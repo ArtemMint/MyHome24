@@ -4,22 +4,19 @@ venv
 
 media
 
-
 myhome24/__pycache__
 
-apps/admin_cabinet/__pycache__
+apps/admin_panel/__pycache__
 
-apps/admin_cabinet/migrations/__pycache__
-
-
+apps/admin_panel/migrations/__pycache__
 
 apps/personal_cabinet/__pycache__
 
-apps/personal_cabinet/migrations/__pycache__
-
-
+apps/personal_cabinet/migrations/__pycache__ 
 
 apps/web_site/__pycache__
+
+apps/web_site/models/__pycache__
 
 apps/web_site/migrations/__pycache__
 

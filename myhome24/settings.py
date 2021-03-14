@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'admin_cabinet',
+    'admin_panel',
     'personal_cabinet',
     'web_site',
 ]
