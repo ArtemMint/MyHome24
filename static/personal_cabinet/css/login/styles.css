@@ -1,0 +1,137 @@
+.login-box, .register-box{
+    width: 360px;
+    margin: 0 auto;
+    padding-top: 7%;
+}
+.login-page .login-logo img {
+    max-width: 100%;
+    z-index: 2000;
+    position: relative;
+}
+.login-logo, .register-logo {
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 300;
+}
+.nav-tabs-custom {
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 3px;
+}
+.btn-group-vertical>.btn-group:after, .btn-group-vertical>.btn-group:before, .btn-toolbar:after, .btn-toolbar:before, .clearfix:after, .clearfix:before, .container-fluid:after, .container-fluid:before, .container:after, .container:before, .dl-horizontal dd:after, .dl-horizontal dd:before, .form-horizontal .form-group:after, .form-horizontal .form-group:before, .modal-footer:after, .modal-footer:before, .modal-header:after, .modal-header:before, .nav:after, .nav:before, .navbar-collapse:after, .navbar-collapse:before, .navbar-header:after, .navbar-header:before, .navbar:after, .navbar:before, .pager:after, .pager:before, .panel-body:after, .panel-body:before, .row:after, .row:before {
+    display: table;
+    content: " ";
+}
+.nav-tabs-custom>.tab-content {
+    background: #fff;
+    padding: 10px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.tab-content>.active {
+    display: block;
+}
+.login-box-body, .register-box-body {
+    background: #fff;
+    padding: 20px;
+    border-top: 0;
+    color: #666;
+}
+.login-box-msg, .register-box-msg {
+    margin: 0;
+    text-align: center;
+    padding: 0 20px 20px 20px;
+}
+.login-box-body, .register-box-body {
+    background: #fff;
+    padding: 20px;
+    border-top: 0;
+    color: #666;
+}
+.has-feedback {
+    position: relative;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.form-control-feedback.fa {
+    line-height: 34px;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.form-control-feedback {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    pointer-events: none;
+}
+.login-page .nav-tabs-custom>.nav-tabs {
+    display: table;
+    width: 100%;
+}
+.nav-tabs-custom>.nav-tabs {
+    margin: 0;
+    border-bottom-color: #f4f4f4;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+.nav-tabs {
+    border-bottom: 1px solid #ddd;
+}
+.nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.btn-group-vertical>.btn-group:after, .btn-group-vertical>.btn-group:before, .btn-toolbar:after, .btn-toolbar:before, .clearfix:after, .clearfix:before, .container-fluid:after, .container-fluid:before, .container:after, .container:before, .dl-horizontal dd:after, .dl-horizontal dd:before, .form-horizontal .form-group:after, .form-horizontal .form-group:before, .modal-footer:after, .modal-footer:before, .modal-header:after, .modal-header:before, .nav:after, .nav:before, .navbar-collapse:after, .navbar-collapse:before, .navbar-header:after, .navbar-header:before, .navbar:after, .navbar:before, .pager:after, .pager:before, .panel-body:after, .panel-body:before, .row:after, .row:before {
+    display: table;
+    content: " ";
+}
+.nav>li>a {
+    text-decoration: none;
+    color: #444;
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+.login-page .nav-tabs-custom>.nav-tabs>li {
+    display: table-cell;
+    width: 50%;
+    margin-right: 0;
+    text-align: center;
+}
+.nav-tabs-custom>.nav-tabs>li:first-of-type {
+    margin-left: 0;
+}
+.nav-tabs-custom>.nav-tabs>li.active {
+    border-top: 3px solid #3c8dbc;
+}
+.nav-tabs>li {
+    float: left;
+    margin-bottom: -1px;
+}
+.login-page, .register-page {
+    background: #d2d6de;
+}
+button.btn.btn-primary.btn-block{
+    width: 100%;
+    background-color: #3c8dbc;
+    border-color: #367fa9;
+}

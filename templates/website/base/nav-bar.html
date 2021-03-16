@@ -1,0 +1,22 @@
+{% load static %}
+
+<div class="navbar">
+    <div class="container d-flex justify-content-between">
+        <div class="logo">
+            <a href="/"><img src="{% static 'logo/logo.svg' %}" style="width: 145px; max-height: 40px"></a>
+        </div>
+        <div class="d-flex">
+            <ul class="nav navbar-nav navbar-right"></ul>
+                <a href="{% url 'website:index' %}" {% if request.path == '/' %}class="active"{% endif %}>Main</a>
+                <a href="{% url 'website:about' %}" {% if request.path == '/about' %}class="active"{% endif %}>About us</a>
+                <a href="{% url 'website:services' %}" {% if request.path == '/services' %}class="active"{% endif %}>Services</a>
+                <a href="https://avada-media.ua/myhouse24/">Terms of purchase</a>
+                <a href="{% url 'website:contacts' %}" {% if request.path == '/contact' %}class="active"{% endif %}>Contacts</a>
+                <a href="{% url 'website:login' %}">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign-in
+                </a>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,123 @@
+.main-sidebar {
+    border-right: 1px solid #d2d6de;
+}
+.navbar {
+    padding: 0;
+}
+.expand {
+    border-right: 1px solid #d2d6de;
+}
+a.nav-link.expand{
+    padding: 15px 15px;
+}
+.top-bar{
+    padding: 15px 15px;
+}
+.sidebar{
+    padding: 0;
+}
+.sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active{
+    background-color: #e1f1ea;
+    color: black;
+    font-size: 17px;
+    line-height: 1.42;
+    box-shadow: none;
+
+}
+.nav-link{
+    display: block;
+    padding: 12px 5px 12px 28px;
+}
+.nav-sidebar .nav-item>.nav-link{
+    margin-bottom: 0;
+}
+.nav-pills .nav-link {
+    border-radius: 0;
+}
+.fas, .far, .fal{
+    width: 20px;
+}
+.brand-link .brand-image{
+    max-height: 40px;
+}
+.nav-sidebar .nav-link>.right, .nav-sidebar .nav-link>p>.right {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -8px;
+}
+
+.nav-sidebar>.nav-item .nav-icon{
+    margin-left: 0;
+    margin-right: 0;
+    width: 20px;
+    font-size: 17px;
+}
+ul.nav.nav-treeview li.nav-item a.nav-link, ul.nav.nav-treeview li.nav-item a.nav-link.active{
+    padding: 5px 5px 5px 40px;
+    background-color: #f9f5f5;
+    text-decoration: none;
+    color: #777
+}
+li.nav-item.menu ul.nav.nav-treeview li.nav-item a.nav-link.active{
+    font-weight: 600;
+    color: black;
+}
+body{
+    font-size: 17px;
+    line-height: 1.42;
+}
+.navbar-custom-menu{
+    float: right;
+    display: block;
+}
+.navbar-nav>li>a{
+    padding: 18px 15px;
+}
+.dropdown-toggle::after {
+    content: none;
+}
+li.dropdown.notifications-menu>a, li.dropdown.user.user-menu>a {
+    border-left: 1px solid #d2d6de;
+}
+ul.navbar-nav.ml-auto>div>ul>li>a{
+    color: #333
+}
+ul.navbar-nav.ml-auto>div>ul>li>a:hover{
+    color: #777
+}
+span.label.label-warning{
+    position: absolute;
+    top: 9px;
+    right: 7px;
+    text-align: center;
+    font-size: 9px;
+    padding: 2px 3px;
+    line-height: .9;
+    background-color: #f39c12;
+    border-radius: .25em;
+    color: white;
+}
+.content-wrapper .content-header{
+    border-bottom: 1px solid #d2d6de;
+    padding: 15px 15px 5px 15px;
+}
+.breadcrumb-item+.breadcrumb-item::before{
+    content: '>';
+}
+.content-header .breadcrumb{
+    font-size: 12px;
+}
+li.breadcrumb-item>a{
+    color: black;
+}
+[class*=sidebar-light-] .nav-sidebar>.nav-item.menu-open>.nav-link, [class*=sidebar-light-] .nav-sidebar>.nav-item:hover>.nav-link{
+    background-color: #e1f1ea;
+}
+
+.panel-content{
+    padding: 1.5rem !important;
+}
+.sidebar-mini .nav-sidebar, .sidebar-mini .nav-sidebar .nav-link, .sidebar-mini .nav-sidebar>.nav-header{
+    white-space: normal;
+}

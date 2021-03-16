@@ -23,6 +23,6 @@ urlpatterns = [
     ),
     path(
         '',
-        include('web_site.urls')
+        include('website.urls')
     ),
 ]

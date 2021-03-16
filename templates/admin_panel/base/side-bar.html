@@ -1,0 +1,161 @@
+{% load static %}
+
+    <aside class="main-sidebar sidebar-light-primary">
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link d-flex justify-content-center" style="padding: 0">
+        <span class="brand-text"><img src="{% static 'logo/logo.svg' %}" alt="" class="brand-image" style="height: 60px; margin: 7.5px" height="180"></span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" style="top: -8px">
+            <li class="nav-item">
+                <a href="{% url 'admin_panel:statistics' %}" class="nav-link {% if request.path == '/admin/' %} active {% endif %}">
+                    <i class="fas fa-chart-line"></i>
+                    <p>Statistics</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin_panel:account_transaction_list' %}" class="nav-link {% if request.path == '/admin/account-transaction/index/' %} active {% endif %}">
+                    <i class="fas fa-dollar-sign"></i>
+                    <p>Account transaction</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin_panel:invoice_list' %}" class="nav-link {% if request.path == '/admin/invoice/index/' %} active {% endif %}">
+                    <i class="far fa-copy"></i>
+                    <p>Invoice</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin_panel:account_list' %}" class="nav-link {% if request.path == '/admin/account/index/' %} active {% endif %}">
+                    <i class="far fa-credit-card"></i>
+                    <p>Accounts</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin_panel:flat_list' %}" class="nav-link {% if request.path == '/admin/flats/index/' %} active {% endif %}">
+                    <i class="fas fa-key"></i>
+                    <p>Flats</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin_panel:user_list' %}" class="nav-link {% if request.path == '/admin/user/index/' %} active {% endif %}">
+                    <i class="fas fa-users"></i>
+                    <p>Flat owners</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin_panel:house_list' %}" class="nav-link {% if request.path == '/admin/house' %} active {% endif %}">
+                    <i class="fas fa-building"></i>
+                    <p>Houses</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin_panel:message_list' %}" class="nav-link {% if request.path == '/admin/message' %} active {% endif %}">
+                    <i class="far fa-envelope"></i>
+                    <p>Messages</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin_panel:master_request_list' %}" class="nav-link {% if request.path == '/admin/master-request' %} active {% endif %}">
+                    <i class="fas fa-wrench"></i>
+                    <p>Master request</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin_panel:meter_readings_list' %}" class="nav-link {% if request.path == '/admin/meter-data' %} active {% endif %}">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <p>Meter readings</p>
+                </a>
+            </li>
+            <li class="nav-item menu">
+                <a href="" class="nav-link">
+                    <i class="fas fa-desktop"></i>
+                    <p>Site settings<i class="right fas fa-angle-left"></i></p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{% url 'admin_panel:home' %}" class="nav-link {% if request.path == '/admin/website/home/' %} active {% endif %}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Main</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'admin_panel:about' %}" class="nav-link {% if request.path == '/admin/website/about/' %} active {% endif %}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>About</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'admin_panel:services' %}" class="nav-link {% if request.path == '/admin/website/services/' %} active {% endif %}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Services</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'admin_panel:tariffs' %}" class="nav-link {% if request.path == '/admin/website/tariffs/' %} active {% endif %}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Tariff</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'admin_panel:contacts' %}" class="nav-link {% if request.path == '/admin/website/contacts/' %} active {% endif %}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Contacts</p>
+                    </a>
+                </li>
+                </ul>
+            </li>
+            <li class="nav-item menu">
+                <a href="" class="nav-link">
+                    <i class="fas fa-cogs"></i>
+                    <p>System settings<i class="right fas fa-angle-left"></i></p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{% url 'admin_panel:service_list' %}" class="nav-link {% if request.path == '/admin/services' %} active {% endif %}">
+                        <i class="fas fa-briefcase"></i>
+                        <p>Service</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'admin_panel:tariff_list' %}" class="nav-link {% if request.path == '/admin/tariffs' %} active {% endif %}">
+                        <i class="far fa-money-bill-alt"></i>
+                        <p>Tariff</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'admin_panel:role_list' %}" class="nav-link {% if request.path == '/admin/user-admin/role' %} active {% endif %}">
+                        <i class="fas fa-user"></i>
+                        <p>Role</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'admin_panel:user_admin_list' %}" class="nav-link {% if request.path == '/admin/user-admin/users/list' %} active {% endif %}">
+                        <i class="fas fa-user-plus"></i>
+                        <p>Admin users</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'admin_panel:pay_company' %}" class="nav-link {% if request.path == '/admin/pay-company' %} active {% endif %}">
+                        <i class="far fa-credit-card"></i>
+                        <p>Payment company</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'admin_panel:transaction_purpose_list' %}" class="nav-link {% if request.path == '/admin/transaction-purpose' %} active {% endif %}">
+                        <i class="fas fa-list-ol"></i>
+                        <p>Transaction purpose</p>
+                    </a>
+                </li>
+                </ul>
+            </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
