@@ -1,0 +1,93 @@
+{% load static %}
+
+    <aside class="main-sidebar sidebar-light-primary">
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link d-flex justify-content-center" style="padding: 0">
+        <span class="brand-text"><img src="{% static 'logo/logo.svg' %}" alt="" class="brand-image" style="height: 60px; margin: 7.5px" height="180"></span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" style="top: -8px">
+            <li class="nav-item menu">
+                <a href="" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <p>Summary<i class="right fas fa-angle-left"></i></p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{% url 'personal_cabinet:summary' %}" class="nav-link {% if request.path == '/admin/website/home/' %} active {% endif %}">
+                            <i class="far fa-building"></i>
+                            <p>House name</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item menu">
+                <a href="" class="nav-link">
+                    <i class="far fa-copy"></i>
+                    <p>Invoice<i class="right fas fa-angle-left"></i></p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{% url 'personal_cabinet:invoice_list' %}" class="nav-link {% if request.path == '/admin/services' %} active {% endif %}">
+                            <i class="far fa-copy"></i>
+                            <p>All invoices</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{% url 'personal_cabinet:invoice_list' %}" class="nav-link {% if request.path == '/admin/services' %} active {% endif %}">
+                            <i class="fa fa-file-alt"></i>
+                            <p>house</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-item menu">
+                <a href="" class="nav-link">
+                    <i class="fas fa-money-bill-alt"></i>
+                    <p>Tariffs<i class="right fas fa-angle-left"></i></p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{% url 'personal_cabinet:tariff_list' %}" class="nav-link {% if request.path == '/admin/services' %} active {% endif %}">
+                            <i class="fa fa-file-alt"></i>
+                            <p>house</p>
+                        </a>
+                    </li>
+                </ul>
+
+
+
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'personal_cabinet:message_list' %}" class="nav-link {% if request.path == '/admin/' %} active {% endif %}">
+                    <i class="far fa-envelope"></i>
+                    <p>Messages</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'personal_cabinet:master_request_list' %}" class="nav-link {% if request.path == '/admin/account-transaction/index/' %} active {% endif %}">
+                    <i class="fas fa-wrench"></i>
+                    <p>Master request</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link {% if request.path == '/admin/invoice/index/' %} active {% endif %}">
+                    <i class="fa fa-user-circle"></i>
+                    <p>Profile</p>
+                </a>
+            </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>

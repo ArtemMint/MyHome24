@@ -1,15 +1,77 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cabinet</title>
+    <title>Admin</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'personal_cabinet/css/adminlte.min.css' %}">
+    <link rel="stylesheet" href="{% static 'personal_cabinet/css/styles.css' %}">
 </head>
 
-<body>
-    {% block content %} {% endblock content %}
-</body>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
 
+    {% include 'personal_cabinet/base/nav-bar.html' %}
+
+    {% include 'personal_cabinet/base/side-bar.html' %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            <div class="col-sm-6">
+                {% block page_title %}
+                <h1 class="m-0">title</h1>
+                {% endblock %}
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                {% block pagination_link %}
+                {% endblock %}
+                </ol>
+            </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+
+        {% block content %} {% endblock content %}
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+        <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+
+    {% include 'personal_cabinet/base/footer.html' %}
+    
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- REQUIRED SCRIPTS -->
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'personal_cabinet/js/adminlte.min.js' %}"></script>
+    </body>
 </html>
