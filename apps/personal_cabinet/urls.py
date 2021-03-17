@@ -25,35 +25,35 @@ urlpatterns = [
         SummaryById.as_view(),
         name='summary'
     ),
-
+    
     # Invoice
     path(
         'invoice/index/',
         InvoiceList.as_view(),
         name='invoice_list'
     ),
-    
+
     # Messages
     path(
         'message/index/',
         MessagesList.as_view(),
         name='message_list'
     ),
-    
+
     # Tariff
     path(
         'tariff/index/',
         TariffList.as_view(),
         name='tariff_list'
     ),
-    
+
     # Master request
     path(
         'master-request/index/',
         MasterRequestList.as_view(),
         name='master_request_list'
     ),
-    
+
     # Profile
     # path(
     #     '<int:flat_id>',
