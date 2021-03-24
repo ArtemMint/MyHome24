@@ -12,6 +12,14 @@ apps/admin_panel/__pycache__
 
 apps/admin_panel/views/__pycache__
 
+apps/admin_panel/forms/__pycache__
+
+apps/admin_panel/forms/manage_site/__pycache__
+
+apps/admin_panel/models/__pycache__
+
+apps/admin_panel/models/manage_site/__pycache__
+
 apps/admin_panel/migrations/__pycache__
 
 apps/personal_cabinet/__pycache__

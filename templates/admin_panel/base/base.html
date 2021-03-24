@@ -20,28 +20,41 @@
 
     {% include 'admin_panel/base/side-bar.html' %}
 
-    <div class="content-wrapper">
-        <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-            <div class="col-sm-6">
-                {% block page_title %}
-                <h1 class="m-0">title</h1>
-                {% endblock %}
+    <div class="content-wrapper" style="min-height: 865px;">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-8">
+                        {% block title %}{% endblock %}
+                    </div>
+                    <div class="col-sm-4">
+                        <ol class="breadcrumb float-sm-right">
+                        {% block breadcrumb %}{% endblock %}
+                        </ol>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                {% block pagination_link %}
-                {% endblock %}
-                </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Editing page</h3>
+{#                            <div class="box-tools">#}
+{#                                <a href="#" class="btn btn-default btn-sm updateSeoFiles">#}
+{#                                    <span class="hidden-xs">Update robots and sitemap</span><i class="fa fa-refresh visible-xs" aria-hidden="true"></i>#}
+{#                                </a>#}
+{#                            </div>#}
+                        </div>
+                        <hr>
+                        <div class="box-body">
+                            {% block content %} {% endblock content %}
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
-        </div>
-        </div>
-
-
-
-        {% block content %} {% endblock content %}
+        </section>
     </div>
 
 

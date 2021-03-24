@@ -1,5 +1,103 @@
 {% extends 'admin_panel/base/base.html' %}
 
+{% block title %} <h1 class="m-0">About page</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Main </a></li>
+        <li class="breadcrumb-item active"> Editing page</li>
+    </ul>
+{% endblock %}
+
 {% block content %}
-    <h1 class="text-center">About page</h1>
+<form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <h3 class="title-block">Information</h3>
+    <hr>
+    <div class="row">
+        <div class='col-lg-8'>
+            {{ about_form.media }}
+            <p>
+            <label>{{ about_form.title.label_tag }}</label>
+            {{ about_form.title }}
+            </p>
+            <p>
+            <label>{{ about_form.short_text.label_tag }}</label>
+            {{ about_form.short_text }}
+            </p>
+        </div>
+        <div class='col-lg-2'>
+            {% if about_form.image %}
+                <img id="image{{forloop.counter0}}" class="img-fluid" src="#" alt="Emtpy" style="height: 310px; display: block; margin">
+            {% else %}
+                <img id="image{{forloop.counter0}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 310px; display: block; margin">
+            {% endif %}
+            <label>{{ about_form.image.label_tag }}</label>
+            {{ about_form.image }}
+        </div>
+    </div>
+
+    {{ gallery_formset.management_form }}
+    <h3 class="title-block">Gallery</h3>
+    <hr>
+    <div class="row">
+    {% for form in slider_formset %}
+    <div class='card shadow-sm'>
+        <div class="card-header">
+            <img id="image{{forloop.counter}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 150px; width: 168px; display: block; margin: auto;">
+        </div>
+        <div class="card-body">
+            {{ form }}
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+
+    <h3>Additional information</h3>
+    <hr>
+    <div class="row">
+        <div class='col-lg-12'>
+            {{ extra_info_form.media }}
+            {{ extra_info_form.as_p }}
+            {{ extra_info_form.errors }}
+        </div>
+    </div>
+
+    {{ extra_gallery_formset.management_form }}
+    <h3 class="title-block">Additional gallery</h3>
+    <hr>
+    <div class="row">
+    {% for form in extra_gallery_formset %}
+    <div class='card shadow-sm'>
+        <div class="card-header">
+            <img id="image{{forloop.counter}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 150px; width: 168px; display: block; margin: auto;">
+        </div>
+        <div class="card-body">
+            {{ form }}
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+
+    {{ extra_document_formset.management_form }}
+    <h3 class="title-block">Documents</h3>
+    <hr>
+    {% for form in extra_document_formset %}
+    <div class="row">
+    <div class='col-sm-2'>
+        {{ form }}
+    </div>
+    </div>
+    {% endfor %}
+    <button class="btn btn-success">Add document</button>
+
+    <h3 class="title-block">Settings SEO</h3>
+    <hr>
+    {{ seo_form }}
+    <div class="col-xs-12 text-center">
+        <div class="form-group">
+            <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Deny</a>
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+</form>
 {% endblock content %}

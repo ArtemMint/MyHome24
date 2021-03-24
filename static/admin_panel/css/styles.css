@@ -1,8 +1,51 @@
+body{
+    font-size: 18px;
+    line-height: 1.42;
+}
+
+.title-block {
+    font-size: 22px;
+}
+
+.box-title {
+    font-size: 18px;
+    margin: 10px;
+}
+
+.content-wrapper>.content {
+    min-height: 250px;
+    padding: 15px 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.form-group {
+    padding: 20px;
+}
+
+.breadcrumb-item+.breadcrumb-item::before{
+    content: '>';
+}
+
+.breadcrumb{
+    font-size: 12px;
+}
+
+li.breadcrumb-item>a {
+    color: black;
+}
+
+.form-group {
+    padding: 0px;
+}
+
+/*        */
 .main-sidebar {
     border-right: 1px solid #d2d6de;
+    position: fixed;
 }
 .navbar {
     padding: 0;
+    /*position: fixed;*/
 }
 .expand {
     border-right: 1px solid #d2d6de;
@@ -63,10 +106,7 @@ li.nav-item.menu ul.nav.nav-treeview li.nav-item a.nav-link.active{
     font-weight: 600;
     color: black;
 }
-body{
-    font-size: 17px;
-    line-height: 1.42;
-}
+
 .navbar-custom-menu{
     float: right;
     display: block;
@@ -102,15 +142,7 @@ span.label.label-warning{
     border-bottom: 1px solid #d2d6de;
     padding: 15px 15px 5px 15px;
 }
-.breadcrumb-item+.breadcrumb-item::before{
-    content: '>';
-}
-.content-header .breadcrumb{
-    font-size: 12px;
-}
-li.breadcrumb-item>a{
-    color: black;
-}
+
 [class*=sidebar-light-] .nav-sidebar>.nav-item.menu-open>.nav-link, [class*=sidebar-light-] .nav-sidebar>.nav-item:hover>.nav-link{
     background-color: #e1f1ea;
 }
