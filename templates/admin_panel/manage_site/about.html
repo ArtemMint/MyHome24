@@ -1,4 +1,5 @@
 {% extends 'admin_panel/base/base.html' %}
+{% load static %}
 
 {% block title %} <h1 class="m-0">About page</h1> {% endblock %}
 
@@ -26,10 +27,10 @@
             </p>
         </div>
         <div class='col-lg-2'>
-            {% if about_form.image %}
-                <img id="image{{forloop.counter0}}" class="img-fluid" src="#" alt="Emtpy" style="height: 310px; display: block; margin">
+            {% if about_page.image.url %}
+                <img class="img-fluid" src="{{ about_page.image.url }}" alt="{{ about_page.image }}" style="height: 310px; display: block;">
             {% else %}
-                <img id="image{{forloop.counter0}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 310px; display: block; margin">
+                <img class="img-fluid" src="{% static 'admin_panel/img/avatar5.png' %}" alt="Emtpy" style="height: 310px; display: block;">
             {% endif %}
             <label>{{ about_form.image.label_tag }}</label>
             {{ about_form.image }}
@@ -40,7 +41,7 @@
     <h3 class="title-block">Gallery</h3>
     <hr>
     <div class="row">
-    {% for form in slider_formset %}
+    {% for form in gallery_formset %}
     <div class='card shadow-sm'>
         <div class="card-header">
             <img id="image{{forloop.counter}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 150px; width: 168px; display: block; margin: auto;">
@@ -54,13 +55,14 @@
 
     <h3>Additional information</h3>
     <hr>
+    {{ extra_info_formset.management_form }}
+    {% for form in extra_info_formset %}
     <div class="row">
         <div class='col-lg-12'>
-            {{ extra_info_form.media }}
-            {{ extra_info_form.as_p }}
-            {{ extra_info_form.errors }}
+            {{ form.as_p }}
         </div>
     </div>
+    {% endfor %}
 
     {{ extra_gallery_formset.management_form }}
     <h3 class="title-block">Additional gallery</h3>
@@ -81,6 +83,14 @@
     {{ extra_document_formset.management_form }}
     <h3 class="title-block">Documents</h3>
     <hr>
+    {% for document in documents %}
+        <p>File: {{ document.name }}</p>
+        <object data="{{ document.document.url }}" type="application/pdf">
+            <iframe src="https://docs.google.com/viewer?url={{ document.document.url }}&embedded=true"></iframe>
+{#        <iframe src="{{ document.document.url }}" width="500px" height="700px"></iframe>#}
+        </object>
+
+    {% endfor %}
     {% for form in extra_document_formset %}
     <div class="row">
     <div class='col-sm-2'>

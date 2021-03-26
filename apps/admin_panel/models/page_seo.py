@@ -6,6 +6,9 @@ from django.db import models
 
 
 class SEO(models.Model):
+    """
+    Table with SEO info about each pages on website
+    """
     seo_title = models.CharField(
         max_length=100,
         null=True,

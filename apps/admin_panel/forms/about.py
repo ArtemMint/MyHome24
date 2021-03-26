@@ -152,6 +152,18 @@ AboutGalleryFormset = forms.inlineformset_factory(
     max_num=5,
     min_num=1,
 )
+AboutExtraInfoFormset = forms.inlineformset_factory(
+    AboutPage,
+    AboutExtraInfo,
+    AboutExtraInfoForm,
+    fields=(
+        'title',
+        'short_text',
+    ),
+    extra=0,
+    max_num=1,
+    min_num=1,
+)
 AboutExtraGalleryFormset = forms.inlineformset_factory(
     AboutPage,
     AboutExtraGallery,
@@ -169,7 +181,7 @@ AboutDocumentFormset = forms.inlineformset_factory(
         'document',
         'name',
     ),
-    extra=1,
+    extra=0,
     max_num=5,
     min_num=1,
 )
