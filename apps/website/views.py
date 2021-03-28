@@ -2,11 +2,7 @@
 Website views
 """
 
-from django.shortcuts import render
-from django.views.generic.base import View
 from django.views.generic.base import TemplateView
-
-from admin_panel.models.page_index import IndexPage
 
 
 class IndexPage(TemplateView):

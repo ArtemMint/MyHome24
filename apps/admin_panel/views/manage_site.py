@@ -3,10 +3,13 @@ Views of site data
 """
 
 # from django.contrib import messages
+from django.views import View
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.base import TemplateView
-from django.views import View
+from django.views.generic.edit import UpdateView
+
 
 from .. import models
 from .. import forms
@@ -211,8 +214,91 @@ class AboutSettings(TemplateView):
         )
 
 
-class ServicesSettings(TemplateView):
+class ServicesSettings(SuccessMessageMixin, UpdateView):
+    """
+    Services page settings
+    """
+    model = models.ServicesPage
+    form_class = forms.ServicesForm
+    formset_class = forms.ServicesFormset
+    second_form_class = forms.SEOForm
+    success_url = reverse_lazy('admin_panel:services')
+    success_message = 'All data successfully updated!'
     template_name = 'admin_panel/manage_site/services.html'
+
+    def __init__(self):
+        super(ServicesSettings, self).__init__()
+        self.object = self.get_object()
+
+    def get_object(self, queryset=None):
+        """
+        Get services page data
+        """
+        obj = models.ServicesPage.get_solo()
+        if not obj.seo:
+            obj.seo = models.SEO.objects.create()
+            obj.save()
+        return obj
+
+    def get_context_data(self, **kwargs):
+        """
+        Get context to render forms in page
+        """
+        context = super(ServicesSettings, self).get_context_data(**kwargs)
+        context['services_formset'] = self.formset_class()
+        context['seo_form'] = self.second_form_class(
+            instance=self.object.seo,
+        )
+        return context
+
+    def form_valid(self, formset, form):
+        """
+        If form valid
+        """
+        formset.save()
+        form.save()
+        return super(ServicesSettings, self).form_valid(form)
+
+    def form_invalid(self, form):
+        """
+        If form invalid
+        """
+        return self.render_to_response(
+            self.get_context_data(
+                services_formset=self.formset_class,
+                seo_form=self.second_form_class,
+            )
+        )
+
+    def get(self, request, *args, **kwargs):
+        """
+        GET method
+        """
+        super(ServicesSettings, self).get(request, *args, **kwargs)
+        return self.render_to_response(
+            self.get_context_data(
+                object=self.object,
+                services_formset=self.formset_class,
+                seo_form=self.second_form_class,
+            )
+        )
+
+    def post(self, request, *args, **kwargs):
+        """
+        POST method
+        """
+        formset = self.formset_class(
+            request.POST,
+            request.FILES,
+        )
+        form = self.second_form_class(
+            request.POST,
+            instance=self.object.seo,
+        )
+        if formset.is_valid() and form.is_valid():
+            return self.form_valid(formset, form)
+        else:
+            return self.form_invalid(*args)
 
 
 class TariffsSettings(TemplateView):

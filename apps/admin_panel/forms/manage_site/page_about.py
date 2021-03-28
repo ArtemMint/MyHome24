@@ -4,7 +4,7 @@ About page forms
 
 from django import forms
 
-from ..models.page_about import (
+from admin_panel.models.manage_site.page_about import (
     AboutPage,
     AboutGallery,
     AboutExtraGallery,
