@@ -162,11 +162,6 @@ urlpatterns = [
         name='services'
     ),
     path(
-        'website/tariffs/',
-        manage_site.TariffsSettings.as_view(),
-        name='tariffs'
-    ),
-    path(
         'website/contacts/',
         manage_site.ContactsSettings.as_view(),
         name='contacts'

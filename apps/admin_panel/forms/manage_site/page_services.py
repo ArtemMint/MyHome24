@@ -4,7 +4,7 @@ Form for services page on website
 
 from django import forms
 
-from ...models import Services
+from ...models import ServicesPage, Services
 
 
 class ServicesForm(forms.ModelForm):
@@ -42,7 +42,22 @@ class ServicesForm(forms.ModelForm):
         }
 
 
-ServicesFormset = forms.modelformset_factory(
+# ServicesFormset = forms.modelformset_factory(
+#     Services,
+#     ServicesForm,
+#     fields=(
+#         'image',
+#         'name',
+#         'description',
+#     ),
+#     extra=3,
+#     max_num=4,
+#     min_num=4,
+#     can_delete=True,
+# )
+
+ServicesFormset = forms.inlineformset_factory(
+    ServicesPage,
     Services,
     ServicesForm,
     fields=(

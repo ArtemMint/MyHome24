@@ -69,7 +69,7 @@ class IndexBlock(models.Model):
         IndexPage,
         on_delete=models.CASCADE,
         verbose_name='Title of the block',
-        related_name='blocks',
+        related_name='block',
     )
     image = models.ImageField(
         blank=True,
@@ -82,7 +82,7 @@ class IndexBlock(models.Model):
     )
     description = models.TextField(
         blank=True,
-        max_length=1000,
+        max_length=255,
     )
 
     def __str__(self):

@@ -11,28 +11,35 @@
 {% endblock %}
 
 {% block content %}
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+             </ul>
+         {% endfor %}
+    {% endif %}
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-        <h3 class="title-block">Services</h3>
-        <hr>
-        {{ services_formset.management_form }}
         <div class="row">
-        {% for form in services_formset %}
-        <div class='col-md-3'>
-            <div class='card mb-3 shadow-sm'>
-                <div class="card-header">
-                    <h4 class="box-title">Service {{ forloop.counter }}</h4>
-                    {% if form.image.value %}
-                        <img id="image{{forloop.counter0}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 310px; display: block;">
-                    {% else %}
-                        <img id="image{{forloop.counter0}}" class="img-fluid" src="{% static 'admin_panel/img/default-650x300.png' %}" alt="650x300" style="height: 310px; display: block;">
-                    {% endif %}
-                    </div>
-                <div class="card-body">
-                    {{ form.as_p }}
-                </div>
+            <div class='col-xs-12 col-md-8'>
+                <h3 class="title-block">Contact information</h3>
+                <hr>
+                {{ contacts_page_form.media }}
+                {{ contacts_page_form.as_p }}
+            </div>
+
+            <div class='col-xs-12 col-md-4'>
+                <h3 class="title-block">Contacts</h3>
+                <hr>
+                {{ contacts_address_form.as_p }}
             </div>
         </div>
-        {% endfor %}
+
+        <div class="row">
+            <div class='col-lg-12'>
+                <h3 class="title-block">Map</h3>
+                <hr>
+                {{ contacts_map_form.as_p }}
+            </div>
         </div>
 
         <h3 class="title-block">Settings SEO</h3>

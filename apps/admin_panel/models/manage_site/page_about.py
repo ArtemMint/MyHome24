@@ -20,7 +20,7 @@ class AboutPage(SingletonModel):
     )
     short_text = RichTextField(
         blank=False,
-        max_length=1000,
+        max_length=3000,
     )
     image = models.ImageField(
         verbose_name='Recommend size (250x310)',

@@ -51,7 +51,7 @@ a.nav-link.expand{
 }
 a.brand-link {
     position: fixed;
-    top: 0px;
+    top: 0;
 }
 
 .top-bar{
