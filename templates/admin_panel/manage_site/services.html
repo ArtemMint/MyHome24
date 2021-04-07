@@ -24,8 +24,8 @@
         {{ services_formset.management_form }}
         <div class="row">
         {% for form in services_formset %}
-        <div class='col-md-3'>
-            <div class='card mb-3 shadow-sm'>
+        <div class='col-md-4'>
+            <div class='card mb-4 shadow-sm'>
                 <div class="card-header">
                     <h4 class="box-title">Услуга {{ forloop.counter }}</h4>
                     {% if form.image.value %}
