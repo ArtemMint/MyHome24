@@ -27,7 +27,7 @@ class IndexPageForm(forms.ModelForm):
             'apps_status'
         )
         widgets = {
-            'title': forms.TextInput(
+            'main_title': forms.TextInput(
                 attrs={
                     'class': 'form-control'
                 }

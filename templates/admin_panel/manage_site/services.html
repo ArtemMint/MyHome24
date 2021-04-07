@@ -5,8 +5,8 @@
 
 {% block breadcrumb %}
     <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Main </a></li>
-        <li class="breadcrumb-item active"> Editing page</li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item active"> Редактирование страницы</li>
     </ul>
 {% endblock %}
 
@@ -19,7 +19,7 @@
          {% endfor %}
     {% endif %}
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-        <h3 class="title-block">Services</h3>
+        <h3 class="title-block">Услуги</h3>
         <hr>
         {{ services_formset.management_form }}
         <div class="row">
@@ -27,7 +27,7 @@
         <div class='col-md-3'>
             <div class='card mb-3 shadow-sm'>
                 <div class="card-header">
-                    <h4 class="box-title">Service {{ forloop.counter }}</h4>
+                    <h4 class="box-title">Услуга {{ forloop.counter }}</h4>
                     {% if form.image.value %}
                         <img id="image{{forloop.counter0}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 310px; display: block;">
                     {% else %}
@@ -42,14 +42,14 @@
         {% endfor %}
         </div>
 
-        <h3 class="title-block">Settings SEO</h3>
+        <h3 class="title-block">Настройки SEO</h3>
         <hr>
         {{ seo_form.as_p }}
         <div class="col-xs-12 text-center">
             <div class="form-group">
-                <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Deny</a>
-                <a href=""  class="btn btn-success bg-green-active form-row-add-websiteservice-btn">Add service</a>
-                <button type="submit" class="btn btn-success">Save</button>
+                <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Отменить</a>
+                <a href=""  class="btn btn-success bg-green-active form-row-add-websiteservice-btn">Добавить услугу</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>
             </div>
         </div>
     </form>

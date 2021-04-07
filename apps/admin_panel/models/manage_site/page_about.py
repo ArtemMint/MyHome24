@@ -17,13 +17,15 @@ class AboutPage(SingletonModel):
         max_length=100,
         default='',
         blank=False,
+        verbose_name='Заголовок',
     )
     short_text = RichTextField(
         blank=False,
         max_length=3000,
+        verbose_name='Краткий текст',
     )
     image = models.ImageField(
-        verbose_name='Recommend size (250x310)',
+        verbose_name='Рекомендуемый размер: (250x310)',
         upload_to='images/about/director/',
     )
     seo = models.OneToOneField(
@@ -51,7 +53,7 @@ class AboutGallery(models.Model):
     image = models.ImageField(
         blank=True,
         upload_to='images/about/gallery/',
-        verbose_name='Recommend size (1200x1200)',
+        verbose_name='Рекомендуемый размер: (1200x1200)',
     )
 
     def __str__(self):
@@ -71,10 +73,12 @@ class AboutExtraInfo(models.Model):
         max_length=100,
         default='',
         blank=True,
+        verbose_name='Заголовок',
     )
     short_text = RichTextField(
         blank=True,
         max_length=1000,
+        verbose_name='Краткий текст',
     )
 
     def __str__(self):
@@ -93,7 +97,7 @@ class AboutExtraGallery(models.Model):
     image = models.ImageField(
         blank=True,
         upload_to='images/about/additional_gallery/',
-        verbose_name='Recommend size (1200x1200)',
+        verbose_name='Рекомендуемый размер (1200x1200)',
     )
 
     def __str__(self):
@@ -111,10 +115,10 @@ class AboutDocument(models.Model):
     )
     document = models.FileField(
         upload_to='files/about/',
-        verbose_name='PDF, JPG (max.size 20 Mb)',
+        verbose_name='PDF, JPG (максимальный размер 20 Mb)',
     )
     name = models.CharField(
-        verbose_name='Name of the document',
+        verbose_name='Название документа',
         max_length=100,
         null=True,
         blank=True,

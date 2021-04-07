@@ -17,15 +17,17 @@ class ContactsPage(SingletonModel):
         max_length=100,
         default='',
         blank=True,
+        verbose_name='Заголовок',
     )
     short_text = RichTextField(
         max_length=1000,
         default='',
         blank=True,
+        verbose_name='Краткий текст',
     )
     url = models.URLField(
         max_length=500,
-        verbose_name='Link on commerce site',
+        verbose_name='Ссылка на коммерческий сайт',
     )
     seo = models.OneToOneField(
         SEO,
@@ -48,26 +50,31 @@ class ContactsAddress(models.Model):
         max_length=100,
         default='',
         blank=True,
+        verbose_name='ФИО',
     )
     location = models.CharField(
         max_length=100,
         default='',
         blank=True,
+        verbose_name='Локация',
     )
     address = models.CharField(
         max_length=100,
         default='',
         blank=True,
+        verbose_name='Адрес',
     )
     phone = models.CharField(
         max_length=100,
         default='',
         blank=True,
+        verbose_name='Телефон',
     )
     email = models.EmailField(
         max_length=100,
         default='',
         blank=True,
+        verbose_name='E-mail',
     )
     contacts = models.ForeignKey(
         ContactsPage,
@@ -90,7 +97,7 @@ class ContactsMap(models.Model):
         max_length=1000,
         default='',
         blank=False,
-        verbose_name='Map code',
+        verbose_name='Код карты',
     )
     contacts = models.ForeignKey(
         ContactsPage,

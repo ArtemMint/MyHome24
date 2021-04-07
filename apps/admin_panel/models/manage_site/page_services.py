@@ -26,17 +26,17 @@ class Services(models.Model):
     image = models.ImageField(
         blank=True,
         upload_to='images/services/',
-        verbose_name='Recommend size (650x300)'
+        verbose_name='Рекомендуемый размер: (650x300)'
     )
     name = models.CharField(
         blank=True,
         max_length=100,
-        verbose_name='Service name',
+        verbose_name='Название услуги',
     )
     description = models.TextField(
         blank=True,
         max_length=1000,
-        verbose_name='Service description'
+        verbose_name='Описание услуги'
     )
     services_page = models.ForeignKey(
         ServicesPage,
@@ -46,6 +46,9 @@ class Services(models.Model):
         verbose_name='service',
         related_name='services',
     )
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         return str(self.name)

@@ -1,7 +1,9 @@
 {% extends 'website/base/base.html' %} {% load static %}
 
+{% block title %}Система "МойДом24" - Главная{% endblock %}
+
 {% block content %}
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide slider" data-ride="carousel">
         <ol class="carousel-indicators">
             {% comment %} DYNAMIC CAROUSEL BOTTOM INDICATOR {% endcomment %}
             {% for image in index_page.slider.values %}
@@ -41,15 +43,15 @@
                         <p>{{ index_page.short_text|safe }}</p>
                         <div class="container d-flex justify-content-between" style="padding: 0">
                             <div class="col-xs-4">
-                                <a href="{% url 'website:about' %}" class="btn btn-primary">Detail</a>
+                                <a href="{% url 'website:about' %}" class="btn btn-primary">Подробнее</a>
                             </div>
                             {% if index_page.apps_status %}
                             <div class="col-xs-8">
-                                <a href="#appstore">
-                                    <img class="store-image" src="{% static 'website/img/content/index/appstore.png' %}" alt="appstore.png">
+                                <a href="https://play.google.com/store/apps/details?id=com.avadamedia.program.myhouse24&hl=uk">
+                                    <img class="img-responsive imgStore" src="{% static 'website/img/content/index/appstore.png' %}" alt="appstore.png">
                                 </a>
-                                <a href="#googleplay">
-                                    <img class="store-image" src="{% static 'website/img/content/index/google.png' %}" alt="google.png">
+                                <a href="https://apps.apple.com/us/app/%D0%BC%D0%BE%D0%B9%D0%B4%D0%BE%D0%BC24/id1308075440?l=ru&ls=1">
+                                    <img class="img-responsive imgStore" src="{% static 'website/img/content/index/google.png' %}" alt="google.png">
                                 </a>
                             </div>
                             {% endif %}
@@ -58,7 +60,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-5 col-md-4">
                     <div class="page-header">
-                        <h3>Contacts</h3>
+                        <h3>Контакты</h3>
                     </div>
                     <div class="box">
                         <p><i class="fas fa-user-circle"></i> {{ contacts_address.name }}</p>
@@ -76,7 +78,7 @@
                 <div class="row row-eq-height">
                     <div class="col-xs-12">
                         <div class="page-header">
-                            <h3>Near us</h3>
+                            <h3>Рядом с нами</h3>
                         </div>
                     </div>
                     {% for block in index_page.block.values %}

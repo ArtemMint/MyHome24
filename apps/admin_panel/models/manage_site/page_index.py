@@ -16,15 +16,17 @@ class IndexPage(SingletonModel):
     main_title = models.CharField(
         max_length=100,
         default='',
-        blank=False,
+        blank=True,
+        verbose_name='Заголовок',
     )
     short_text = RichTextField(
         blank=False,
         max_length=1000,
+        verbose_name='Краткий текст',
     )
     apps_status = models.BooleanField(
         default='False',
-        verbose_name='Show apps links',
+        verbose_name='Показать ссылки на приложения',
     )
     seo = models.OneToOneField(
         SEO,
@@ -54,7 +56,7 @@ class IndexSlider(models.Model):
     image = models.ImageField(
         blank=True,
         upload_to='images/index/slider/',
-        verbose_name='Recommend size (1920x800)'
+        verbose_name='Рекомендуемый размер: (1920x800)'
     )
 
     def __str__(self):
@@ -74,16 +76,21 @@ class IndexBlock(models.Model):
     image = models.ImageField(
         blank=True,
         upload_to='images/index/near_us/',
-        verbose_name='Recommend size (1000x600)'
+        verbose_name='Рекомендуемый размер: (1000x600)'
     )
     title = models.CharField(
         blank=True,
         max_length=100,
+        verbose_name='Заголовок блока',
     )
     description = models.TextField(
         blank=True,
-        max_length=255,
+        max_length=350,
+        verbose_name='Описание',
     )
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         return str(self.title)

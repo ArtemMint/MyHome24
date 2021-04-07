@@ -13,16 +13,19 @@ class SEO(models.Model):
         max_length=100,
         null=True,
         blank=True,
+        verbose_name='Title',
     )
     seo_description = models.CharField(
         max_length=250,
         null=True,
         blank=True,
+        verbose_name='Description',
     )
     seo_keywords = models.CharField(
         max_length=150,
         null=True,
         blank=True,
+        verbose_name='Keywords',
     )
 
     def __str__(self):

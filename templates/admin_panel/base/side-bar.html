@@ -2,8 +2,13 @@
 
     <aside class="main-sidebar sidebar-light-primary">
         <!-- Logo -->
-        <a href="#" class="brand-link d-flex justify-content-center" style="padding: 0">
-        <span class="brand-text"><img src="{% static 'logo/logo.svg' %}" alt="" class="brand-image" style="height: 60px; margin: 7.5px" height="180"></span>
+        <a href="#" class="logo">
+            <span class="logo-lg">
+                <img src="{% static 'logo/logo.svg' %}" alt="" class="img-responsive">
+            </span>
+{#            <span class="logo-mini">#}
+{#                <img src="{% static 'logo/logo-mini.svg' %}" class="img-responsive" alt="">#}
+{#            </span>#}
         </a>
 
 
@@ -13,91 +18,91 @@
                 <li class="nav-item">
                     <a href="{% url 'admin_panel:statistics' %}" class="nav-link">
                         <i class="fas fa-chart-line"></i>
-                        <p>Statistics</p>
+                        <p>Статистика</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'admin_panel:account_transaction_list' %}" class="nav-link">
                         <i class="fas fa-dollar-sign"></i>
-                        <p>Account transaction</p>
+                        <p>Каса</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'admin_panel:invoice_list' %}" class="nav-link">
                         <i class="far fa-copy"></i>
-                        <p>Invoice</p>
+                        <p>Квитанции</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'admin_panel:account_list' %}" class="nav-link">
                         <i class="far fa-credit-card"></i>
-                        <p>Accounts</p>
+                        <p>Лицевые счета</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'admin_panel:flat_list' %}" class="nav-link">
                         <i class="fas fa-key"></i>
-                        <p>Flats</p>
+                        <p>Квартиры</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'admin_panel:user_list' %}" class="nav-link">
                         <i class="fas fa-users"></i>
-                        <p>Flat owners</p>
+                        <p>Владельцы квартир</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'admin_panel:house_list' %}" class="nav-link">
                         <i class="fas fa-building"></i>
-                        <p>Houses</p>
+                        <p>Дома</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'admin_panel:message_list' %}" class="nav-link">
                         <i class="far fa-envelope"></i>
-                        <p>Messages</p>
+                        <p>Сообщения</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'admin_panel:master_request_list' %}" class="nav-link">
                         <i class="fas fa-wrench"></i>
-                        <p>Master request</p>
+                        <p>Заявки вызова мастера</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'admin_panel:meter_readings_list' %}" class="nav-link">
                         <i class="fas fa-tachometer-alt"></i>
-                        <p>Meter readings</p>
+                        <p>Показания счетчиков</p>
                     </a>
                 </li>
                 <li class="nav-item menu">
                     <a href="" class="nav-link">
                         <i class="fas fa-desktop"></i>
-                        <p>Site settings<i class="right fas fa-angle-left"></i></p>
+                        <p>Управление сайтом<i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{% url 'admin_panel:index' %}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Main</p>
+                            <p>Главная</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'admin_panel:about' %}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>About</p>
+                            <p>О нас</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'admin_panel:services' %}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Services</p>
+                            <p>Услуги</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'admin_panel:contacts' %}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Contacts</p>
+                            <p>Контакты</p>
                         </a>
                     </li>
                     </ul>
@@ -105,43 +110,43 @@
                 <li class="nav-item menu">
                     <a href="" class="nav-link">
                         <i class="fas fa-cogs"></i>
-                        <p>System settings<i class="right fas fa-angle-left"></i></p>
+                        <p>Настройки системы<i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{% url 'admin_panel:service_list' %}" class="nav-link">
                             <i class="fas fa-briefcase"></i>
-                            <p>Service</p>
+                            <p>Услуги</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'admin_panel:tariff_list' %}" class="nav-link">
                             <i class="far fa-money-bill-alt"></i>
-                            <p>Tariff</p>
+                            <p>Тарифы</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'admin_panel:role_list' %}" class="nav-link">
                             <i class="fas fa-user"></i>
-                            <p>Role</p>
+                            <p>Роли</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'admin_panel:user_admin_list' %}" class="nav-link">
                             <i class="fas fa-user-plus"></i>
-                            <p>Admin users</p>
+                            <p>Пользователи</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'admin_panel:pay_company' %}" class="nav-link">
                             <i class="far fa-credit-card"></i>
-                            <p>Payment company</p>
+                            <p>Плетежные реквизиты</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'admin_panel:transaction_purpose_list' %}" class="nav-link">
                             <i class="fas fa-list-ol"></i>
-                            <p>Transaction purpose</p>
+                            <p>Статьи платежей</p>
                         </a>
                     </li>
                     </ul>

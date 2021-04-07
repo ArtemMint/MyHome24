@@ -1,27 +1,69 @@
+/*html tag with height to all screen*/
+html {
+    position: relative;
+    min-height: 100%;
+}
+/*body tag*/
+body {
+    padding-top: 50px;
+    margin-bottom: 60px;
+}
+/*h1-h6 tags with font-size 24px and margin*/
 h1, h2, h3 {
     font-size: 24px;
 }
-
 .h1, .h2, .h3, h1, h2, h3 {
     margin-top: 20px;
     margin-bottom: 10px;
 }
+/*h1-h6 tags end*/
 
+/*title of each block in website*/
 .page-header {
     padding-bottom: 9px;
     margin: 40px 0 20px;
     border-bottom: 1px solid #eee;
 }
+/*title end*/
 
+/*slider image*/
+.slider img {
+    width: 100%;
+    height: 800px;
+    object-fit: cover;
+}
+/*slider end*/
+
+/* Breadcrumb settings*/
+.breadcrumb {
+    background-color: #fff;
+    padding: 8px 0;
+}
 .breadcrumb li+li:before {
     padding: 0 5px;
     content: "/";
 }
-
 .breadcrumb .active {
     color: grey;
 }
+.breadcrumb a {
+    text-decoration: none;
+    color: #337ab7;
+}
+/* Breadcrumb END*/
 
+/*Block with "Рядом с нами"*/
+.advantage-item {
+    margin-bottom: 20px;
+}
+.advantages .thumbnail {
+    height: 100%;
+    margin-bottom: 0;
+}
+/*End BLock*/
+
+/*Navigation bat on the top of the site*/
+/*Main navbar zone with row position of each item*/
 .navbar {
     display: block;
     padding: 0;
@@ -33,51 +75,64 @@ h1, h2, h3 {
     top: 0;
     width: 100%;
 }
-
+/*Container in navbar with items and icon brand*/
 .navbar .container{
     padding: 0;
 }
-
-.navbar .logo{
-    padding: 0;
+/*Icon brand*/
+.navbar-brand {
+    padding: 5px 15px;
 }
+/*image of the brand*/
+.navbar-brand>img {
+    width: 145px;
+    max-height: 40px;
+}
+/*icon brand END*/
 
+/*list of the website pages*/
 .navbar li {
     list-style-type: none;
     text-align: center;
     padding: 15px 15px;
 }
-
+/*links of each website pages*/
 .navbar a {
     color: #555;
     text-align: center;
     padding: 16px 15px;
     text-decoration: none;
 }
-
+/*if on current page change background*/
 .navbar a.active{
     background-color: #e7e7e7;
 }
-
+/*if hovering in navbar item change color*/
 .navbar a:hover {
     color: black;
 }
+/*NavBar END*/
 
-a .store-image{
+/*picture with link to app*/
+a .imgStore{
     display: inline-block;
     text-decoration: none;
     max-width: 114px;
     max-height: 34px;
 }
+.info .imgStore {
+    float: right;
+}
+.imgFloatRight {
+    float: right;
+    margin: 0 0 15px 15px;
+}
+/*button with link to "о нас" page*/
 
 .btn-primary {
     color: #fff;
     background-color: #337ab7;
     border-color: #2e6da4;
-}
-
-.w-100 {
-    height: 80vh;
 }
 
 .thumbnail {
@@ -92,12 +147,11 @@ a .store-image{
     border-radius: 4px;
     transition: border .2s ease-in-out;
 }
-
+/*Image display*/
 .img-responsive {
     width: 350px;
     height: 210px;
 }
-
 .img-thumbnail {
     display: inline-block;
     max-width: 100%;
@@ -111,27 +165,70 @@ a .store-image{
     -o-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
 }
-
 .services img {
     width: 100%;
     height: 300px;
     object-fit: cover;
 }
-
 .about img {
     max-width: 250px;
 }
-
-.imgFloatRight {
-    float: right;
-    margin: 0 0 15px 15px;
-}
+/*Image display end*/
 
 .caption {
     padding: 9px;
 }
 
+/*Map size*/
 .map {
     width: 100%;
-    height: 100vh;
+    height: 800px;
 }
+
+/* About page gallery*/
+.about img {
+    max-width: 250px;
+}
+.gallery .item {
+    margin-bottom: 30px;
+}
+/*img cover by width, height is cut*/
+.gallery img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    cursor: pointer;
+}
+/* About page END */
+
+/* Service page */
+.services .row {
+    margin-bottom: 30px;
+}
+.services .row:first-child {
+    margin-bottom: 0;
+}
+.services img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+/* Service page END */
+
+/*Footer*/
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #e7e7e7;
+}
+.footer p {
+    margin: 20px 0;
+}
+.footer a {
+    text-decoration: none;
+    color: #337ab7;
+}
+/*Footer END*/

@@ -1,13 +1,15 @@
 {% extends 'website/base/base.html' %} {% load static %}
 
+{% block title %}Система "МойДом24" - Контакты{% endblock %}
+
 {% block content %}
 <div class="breadcrumbs">
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
                 <ol class="breadcrumb">
-                    <li><a href="">Home</a></li>
-                    <li class="active">Contacts</li>
+                    <li><a href="">Главная</a></li>
+                    <li class="active">Контакты</li>
                 </ol>
             </div>
         </div>
@@ -25,17 +27,17 @@
             <div class="box">
                 <p>{{ contacts_page.short_text|safe }}</p>
             </div>
-            <div class="col-xs-12 col-sm-5 col-md-4">
-                <div class="page-header">
-                    <h3>Contacts</h3>
-                </div>
-                <div class="box">
-                    <p><i class="fas fa-user-circle"></i> {{ contacts_address.name }}</p>
-                    <p><i class="fas fa-compass"></i> {{ contacts_address.location }}</p>
-                    <p><i class="fas fa-map-marker"></i> {{ contacts_address.address }}</p>
-                    <p><i class="fas fa-phone"></i> <a href="tel:{{ contacts_address.phone }}">{{ contacts_address.phone }}</a></p>
-                    <p><i class="fas fa-envelope"></i> <a href="mailto:{{ contacts_address.email }}"> {{ contacts_address.email }}</a></p>
-                </div>
+        </div>
+        <div class="col-xs-12 col-sm-5 col-md-4">
+            <div class="page-header">
+                <h3>Контакты</h3>
+            </div>
+            <div class="box">
+                <p><i class="fas fa-user-circle"></i> {{ contacts_address.name }}</p>
+                <p><i class="fas fa-compass"></i> {{ contacts_address.location }}</p>
+                <p><i class="fas fa-map-marker"></i> {{ contacts_address.address }}</p>
+                <p><i class="fas fa-phone"></i> <a href="tel:{{ contacts_address.phone }}">{{ contacts_address.phone }}</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:{{ contacts_address.email }}"> {{ contacts_address.email }}</a></p>
             </div>
         </div>
     </div>

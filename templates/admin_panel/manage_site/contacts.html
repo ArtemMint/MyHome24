@@ -5,8 +5,8 @@
 
 {% block breadcrumb %}
     <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Main </a></li>
-        <li class="breadcrumb-item active"> Editing page</li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item active"> Редактирование страницы</li>
     </ul>
 {% endblock %}
 
@@ -21,14 +21,14 @@
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
         <div class="row">
             <div class='col-xs-12 col-md-8'>
-                <h3 class="title-block">Contact information</h3>
+                <h3 class="title-block">Контактная информация</h3>
                 <hr>
                 {{ contacts_page_form.media }}
                 {{ contacts_page_form.as_p }}
             </div>
 
             <div class='col-xs-12 col-md-4'>
-                <h3 class="title-block">Contacts</h3>
+                <h3 class="title-block">Контакты</h3>
                 <hr>
                 {{ contacts_address_form.as_p }}
             </div>
@@ -36,19 +36,19 @@
 
         <div class="row">
             <div class='col-lg-12'>
-                <h3 class="title-block">Map</h3>
+                <h3 class="title-block">Карта</h3>
                 <hr>
                 {{ contacts_map_form.as_p }}
             </div>
         </div>
 
-        <h3 class="title-block">Settings SEO</h3>
+        <h3 class="title-block">Настройки SEO</h3>
         <hr>
         {{ seo_form.as_p }}
         <div class="col-xs-12 text-center">
             <div class="form-group">
-                <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Deny</a>
-                <button type="submit" class="btn btn-success">Save</button>
+                <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Отменить</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>
             </div>
         </div>
     </form>

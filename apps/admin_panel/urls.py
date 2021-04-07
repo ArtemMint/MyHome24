@@ -133,7 +133,7 @@ urlpatterns = [
     
     # Pay company
     path(
-        'pay-company/index/',
+        'pay_company/index/',
         pay_company.PayCompany.as_view(),
         name='pay_company'
     ),
