@@ -12,6 +12,13 @@
 
 {% block content %}
 <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+             </ul>
+         {% endfor %}
+    {% endif %}
     <h3 class="title-block">Информация</h3>
     <hr>
     <div class="row">
@@ -30,7 +37,7 @@
             {% if about_page.image.url %}
                 <img class="img-fluid" src="{{ about_page.image.url }}" alt="{{ about_page.image }}" style="height: 310px; display: block;">
             {% else %}
-                <img class="img-fluid" src="{% static 'admin_panel/img/avatar5.png' %}" alt="Emtpy" style="height: 310px; display: block;">
+                <img class="img-fluid" src="{% static 'admin_panel/img/avatar5.png' %}" alt="Empty" style="height: 310px; display: block;">
             {% endif %}
             <label>{{ about_form.image.label_tag }}</label>
             {{ about_form.image }}

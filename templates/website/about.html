@@ -86,17 +86,19 @@
                         <div class="page-header">
                             <h3>Документы</h3>
                         </div>
-                        <div class="media">
-                            <div class="media-left">
-                                <div class="media-object">
-                                    <i class="far fa-file-pdf fa-3x"></i>
+                        {% for document in about_documents %}
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="media-object">
+                                        <i class="far fa-file-pdf fa-3x"></i>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">{{ document.name|safe }}</h4>
+                                    <a href="{{ document.document.url }}" download><i class="fa fa-download" aria-hidden="true"></i> Загрузить</a>
                                 </div>
                             </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">{{ about_documents.name }}</h4>
-                                <a href="{{ about_documents.document }}" download><i class="fa fa-download" aria-hidden="true"></i> Download</a>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

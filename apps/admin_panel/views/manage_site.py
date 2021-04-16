@@ -3,7 +3,7 @@ Views of site data
 """
 
 # from django.contrib import messages
-from django.views import View
+# from django.views import View
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
@@ -15,72 +15,87 @@ from .. import models
 from .. import forms
 
 
-class IndexUpdate(SuccessMessageMixin, View):
+class IndexUpdate(SuccessMessageMixin, UpdateView):
     """
     Index page view class
     """
+    model = models.IndexPage
+    form_class = forms.IndexPageForm
+    slider_formset_class = forms.IndexSliderFormset
+    block_formset_class = forms.IndexBlockFormset
+    seo_form_class = forms.SEOForm
+    success_url = reverse_lazy('admin_panel:index')
+    success_message = 'Все данные успешно сохранены!'
     template_name = 'admin_panel/manage_site/index.html'
 
-    def get_object(self):
+    def __init__(self):
+        super(IndexUpdate, self).__init__()
+        self.object = self.get_object()
+
+    def get_object(self, queryset=None):
         """
         Get index page data
         """
         obj = models.IndexPage.get_solo()
         if not obj.seo:
-            obj.seo = models.SEO.objects.create()
+            obj.seo = models.SEO.objects.create().save()
         return obj
+
+    def get_context_data(self, **kwargs):
+        """
+        Get context to render forms in page
+        """
+        context = super(IndexUpdate, self).get_context_data(**kwargs)
+        context['index_form'] = self.form_class(
+            instance=self.object,
+        )
+        context['slider_formset'] = self.slider_formset_class(
+            instance=self.object,
+        )
+        context['block_formset'] = self.block_formset_class(
+            instance=self.object,
+        )
+        context['seo_form'] = self.seo_form_class(
+            instance=self.object.seo,
+        )
+        return context
 
     def get(self, request, *args, **kwargs):
         """
         GET method logic
         """
-        index_page = self.get_object()
-        index_form = forms.IndexPageForm(
-            instance=index_page
-        )
-        slider_formset = forms.IndexSliderFormset(
-            instance=index_page,
-        )
-        block_formset = forms.IndexBlockFormset(
-            instance=index_page,
-        )
-        seo_form = forms.SEOForm(
-            instance=index_page.seo,
-        )
-        return render(
-            request,
-            self.template_name,
-            {
-                'index_page': index_page,
-                'slider_formset': slider_formset,
-                'index_form': index_form,
-                'block_formset': block_formset,
-                'seo_form': seo_form,
-            }
+        super(IndexUpdate, self).get(request, *args, **kwargs)
+        return self.render_to_response(
+            self.get_context_data(
+                object=self.object,
+                index_form=self.form_class,
+                slider_formset=self.slider_formset_class,
+                block_formset=self.block_formset_class,
+                seo_form=self.seo_form_class,
+            )
         )
 
     def post(self, request, *args, **kwargs):
         """
-        Post method logic
+        POST method logic
         """
-        index_page = self.get_object()
-        index_form = forms.IndexPageForm(
+        index_form = self.form_class(
             request.POST,
-            instance=index_page,
+            instance=self.object,
         )
-        slider_formset = forms.IndexSliderFormset(
+        slider_formset = self.slider_formset_class(
             request.POST,
             request.FILES,
-            instance=index_page,
+            instance=self.object,
         )
-        block_formset = forms.IndexBlockFormset(
+        block_formset = self.block_formset_class(
             request.POST,
             request.FILES,
-            instance=index_page,
+            instance=self.object,
         )
-        seo_form = forms.SEOForm(
+        seo_form = self.seo_form_class(
             request.POST,
-            instance=index_page.seo,
+            instance=self.object.seo,
         )
         if (
                 index_form.is_valid() and
@@ -88,100 +103,164 @@ class IndexUpdate(SuccessMessageMixin, View):
                 block_formset.is_valid() and
                 seo_form.is_valid()
         ):
-            index_form.save()
-            slider_formset.save()
-            block_formset.save()
-            seo_form.save()
-            return redirect('admin_panel:index')
-        return render(
-            request,
-            self.template_name,
-            {
-                'index_page': index_page,
-                'slider_formset': slider_formset,
-                'index_form': index_form,
-                'block_formset': block_formset,
-                'seo_form': seo_form,
-            }
+            return self.forms_valid(
+                index_form,
+                slider_formset,
+                block_formset,
+                seo_form,
+            )
+        else:
+            return self.forms_invalid(
+                index_form,
+                slider_formset,
+                block_formset,
+                seo_form,
+            )
+
+    def forms_valid(
+            self,
+            index_form,
+            slider_formset,
+            block_formset,
+            seo_form,
+    ):
+        """
+        Forms is valid
+        """
+        index_form.save()
+        slider_formset.save()
+        block_formset.save()
+        seo_form.save()
+        return super(IndexUpdate, self).form_valid(seo_form)
+
+    def forms_invalid(
+            self,
+            index_form,
+            slider_formset,
+            block_formset,
+            seo_form,
+    ):
+        """
+        Forms is invalid
+        """
+        return self.render_to_response(
+            self.get_context_data(
+                index_form=index_form,
+                slider_formset=slider_formset,
+                block_formset=block_formset,
+                seo_form=seo_form,
+            )
         )
 
 
-class AboutSettings(TemplateView):
+class AboutSettings(SuccessMessageMixin, UpdateView):
+    models = models.AboutPage
+    form_class = forms.AboutPageForm
+    gallery_formset_class = forms.AboutGalleryFormset
+    extra_info_formset_class = forms.AboutExtraInfoFormset
+    extra_gallery_formset_class = forms.AboutExtraGalleryFormset
+    extra_document_formset_class = forms.AboutDocumentFormset
+    seo_form_class = forms.SEOForm
+    success_url = reverse_lazy('admin_panel:about')
+    success_message = 'Все данные успешно сохранены!'
     template_name = 'admin_panel/manage_site/about.html'
 
-    def get_object(self):
+    def __init__(self):
+        super(AboutSettings, self).__init__()
+        self.object = self.get_object()
+        self.documents = self.get_queryset()
+
+    def get_object(self, queryset=None):
         """
         Get about page data
         """
         obj = models.AboutPage.get_solo()
+
         if not obj.seo:
-            obj.seo = models.SEO.objects.create()
+            obj.seo = models.SEO.objects.create().save()
         return obj
 
+    def get_queryset(self):
+        """
+        Get all documents
+        """
+        return models.AboutDocument.objects.all()
+
+    def get_context_data(self, **kwargs):
+        """
+        Get context to render forms in page
+        """
+        context = super(AboutSettings, self).get_context_data(**kwargs)
+        context['documents'] = self.documents
+        context['about_page'] = models.AboutPage.get_solo()
+        context['about_form'] = self.form_class(
+            instance=self.object,
+        )
+        context['gallery_formset'] = self.gallery_formset_class(
+            instance=self.object,
+        )
+        context['extra_info_formset'] = self.extra_info_formset_class(
+            instance=self.object,
+        )
+        context['extra_gallery_formset'] = self.extra_gallery_formset_class(
+            instance=self.object,
+        )
+        context['extra_document_formset'] = self.extra_document_formset_class(
+            instance=self.object,
+        )
+        context['seo_form'] = self.seo_form_class(
+            instance=self.object.seo,
+        )
+        return context
+
     def get(self, request, *args, **kwargs):
-        about_page: models.AboutPage = self.get_object()
-        about_form = forms.AboutPageForm(
-            instance=about_page,
-        )
-        gallery_formset = forms.AboutGalleryFormset(
-            instance=about_page,
-        )
-        extra_info_formset = forms.AboutExtraInfoFormset(
-            instance=about_page,
-        )
-        extra_gallery_formset = forms.AboutExtraGalleryFormset(
-            instance=about_page,
-        )
-        extra_document_formset = forms.AboutDocumentFormset(
-            instance=about_page,
-        )
-        seo_form = forms.SEOForm(
-            instance=about_page.seo,
-        )
-        return render(
-            request,
-            self.template_name,
-            {
-                'about_page': about_page,
-                'about_form': about_form,
-                'gallery_formset': gallery_formset,
-                'extra_info_formset': extra_info_formset,
-                'extra_gallery_formset': extra_gallery_formset,
-                'extra_document_formset': extra_document_formset,
-                'documents': models.AboutDocument.objects.all(),
-                'seo_form': seo_form,
-            }
+        """
+        GET method logic
+        """
+        super(AboutSettings, self).get(request, *args, **kwargs)
+        return self.render_to_response(
+            self.get_context_data(
+                object=self.object,
+                about_form=self.form_class,
+                gallery_formset=self.gallery_formset_class,
+                extra_info_formset=self.extra_info_formset_class,
+                extra_gallery_formset=self.extra_gallery_formset_class,
+                documents=self.documents,
+                seo_form=self.seo_form_class,
+            )
         )
 
     def post(self, request, *args, **kwargs):
-        about_page = self.get_object()
-        about_form = forms.AboutPageForm(
+        """
+        POST method logic
+        """
+        about_form = self.form_class(
             request.POST,
             request.FILES,
-            instance=about_page,
+            instance=self.object,
         )
-        gallery_formset = forms.AboutGalleryFormset(
+        gallery_formset = self.gallery_formset_class(
             request.POST,
             request.FILES,
-            instance=about_page,
+            instance=self.object,
         )
-        extra_info_formset = forms.AboutExtraInfoFormset(
+        extra_info_formset = self.extra_info_formset_class(
             request.POST,
-            instance=about_page,
+            instance=self.object,
         )
-        extra_gallery_formset = forms.AboutExtraGalleryFormset(
-            request.POST,
-            request.FILES,
-            instance=about_page,
-        )
-        document_formset = forms.AboutDocumentFormset(
+        extra_gallery_formset = self.extra_gallery_formset_class(
             request.POST,
             request.FILES,
-            instance=about_page,
+            instance=self.object,
+        )
+        document_formset = self.extra_document_formset_class(
+            request.POST,
+            request.FILES,
+            instance=self.object,
         )
         seo_form = forms.SEOForm(
             request.POST,
-            instance=about_page.seo,
+            instance=self.object.seo,
         )
         if (
                 about_form.is_valid() and
@@ -191,26 +270,65 @@ class AboutSettings(TemplateView):
                 document_formset.is_valid() and
                 seo_form.is_valid()
         ):
-            about_form.save()
-            gallery_formset.save()
-            extra_info_formset.save()
-            extra_gallery_formset.save()
-            document_formset.save()
-            seo_form.save()
-            return redirect('admin_panel:about')
-        return render(
-            request,
-            self.template_name,
-            {
-                'about_page': about_page,
-                'about_form': about_form,
-                'gallery_formset': gallery_formset,
-                'extra_info_formset': extra_info_formset,
-                'extra_gallery_formset': extra_gallery_formset,
-                'extra_document_formset': document_formset,
-                'documents': models.AboutDocument.objects.all(),
-                'seo_form': seo_form,
-            }
+            return self.forms_valid(
+                about_form,
+                gallery_formset,
+                extra_info_formset,
+                extra_gallery_formset,
+                document_formset,
+                seo_form
+            )
+        else:
+            return self.forms_invalid(
+                about_form,
+                gallery_formset,
+                extra_info_formset,
+                extra_gallery_formset,
+                document_formset,
+                seo_form
+            )
+
+    def forms_valid(
+            self,
+            about_form,
+            gallery_formset,
+            extra_info_formset,
+            extra_gallery_formset,
+            document_formset,
+            seo_form
+    ):
+        """
+        Forms is invalid
+        """
+        about_form.save()
+        gallery_formset.save()
+        extra_info_formset.save()
+        extra_gallery_formset.save()
+        document_formset.save()
+        seo_form.save()
+        return super(AboutSettings, self).form_valid(seo_form)
+
+    def forms_invalid(
+            self,
+            about_form,
+            gallery_formset,
+            extra_info_formset,
+            extra_gallery_formset,
+            document_formset,
+            seo_form,
+    ):
+        """
+        Forms is invalid
+        """
+        return self.render_to_response(
+            self.get_context_data(
+                about_form=about_form,
+                gallery_formset=gallery_formset,
+                extra_info_formset=extra_info_formset,
+                extra_gallery_formset=extra_gallery_formset,
+                document_formset=document_formset,
+                seo_form=seo_form,
+            )
         )
 
 
@@ -223,7 +341,7 @@ class ServicesSettings(SuccessMessageMixin, UpdateView):
     formset_class = forms.ServicesFormset
     second_form_class = forms.SEOForm
     success_url = reverse_lazy('admin_panel:services')
-    success_message = 'All services successfully updated!'
+    success_message = 'Все данные успешно сохранены!'
     template_name = 'admin_panel/manage_site/services.html'
 
     def __init__(self):
@@ -317,7 +435,7 @@ class ContactsSettings(SuccessMessageMixin, UpdateView):
     contacts_map_form_class = forms.ContactsMapForm
     seo_form_class = forms.SEOForm
     success_url = reverse_lazy('admin_panel:contacts')
-    success_message = 'All contacts successfully updated!'
+    success_message = 'Все данные успешно сохранены!'
     template_name = 'admin_panel/manage_site/contacts.html'
 
     def __init__(self):
