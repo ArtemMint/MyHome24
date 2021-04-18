@@ -4,70 +4,88 @@ Views of site data
 
 # from django.contrib import messages
 # from django.views import View
-from django.shortcuts import render, redirect
+# from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
-
 
 from .. import models
 from .. import forms
 
 
-class IndexUpdate(SuccessMessageMixin, UpdateView):
-    """
-    Index page view class
+class IndexSettings(SuccessMessageMixin, UpdateView):
+    """IndexSettings page is render page with forms and
+    data from DB and can change these data in forms
+
+    Args:
+        SuccessMessageMixin ([type]): success message 
+        if all saved correct
+        UpdateView ([type]): display all data
+        using forms and update data in DB
+
+    Returns:
+        [type]: render page with all data
     """
     model = models.IndexPage
+    # Forms
     form_class = forms.IndexPageForm
     slider_formset_class = forms.IndexSliderFormset
     block_formset_class = forms.IndexBlockFormset
     seo_form_class = forms.SEOForm
+    # Success URL
     success_url = reverse_lazy('admin_panel:index')
+    # Success message
     success_message = 'Все данные успешно сохранены!'
+    # Template to render
     template_name = 'admin_panel/manage_site/index.html'
 
     def __init__(self):
-        super(IndexUpdate, self).__init__()
-        self.object = self.get_object()
+        """
+        Init start variable object - IndexPage
+        """
+        super(IndexSettings, self).__init__()  # init parent method
+        self.object = self.get_object()  # get object IndexPage
 
     def get_object(self, queryset=None):
         """
-        Get index page data
+        Get IndexPage data
         """
-        obj = models.IndexPage.get_solo()
+        obj: models.IndexPage = models.IndexPage.get_solo()  # Get IndexPage instancesingletone
         if not obj.seo:
+            # and create SEO connect if it`s empty
             obj.seo = models.SEO.objects.create().save()
         return obj
 
     def get_context_data(self, **kwargs):
         """
-        Get context to render forms in page
+        Get context to rendering forms in page
         """
-        context = super(IndexUpdate, self).get_context_data(**kwargs)
+        context = super(IndexSettings, self).get_context_data(
+            **kwargs)  # init parent method at first
         context['index_form'] = self.form_class(
-            instance=self.object,
+            instance=self.object,  # instance is IndexPage
         )
         context['slider_formset'] = self.slider_formset_class(
-            instance=self.object,
+            instance=self.object,  # instance is IndexPage
         )
         context['block_formset'] = self.block_formset_class(
-            instance=self.object,
+            instance=self.object,  # instance is IndexPage
         )
         context['seo_form'] = self.seo_form_class(
-            instance=self.object.seo,
+            instance=self.object.seo,  # instance of SEO
         )
         return context
 
     def get(self, request, *args, **kwargs):
         """
-        GET method logic
+        GET method logic to render template page and all forms on it
         """
-        super(IndexUpdate, self).get(request, *args, **kwargs)
+        super(IndexSettings, self).get(request, *args,
+                                       **kwargs)  # init parent method at first
         return self.render_to_response(
             self.get_context_data(
-                object=self.object,
+                object=self.object,  # IndexPage data
+                # All forms
                 index_form=self.form_class,
                 slider_formset=self.slider_formset_class,
                 block_formset=self.block_formset_class,
@@ -77,38 +95,46 @@ class IndexUpdate(SuccessMessageMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
         """
-        POST method logic
+        POST method logic to upade data in models
+        using forms and instance as IndexPage
         """
         index_form = self.form_class(
             request.POST,
-            instance=self.object,
+            instance=self.object,  # instance is IndexPage
         )
         slider_formset = self.slider_formset_class(
             request.POST,
             request.FILES,
-            instance=self.object,
+            instance=self.object,  # instance is IndexPage
         )
         block_formset = self.block_formset_class(
             request.POST,
             request.FILES,
-            instance=self.object,
+            instance=self.object,  # instance is IndexPage
         )
         seo_form = self.seo_form_class(
             request.POST,
-            instance=self.object.seo,
+            instance=self.object.seo,  # instance SEO
         )
+
+        # verify if all forms is correct
         if (
                 index_form.is_valid() and
-                slider_formset.is_valid() and
+                slider_formsemessaget.is_valid() and
                 block_formset.is_valid() and
                 seo_form.is_valid()
         ):
+            # than return method forms_valid
+            # that save all data in DB
             return self.forms_valid(
                 index_form,
                 slider_formset,
                 block_formset,
                 seo_form,
             )
+        # else return method forms)invalid that
+        # render page without saving data and
+        # return errors
         else:
             return self.forms_invalid(
                 index_form,
@@ -125,13 +151,14 @@ class IndexUpdate(SuccessMessageMixin, UpdateView):
             seo_form,
     ):
         """
-        Forms is valid
+        Forms is valid save data in
+        DB and call success message
         """
         index_form.save()
         slider_formset.save()
         block_formset.save()
         seo_form.save()
-        return super(IndexUpdate, self).form_valid(seo_form)
+        return super(IndexSettings, self).form_valid(seo_form)
 
     def forms_invalid(
             self,
@@ -141,7 +168,9 @@ class IndexUpdate(SuccessMessageMixin, UpdateView):
             seo_form,
     ):
         """
-        Forms is invalid
+        Forms is invalid.
+        Render page without saving
+        data and return errors
         """
         return self.render_to_response(
             self.get_context_data(
@@ -154,18 +183,38 @@ class IndexUpdate(SuccessMessageMixin, UpdateView):
 
 
 class AboutSettings(SuccessMessageMixin, UpdateView):
+    """AboutSetting is render page with forms and
+    data from DB and can change these data in forms
+
+    Args:
+        SuccessMessageMixin ([type]): success message 
+        if all saved correct
+        UpdateView ([type]): display all data
+        using forms and update data in DB
+
+    Returns:
+        [type]: render page with all data
+    """
     models = models.AboutPage
+    # Forms
     form_class = forms.AboutPageForm
     gallery_formset_class = forms.AboutGalleryFormset
     extra_info_formset_class = forms.AboutExtraInfoFormset
     extra_gallery_formset_class = forms.AboutExtraGalleryFormset
     extra_document_formset_class = forms.AboutDocumentFormset
     seo_form_class = forms.SEOForm
+    # Success URL
     success_url = reverse_lazy('admin_panel:about')
+    # Success message
     success_message = 'Все данные успешно сохранены!'
+    # Template ro render
     template_name = 'admin_panel/manage_site/about.html'
 
     def __init__(self):
+        """
+        Init start variable object - AboutPage
+        documents - documents in About
+        """
         super(AboutSettings, self).__init__()
         self.object = self.get_object()
         self.documents = self.get_queryset()
@@ -175,7 +224,6 @@ class AboutSettings(SuccessMessageMixin, UpdateView):
         Get about page data
         """
         obj = models.AboutPage.get_solo()
-
         if not obj.seo:
             obj.seo = models.SEO.objects.create().save()
         return obj
@@ -188,79 +236,82 @@ class AboutSettings(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         """
-        Get context to render forms in page
+        Get context to rendering forms in page
         """
         context = super(AboutSettings, self).get_context_data(**kwargs)
         context['documents'] = self.documents
         context['about_page'] = models.AboutPage.get_solo()
         context['about_form'] = self.form_class(
-            instance=self.object,
+            instance=self.object,  # instance is AboutPage
         )
         context['gallery_formset'] = self.gallery_formset_class(
-            instance=self.object,
+            instance=self.object,  # instance is AboutPage
         )
         context['extra_info_formset'] = self.extra_info_formset_class(
-            instance=self.object,
+            instance=self.object,  # instance is AboutPage
         )
         context['extra_gallery_formset'] = self.extra_gallery_formset_class(
-            instance=self.object,
+            instance=self.object,  # instance is AboutPage
         )
         context['extra_document_formset'] = self.extra_document_formset_class(
-            instance=self.object,
+            instance=self.object,  # instance is AboutPage
         )
         context['seo_form'] = self.seo_form_class(
-            instance=self.object.seo,
+            instance=self.object.seo,  # instance of SEO
         )
         return context
 
     def get(self, request, *args, **kwargs):
         """
-        GET method logic
+        GET method logic to render template page and all forms on it
         """
         super(AboutSettings, self).get(request, *args, **kwargs)
         return self.render_to_response(
             self.get_context_data(
-                object=self.object,
+                object=self.object,   # instance is AboutPage
+                # All forms to render in page
                 about_form=self.form_class,
                 gallery_formset=self.gallery_formset_class,
                 extra_info_formset=self.extra_info_formset_class,
                 extra_gallery_formset=self.extra_gallery_formset_class,
-                documents=self.documents,
                 seo_form=self.seo_form_class,
+                # Documents
+                documents=self.documents,
             )
         )
 
     def post(self, request, *args, **kwargs):
         """
-        POST method logic
+        POST method logic to upade data in models
+        using forms and instance as IndexPage
         """
         about_form = self.form_class(
             request.POST,
             request.FILES,
-            instance=self.object,
+            instance=self.object,  # instance is AboutPage
         )
         gallery_formset = self.gallery_formset_class(
             request.POST,
             request.FILES,
-            instance=self.object,
+            instance=self.object,  # instance is AboutPage
         )
         extra_info_formset = self.extra_info_formset_class(
             request.POST,
-            instance=self.object,
+            instance=self.object,  # instance is AboutPage
         )
         extra_gallery_formset = self.extra_gallery_formset_class(
             request.POST,
             request.FILES,
-            instance=self.object,
+            instance=self.object,  # instance is AboutPage
         )
         document_formset = self.extra_document_formset_class(
             request.POST,
             request.FILES,
-            instance=self.object,
+            instance=self.object,  # instance is AboutPage
         )
         seo_form = forms.SEOForm(
             request.POST,
-            instance=self.object.seo,
+            instance=self.object.seo,  # instance of SEO
         )
         if (
                 about_form.is_valid() and
@@ -298,7 +349,8 @@ class AboutSettings(SuccessMessageMixin, UpdateView):
             seo_form
     ):
         """
-        Forms is invalid
+        Forms is valid save data in
+        DB and call success message
         """
         about_form.save()
         gallery_formset.save()
@@ -318,7 +370,9 @@ class AboutSettings(SuccessMessageMixin, UpdateView):
             seo_form,
     ):
         """
-        Forms is invalid
+        Forms is invalid.
+        Render page without saving
+        data and return errors
         """
         return self.render_to_response(
             self.get_context_data(
@@ -333,18 +387,34 @@ class AboutSettings(SuccessMessageMixin, UpdateView):
 
 
 class ServicesSettings(SuccessMessageMixin, UpdateView):
-    """
-    Services page settings
+    """ServicesSettings page is render page with forms and
+    data from DB and can change these data in forms
+
+    Args:
+        SuccessMessageMixin ([type]): success message 
+        if all saved correct
+        UpdateView ([type]): display all data
+        using forms and update data in DB
+
+    Returns:
+        [type]: render page with all data
     """
     model = models.ServicesPage
+    # ALl forms
     form_class = forms.ServicesForm
     formset_class = forms.ServicesFormset
     second_form_class = forms.SEOForm
+    # Success URL
     success_url = reverse_lazy('admin_panel:services')
+    # Success message
     success_message = 'Все данные успешно сохранены!'
+    # Template to render
     template_name = 'admin_panel/manage_site/services.html'
 
     def __init__(self):
+        """
+        Init start variable object - ServicePage
+        """
         super(ServicesSettings, self).__init__()
         self.object = self.get_object()
 
@@ -360,25 +430,26 @@ class ServicesSettings(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         """
-        Get context to render forms in page
+        Get context to rendering forms in page
         """
         context = super(ServicesSettings, self).get_context_data(**kwargs)
         context['services_formset'] = self.formset_class(
-            instance=self.object,
+            instance=self.object,  # instance is ServicesPage
         )
         context['seo_form'] = self.second_form_class(
-            instance=self.object.seo,
+            instance=self.object.seo,  # instance of SEO
         )
         return context
 
     def get(self, request, *args, **kwargs):
         """
-        GET method
+        GET method logic to render template page and all forms on it
         """
         super(ServicesSettings, self).get(request, *args, **kwargs)
         return self.render_to_response(
             self.get_context_data(
-                object=self.object,
+                object=self.object,  # instance is ServicesPage
+                # All forms
                 services_formset=self.formset_class,
                 seo_form=self.second_form_class,
             )
@@ -386,16 +457,17 @@ class ServicesSettings(SuccessMessageMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
         """
-        POST method
+        POST method logic to upade data in models
+        using forms and instance as IndexPage
         """
         formset = self.formset_class(
             request.POST,
             request.FILES,
-            instance=self.object,
+            instance=self.object,  # instance is ServicesPage
         )
         form = self.second_form_class(
             request.POST,
-            instance=self.object.seo,
+            instance=self.object.seo,  # instance of SEO
         )
         if formset.is_valid() and form.is_valid():
             return self.forms_valid(
@@ -407,7 +479,8 @@ class ServicesSettings(SuccessMessageMixin, UpdateView):
 
     def forms_valid(self, formset, form):
         """
-        If form valid
+        Forms is valid save data in
+        DB and call success message
         """
         formset.save()
         form.save()
@@ -415,7 +488,9 @@ class ServicesSettings(SuccessMessageMixin, UpdateView):
 
     def forms_invalid(self):
         """
-        If form invalid
+        Forms is invalid.
+        Render page without saving
+        data and return errors
         """
         return self.render_to_response(
             self.get_context_data(
@@ -426,19 +501,35 @@ class ServicesSettings(SuccessMessageMixin, UpdateView):
 
 
 class ContactsSettings(SuccessMessageMixin, UpdateView):
-    """
-    Services page settings
+    """ContactsSettings page is render page with forms and
+    data from DB and can change these data in forms
+
+    Args:
+        SuccessMessageMixin ([type]): success message 
+        if all saved correct
+        UpdateView ([type]): display all data
+        using forms and update data in DB
+
+    Returns:
+        [type]: render page with all data
     """
     model = models.ContactsPage
+    # Forms
     form_class = forms.ContactsPageForm
     contacts_address_form_class = forms.ContactsAddressForm
     contacts_map_form_class = forms.ContactsMapForm
     seo_form_class = forms.SEOForm
+    # Success URL
     success_url = reverse_lazy('admin_panel:contacts')
+    # Success message
     success_message = 'Все данные успешно сохранены!'
+    # Template to render
     template_name = 'admin_panel/manage_site/contacts.html'
 
     def __init__(self):
+        """
+        Init start variable object - ContactsPage
+        """
         super(ContactsSettings, self).__init__()
         self.object = self.get_object()
 
@@ -446,38 +537,41 @@ class ContactsSettings(SuccessMessageMixin, UpdateView):
         """
         Get contacts page data
         """
-        obj = models.ContactsPage.get_solo()
+        obj = models.ContactsPage.get_solo()  # Get singleton
         if not obj.seo:
+            # create seo connect
             obj.seo = models.SEO.objects.create()
         if obj.map.count() == 0:
+            # create map connect
             obj.map.create()
         if obj.contacts_address.count() == 0:
+            # Create address connect
             obj.contacts_address.create()
-        obj.save()
+        obj.save()  # save changes
         return obj
 
     def get_context_data(self, **kwargs):
         """
-        Get context to render forms in page
+        Get context to rendering forms in page
         """
         context = super(ContactsSettings, self).get_context_data(**kwargs)
         context['contacts_page_form'] = self.form_class(
-            instance=self.object,
+            instance=self.object,  # instance is ContactsPage
         )
         context['contacts_address_form'] = self.contacts_address_form_class(
-            instance=self.object.contacts_address.last(),
+            instance=self.object.contacts_address.last(),  # instance is ContactsAddress
         )
         context['contacts_map_form'] = self.contacts_map_form_class(
-            instance=self.object.map.last(),
+            instance=self.object.map.last(),  # instance of ContactsMap
         )
         context['seo_form'] = self.seo_form_class(
-            instance=self.object.seo,
+            instance=self.object.seo,  # instance of SEO
         )
         return context
 
     def get(self, request, *args, **kwargs):
         """
-        GET method
+        GET method logic to render template page and all forms on it
         """
         super(ContactsSettings, self).get(request, *args, **kwargs)
         return self.render_to_response(
@@ -492,23 +586,24 @@ class ContactsSettings(SuccessMessageMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
         """
-        POST method
+        POST method logic to upade data in models
+        using forms and instance as IndexPage
         """
         contacts_page_form = self.form_class(
             request.POST,
-            instance=self.object,
+            instance=self.object,  # instance is ContactsPage
         )
         contacts_address_form = self.contacts_address_form_class(
             request.POST,
-            instance=self.object.contacts_address.last(),
+            instance=self.object.contacts_address.last(),  # instance is ContactsAddress
         )
         contacts_map_form = self.contacts_map_form_class(
             request.POST,
-            instance=self.object.map.last(),
+            instance=self.object.map.last(),  # instance of ContactsMap
         )
         seo_form = self.seo_form_class(
             request.POST,
-            instance=self.object.seo,
+            instance=self.object.seo,  # instance of SEO
         )
         if (
             contacts_page_form.is_valid() and
@@ -533,12 +628,12 @@ class ContactsSettings(SuccessMessageMixin, UpdateView):
     def forms_valid(
             self,
             contacts_page_form,
-            contacts_address_form,
             contacts_map_form,
             seo_form,
     ):
         """
-        Forms is valid
+        Forms is valid save data in
+        DB and call success message
         """
         contacts_page_form.save()
         contacts_address_form.save()
@@ -554,7 +649,9 @@ class ContactsSettings(SuccessMessageMixin, UpdateView):
             seo_form,
     ):
         """
-        Forms is invalid
+        Forms is invalid.
+        Render page without saving
+        data and return errors
         """
         return self.render_to_response(
             self.get_context_data(
