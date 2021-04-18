@@ -148,7 +148,7 @@ urlpatterns = [
     # Manage site
     path(
         'website/home/',
-        manage_site.IndexUpdate.as_view(),
+        manage_site.IndexSettings.as_view(),
         name='index'
     ),
     path(

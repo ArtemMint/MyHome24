@@ -9,10 +9,17 @@ from admin_panel import models
 
 
 class IndexPage(DetailView):
-    """
-    Index page views
+    """IndexPage view that render template and all data on it
+
+    Args:
+        DetailView ([type]): detail view display all
+        data from tables in DB
+
+    Returns:
+        [type]: rendered page
     """
     context_object_name = 'index_page'
+    # Template to render page
     template_name = 'website/index.html'
 
     def get_object(self, queryset=None):
@@ -26,11 +33,21 @@ class IndexPage(DetailView):
         Get context data for index page
         """
         context = super(IndexPage, self).get_context_data(**kwargs)
+        #Get contact address from ContactsAdress table
         context['contacts_address'] = models.ContactsAddress.objects.last()
         return context
 
 
 class AboutPage(DetailView):
+    """AboutPage view that render template and all data on it
+
+    Args:
+        DetailView ([type]): detail view display all
+        data from tables in DB
+
+    Returns:
+        [type]: rendered page
+    """
     context_object_name = 'about_page'
     template_name = "website/about.html"
 
@@ -53,6 +70,15 @@ class AboutPage(DetailView):
 
 
 class ServicesPage(DetailView):
+    """ServicesPage view that render template and all data on it
+
+    Args:
+        DetailView ([type]): detail view display all
+        data from tables in DB
+
+    Returns:
+        [type]: rendered page
+    """
     context_object_name = 'services_page'
     template_name = "website/services.html"
 
@@ -64,6 +90,15 @@ class ServicesPage(DetailView):
 
 
 class ContactsPage(DetailView):
+    """ContactsPage view that render template and all data on it
+
+    Args:
+        DetailView ([type]): detail view display all
+        data from tables in DB
+
+    Returns:
+        [type]: rendered page
+    """
     context_object_name = 'contacts_page'
     template_name = "website/contacts.html"
 
