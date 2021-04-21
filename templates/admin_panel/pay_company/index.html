@@ -1,5 +1,38 @@
 {% extends 'admin_panel/base/base.html' %}
 
+{% block title %}
+    <h1 class="m-0">Платежные реквизиты</h1>
+{% endblock title %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item active"> Платежные реквизиты </li>
+    </ul>
+{% endblock %}
+
 {% block content %}
-    <h1 class="text-center">Pay company</h1>
+<form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <!-- Message if all saved -->
+    {% if messages %}
+            {% for message in messages %}
+                <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+                </ul>
+            {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class='col-xs-12 col-lg-7'>
+            {{ form.as_p }}
+        </div>
+    </div>
+
+    <div class="col-xs-12 text-center">
+        <div class="form-group">
+            <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Отменить</a>
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        </div>
+    </div>
+
 {% endblock content %}

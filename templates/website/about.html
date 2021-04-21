@@ -3,6 +3,8 @@
 {% block title %}Система "МойДом24" - О нас{% endblock %}
 
 {% block content %}
+
+    <!-- Breadcrumb -->
     <div class="breadcrumbs">
         <div class="container">
             <div class="row">
@@ -16,6 +18,7 @@
         </div>
     </div>
 
+    <!-- About data -->
     <div class="about">
         <div class="container">
             <div class="row">
@@ -32,6 +35,7 @@
         </div>
     </div>
 
+    <!-- Gallery -->
     <div class="gallery">
         <div class="container">
             <div class="row">
@@ -46,6 +50,7 @@
         </div>
     </div>
 
+    <!-- Extra information -->
     <div class="about">
         <div class="container">
             <div class="row">
@@ -61,6 +66,7 @@
         </div>
     </div>
 
+    <!-- Extra gallery -->
     {% if about_extra_gallery %}
     <div class="gallery">
         <div class="container">
@@ -77,6 +83,7 @@
     </div>
     {% endif %}
 
+    <!-- Documents to download -->
     {% if about_documents %}
     <div class="documents">
         <div class="container">
@@ -104,5 +111,6 @@
             </div>
         </div>
     </div>
+    
     {% endif %}
 {% endblock %}

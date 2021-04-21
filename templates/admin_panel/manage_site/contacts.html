@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block content %}
+    <!-- Message if all saved -->
     {% if messages %}
          {% for message in messages %}
              <ul class="text-center alert alert-{{ message.tags }}">
@@ -18,8 +19,11 @@
              </ul>
          {% endfor %}
     {% endif %}
+
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
         <div class="row">
+
+            <!-- Contacts info form -->
             <div class='col-xs-12 col-md-8'>
                 <h3 class="title-block">Контактная информация</h3>
                 <hr>
@@ -27,21 +31,27 @@
                 {{ contacts_page_form.as_p }}
             </div>
 
+            <!-- Contacts form -->
             <div class='col-xs-12 col-md-4'>
                 <h3 class="title-block">Контакты</h3>
                 <hr>
                 {{ contacts_address_form.as_p }}
             </div>
+
         </div>
 
         <div class="row">
+
+            <!-- Map form -->
             <div class='col-lg-12'>
                 <h3 class="title-block">Карта</h3>
                 <hr>
                 {{ contacts_map_form.as_p }}
             </div>
+            
         </div>
 
+        <!-- SEO form -->
         <h3 class="title-block">Настройки SEO</h3>
         <hr>
         {{ seo_form.as_p }}
@@ -51,5 +61,6 @@
                 <button type="submit" class="btn btn-success">Сохранить</button>
             </div>
         </div>
+
     </form>
 {% endblock content %}

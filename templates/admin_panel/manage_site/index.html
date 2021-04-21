@@ -11,15 +11,18 @@
 {% endblock %}
 
 {% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+        {% for message in messages %}
+            <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+        {% endfor %}
+    {% endif %}
 
-{% if messages %}
-     {% for message in messages %}
-         <ul class="text-center alert alert-{{ message.tags }}">
-            {{ message|safe }}
-         </ul>
-     {% endfor %}
-{% endif %}
 <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+    <!-- Slider -->
     {{ slider_formset.management_form }}
     <h3 class="title-block">Слайдер</h3>
     <hr>
@@ -28,7 +31,9 @@
     <div class='col-md-4'>
         <div class='card mb-4 shadow-sm'>
             <div class="card-header">
-                <h4 class="box-title">Слайд {{ forloop.counter }}</h4>
+                <h4 class="box-title">Слайд {{ forloop.counter }}
+                <i class="fa fa-trash" id="delete-form"></i>
+                </h4>
                 {% if form.image.value %}
                     <img id="image{{forloop.counter0}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 310px; display: block;">
                 {% else %}
@@ -42,6 +47,8 @@
     </div>
     {% endfor %}
     </div>
+
+    <!-- Short info -->
     <h3 class="title-block">Краткая информация</h3>
     <hr>
     <div class="row">
@@ -51,6 +58,8 @@
             {{ index_form.errors }}
         </div>
     </div>
+
+    <!-- Block form -->
     <h3 class="title-block">Рядом с нами</h3>
     <hr>
     {{ block_formset.management_form }}
@@ -59,7 +68,9 @@
             <div class='col-md-4'>
                 <div class='card mb-4 shadow-sm'>
                     <div class="card-header">
-                        <h4>Блок {{ forloop.counter }}</h4>
+                        <h4 class="box-title">Блок {{ forloop.counter }}
+                        <i class="fa fa-trash" id="delete-form"></i>
+                        </h4>
                         {% if form.image.value %}
                             <img id="image{{forloop.counter0}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 310px; display: block;">
                         {% else %}
@@ -74,6 +85,7 @@
         {% endfor %}
     </div>
 
+    <!-- SEO form -->
     <h3 class="title-block">Настройки SEO</h3>
     <hr>
     {{ seo_form }}
@@ -83,5 +95,6 @@
             <button type="submit" class="btn btn-success">Сохранить</button>
         </div>
     </div>
+    
 </form>
 {% endblock content %}

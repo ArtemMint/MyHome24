@@ -41,21 +41,6 @@ class ServicesForm(forms.ModelForm):
             ),
         }
 
-
-# ServicesFormset = forms.modelformset_factory(
-#     Services,
-#     ServicesForm,
-#     fields=(
-#         'image',
-#         'name',
-#         'description',
-#     ),
-#     extra=3,
-#     max_num=4,
-#     min_num=4,
-#     can_delete=True,
-# )
-
 ServicesFormset = forms.inlineformset_factory(
     ServicesPage,
     Services,
@@ -65,8 +50,5 @@ ServicesFormset = forms.inlineformset_factory(
         'name',
         'description',
     ),
-    extra=3,
-    max_num=4,
-    min_num=4,
-    can_delete=True,
+    extra=1,
 )

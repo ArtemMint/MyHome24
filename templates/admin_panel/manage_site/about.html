@@ -12,13 +12,16 @@
 
 {% block content %}
 <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <!-- Message if all saved -->
     {% if messages %}
          {% for message in messages %}
              <ul class="text-center alert alert-{{ message.tags }}">
                 {{ message|safe }}
-             </ul>
+            </ul>
          {% endfor %}
     {% endif %}
+
+    <!-- Information form -->
     <h3 class="title-block">Информация</h3>
     <hr>
     <div class="row">
@@ -44,6 +47,7 @@
         </div>
     </div>
 
+    <!-- Gallery -->
     {{ gallery_formset.management_form }}
     <h3 class="title-block">Фотогалерея</h3>
     <hr>
@@ -60,6 +64,7 @@
     {% endfor %}
     </div>
 
+    <!-- Extra information -->
     <h3>Дополнительная информация</h3>
     <hr>
     {{ extra_info_formset.management_form }}
@@ -71,6 +76,7 @@
     </div>
     {% endfor %}
 
+    <!-- Extra gallery -->
     {{ extra_gallery_formset.management_form }}
     <h3 class="title-block">Дополнительная фотогалерея</h3>
     <hr>
@@ -87,9 +93,12 @@
     {% endfor %}
     </div>
 
+    <!-- Documents -->
     {{ extra_document_formset.management_form }}
     <h3 class="title-block">Документы</h3>
     <hr>
+
+    <!-- Display existing documents -->
     {% for document in documents %}
         <p>File: {{ document.name }}</p>
         <object data="{{ document.document.url }}" type="application/pdf">
@@ -98,6 +107,7 @@
         </object>
 
     {% endfor %}
+
     {% for form in extra_document_formset %}
     <div class="row">
     <div class='col-sm-2'>
@@ -105,8 +115,11 @@
     </div>
     </div>
     {% endfor %}
+
+    <!-- Add new document -->
     <button class="btn btn-success">Добавить документ</button>
 
+    <!-- SEO form -->
     <h3 class="title-block">Настройки SEO</h3>
     <hr>
     {{ seo_form }}
@@ -116,5 +129,6 @@
             <button type="submit" class="btn btn-success">Сохранить</button>
         </div>
     </div>
+    
 </form>
 {% endblock content %}

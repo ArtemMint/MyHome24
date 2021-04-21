@@ -12,10 +12,10 @@ class PayCompany(SingletonModel):
     Pay-company model
     """
     name = models.CharField(
-        verbose_name='Name of company',
+        verbose_name='Название компании',
         max_length=250,
     )
     info = models.TextField(
-        verbose_name='Information',
+        verbose_name='Информация',
         max_length=1500,
     )

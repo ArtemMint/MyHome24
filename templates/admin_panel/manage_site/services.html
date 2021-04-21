@@ -1,56 +1,209 @@
-{% extends 'admin_panel/base/base.html' %}
-{% load static %}
+{% extends 'admin_panel/base/base.html' %} {% load static %} {% block title %}
+<h1 class="m-0">Services page</h1> {% endblock %} {% block breadcrumb %}
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+    <li class="breadcrumb-item active"> Редактирование страницы</li>
+</ul>
+{% endblock %} {% block content %}
 
-{% block title %} <h1 class="m-0">Services page</h1> {% endblock %}
+<!-- Message if all saved -->
+{% if messages %} {% for message in messages %}
+<ul class="text-center alert alert-{{ message.tags }}">
+    {{ message|safe }}
+</ul>
+{% endfor %} {% endif %}
 
-{% block breadcrumb %}
-    <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item active"> Редактирование страницы</li>
-    </ul>
-{% endblock %}
+<form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
 
-{% block content %}
-    {% if messages %}
-         {% for message in messages %}
-             <ul class="text-center alert alert-{{ message.tags }}">
-                {{ message|safe }}
-             </ul>
-         {% endfor %}
-    {% endif %}
-    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-        <h3 class="title-block">Услуги</h3>
-        <hr>
-        {{ services_formset.management_form }}
-        <div class="row">
-        {% for form in services_formset %}
-        <div class='col-md-4'>
-            <div class='card mb-4 shadow-sm'>
+    <!-- Service form -->
+    <h3 class="title-block">Услуги</h3>
+    <hr> {{ services_formset.management_form }}
+    <div class="row">
+        {% for form in services_formset %} {{ form.id }}
+        <div class="form col-md-4">
+            <div class="card mb-4 shadow-sm">
                 <div class="card-header">
-                    <h4 class="box-title">Услуга {{ forloop.counter }}</h4>
+                    <h4 class="box-title">Услуга <span class="form-index">{{ forloop.counter }}</span>
+                        <i class="fa fa-trash delete-form"></i> {{ form.DELETE }}
+                    </h4>
                     {% if form.image.value %}
-                        <img id="image{{forloop.counter0}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 310px; display: block;">
-                    {% else %}
-                        <img id="image{{forloop.counter0}}" class="img-fluid" src="{% static 'admin_panel/img/default-650x300.png' %}" alt="650x300" style="height: 310px; display: block;">
-                    {% endif %}
-                    </div>
+                    <img class="image img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 310px; display: block;"> {% else %}
+                    <img class="image img-fluid" src="{% static 'admin_panel/img/default_image.png' %}" alt="650x300" style="height: 310px; display: block;"> {% endif %}
+                </div>
                 <div class="card-body">
-                    {{ form.as_p }}
+                    <div>
+                        {{ form.image.label_tag }} {{ form.image }}
+                    </div>
+                    <div>
+                        {{ form.name.label_tag }} {{ form.name }}
+                    </div>
+                    <div>
+                        {{ form.description.label_tag }} {{ form.description }}
+                    </div>
                 </div>
             </div>
         </div>
         {% endfor %}
+    </div>
+    <!-- SEO form -->
+    <h3 class="title-block">Настройки SEO</h3>
+    <hr> {{ seo_form.as_p }}
+    <div class="col-xs-12 text-center">
+        <div class="form-group">
+            <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Отменить</a>
+            <a id="addNewForm" class="btn btn-success bg-green-active form-row-add-websiteservice-btn">Добавить услугу</a>
+            <button type="submit" class="btn btn-success">Сохранить</button>
         </div>
+    </div>
 
-        <h3 class="title-block">Настройки SEO</h3>
-        <hr>
-        {{ seo_form.as_p }}
-        <div class="col-xs-12 text-center">
-            <div class="form-group">
-                <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Отменить</a>
-                <a href=""  class="btn btn-success bg-green-active form-row-add-websiteservice-btn">Добавить услугу</a>
-                <button type="submit" class="btn btn-success">Сохранить</button>
-            </div>
-        </div>
-    </form>
-{% endblock content %}
+</form>
+{% endblock content %} {% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- <script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script> -->
+<script>
+    function addHiddenForm(prefix, form_class, image_class, default_image) {
+        // get first form
+        let firstForm = form_class + ":first";
+
+        // get last form
+        let lastForm = form_class + ":last";
+
+        // clone hidden form from the last form
+        let hiddenForm = $(lastForm).clone(true);
+
+        // set attrs name and id
+        hiddenForm.find(":input").each(() => {
+
+            name = $(this).attr('name').replace(prefix + '-0-', 'name');
+
+            id = 'id_' + name;
+
+            $(this).attr({
+                'name': name,
+                'id': id
+            }).val('');
+        });
+
+        // find img tag than set default image insted of current
+        hiddenForm.find("img").each(() => {
+            $(this).attr("src", default_image);
+            $(this).attr("alt", default_image);
+        });
+
+        // hide form from page and set it before all forms
+        hiddenForm.css('display', '');
+        $(firstForm).before(hiddenForm);
+    };
+
+    function addNewForm(prefix, form_class, index) {
+
+        // get first form
+        let firstForm = form_class + ":first";
+        let lastForm = form_class + ":last";
+        let newElement = $(firstForm).clone(true);
+        let totalForms = $('#id_' + prefix + '-TOTAL_FORMS').val();
+        let allForms = $(form_class);
+
+        newElement.find(':input').each(() => {
+            allForms = $(form_class);
+            name = prefix + '-' + totalForms + '-' + $(this).attr('name');
+            id = 'id_' + name;
+            $(this).attr({
+                'name': name,
+                'id': id
+            }).val('');
+        });
+        newElement.css('display', '')
+
+        totalForms++;
+
+        $('#id_' + prefix + '-TOTAL_FORMS').val(totalForms);
+
+
+        if (index) newElement.find(index).each(() => {
+            $(this).text(totalForms);
+        });
+
+
+        $(lastForm).after(newElement);
+
+        for (let i = 1, count = allForms.length; i < count; i++) {
+            form = $(allForms.get(i));
+            form.find(":input").each(() => {
+                updateFormIndex(form, prefix, i - 1)
+            });
+            form.find("span").text(i);
+        }
+    };
+
+    function updateFormIndex(form, prefix, index) {
+        // create name
+        let name = prefix + '-' + index + '-' + $(this).attr('name');
+        // create id
+        let id = "id_" + name;
+
+        $(this).attr({
+            "name": name,
+            "id": id
+        }).val('');
+
+        // set index
+        $(this).find(index).text(index);
+    };
+
+    function deleteForm(e, prefix, form_class, image, index_class) {
+
+        // set checked to delete form after confirm
+        $(e.target).siblings(":input").prop('checked', true);
+
+        // hide form on page
+        $(e.target).parents(form_class).css("display", 'none');
+
+        //set attr hiden to hide from selector
+        $(e.target).parents(form_class).prop("hidden", true);
+
+        // get all forms which not hidden
+        const allForms = $(form_class + ":not(:hidden)");
+
+        // get number of all forms
+        const totalForms = $("#id_" + prefix + "-TOTAL_FORMS").val() - 1;
+
+        // set new number of all forms
+        $("#id_" + prefix + "-TOTAL_FORMS").val(totalForms);
+
+        // cycle for updating all indexes of forms
+        for (let i = 1, count = allForms.length; i < count; i++) {
+
+            // get form
+            form = $(allForms.get(i));
+
+            // find input area and start updateFormIndex() for each
+            form.find(":input").each(() => {
+                updateFormIndex(form, prefix, i - 1)
+            });
+
+            // set counter of form at the top of form
+            form.find("span").text(i);
+        }
+    };
+
+    const prefix = "services";
+    const form_class = ".form";
+    const image = "img"
+    const index_class = ".form-index";
+    const default_image = "{% static 'admin_panel/img/default_image.jpeg' %}";
+
+    // after rendering page set hidden form
+    $("document").ready(() => {
+        addHiddenForm(prefix, form_class, image, default_image)
+    });
+
+    $(".delete-form").click((e) => {
+        deleteForm(e, prefix, form_class, image, index_class);
+    });
+
+    $("#addNewForm").click(() => {
+        addNewForm(prefix, form_class, index_class);
+    });
+</script>
+{% endblock scripts %}
