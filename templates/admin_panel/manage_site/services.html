@@ -28,7 +28,7 @@
                     </h4>
                     {% if form.image.value %}
                     <img class="image img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 310px; display: block;"> {% else %}
-                    <img class="image img-fluid" src="{% static 'admin_panel/img/default_image.png' %}" alt="650x300" style="height: 310px; display: block;"> {% endif %}
+                    <img class="image img-fluid" src="{% static 'admin_panel/img/default_image.jpeg' %}" alt="650x300" style="height: 310px; display: block;"> {% endif %}
                 </div>
                 <div class="card-body">
                     <div>
@@ -101,7 +101,7 @@
         let firstForm = form_class + ":first";
         let lastForm = form_class + ":last";
         let newElement = $(firstForm).clone(true);
-        let totalForms = $('#id_' + prefix + '-TOTAL_FORMS').val();
+        let totalForms = $('#id_' + prefix + '-TOTAL_FORMS').val() - 1;
         let allForms = $(form_class);
 
         newElement.find(':input').each(() => {
@@ -124,8 +124,7 @@
             $(this).text(totalForms);
         });
 
-
-        $(lastForm).after(newElement);
+        $(lastForm).before(newElement);
 
         for (let i = 1, count = allForms.length; i < count; i++) {
             form = $(allForms.get(i));
@@ -197,11 +196,11 @@
     $("document").ready(() => {
         addHiddenForm(prefix, form_class, image, default_image)
     });
-
+    // if clicked trash icon than delete current form
     $(".delete-form").click((e) => {
         deleteForm(e, prefix, form_class, image, index_class);
     });
-
+    //if clicked add new form form button than add new form
     $("#addNewForm").click(() => {
         addNewForm(prefix, form_class, index_class);
     });

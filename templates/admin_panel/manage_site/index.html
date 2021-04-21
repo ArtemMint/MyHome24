@@ -32,16 +32,16 @@
         <div class='card mb-4 shadow-sm'>
             <div class="card-header">
                 <h4 class="box-title">Слайд {{ forloop.counter }}
-                <i class="fa fa-trash" id="delete-form"></i>
+                <i class="fa fa-trash delete-form"></i> {{ form.DELETE }}
                 </h4>
-                {% if form.image.value %}
-                    <img id="image{{forloop.counter0}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 310px; display: block;">
-                {% else %}
-                    <img id="image{{forloop.counter0}}" class="img-fluid" src="{% static 'admin_panel/img/default-1920x800.jpg' %}" alt="1920x800" style="height: 310px; display: block;">
-                {% endif %}
+                <img class="img-fluid" {% if form.image.value %} src="/media/{{form.image.value}}" alt="{{form.image.value}}"
+                {% else %} src="{% static 'admin_panel/img/default-1920x800.jpg'%}" alt="default_image" 
+                {% endif %} style="height: 310px; display: block;">
                 </div>
             <div class="card-body">
-                {{ form }}
+                {{ form.id }}
+                {{ form.image.label_tag }}
+                {{ form.image }}
             </div>
         </div>
     </div>

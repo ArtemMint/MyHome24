@@ -40,7 +40,7 @@
             {% if about_page.image.url %}
                 <img class="img-fluid" src="{{ about_page.image.url }}" alt="{{ about_page.image }}" style="height: 310px; display: block;">
             {% else %}
-                <img class="img-fluid" src="{% static 'admin_panel/img/avatar5.png' %}" alt="Empty" style="height: 310px; display: block;">
+                <img class="img-fluid" src="{% static 'admin_panel/img/default_image.jpeg' %}" alt="default_image" style="height: 310px; display: block;">
             {% endif %}
             <label>{{ about_form.image.label_tag }}</label>
             {{ about_form.image }}
@@ -55,10 +55,15 @@
     {% for form in gallery_formset %}
     <div class='card shadow-sm'>
         <div class="card-header">
-            <img id="image{{forloop.counter}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 150px; width: 168px; display: block; margin: auto;">
+        <i class="fa fa-trash delete-form"></i> {{ form.DELETE }}
+            <img class="img-fluid" {% if form.image.value %} src="/media/{{form.image.value}}" alt="{{form.image.value}}"
+            {% else %} src="{% static 'admin_panel/img/default_image.jpeg' %}" alt="default_image" 
+            {% endif %} style="height: 150px; width: 168px; display: block; margin: auto;">
         </div>
         <div class="card-body">
-            {{ form }}
+            {{ form.id }}
+            {{ form.image.label_tag }}
+            {{ form.image }}
         </div>
     </div>
     {% endfor %}
@@ -84,10 +89,15 @@
     {% for form in extra_gallery_formset %}
     <div class='card shadow-sm'>
         <div class="card-header">
-            <img id="image{{forloop.counter}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 150px; width: 168px; display: block; margin: auto;">
+        <i class="fa fa-trash delete-form"></i> {{ form.DELETE }}
+            <img class="img-fluid" {% if form.image.value %} src="/media/{{form.image.value}}" alt="{{form.image.value}}"
+            {% else %} src="{% static 'admin_panel/img/default_image.jpeg' %}" alt="default_image"
+            {% endif %} style="height: 150px; width: 168px; display: block; margin: auto;">
         </div>
         <div class="card-body">
-            {{ form }}
+            {{ form.id }}
+            {{ form.image.label_tag }}
+            {{ form.image }}
         </div>
     </div>
     {% endfor %}
