@@ -50,7 +50,8 @@ class IndexSettings(SuccessMessageMixin, UpdateView):
         """
         Get IndexPage data
         """
-        obj: models.IndexPage = models.IndexPage.get_solo()  # Get IndexPage instancesingletone
+        # Get IndexPage instancesingletone
+        obj: models.IndexPage = models.IndexPage.get_solo()
         if not obj.seo:
             # and create SEO connect if it`s empty
             obj.seo = models.SEO.objects.create().save()
