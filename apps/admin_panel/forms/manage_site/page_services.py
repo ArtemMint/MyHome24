@@ -4,10 +4,10 @@ Form for services page on website
 
 from django import forms
 
-from ...models import ServicesPage, Services
+from ...models import ServicesPage, ServicesSite
 
 
-class ServicesForm(forms.ModelForm):
+class ServicesSiteForm(forms.ModelForm):
     """
     Services page form for
     updating data on website
@@ -17,7 +17,7 @@ class ServicesForm(forms.ModelForm):
         """
         Class Meta
         """
-        model = Services
+        model = ServicesSite
         fields = (
             'image',
             'name',
@@ -41,10 +41,10 @@ class ServicesForm(forms.ModelForm):
             ),
         }
 
-ServicesFormset = forms.inlineformset_factory(
+ServicesSiteFormset = forms.inlineformset_factory(
     ServicesPage,
-    Services,
-    ServicesForm,
+    ServicesSite,
+    ServicesSiteForm,
     fields=(
         'image',
         'name',

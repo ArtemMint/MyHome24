@@ -28,6 +28,11 @@ class PayCompany(SuccessMessageMixin, UpdateView):
     
     def get_object(self):
         """
-        Get qobject to render on page
+        Get object to render on page
         """
-        return models.PayCompany.objects.get(id=1)
+        obj, created = models.PayCompany.objects.get_or_create(
+            id=1,
+            name='',
+            info='',
+        )
+        return obj

@@ -19,7 +19,7 @@ class ServicesPage(SingletonModel):
     )
 
 
-class Services(models.Model):
+class ServicesSite(models.Model):
     """
     Table with services info for website
     """

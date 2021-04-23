@@ -1,5 +1,79 @@
-{% extends 'admin_panel/base/base.html' %}
+{% extends 'admin_panel/base/base.html' %} {% load static %} {% block title %}
+<h1 class="m-0">Services page</h1> {% endblock %} {% block breadcrumb %}
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+    <li class="breadcrumb-item active"> Редактирование услуг</li>
+</ul>
+{% endblock %} {% block content %}
 
-{% block content %}
-    <h1 class="text-center">Services</h1>
-{% endblock content %}
+<!-- Message if all saved -->
+{% if messages %} {% for message in messages %}
+<ul class="text-center alert alert-{{ message.tags }}">
+    {{ message|safe }}
+</ul>
+{% endfor %} {% endif %}
+
+<form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+    <!-- Service form -->
+    <h3 class="title-block">Услуги</h3>
+    {{ services_formset.management_form }}
+    <div class="row">
+        <div class="col-xs-12 col-lg-7">
+            <hr>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="services-tab" data-toggle="tab" href="#services" role="tab">Услуги</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="metric-tab" data-toggle="tab" href="#metric" role="tab">Единицы измерения</a>
+                </li>
+
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="services" role="tabpanel">
+                    <div class="form">
+                        {{ services_formset.as_p }}
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default form-row-remove-btn disabled" no-delete-msg="Эта ед.изм. используется в услуге. Удаление невозможно."><i class="fa fa-trash"></i></button>
+                    </span>
+                    </div>
+                    <a id="addNewForm" class="btn btn-default bg-green-active form-row-add-websiteservice-btn">Добавить</a>
+                </div>
+                <div class="tab-pane fade" id="metric" role="tabpanel">
+                    <div class="form">
+                        {{ metrics_formset.as_p }}
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default form-row-remove-btn disabled" no-delete-msg="Эта ед.изм. используется в услуге. Удаление невозможно."><i class="fa fa-trash"></i></button>
+                    </span>
+                    </div>
+                    <a id="addNewForm" class="btn btn-default bg-green-active form-row-add-websiteservice-btn">Добавить</a>
+                </div>
+            </div>
+
+
+            <hr>
+        </div>
+    </div>
+
+    <div class="col-xs-12 text-center">
+        <div class="form-group">
+            <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Отменить</a>
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        </div>
+    </div>
+
+</form>
+{% endblock content %} s{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $('#myTab a[href="#services"]').on('click ', function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+
+    $('#myTab a[href="#metric"]').on('click ', function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+</script>{% endblock scripts %}

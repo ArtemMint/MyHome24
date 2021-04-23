@@ -106,7 +106,7 @@ urlpatterns = [
     # Services
     path(
         'service/index/',
-        services.ServicesList.as_view(),
+        services.ServicesAndMetricsList.as_view(),
         name='service_list'
     ),
     

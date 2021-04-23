@@ -402,8 +402,8 @@ class ServicesSettings(SuccessMessageMixin, UpdateView):
     """
     model = models.ServicesPage
     # ALl forms
-    form_class = forms.ServicesForm
-    formset_class = forms.ServicesFormset
+    form_class = forms.ServicesSiteForm
+    formset_class = forms.ServicesSiteFormset
     second_form_class = forms.SEOForm
     # Success URL
     success_url = reverse_lazy('admin_panel:services')
