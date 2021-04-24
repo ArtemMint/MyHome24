@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'admin_panel',
     'personal_cabinet',
     'website',
+    'register'
     'ckeditor',
 ]
 

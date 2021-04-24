@@ -196,7 +196,7 @@ class AboutSettings(SuccessMessageMixin, UpdateView):
     Returns:
         [type]: render page with all data
     """
-    models = models.AboutPage
+    model = models.AboutPage
     # Forms
     form_class = forms.AboutPageForm
     gallery_formset_class = forms.AboutGalleryFormset
