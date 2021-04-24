@@ -24,7 +24,11 @@ apps/admin_panel/migrations/__pycache__
 
 apps/personal_cabinet/__pycache__
 
-apps/personal_cabinet/migrations/__pycache__ 
+apps/personal_cabinet/migrations/__pycache__
+
+apps/register/__pycache__
+
+apps/register/migrations/__pycache__
 
 apps/website/__pycache__
 
