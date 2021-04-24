@@ -16,9 +16,13 @@ apps/admin_panel/forms/__pycache__
 
 apps/admin_panel/forms/manage_site/__pycache__
 
+apps/admin_panel/forms/services/__pycache__
+
 apps/admin_panel/models/__pycache__
 
 apps/admin_panel/models/manage_site/__pycache__
+
+apps/admin_panel/models/services/__pycache__
 
 apps/admin_panel/migrations/__pycache__
 
