@@ -12,10 +12,7 @@
                 <a href="{% url 'website:services' %}" {% if request.path == '/services/' %}class="active"{% endif %}>Услуги</a>
                 <a href="https://avada-media.ua/myhouse24/">Условия приобретения</a>
                 <a href="{% url 'website:contacts' %}" {% if request.path == '/contacts/' %}class="active"{% endif %}>Контакты</a>
-                <a href="{% url 'website:login' %}">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Вход
-                </a>
+                <a href="{% url 'personal_cabinet:user_login' %}"><i class="fas fa-sign-in-alt"></i>Вход</a>
             </ul>
         </div>
     </div>

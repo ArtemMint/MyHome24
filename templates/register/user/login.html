@@ -1,1 +1,48 @@
 {% extends 'register/base/base.html' %}
+
+{% block title %}
+    <title> Вход </title>
+{% endblock %}
+
+{% block content %}
+
+    <ul class="nav nav-tabs nav-tabs-custom" id="myTab" role="tablist">
+        <li class="nav-item active">
+            <a class="nav-link active" id="services-tab" data-toggle="tab" href="{% url 'personal_cabinet:user_login' %}" role="tab">Для жильца</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="metric-tab" data-toggle="tab" href="{% url 'admin_panel:admin_login' %}" role="tab">Для администрации</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+
+        <div class="tab-pane fade show active" id="users" role="tabpanel">
+            <div class="login-box-body">
+                <div class="form">
+                    <p class="login-box-msg">Вход в личный кабинет</p>
+                    <input class="form-control" type="email" placeholder="E-mail или ID"><br>
+                    <input class="form-control" type="email" placeholder="Пароль">
+
+                    <div>Captcha</div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="checkbox icheck">
+                                <input type="checkbox" name="LoginForm[rememberMe]" value="0">
+                                <label class="">Запомнить меня</label><br>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-primary btn-block" name="login-button">Вход</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

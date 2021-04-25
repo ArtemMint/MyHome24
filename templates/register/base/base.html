@@ -8,29 +8,27 @@
         <link rel="icon" type="image/png" href="http://myhouse24.avada-media.ua/favicon.png">
         {% block title %} {% endblock title %}
         <link rel="stylesheet" href="{% static 'admin_panel/css/adminlte.min.css' %}">
-        <link rel="stylesheet" href="{% static 'admin_panel/css/styles.css' %}">
+        <link rel="stylesheet" href="{% static 'register/css/styles.css' %}">
     </head>
+
     <body class="login-page" style="height: auto; min-height: 100%;">
         <div class="login-box">
+
             <div class="login-logo">
-                <a href="http://myhouse24.avada-media.ua/">
+                <a href="{% url 'website:index' %}">
                     <img src="http://myhouse24.avada-media.ua/logo.svg" alt="logo">
                 </a>
             </div>
+
             <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                    <li><a href="#">Для жильца</a></li>
-                    <li class="active"><a href="#tab_2" data-toggle="tab" aria-expanded="true">Для администрации</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="tab_2">
-                        <div class="login-box-body">
-                            <p class="login-box-msg">Вход в панель управления</p>
-                            <span class="fa fa-envelope form-control-feedback"></span>
-                        </div>
-                    </div>
-                </div>
+                {% block content %}
+                {% endblock %}
             </div>
+
         </div>
     </body>
 </html>
+
+<script>
+
+</script>

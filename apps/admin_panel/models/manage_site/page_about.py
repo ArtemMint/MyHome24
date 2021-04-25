@@ -27,6 +27,7 @@ class AboutPage(SingletonModel):
     image = models.ImageField(
         verbose_name='Рекомендуемый размер: (250x310)',
         upload_to='images/about/director/',
+        blank=True,
     )
     seo = models.OneToOneField(
         SEO,
@@ -55,9 +56,6 @@ class AboutGallery(models.Model):
         upload_to='images/about/gallery/',
         verbose_name='Рекомендуемый размер: (1200x1200)',
     )
-
-    def __str__(self):
-        return str(self.image)
 
 
 class AboutExtraInfo(models.Model):
@@ -100,9 +98,6 @@ class AboutExtraGallery(models.Model):
         verbose_name='Рекомендуемый размер (1200x1200)',
     )
 
-    def __str__(self):
-        return str(self.image)
-
 
 class AboutDocument(models.Model):
     """
@@ -114,6 +109,7 @@ class AboutDocument(models.Model):
         related_name='documents',
     )
     document = models.FileField(
+        blank=True,
         upload_to='files/about/',
         verbose_name='PDF, JPG (максимальный размер 20 Mb)',
     )

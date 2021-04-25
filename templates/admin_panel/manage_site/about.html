@@ -27,21 +27,15 @@
     <div class="row">
         <div class='col-lg-8'>
             {{ about_form.media }}
-            <p>
-            <label>{{ about_form.title.label_tag }}</label>
-            {{ about_form.title }}
-            </p>
-            <p>
-            <label>{{ about_form.short_text.label_tag }}</label>
-            {{ about_form.short_text }}
-            </p>
+            <p><label>{{ about_form.title.label_tag }}</label>
+            {{ about_form.title }}</p>
+            <p><label>{{ about_form.short_text.label_tag }}</label>
+            {{ about_form.short_text }}</p>
         </div>
         <div class='col-lg-2'>
-            {% if about_page.image.url %}
-                <img class="img-fluid" src="{{ about_page.image.url }}" alt="{{ about_page.image }}" style="height: 310px; display: block;">
-            {% else %}
-                <img class="img-fluid" src="{% static 'admin_panel/img/default_image.jpeg' %}" alt="default_image" style="height: 310px; display: block;">
-            {% endif %}
+            <img class="img-fluid" {% if about_page.image %} src="{{ about_page.image.url }}" alt="{{ about_page.image }}"
+            {% else %} src="{% static 'admin_panel/img/default_image.jpeg' %}" alt="default_image"
+            {% endif %} style="height: 310px; display: block;">
             <label>{{ about_form.image.label_tag }}</label>
             {{ about_form.image }}
         </div>
@@ -57,7 +51,7 @@
         <div class="card-header">
         <i class="fa fa-trash delete-form"></i> {{ form.DELETE }}
             <img class="img-fluid" {% if form.image.value %} src="/media/{{form.image.value}}" alt="{{form.image.value}}"
-            {% else %} src="{% static 'admin_panel/img/default_image.jpeg' %}" alt="default_image" 
+            {% else %} src="{% static 'admin_panel/img/default_image.jpeg' %}" alt="default_image"
             {% endif %} style="height: 150px; width: 168px; display: block; margin: auto;">
         </div>
         <div class="card-body">
@@ -139,6 +133,6 @@
             <button type="submit" class="btn btn-success">Сохранить</button>
         </div>
     </div>
-    
+
 </form>
 {% endblock content %}

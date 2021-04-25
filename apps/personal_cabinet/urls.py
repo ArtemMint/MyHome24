@@ -9,16 +9,31 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views.summary import *
-from .views.invoice import *
-from .views.master_request import *
-from .views.message import *
-from .views.tariff import *
-from .views.profile import *
+from personal_cabinet.views.summary import *
+from personal_cabinet.views.invoice import *
+from personal_cabinet.views.master_request import *
+from personal_cabinet.views.message import *
+from personal_cabinet.views.tariff import *
+from register import views
 
 
 app_name = 'personal_cabinet'
 urlpatterns = [
+
+    # User login
+    path(
+        'site/login',
+        views.UserLoginPage.as_view(),
+        name='user_login'
+    ),
+
+    # User register
+    path(
+        'site/register',
+        views.UserRegisterPage.as_view(),
+        name='user_register'
+    ),
+
     # Summary
     path(
         '',
@@ -53,12 +68,5 @@ urlpatterns = [
         MasterRequestList.as_view(),
         name='master_request_list'
     ),
-
-    # Profile
-    # path(
-    #     '<int:flat_id>',
-    #     SummaryById.as_view(),
-    #     name='summary'
-    # ),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

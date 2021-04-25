@@ -8,6 +8,6 @@ from django.views.generic.base import TemplateView
 
 class AccountTransactionList(TemplateView):
     """
-    Accoun transaction list of all users
+    Account transaction list of all users
     """
     template_name = "admin_panel/account_transaction/index.html"
