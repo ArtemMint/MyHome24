@@ -33,6 +33,11 @@ ALLOWED_HOSTS = [
     'testserver',
 ]
 
+AUTH_USER_MODEL = 'register.User'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'register.backends.CaseInsensitiveModelBackend',
+)
 
 # Application definition
 
