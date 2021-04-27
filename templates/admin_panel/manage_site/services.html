@@ -63,33 +63,31 @@
 </form>
 {% endblock content %} {% block scripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- <script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script> -->
+<!-- <script src="{% static 'admin_panel/js/add_delete_forms.js ' %}"></script> -->
 <script>
     function addHiddenForm(prefix, form_class, image_class, default_image) {
         // get first form
         let firstForm = form_class + ":first";
 
-        // get last form
-        let lastForm = form_class + ":last";
-
         // clone hidden form from the last form
-        let hiddenForm = $(lastForm).clone(true);
+        let hiddenForm = $(firstForm).clone(true);
 
         // set attrs name and id
-        hiddenForm.find(":input").each(() => {
+        hiddenForm.find(":input").each(function () {
 
-            name = $(this).attr('name').replace(prefix + '-0-', 'name');
+            let name = $(this).attr('name').replace(prefix + '-0-','');
 
-            id = 'id_' + name;
+            let id = 'id_' + name;
+
             // set new name and id
             $(this).attr({
                 'name': name,
-                'id': id
-            }).val('');
+                'id': id,
+            }).val('').removeAttr('checked');
         });
 
         // find img tag than set default image insted of current
-        hiddenForm.find("img").each(() => {
+        hiddenForm.find("img").each(function () {
             $(this).attr("src", default_image);
             $(this).attr("alt", default_image);
         });
@@ -104,20 +102,19 @@
         let firstForm = form_class + ":first";
         let lastForm = form_class + ":last";
         let newForm = $(firstForm).clone(true);
-        let totalForms = $('#id_' + prefix + '-TOTAL_FORMS').val() - 1;
-        let allForms = $(form_class);
+        let totalForms = $('#id_' + prefix + '-TOTAL_FORMS').val()
+        let allForms = $(form_class + ":not(:hidden)");
 
-        // get input 
-        newForm.find(':input').each(() => {
-            allForms = $(form_class);
-            name = prefix + '-' + totalForms + '-' + $(this).attr('name');
-            id = 'id_' + name;
+        // get input
+        newForm.find(':input').each(function () {
+            let name = prefix + '-' + totalForms + '-' + $(this).attr('name');
+            let id = 'id_' + name;
 
             // set new name and id
             $(this).attr({
                 'name': name,
                 'id': id
-            }).val('');
+            }).val('').removeAttr('checked');
         });
 
         // display current form
@@ -135,35 +132,32 @@
         });
 
         // set new form after last form
-        $(lastForm).before(newForm);
+        $(lastForm).after(newForm);
 
-        for (let i = 1, count = allForms.length; i < count; i++) {
+        // cycle for updating all indexes of forms
+        for (let i = 0, count = allForms.length; i <= count; i++) {
+
+            // get form
             form = $(allForms.get(i));
 
-            // 
-            form.find(":input").each(() => {
-                updateFormIndex(form, prefix, i - 1)
-            });
+            // set counter of form at the top of form
+            form.find("span").text(i+1);
 
-            // set new counter
-            form.find("span").text(i);
-        }
+            // find input area and start updateFormIndex() for each
+            form.find(":input").each(function () {
+                updateFormIndex(form, prefix, i);
+            });
+        };
     };
 
     function updateFormIndex(form, prefix, index) {
-        // create name
-        let name = prefix + '-' + index + '-' + $(this).attr('name');
-        // create id
-        let id = "id_" + name;
+        let idRegex = new RegExp(prefix + '-(\\d+)-');
+        let replacement = prefix + '-' + index + '-';
 
-        // set new name and id attrs
-        $(this).attr({
-            "name": name,
-            "id": id
-        }).val('');
-
-        // set index
-        $(this).find(index).text(index);
+        $(form).find(':input').attr({
+            'name': $(form).find(':input').attr('name').replace(idRegex, replacement),
+            'id': $(form).find(':input').attr('id').replace(idRegex, replacement),
+        });
     };
 
     function deleteForm(e, prefix, form_class, image, index_class) {
@@ -178,28 +172,28 @@
         $(e.target).parents(form_class).prop("hidden", true);
 
         // get all forms which not hidden
-        const allForms = $(form_class + ":not(:hidden)");
+        let allForms = $(form_class + ":not(:hidden)");
 
         // get number of all forms
-        const totalForms = $("#id_" + prefix + "-TOTAL_FORMS").val() - 1;
+        let totalForms = $("#id_" + prefix + "-TOTAL_FORMS").val() - 1;
 
         // set new number of all forms
         $("#id_" + prefix + "-TOTAL_FORMS").val(totalForms);
 
         // cycle for updating all indexes of forms
-        for (let i = 1, count = allForms.length; i < count; i++) {
+        for (let i = 0, count = allForms.length; i <= count; i++) {
 
             // get form
             form = $(allForms.get(i));
 
-            // find input area and start updateFormIndex() for each
-            form.find(":input").each(() => {
-                updateFormIndex(form, prefix, i - 1)
-            });
-
             // set counter of form at the top of form
-            form.find("span").text(i);
-        }
+            form.find("span").text(i+1);
+
+            // find input area and start updateFormIndex() for each
+            form.find(":input").each(function () {
+                updateFormIndex(form, prefix, i);
+            });
+        };
     };
 
     const prefix = "services";
@@ -209,16 +203,17 @@
     const default_image = "{% static 'admin_panel/img/default_image.jpeg' %}";
 
     // after rendering page set hidden form
-    $("document").ready(() => {
-        addHiddenForm(prefix, form_class, image, default_image)
+    $("document").ready(function () {
+        addHiddenForm(prefix, form_class, image, default_image);
     });
     // if clicked trash icon than delete current form
-    $(".delete-form").click((e) => {
+    $(".delete-form").click(function (e) {
         deleteForm(e, prefix, form_class, image, index_class);
     });
     //if clicked add new form form button than add new form
-    $("#addNewForm").click(() => {
+    $("#addNewForm").click(function () {
         addNewForm(prefix, form_class, index_class);
     });
+
 </script>
 {% endblock scripts %}

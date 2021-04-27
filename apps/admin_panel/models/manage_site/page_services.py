@@ -41,7 +41,6 @@ class ServicesSite(models.Model):
     services_page = models.ForeignKey(
         ServicesPage,
         on_delete=models.CASCADE,
-        null=True,
         blank=True,
         verbose_name='service',
         related_name='services',
