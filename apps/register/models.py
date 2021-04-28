@@ -37,24 +37,15 @@ def get_default_profile_image():
     return 'default_profile_image.png'
 
 
-class User(AbstractBaseUser):
-
+class AbstractUser(AbstractBaseUser):
+    """
+    AbstractUser model is a base form other user model
+    and contain register/login logic.
+    """
     email = models.EmailField(
         verbose_name='email',
         max_length=100,
         unique=True,
-    )
-    first_name = models.CharField(
-        max_length=50,
-        blank=True,
-    )
-    last_name = models.CharField(
-        max_length=50,
-        blank=True,
-    )
-    middle_name = models.CharField(
-        max_length=50,
-        blank=True,
     )
     date_joined = models.DateTimeField(
         verbose_name='date joined',
@@ -76,18 +67,14 @@ class User(AbstractBaseUser):
     is_superuser = models.BooleanField(
         default=False,
     )
-    profile_image = models.ImageField(
-        max_length=255,
-        upload_to=get_profile_image_filepath,
-        null=True,
-        blank=True,
-        default=get_default_profile_image,
-    )
 
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
+
+    class Meta:
+        abstract = True
 
     def __str__(self):
         return self.email
@@ -105,3 +92,106 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+
+class User(AbstractUser):
+    """
+    Custom User model to register and
+    login users in application.
+    """
+    STATUS = (
+        ('Активен', 'Активен'),
+        ('Новый', 'Новый'),
+        ('Отключен', 'Отключен')
+    )
+    ROLE = (
+        ('Директор', 'Директор'),
+        ('Управляющий', 'Управляющий'),
+        ('Бухгалтер', 'Бухгалтер'),
+        ('Электрик', 'Электрик'),
+        ('Сантехник', 'Сантехник'),
+    )
+
+    first_name = models.CharField(
+        verbose_name='first name',
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+    last_name = models.CharField(
+        verbose_name='last name',
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+    middle_name = models.CharField(
+        verbose_name='middle name',
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+    phone = models.CharField(
+        verbose_name='phone number',
+        max_length=25,
+        blank=True,
+        null=False,
+    )
+    telegram = models.CharField(
+        verbose_name='telegram',
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    viber = models.CharField(
+        verbose_name='viber',
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    notes = models.TextField(
+        verbose_name='notes about',
+        max_length=1500,
+        blank=True,
+        null=True,
+    )
+    birth_date = models.DateField(
+        verbose_name='date joined',
+        auto_now_add=True,
+        blank=True,
+        null=True,
+    )
+    status = models.CharField(
+        verbose_name='status of user',
+        max_length=100,
+        blank=True,
+        null=True,
+        choices=STATUS,
+    )
+    role = models.CharField(
+        verbose_name='role of the user',
+        max_length=150,
+        blank=True,
+        null=True,
+        choices=ROLE,
+    )
+
+
+class UserSocialNetwork(models.Model):
+    """
+    Social network of the user - Telegram and Viber
+    """
+    pass
+
+
+class UserProfile(models.Model):
+    """
+    Profile extend for User model
+    """
+    pass
+
+
+class UserPhone(models.Model):
+    """
+    Phone of the User
+    """
+    pass
