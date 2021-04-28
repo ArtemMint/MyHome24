@@ -105,6 +105,7 @@ class User(AbstractUser):
         ('Отключен', 'Отключен')
     )
     ROLE = (
+        ('Владелец квартиры', 'Владелец квартиры'),
         ('Директор', 'Директор'),
         ('Управляющий', 'Управляющий'),
         ('Бухгалтер', 'Бухгалтер'),
@@ -161,7 +162,7 @@ class User(AbstractUser):
         null=True,
     )
     status = models.CharField(
-        verbose_name='status of user',
+        verbose_name='status of the user',
         max_length=100,
         blank=True,
         null=True,
@@ -172,26 +173,27 @@ class User(AbstractUser):
         max_length=150,
         blank=True,
         null=True,
+        default=ROLE[0][0],
         choices=ROLE,
     )
 
 
-class UserSocialNetwork(models.Model):
-    """
-    Social network of the user - Telegram and Viber
-    """
-    pass
-
-
-class UserProfile(models.Model):
-    """
-    Profile extend for User model
-    """
-    pass
-
-
-class UserPhone(models.Model):
-    """
-    Phone of the User
-    """
-    pass
+# class UserSocialNetwork(models.Model):
+#     """
+#     Social network of the user - Telegram and Viber
+#     """
+#     pass
+#
+#
+# class UserProfile(models.Model):
+#     """
+#     Profile extend for User model
+#     """
+#     pass
+#
+#
+# class UserPhone(models.Model):
+#     """
+#     Phone of the User
+#     """
+#     pass

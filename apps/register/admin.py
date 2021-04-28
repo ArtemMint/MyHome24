@@ -4,6 +4,7 @@ from register.models import User
 
 
 class UserAdmin(UserAdmin):
+    exclude = ('username',)
     list_display = (
         'email',
         'first_name',
