@@ -8,6 +8,7 @@ __author__ = 'Artem Yurchak'
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import LogoutView
 
 from personal_cabinet.views.summary import *
 from personal_cabinet.views.invoice import *
@@ -23,14 +24,21 @@ urlpatterns = [
     # User login
     path(
         'site/login',
-        views.UserLoginPage.as_view(),
+        views.UserLoginView.as_view(),
         name='user_login'
+    ),
+
+    # User logout
+    path(
+        'site/logout',
+        LogoutView.as_view(next_page='personal_cabinet:user_login'),
+        name='user_logout'
     ),
 
     # User register
     path(
         'site/register',
-        views.UserRegisterPage.as_view(),
+        views.UserRegisterView.as_view(),
         name='user_register'
     ),
 

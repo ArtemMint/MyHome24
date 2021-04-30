@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
 ]
 
 AUTH_USER_MODEL = 'register.User'
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.AllowAllUsersModelBackend',
     'register.backends.CaseInsensitiveModelBackend',
@@ -151,6 +152,6 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# LOGIN_URL = '/profile/login/'
-# LOGIN_REDIRECT_URL = 'home'
-# LOGOUT_REDIRECT_URL = 'home'
+# LOGIN_USER_URL = 'website:index'
+# LOGIN_REDIRECT_URL = '/'
+# LOGOUT_REDIRECT_URL = 'website:index'

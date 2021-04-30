@@ -15,9 +15,16 @@
 
 <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
 
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+             </ul>
+         {% endfor %}
+    {% endif %}
+
     <!-- Service form -->
     <h3 class="title-block">Услуги</h3>
-    {{ services_formset.management_form }}
     <div class="row">
         <div class="col-xs-12 col-lg-7">
             <hr>
@@ -32,22 +39,44 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="services" role="tabpanel">
-                    <div class="form">
-                        {{ services_formset.as_p }}
-                        <span class="input-group-btn">
-                        <button type="button" class="btn btn-default form-row-remove-btn disabled" no-delete-msg="Эта ед.изм. используется в услуге. Удаление невозможно."><i class="fa fa-trash"></i></button>
-                    </span>
-                    </div>
+                    {{ metrics_formset.management_form }}
+                    {% for service_form in services_formset.forms %}
+                        <div class="form row">
+                            {{ service_form.id }}
+                            <div class="col-sm-7">
+                                {{ service_form.name.label_tag }}
+                                {{ service_form.name }}
+                            </div>
+                            <div class="col-sm-5">
+                                {{ service_form.metric.label_tag }}
+                                {{ service_form.metric }}
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn col-xs-12 btn-default form-row-remove-btn disabled">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div class="col-xs-12">
+                                {{ service_form.show_in_meter_reading.label_tag }}
+                                {{ service_form.show_in_meter_reading }}
+                            </div>
+                        </div>
+                    {% endfor %}
                     <a id="addNewForm" class="btn btn-default bg-green-active form-row-add-websiteservice-btn">Добавить</a>
                 </div>
                 <div class="tab-pane fade" id="metric" role="tabpanel">
+                    {{ services_formset.management_form }}
+                    {% for metric_form in metrics_formset.forms %}
                     <div class="form">
-                        {{ metrics_formset.as_p }}
+                        {{ metric_form.as_p }}
                         <span class="input-group-btn">
-                        <button type="button" class="btn btn-default form-row-remove-btn disabled" no-delete-msg="Эта ед.изм. используется в услуге. Удаление невозможно."><i class="fa fa-trash"></i></button>
-                    </span>
+                            <button type="button" class="btn col-xs-12 btn-default form-row-remove-btn disabled">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </span>
                     </div>
                     <a id="addNewForm" class="btn btn-default bg-green-active form-row-add-websiteservice-btn">Добавить</a>
+                    {% endfor %}
                 </div>
             </div>
             <hr>

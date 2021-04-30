@@ -2,9 +2,7 @@
 Views of site data
 """
 
-# from django.contrib import messages
-# from django.views import View
-# from django.shortcuts import render, redirect
+
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import UpdateView
@@ -121,7 +119,7 @@ class IndexSettings(SuccessMessageMixin, UpdateView):
         # verify if all forms is correct
         if (
                 index_form.is_valid() and
-                slider_formsemessaget.is_valid() and
+                slider_formset.is_valid() and
                 block_formset.is_valid() and
                 seo_form.is_valid()
         ):
@@ -629,6 +627,7 @@ class ContactsSettings(SuccessMessageMixin, UpdateView):
     def forms_valid(
             self,
             contacts_page_form,
+            contacts_address_form,
             contacts_map_form,
             seo_form,
     ):

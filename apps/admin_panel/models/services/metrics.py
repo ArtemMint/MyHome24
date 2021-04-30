@@ -13,3 +13,6 @@ class Metrics(models.Model):
         verbose_name='Ед.изм.',
         max_length=100,
     )
+
+    def __str__(self):
+        return self.name

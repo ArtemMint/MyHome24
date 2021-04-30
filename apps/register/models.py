@@ -79,14 +79,6 @@ class AbstractUser(AbstractBaseUser):
     def __str__(self):
         return self.email
 
-    def get_full_name(self):
-        return f'{self.first_name} {self.last_name} {self.middle_name}'
-
-    def get_profile_image_filename(self):
-        return str(self.profile_image)[str(self.profile_image).index(
-            f'profile_images/{self.pk}/'
-        ):]
-
     def has_perm(self, perm, obj=None):
         return self.is_admin
 
@@ -166,6 +158,7 @@ class User(AbstractUser):
         max_length=100,
         blank=True,
         null=True,
+        default=STATUS[1][0],
         choices=STATUS,
     )
     role = models.CharField(
@@ -176,6 +169,9 @@ class User(AbstractUser):
         default=ROLE[0][0],
         choices=ROLE,
     )
+
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name} {self.middle_name}'
 
 
 # class UserSocialNetwork(models.Model):

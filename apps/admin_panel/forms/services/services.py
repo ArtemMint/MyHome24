@@ -29,16 +29,12 @@ class ServicesForm(forms.ModelForm):
                     'class': 'form-control',
                 }
             ),
-            'metric': forms.TextInput(
+            'metric': forms.Select(
                 attrs={
                     'class': 'form-control',
                 }
             ),
-            'show_in_meter_reading': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control',
-                }
-            ),
+            'show_in_meter_reading': forms.CheckboxInput(),
         }
 
 

@@ -27,3 +27,6 @@ class Services(models.Model):
         default='False',
         verbose_name='Показывать в счетчиках',
     )
+
+    def __str__(self):
+        return self.name
