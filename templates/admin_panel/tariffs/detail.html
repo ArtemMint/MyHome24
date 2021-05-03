@@ -1,0 +1,66 @@
+﻿{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Тарифы</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:tariff_list' %}">Тарифы</a></li>
+        <li class="breadcrumb-item active"> Тариф:{{ tariff_form.name }} </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title"></h3>
+            <div class="box-tools">
+                <a href="/admin/tariff/update/2" class="btn btn-primary btn-sm">
+                    <span class="hidden-xs">Редактировать тариф</span><i class="fa fa-pencil visible-xs" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <div class="box-body">
+            <table class="table table-bordered table-striped table-view">
+                <tbody>
+                    <tr>
+                        <td>Название тарифа</td>
+                        <td>{{ tariff_form.name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Описание тарифа</td>
+                        <td>{{ tariff_form.description|truncatechars:100 }}</td>
+                    </tr>
+                    <tr>
+                        <td>Дата редактирования</td>
+                        <td>{{ tariff_form.editing_date }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="table-responsive no-padding margin-top-15">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Услуга</th>
+                            <th>Ед. изм.</th>
+                            <th>Цена за ед., грн</th>
+                            <th>Валюта</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row">
+                            <td>1</td>
+                            <td>Электроэнергия</td>
+                            <td>кВт.ч</td>
+                            <td>2.00</td>
+                            <td>грн</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

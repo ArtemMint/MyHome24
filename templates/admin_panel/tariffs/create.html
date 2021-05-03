@@ -1,0 +1,26 @@
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Тарифы</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:tariff_list' %}">Тарифы</a></li>
+        <li class="breadcrumb-item active"> Новый тариф </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_p }}
+        <div class="col-xs-12 text-center">
+            <div class="form-group">
+                <a href="{% url 'admin_panel:tariff_list' %}" class="btn btn-default">Отменить</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock content %}

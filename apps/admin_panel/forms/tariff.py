@@ -9,7 +9,6 @@ from admin_panel.models import (
 class TariffForm(forms.ModelForm):
 
     class Meta:
-
         model = Tariff
         fields = (
             'name',

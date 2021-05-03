@@ -101,7 +101,7 @@ urlpatterns = [
 
     #Metrics
     path(
-        'metrics/index',
+        'metrics/index/',
         views.MetricsList.as_view(),
         name='metrics_list'
     ),
@@ -109,8 +109,28 @@ urlpatterns = [
     # Tariffs
     path(
         'tariff/index/',
-        views.TariffsList.as_view(),
+        views.TariffList.as_view(),
         name='tariff_list'
+    ),
+    path(
+        'tariff/create/',
+        views.TariffCreate.as_view(),
+        name='tariff_create'
+    ),
+    path(
+        'tariff/detail/<int:pk>/',
+        views.TariffDetail.as_view(),
+        name='tariff_detail'
+    ),
+    path(
+        'tariff/update/<int:pk>/',
+        views.TariffUpdate.as_view(),
+        name='tariff_update'
+    ),
+    path(
+        'tariff/delete/<int:pk>/',
+        views.TariffDelete.as_view(),
+        name='tariff_delete'
     ),
 
     # Roles
