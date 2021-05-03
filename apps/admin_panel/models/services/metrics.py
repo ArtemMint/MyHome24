@@ -12,6 +12,7 @@ class Metrics(models.Model):
     name = models.CharField(
         verbose_name='Ед.изм.',
         max_length=100,
+        blank=False,
     )
 
     def __str__(self):

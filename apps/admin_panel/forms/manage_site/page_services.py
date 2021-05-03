@@ -1,5 +1,5 @@
 """
-Form for services page on website
+Form for services_metrics page on website
 """
 
 from django import forms

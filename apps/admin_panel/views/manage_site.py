@@ -404,7 +404,7 @@ class ServicesSettings(SuccessMessageMixin, UpdateView):
     formset_class = forms.ServicesSiteFormset
     second_form_class = forms.SEOForm
     # Success URL
-    success_url = reverse_lazy('admin_panel:services')
+    success_url = reverse_lazy('admin_panel:services_metrics')
     # Success message
     success_message = 'Все данные успешно сохранены!'
     # Template to render
@@ -419,7 +419,7 @@ class ServicesSettings(SuccessMessageMixin, UpdateView):
 
     def get_object(self, queryset=None):
         """
-        Get services page data
+        Get services_metrics page data
         """
         obj = models.ServicesPage.get_solo()
         if not obj.seo:

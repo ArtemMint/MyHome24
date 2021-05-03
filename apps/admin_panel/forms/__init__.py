@@ -9,5 +9,11 @@ from admin_panel.forms.manage_site.page_contacts import *
 from admin_panel.forms.pay_company import *
 
 # Services
+from admin_panel.forms.services.metrics import MetricsForm
+from admin_panel.forms.services.services import ServicesForm
 from admin_panel.forms.services.metrics import MetricsFormset
 from admin_panel.forms.services.services import ServicesFormset
+
+# Tariff
+from admin_panel.forms.tariff import TariffForm,\
+    TariffServiceForm, TariffServiceFormset

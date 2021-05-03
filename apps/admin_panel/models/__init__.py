@@ -11,4 +11,5 @@ from admin_panel.models.pay_company.pay_company import PayCompany
 from admin_panel.models.services.services import Services
 from admin_panel.models.services.metrics import Metrics
 
-#
+#Tariff
+from admin_panel.models.tariffs.tariffs import Tariff, TariffService

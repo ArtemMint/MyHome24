@@ -21,11 +21,11 @@ class ServicesPage(SingletonModel):
 
 class ServicesSite(models.Model):
     """
-    Table with services info for website
+    Table with services_metrics info for website
     """
     image = models.ImageField(
         blank=True,
-        upload_to='images/services/',
+        upload_to='images/services_metrics/',
         verbose_name='Рекомендуемый размер: (650x300)'
     )
     name = models.CharField(
@@ -44,7 +44,7 @@ class ServicesSite(models.Model):
         blank=True,
         null=True,
         verbose_name='service',
-        related_name='services',
+        related_name='services_metrics',
     )
 
     class Meta:

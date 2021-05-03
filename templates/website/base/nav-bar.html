@@ -9,7 +9,7 @@
             <ul class="nav navbar-nav navbar-right"></ul>
                 <a href="{% url 'website:index' %}" {% if request.path == '/' %}class="active"{% endif %}>Главная</a>
                 <a href="{% url 'website:about' %}" {% if request.path == '/about/' %}class="active"{% endif %}>О нас</a>
-                <a href="{% url 'website:services' %}" {% if request.path == '/services/' %}class="active"{% endif %}>Услуги</a>
+                <a href="{% url 'website:services_metrics' %}" {% if request.path == '/services_metrics/' %}class="active"{% endif %}>Услуги</a>
                 <a href="https://avada-media.ua/myhouse24/">Условия приобретения</a>
                 <a href="{% url 'website:contacts' %}" {% if request.path == '/contacts/' %}class="active"{% endif %}>Контакты</a>
                 <a href="{% url 'personal_cabinet:user_login' %}"><i class="fas fa-sign-in-alt"></i>Вход</a>

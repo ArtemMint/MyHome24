@@ -6,13 +6,6 @@
 </ul>
 {% endblock %} {% block content %}
 
-<!-- Message if all saved -->
-{% if messages %} {% for message in messages %}
-<ul class="text-center alert alert-{{ message.tags }}">
-    {{ message|safe }}
-</ul>
-{% endfor %} {% endif %}
-
 <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
 
     {% if messages %}
@@ -33,16 +26,14 @@
                     <a class="nav-link active" id="services-tab" data-toggle="tab" href="#services" role="tab">Услуги</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="metric-tab" data-toggle="tab" href="#metric" role="tab">Единицы измерения</a>
+                    <a class="nav-link" id="metric-tab" data-toggle="tab" href="{% url 'admin_panel:metrics_list' %}" role="tab">Единицы измерения</a>
                 </li>
-
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="services" role="tabpanel">
-                    {{ metrics_formset.management_form }}
-                    {% for service_form in services_formset.forms %}
+                    {{ services_formset.management_form }}
+                    {% for service_form in services_formset %}{{ service_form.id }}
                         <div class="form row">
-                            {{ service_form.id }}
                             <div class="col-sm-7">
                                 {{ service_form.name.label_tag }}
                                 {{ service_form.name }}
@@ -53,6 +44,7 @@
                                 <span class="input-group-btn">
                                     <button type="button" class="btn col-xs-12 btn-default form-row-remove-btn disabled">
                                         <i class="fa fa-trash"></i>
+                                        <span hidden>{{ service_form.DELETE }}</span>
                                     </button>
                                 </span>
                             </div>
@@ -65,18 +57,6 @@
                     <a id="addNewForm" class="btn btn-default bg-green-active form-row-add-websiteservice-btn">Добавить</a>
                 </div>
                 <div class="tab-pane fade" id="metric" role="tabpanel">
-                    {{ services_formset.management_form }}
-                    {% for metric_form in metrics_formset.forms %}
-                    <div class="form">
-                        {{ metric_form.as_p }}
-                        <span class="input-group-btn">
-                            <button type="button" class="btn col-xs-12 btn-default form-row-remove-btn disabled">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </span>
-                    </div>
-                    <a id="addNewForm" class="btn btn-default bg-green-active form-row-add-websiteservice-btn">Добавить</a>
-                    {% endfor %}
                 </div>
             </div>
             <hr>
@@ -91,16 +71,4 @@
     </div>
 
 </form>
-{% endblock content %} s{% block scripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $('#myTab a[href="#services"]').on('click ', function(e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
-
-    $('#myTab a[href="#metric"]').on('click ', function(e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
-</script>{% endblock scripts %}
+{% endblock content %}

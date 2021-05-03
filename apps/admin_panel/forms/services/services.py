@@ -5,6 +5,7 @@ Services form
 from django import forms
 from django.forms import modelformset_factory
 
+from admin_panel.models import Metrics
 from admin_panel.models import Services
 
 
@@ -41,10 +42,6 @@ class ServicesForm(forms.ModelForm):
 ServicesFormset = modelformset_factory(
     Services,
     ServicesForm,
-    fields=(
-        'name',
-        'metric',
-        'show_in_meter_reading',
-    ),
     extra=1,
+    can_delete=True,
 )

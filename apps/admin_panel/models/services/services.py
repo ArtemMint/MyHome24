@@ -14,11 +14,11 @@ class Services(models.Model):
     name = models.CharField(
         verbose_name='Услуга',
         max_length=250,
+        blank=False,
     )
     metric = models.ForeignKey(
         Metrics,
         on_delete=models.CASCADE,
-        null=True,
         blank=False,
         verbose_name='Ед.изм.',
         related_name='metrics',

@@ -2,7 +2,7 @@ from admin_panel.views.invoice import *
 from admin_panel.views.users_admin import *
 from admin_panel.views.master_request import *
 from admin_panel.views.users import *
-from admin_panel.views.services import *
+from admin_panel.views.services_metrics import *
 from admin_panel.views.messages import *
 from admin_panel.views.flats import *
 from admin_panel.views.account_transaction import *

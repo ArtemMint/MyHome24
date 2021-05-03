@@ -95,8 +95,15 @@ urlpatterns = [
     # Services
     path(
         'service/index/',
-        views.ServicesAndMetricsList.as_view(),
-        name='service_list'
+        views.ServicesList.as_view(),
+        name='services_list'
+    ),
+
+    #Metrics
+    path(
+        'metrics/index',
+        views.MetricsList.as_view(),
+        name='metrics_list'
     ),
 
     # Tariffs
@@ -146,9 +153,9 @@ urlpatterns = [
         name='about'
     ),
     path(
-        'website/services/',
+        'website/services_metrics/',
         views.ServicesSettings.as_view(),
-        name='services'
+        name='services_metrics'
     ),
     path(
         'website/contacts/',

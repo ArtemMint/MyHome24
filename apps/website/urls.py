@@ -25,9 +25,9 @@ urlpatterns = [
         name='about'
     ),
     path(
-        'services/',
+        'services_metrics/',
         ServicesPage.as_view(),
-        name='services'
+        name='services_metrics'
     ),
     path(
         'contacts/',
