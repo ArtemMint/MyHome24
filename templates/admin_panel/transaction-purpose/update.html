@@ -1,0 +1,28 @@
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+{% block title %} <h1 class="m-0">Статьи приходов/расходов</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:transaction_purpose_list' %}">Статьи приходов/расходов</a></li>
+        <li class="breadcrumb-item active"> Обновить статью </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="col-lg-7">
+            {{ form.as_p }}
+        </div>
+
+        <div class="col-xs-12 text-right">
+            <div class="form-group">
+                <a href="{% url 'admin_panel:transaction_purpose_list' %}" class="btn btn-default">Отменить</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock content %}

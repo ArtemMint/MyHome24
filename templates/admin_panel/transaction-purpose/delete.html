@@ -1,13 +1,13 @@
 {% extends 'admin_panel/base/base.html' %}
 {% load static %}
 
-{% block title %} <h1 class="m-0">Тарифы</h1> {% endblock %}
+{% block title %} <h1 class="m-0">Статьи приходов/расходов</h1> {% endblock %}
 
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:tariff_list' %}">Тарифы</a></li>
-        <li class="breadcrumb-item active">Удалить тариф</li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:transaction_purpose_list' %}">Статьи приходов/расходов</a></li>
+        <li class="breadcrumb-item active"> Удалить статью </li>
     </ul>
 {% endblock %}
 
@@ -19,7 +19,7 @@
             <div class="form-group">
                 <h1>Удалить ?</h1>
                 <input class="btn btn-danger" type="submit" value="Удалить!">
-                <a class="btn btn-default" href="{% url 'admin_panel:tariff_list' %}">Отменить</a>
+                <a class="btn btn-default" href="{% url 'admin_panel:transaction_purpose_list' %}">Отменить</a>
             </div>
         </div>
     </form>

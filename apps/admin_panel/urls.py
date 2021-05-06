@@ -166,6 +166,21 @@ urlpatterns = [
         views.TransactionPurposeList.as_view(),
         name='transaction_purpose_list'
     ),
+    path(
+        'transaction-purpose/create/',
+        views.TransactionPurposeCreate.as_view(),
+        name='transaction_purpose_create'
+    ),
+    path(
+        'transaction-purpose/update/<int:pk>/',
+        views.TransactionPurposeUpdate.as_view(),
+        name='transaction_purpose_update'
+    ),
+    path(
+        'transaction-purpose/delete/<int:pk>/',
+        views.TransactionPurposeDelete.as_view(),
+        name='transaction_purpose_delete'
+    ),
 
     # Manage site
     path(
