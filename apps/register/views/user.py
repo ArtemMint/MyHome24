@@ -16,6 +16,7 @@ from register.forms import (
 
 class UserLoginView(LoginView):
     template_name = 'register/user/login.html'
+    redirect_authenticated_user = True
 
     def get(self, request):
         return render(request, self.template_name)
@@ -23,7 +24,6 @@ class UserLoginView(LoginView):
     def post(self, request):
         email = request.POST['email']
         password = request.POST['password']
-        full_name = request.POST['full_name']
         user = authenticate(email=email, password=password)
         context = {}
 

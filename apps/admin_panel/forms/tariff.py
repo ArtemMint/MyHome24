@@ -7,12 +7,14 @@ from admin_panel.models import (
 
 
 class TariffForm(forms.ModelForm):
+    prefix = 'tariff'
 
     class Meta:
         model = Tariff
         fields = (
             'name',
             'description',
+            # 'editing_date',
         )
         widgets = {
             'name': forms.TextInput(
@@ -25,10 +27,14 @@ class TariffForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
+            'editing_date': forms.DateTimeInput(
+                format=('%Y-%m-%d'),
+                attrs={'type': 'date'}),
         }
 
 
 class TariffServiceForm(forms.ModelForm):
+    prefix = 'tariff_service',
 
     class Meta:
         model = TariffService
@@ -39,7 +45,7 @@ class TariffServiceForm(forms.ModelForm):
             'metric',
         )
         widgets = {
-            'service': forms.TextInput(
+            'service': forms.Select(
                 attrs={
                     'class': 'form-control'
                 }
@@ -54,13 +60,21 @@ class TariffServiceForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
-            'metric': forms.TextInput(
+            'metric': forms.Select(
                 attrs={
                     'class': 'form-control'
                 }
             ),
         }
 
+
+TariffServiceDisplayFormset = forms.inlineformset_factory(
+    Tariff,
+    TariffService,
+    TariffServiceForm,
+    extra=0,
+    can_delete=True,
+)
 
 TariffServiceFormset = forms.inlineformset_factory(
     Tariff,

@@ -22,12 +22,22 @@ class Tariff(models.Model):
         blank=True,
         null=True,
     )
-    editing_date = models.DateField(
-        default=timezone.now,
+    editing_date = models.DateTimeField(
+        auto_now=True,
     )
+
+    class Meta:
+        ordering = ['-editing_date',]
 
     def __str__(self):
         return self.name
+
+    def get_tariff_for_copy(pk):
+        tarriff = Tariff.objects.get(id=pk)
+        tarriff.id = None
+        return tarriff
+
+
 
 
 class TariffService(models.Model):
@@ -61,4 +71,4 @@ class TariffService(models.Model):
     )
 
     def __str__(self):
-        return self.tariff, self.service
+        return f'{self.tariff} - {self.service}'

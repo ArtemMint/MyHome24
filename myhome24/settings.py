@@ -126,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'Europe/Kiev'
 
@@ -153,5 +153,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # LOGIN_USER_URL = 'website:index'
-# LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'personal_cabinet:summary'
 # LOGOUT_REDIRECT_URL = 'website:index'

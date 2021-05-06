@@ -11,7 +11,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-lg-12">
             <div class="pull-right margin-bottom" style="float: right">
                 <a class="btn btn-success" href="{% url 'admin_panel:tariff_create' %}">Добавить тариф</a>
             </div>
@@ -36,7 +36,7 @@
                     <td>{{ field.editing_date }}</td>
                     <td>
                         <div class="btn-group ">
-                            <a class="btn btn-default btn-sm" href="" title="Копировать">
+                            <a class="btn btn-default btn-sm" href="{% url 'admin_panel:tariff_copy' field.pk %}" title="Копировать">
                                 <i class="far fa-copy"></i>
                             </a>
                             <a class="btn btn-default btn-sm" href="{% url 'admin_panel:tariff_update' field.pk %}" title="Редактировать">

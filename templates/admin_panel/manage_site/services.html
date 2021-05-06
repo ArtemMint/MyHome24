@@ -4,7 +4,15 @@
     <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
     <li class="breadcrumb-item active"> Редактирование страницы</li>
 </ul>
-{% endblock %} {% block content %}
+{% endblock %}
+
+{% block header %}
+    <div class="box-header with-border">
+        <h3 class="box-title">Редактирование страницы "Услуги"</h3>
+    </div>
+{% endblock %}
+
+{% block content %}
 
 <!-- Message if all saved -->
 {% if messages %} {% for message in messages %}

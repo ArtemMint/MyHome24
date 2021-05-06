@@ -115,6 +115,7 @@ urlpatterns = [
     path(
         'tariff/create/',
         views.TariffCreate.as_view(),
+
         name='tariff_create'
     ),
     path(
@@ -124,8 +125,13 @@ urlpatterns = [
     ),
     path(
         'tariff/update/<int:pk>/',
-        views.TariffUpdate.as_view(),
+        views.tariff_update_view,
         name='tariff_update'
+    ),
+    path(
+        'tariff/copy/<int:pk>/',
+        views.tariff_copy_view,
+        name='tariff_copy'
     ),
     path(
         'tariff/delete/<int:pk>/',

@@ -14,7 +14,35 @@
 {% block content %}
 
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-        {{ form.as_p }}
+        {{ tariff_form.as_p }}
+
+        {{ tariff_service_formset.manage_formset }}
+        <div class="table-responsive no-padding margin-top-15">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Услуга</th>
+                    <th>Ед. изм.</th>
+                    <th>Цена за ед., грн</th>
+                    <th>Валюта</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ tariff_service_formset.management_form }}
+                {% for tariff_service in tariff_service_formset %}
+                    {{ tariff_service.id }}
+                    <tr role="row">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ tariff_service.service }}</td>
+                        <td>{{ tariff_service.metric }}</td>
+                        <td>{{ tariff_service.price }}</td>
+                        <td>{{ tariff_service.currency }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
         <div class="col-xs-12 text-center">
             <div class="form-group">
                 <a href="{% url 'admin_panel:tariff_list' %}" class="btn btn-default">Отменить</a>

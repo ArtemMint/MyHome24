@@ -281,7 +281,7 @@ class AboutSettings(SuccessMessageMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
         """
-        POST method logic to upade data in models
+        POST method logic to update data in models
         using forms and instance as IndexPage
         """
         about_form = self.form_class(

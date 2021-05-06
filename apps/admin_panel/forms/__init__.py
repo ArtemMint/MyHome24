@@ -16,4 +16,4 @@ from admin_panel.forms.services.services import ServicesFormset
 
 # Tariff
 from admin_panel.forms.tariff import TariffForm,\
-    TariffServiceForm, TariffServiceFormset
+    TariffServiceForm, TariffServiceDisplayFormset, TariffServiceFormset
