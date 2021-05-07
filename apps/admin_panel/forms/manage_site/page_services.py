@@ -12,7 +12,7 @@ class ServicesSiteForm(forms.ModelForm):
     Services page form for
     updating data on website
     """
-
+    prefix = 'services'
     class Meta:
         """
         Class Meta
@@ -45,10 +45,5 @@ ServicesSiteFormset = forms.inlineformset_factory(
     ServicesPage,
     ServicesSite,
     ServicesSiteForm,
-    fields=(
-        'image',
-        'name',
-        'description',
-    ),
-    extra=1,
+    extra=0,
 )

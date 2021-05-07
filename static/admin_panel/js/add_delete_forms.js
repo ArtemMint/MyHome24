@@ -1,64 +1,134 @@
-function addHiddenForm(prefix, form_class, image_class, default_image_url) {
-    let selector = form + ":first";
-    let element = $(selector).clone(true);
+function addHiddenForm(prefix, form_class, image_class=undefined, default_image=undefined) {
+        // get first form
+        let firstForm = form_class + ":first";
 
-    element.find(':input').each(function() {
-        let name = $(this).attr('name').replace(prefix + '-0-', '');
-        let id = 'id_' + name;
-        $(this).attr({
-            'name': name,
-            'id': id
-        }).val('').removeAttr('checked');
-    });
-    element.find("img").each(function() {
-        $(this).attr("src", default_image_url);
-    });
-    element.css('display', 'none');
-    $(selector).before(element);
-}
+        // clone hidden form from the last form
+        let hiddenForm = $(firstForm).clone(true);
 
-function addNewForm(prefix, form, index) {
-    let selector_first = form + ":first";
-    let selector_last = form + ":last";
-    let newElement = $(selector_first).clone(true);
-    let total = $('#id_' + prefix + '-TOTAL_FORMS').val();
-    let i = 0;
+        // set attrs name and id
+        hiddenForm.find(":input").each(function () {
 
-    newElement.find(':input').each(() => {
-        let name = prefix + '-' + total + '-' + $(this).attr('name');
-        let id = 'id_' + name;
-        $(this).attr({ 'name': name, 'id': id }).val('').removeAttr('checked');
-    });
-    newElement.css('display', '')
+            let name = $(this).attr('name').replace(prefix + '-0-','');
 
-    total++;
-    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
-    if (index) newElement.find(index).each(() => { $(this).text(total); });
-    $(selector_last).after(newElement);
-}
+            let id = 'id_' + name;
 
-function updateFormIndex(element, prefix, index) {
-    let id_regex = new RegExp('(' + prefix + '-\\d+)');
-    let replacement = prefix + '-' + index;
-    let name = $(element.target).attr('name').replace(id_regex, replacement);
-    let id = 'id_' + name;
-    $(this).attr({ 'name': name, 'id': id }).val('');
-};
-
-function deleteForm(event, id, prefix, form, image, index) {
-
-    $(event.target).parents(form).remove(); // delete forms and child tags
-
-    const allForms = $(form); //
-    const totalForms = $(id + prefix + '-TOTAL_FORMS').val() - 1;
-    $(id + prefix + '-TOTAL_FORMS').val(totalForms);
-
-    for (let i = 1, count = allForms.length; i < count; i++) {
-        element = $(allForms.get(i));
-        element.find(':input').each(() => {
-            updateFormIndex(element, prefix, i - 1)
+            // set new name and id
+            $(this).attr({
+                'name': name,
+                'id': id,
+            }).val('').removeAttr('checked');
         });
-        element.find("span").text(i);
-    }
-    return false;
-};
+
+        // find img tag than set default image instead of current
+        if (image_class) {
+            hiddenForm.find("img").each(function () {
+                $(this).attr("src", default_image);
+                $(this).attr("alt", default_image);
+            });
+        }
+
+        // hide form from page and set it before all forms
+        hiddenForm.css('display', 'none');
+        $(firstForm).before(hiddenForm);
+    };
+
+    function addNewForm(prefix, form_class, index_class) {
+
+        let firstForm = form_class + ":first";
+        let lastForm = form_class + ":last";
+        let newForm = $(firstForm).clone(true);
+        let totalForms = $('#id_' + prefix + '-TOTAL_FORMS').val()
+        let allForms = $(form_class + ":not(:hidden)");
+
+        // get input
+        newForm.find(':input').each(function () {
+            let name = prefix + '-' + totalForms + '-' + $(this).attr('name');
+            let id = 'id_' + name;
+
+            // set new name and id
+            $(this).attr({
+                'name': name,
+                'id': id
+            }).val('').removeAttr('checked');
+        });
+
+        // display current form
+        newForm.css('display', '')
+
+        // increment number
+        totalForms++;
+
+        // set TOTAL_FORMS number
+        $('#id_' + prefix + '-TOTAL_FORMS').val(totalForms);
+
+        // set last index
+        newForm.find(index_class).each(function() {
+            $(this).text(totalForms);
+        });
+
+        // set new form after last form
+        $(lastForm).after(newForm);
+
+        // cycle for updating all indexes of forms
+        for (let i = 0, count = allForms.length; i < count; i++) {
+
+            // get form
+            form = $(allForms.get(i));
+
+            // set counter of form at the top of form
+            if (index_class) form.find("span.form-index").text(i+1);
+
+            // find input area and start updateFormIndex() for each
+            form.find(":input").each(function () {
+                updateFormIndex(form, prefix, i-1);
+            });
+        };
+    };
+
+    function updateFormIndex(form, prefix, index) {
+        let idRegex = new RegExp('(' + prefix + '-\\d+)');
+        let replacement = prefix + '-' + index;
+        let name = $(this).attr('name').replace(idRegex, replacement);
+        let id = 'id_' + name;
+
+        $(form).attr({
+            'name': name,
+            'id': id,
+        }).val('');
+    };
+
+    function deleteForm(e, prefix, form_class, index_class=undefined) {
+
+        // set checked to delete form after confirm
+        $(e.target).siblings(".check_delete").children().prop('checked', true);
+
+        // hide form on page
+        $(e.target).parents(form_class).css("display", 'none');
+
+        //set attr hidden to hide from selector
+        $(e.target).parents(form_class).prop("hidden", true);
+
+        // get all forms which not hidden
+        let allForms = $(form_class + ":not(:hidden)");
+
+        // get number of all forms
+        let totalForms = $("#id_" + prefix + "-TOTAL_FORMS").val() - 1;
+
+        // set new number of all forms
+        $("#id_" + prefix + "-TOTAL_FORMS").val(totalForms);
+
+        // cycle for updating all indexes of forms
+        for (let i = 0, count = allForms.length; i < count; i++) {
+
+            // get form
+            form = $(allForms.get(i));
+
+            // set counter of form at the top of form
+            if (index_class) form.find("span.form-index").text(i+1);
+
+            // find input area and start updateFormIndex() for each
+            form.find(":input").each(function () {
+                updateFormIndex(form, prefix, i-1);
+            });
+        };
+    };

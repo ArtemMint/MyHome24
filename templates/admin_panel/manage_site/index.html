@@ -44,7 +44,6 @@
         <div class='card mb-4 shadow-sm'>
             <div class="card-header">
                 <h4 class="box-title">Слайд {{ forloop.counter }}
-                <i class="fa fa-trash delete-form"></i> {{ form.DELETE }}
                 </h4>
                 <img class="img-fluid" {% if form.image.value %} src="/media/{{form.image.value}}" alt="{{form.image.value}}"
                 {% else %} src="{% static 'admin_panel/img/default-1920x800.jpg'%}" alt="default_image" 
@@ -76,12 +75,12 @@
     <hr>
     {{ block_formset.management_form }}
     <div class="row">
-        {% for form in block_formset %}
-            <div class='col-md-4'>
+        {% for form in block_formset %} {{ form.id }}
+            <div class='form col-md-4'>
                 <div class='card mb-4 shadow-sm'>
                     <div class="card-header">
-                        <h4 class="box-title">Блок {{ forloop.counter }}
-                        <i class="fa fa-trash" id="delete-form"></i>
+                        <h4 class="box-title">Блок <span class="form-index">{{ forloop.counter }}</span>
+                        <i class="fa fa-trash delete-form"></i> <span class="check_delete" hidden>{{ form.DELETE }}</span>
                         </h4>
                         {% if form.image.value %}
                             <img id="image{{forloop.counter0}}" class="img-fluid" src="/media/{{form.image.value}}" alt="{{form.image.value}}" style="height: 310px; display: block;">
@@ -90,11 +89,22 @@
                         {% endif %}
                     </div>
                     <div class="card-body">
-                        {{ form }}
+                        <div>
+                            {{ form.image.label_tag }} {{ form.image }}
+                        </div>
+                        <div>
+                            {{ form.name.label_tag }} {{ form.name }}
+                        </div>
+                        <div>
+                            {{ form.description.label_tag }} {{ form.description }}
+                        </div>
                     </div>
                 </div>
             </div>
         {% endfor %}
+        <div class="col-lg-12 text-center">
+            <a id="addNewForm" class="btn btn-success bg-green-active">Добавить блок</a>
+        </div>
     </div>
 
     <!-- SEO form -->
@@ -110,3 +120,29 @@
     
 </form>
 {% endblock content %}
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
+<script>
+    const prefix = "block";
+    const form_class = ".form";
+    const image = "img";
+    const index_class = ".form-index";
+    const default_image = "{% static 'admin_panel/img/default_image.jpeg' %}";
+
+    // after rendering page set hidden form
+    $("document").ready(function () {
+        addHiddenForm(prefix, form_class, image, default_image);
+    });
+    // if clicked trash icon than delete current form
+    $(".delete-form").click(function (e) {
+        deleteForm(e, prefix, form_class, image, index_class);
+    });
+    //if clicked add new form form button than add new form
+    $("#addNewForm").click(function () {
+        addNewForm(prefix, form_class, index_class);
+    });
+
+</script>
+{% endblock scripts %}

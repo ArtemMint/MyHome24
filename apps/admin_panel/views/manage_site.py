@@ -7,8 +7,8 @@ from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import UpdateView
 
-from .. import models
-from .. import forms
+from admin_panel import models
+from admin_panel import forms
 
 
 class IndexSettings(SuccessMessageMixin, UpdateView):

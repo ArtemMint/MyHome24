@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.views.generic import (
     ListView,
     CreateView,
@@ -7,9 +8,7 @@ from django.views.generic import (
     DetailView,
 )
 
-from admin_panel.models import (
-    Tariff,
-)
+from admin_panel.models import Tariff
 from admin_panel.forms import (
     TariffForm,
     TariffServiceFormset,
@@ -28,13 +27,11 @@ def tariff_update_view(request, pk):
     tariff_service_formset = TariffServiceDisplayFormset(
         request.POST or None,
         instance=Tariff.objects.get(id=pk),)
-
     if request.POST:
         if tariff_form.is_valid() and tariff_service_formset.is_valid():
             tariff_form.save()
             tariff_service_formset.save()
             return redirect('admin_panel:tariff_list')
-
     return render(
         request,
         'admin_panel/tariffs/create.html',
@@ -130,7 +127,6 @@ class TariffDetail(DetailView):
     success_url = reverse_lazy('admin_panel:tariff_list')
     context_object_name = 'tariff_form'
     tariff_service_formset = TariffServiceDisplayFormset
-
 
     def get_object(self, queryset=None):
         pk = self.kwargs.get('pk')

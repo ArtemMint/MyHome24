@@ -586,3 +586,7 @@ h4.box-title {
     color: #fff;
     background-color: #337ab7;
 }
+
+.bg-green-active, .modal-success .modal-header, .modal-success .modal-footer {
+    background-color: #008d4c !important;
+}

@@ -10,8 +10,6 @@
 
 {% block content %}
 
-<form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-
     {% if messages %}
          {% for message in messages %}
              <ul class="text-center alert alert-{{ message.tags }}">
@@ -33,46 +31,75 @@
                     <a class="nav-link" id="metric-tab" data-toggle="tab" href="{% url 'admin_panel:metrics_list' %}" role="tab">Единицы измерения</a>
                 </li>
             </ul>
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="services" role="tabpanel">
+            <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="services" role="tabpanel">
                     {{ services_formset.management_form }}
-                    {% for service_form in services_formset %}{{ service_form.id }}
-                        <div class="form row">
-                            <div class="col-sm-7">
-                                {{ service_form.name.label_tag }}
-                                {{ service_form.name }}
-                            </div>
-                            <div class="col-sm-5">
-                                {{ service_form.metric.label_tag }}
-                                {{ service_form.metric }}
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn col-xs-12 btn-default form-row-remove-btn disabled">
-                                        <i class="fa fa-trash"></i>
-                                        <span hidden>{{ service_form.DELETE }}</span>
-                                    </button>
-                                </span>
-                            </div>
-                            <div class="col-xs-12">
-                                {{ service_form.show_in_meter_reading.label_tag }}
-                                {{ service_form.show_in_meter_reading }}
-                            </div>
+                        <div class="row">
+                            {% for form in services_formset %}
+                                {{ form.id }}
+                                <div class="form col-12">
+                                    <div class="col-md-7">
+                                        {{ form.name.label_tag }}
+                                        {{ form.name }}
+                                    </div>
+                                    <div class="col-md-5">
+                                        {{ form.metric.label_tag }}
+                                        {{ form.metric }}
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn col-xs-12 btn-default form-row-remove-btn disabled">
+                                                <i class="fa fa-trash delete-form"></i> <span class="check_delete">{{ form.DELETE }}</span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        {{ form.show_in_meter_reading.label_tag }}
+                                        {{ form.show_in_meter_reading }}
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                    {% endfor %}
-                    <a id="addNewForm" class="btn btn-default bg-green-active form-row-add-websiteservice-btn">Добавить</a>
+                        <a id="addNewForm" class="btn btn-default">Добавить</a>
+                    </div>
+                    <div class="tab-pane fade" id="metric" role="tabpanel">
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="metric" role="tabpanel">
-                </div>
-            </div>
             <hr>
+                <div class="col-xs-12 text-center">
+                    <div class="form-group">
+                        <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Отменить</a>
+                        <button type="submit" class="btn btn-success">Сохранить</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
-    <div class="col-xs-12 text-center">
-        <div class="form-group">
-            <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Отменить</a>
-            <button type="submit" class="btn btn-success">Сохранить</button>
-        </div>
-    </div>
 
-</form>
 {% endblock content %}
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
+<script>
+    const prefix = "form";
+    const form_class = ".form";
+    const image = undefined;
+    const index_class = undefined;
+    const default_image = undefined;
+
+    // after rendering page set hidden form
+    $("document").ready(function () {
+        addHiddenForm(prefix, form_class);
+    });
+    // if clicked trash icon than delete current form
+    $(".delete-form").click(function (e) {
+        deleteForm(e, prefix, form_class, index_class);
+    });
+    //if clicked add new form form button than add new form
+    $("#addNewForm").click(function () {
+        addNewForm(prefix, form_class, index_class);
+    });
+
+</script>
+{% endblock scripts %}

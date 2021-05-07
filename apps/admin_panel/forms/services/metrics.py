@@ -33,6 +33,6 @@ class MetricsForm(forms.ModelForm):
 MetricsFormset = modelformset_factory(
     Metrics,
     MetricsForm,
-    extra=1,
+    extra=0,
     can_delete=True,
 )
