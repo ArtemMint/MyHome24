@@ -25,6 +25,7 @@ class Services(models.Model):
     )
     show_in_meter_reading = models.BooleanField(
         default='False',
+        blank=True,
         verbose_name='Показывать в счетчиках',
     )
 

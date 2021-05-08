@@ -95,14 +95,14 @@ urlpatterns = [
     # Services
     path(
         'service/index/',
-        views.ServicesList.as_view(),
+        views.service_update_view,
         name='services_list'
     ),
 
-    #Metrics
+    # Metrics
     path(
         'metrics/index/',
-        views.MetricsList.as_view(),
+        views.metrics_update_view,
         name='metrics_list'
     ),
 
@@ -115,7 +115,6 @@ urlpatterns = [
     path(
         'tariff/create/',
         views.TariffCreate.as_view(),
-
         name='tariff_create'
     ),
     path(

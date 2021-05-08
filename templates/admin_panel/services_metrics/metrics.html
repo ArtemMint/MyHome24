@@ -16,7 +16,7 @@
          {% endfor %}
     {% endif %}
 
-    <!-- Service form -->
+    <!-- Metrics form -->
     <h3 class="title-block">Единицы измерения</h3>
     <div class="row">
         <div class="col-xs-12 col-lg-7">
@@ -39,12 +39,11 @@
                     <div class="form">
                         {{ metric_form.name.label_tag }}
                         {{ metric_form.name }}
-                        <span class="input-group-btn">
-                            <button type="button" class="btn col-xs-12 btn-default form-row-remove-btn disabled">
-                                <i class="fa fa-trash"></i>
-                                <span hidden>{{ metric_form.DELETE }}</span>
-                            </button>
-                        </span>
+                        <div class="input-group-btn">
+                            <a type="button" class="btn col-xs-12 btn-default">
+                                <i class="fa fa-trash delete-form"></i> <span class="check_delete">{{ metric_form.DELETE }}</span>
+                            </a>
+                        </div>
                     </div>
                     {% endfor %}
                 <a id="addNewForm" class="btn btn-default">Добавить</a>
@@ -56,10 +55,36 @@
 
     <div class="col-xs-12 text-center">
         <div class="form-group">
-            <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Отменить</a>
+            <a href="{% url 'admin_panel:metrics_list' %}" class="btn btn-default">Отменить</a>
             <button type="submit" class="btn btn-success">Сохранить</button>
         </div>
     </div>
 
 </form>
 {% endblock content %}
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
+<script>
+    const prefix = "form";
+    const form_class = ".form";
+    const image = undefined;
+    const index_class = undefined;
+    const default_image = undefined;
+
+    // after rendering page set hidden form
+    $("document").ready(function () {
+        addHiddenForm(prefix, form_class);
+    });
+    // if clicked trash icon than delete current form
+    $(".delete-form").click(function (e) {
+        deleteForm(e, prefix, form_class, index_class);
+    });
+    //if clicked add new form form button than add new form
+    $("#addNewForm").click(function () {
+        addNewForm(prefix, form_class, index_class);
+    });
+
+</script>
+{% endblock scripts %}

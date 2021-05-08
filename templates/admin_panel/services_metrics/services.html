@@ -18,6 +18,7 @@
          {% endfor %}
     {% endif %}
 
+<form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
     <!-- Service form -->
     <h3 class="title-block">Услуги</h3>
     <div class="row">
@@ -31,51 +32,49 @@
                     <a class="nav-link" id="metric-tab" data-toggle="tab" href="{% url 'admin_panel:metrics_list' %}" role="tab">Единицы измерения</a>
                 </li>
             </ul>
-            <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="services" role="tabpanel">
-                    {{ services_formset.management_form }}
-                        <div class="row">
-                            {% for form in services_formset %}
-                                {{ form.id }}
-                                <div class="form col-12">
-                                    <div class="col-md-7">
-                                        {{ form.name.label_tag }}
-                                        {{ form.name }}
-                                    </div>
-                                    <div class="col-md-5">
-                                        {{ form.metric.label_tag }}
-                                        {{ form.metric }}
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn col-xs-12 btn-default form-row-remove-btn disabled">
-                                                <i class="fa fa-trash delete-form"></i> <span class="check_delete">{{ form.DELETE }}</span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-12">
-                                        {{ form.show_in_meter_reading.label_tag }}
-                                        {{ form.show_in_meter_reading }}
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="services" role="tabpanel">
+                    <div class="row">
+                        {{ service_formset.management_form }}
+                        {% for form in service_formset %}
+                            {{ form.id }}
+                            <div class="form col-12">
+                                <div class="col-md-7">
+                                    {{ form.name.label_tag }}
+                                    {{ form.name }}
+                                </div>
+                                <div class="col-md-5">
+                                    {{ form.metric.label_tag }}
+                                    {{ form.metric }}
+                                    <div class="input-group-btn">
+                                        <a type="button" class="btn col-xs-12 btn-default">
+                                            <i class="fa fa-trash delete-form"></i> <span class="check_delete" hidden>{{ form.DELETE }}</span>
+                                        </a>
                                     </div>
                                 </div>
-                            {% endfor %}
-                        </div>
-                        <a id="addNewForm" class="btn btn-default">Добавить</a>
+                                <div class="col-md-12">
+                                    {{ form.show_in_meter_reading.label_tag }}
+                                    {{ form.show_in_meter_reading }}
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                    <div class="tab-pane fade" id="metric" role="tabpanel">
-                    </div>
+                    <a id="addNewForm" class="btn btn-default">Добавить</a>
                 </div>
+                <div class="tab-pane fade" id="metric" role="tabpanel">
+                </div>
+            </div>
             <hr>
-                <div class="col-xs-12 text-center">
-                    <div class="form-group">
-                        <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default">Отменить</a>
-                        <button type="submit" class="btn btn-success">Сохранить</button>
-                    </div>
+            <div class="col-xs-12 text-center">
+                <div class="form-group">
+                    <a href="{% url 'admin_panel:services_list' %}" class="btn btn-default">Отменить</a>
+                    <button type="submit" class="btn btn-success">Сохранить</button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-
-
+</form>
 {% endblock content %}
 
 {% block scripts %}

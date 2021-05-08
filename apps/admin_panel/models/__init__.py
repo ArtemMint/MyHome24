@@ -16,3 +16,7 @@ from admin_panel.models.tariffs import Tariff, TariffService
 
 #TransactionPurpose
 from admin_panel.models.transaction_purpose import TransactionPurpose
+
+# House
+from admin_panel.models.house.house import House, HousePreview
+from admin_panel.models.house.section import Section

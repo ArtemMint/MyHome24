@@ -73,7 +73,7 @@ function addHiddenForm(prefix, form_class, image_class=undefined, default_image=
         for (let i = 0, count = allForms.length; i < count; i++) {
 
             // get form
-            form = $(allForms.get(i));
+            let form = $(allForms.get(i));
 
             // set counter of form at the top of form
             if (index_class) form.find("span.form-index").text(i+1);
@@ -101,7 +101,7 @@ function addHiddenForm(prefix, form_class, image_class=undefined, default_image=
 
         // set checked to delete form after confirm
         $(e.target).siblings(".check_delete").children().prop('checked', true);
-
+        // console.log($(e.target).siblings(".check_delete").children().prop('checked',true));
         // hide form on page
         $(e.target).parents(form_class).css("display", 'none');
 
@@ -121,7 +121,7 @@ function addHiddenForm(prefix, form_class, image_class=undefined, default_image=
         for (let i = 0, count = allForms.length; i < count; i++) {
 
             // get form
-            form = $(allForms.get(i));
+            let form = $(allForms.get(i));
 
             // set counter of form at the top of form
             if (index_class) form.find("span.form-index").text(i+1);
