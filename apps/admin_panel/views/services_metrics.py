@@ -2,10 +2,9 @@
 Services and metrics view
 """
 
-from django.urls import reverse_lazy
+
 from django.shortcuts import render, redirect
-from django.views.generic.edit import UpdateView
-from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 from admin_panel.forms import (
     MetricsFormset,
@@ -20,6 +19,7 @@ def service_update_view(request):
         )
         if service_formset.is_valid():
             service_formset.save()
+            messages.success(request, 'Все данные обновлены!')
             return redirect('admin_panel:services_list')
 
     else:
@@ -40,6 +40,7 @@ def metrics_update_view(request):
         )
         if metrics_formset.is_valid():
             metrics_formset.save()
+            messages.success(request, 'Все данные обновлены!')
             return redirect('admin_panel:metrics_list')
 
     else:

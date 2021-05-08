@@ -31,7 +31,7 @@ class HousePreview(models.Model):
     image = models.ImageField(
         blank=True,
         upload_to='images/house/preview/',
-        verbose_name='Изображение'
+        verbose_name='Изображение',
     )
 
     def __str__(self):

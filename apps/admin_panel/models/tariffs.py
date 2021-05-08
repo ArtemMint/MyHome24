@@ -48,11 +48,13 @@ class TariffService(models.Model):
         Tariff,
         on_delete=models.CASCADE,
         related_name='tariff_service',
+        verbose_name='Тариф',
     )
     service = models.ForeignKey(
         Services,
         on_delete=models.CASCADE,
         related_name='tariff_services',
+        verbose_name='Услуга',
     )
     price = models.FloatField(
         max_length=500,
@@ -68,6 +70,7 @@ class TariffService(models.Model):
         Metrics,
         on_delete=models.CASCADE,
         related_name='tariff_metrics',
+        verbose_name='Ед.изм.',
     )
 
     def __str__(self):

@@ -20,37 +20,41 @@
             </ul>
          {% endfor %}
     {% endif %}
-
+    <div class="row">
+    <div class="col-lg-7">
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
         {{ tariff_form.as_p }}
 
-        {{ tariff_service_formset.manage_formset }}
-        <div class="table-responsive no-padding margin-top-15">
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Услуга</th>
-                    <th>Ед. изм.</th>
-                    <th>Цена за ед., грн</th>
-                    <th>Валюта</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{ tariff_service_formset.management_form }}
-                {% for tariff_service in tariff_service_formset %}
-                    {{ tariff_service.id }}
-                    <tr role="row">
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ tariff_service.service }}</td>
-                        <td>{{ tariff_service.metric }}</td>
-                        <td>{{ tariff_service.price }}</td>
-                        <td>{{ tariff_service.currency }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+        {{ tariff_service_formset.management_form }}
+        <div class="row">
+        {% for tariff_service in tariff_service_formset %}
+            {{ tariff_service.id }}
+            <div class="form col-lg-12 row">
+                <div class="col-md-4">
+                    {{ tariff_service.service.label_tag }}
+                    {{ tariff_service.service }}
+                </div>
+                <div class="col-md-3">
+                    {{ tariff_service.metric.label_tag }}
+                    {{ tariff_service.metric }}
+                </div>
+                <div class="col-md-2">
+                    {{ tariff_service.price.label_tag }}
+                    {{ tariff_service.price }}
+                </div>
+                <div class="col-md-3">
+                    {{ tariff_service.currency.label_tag }}
+                    {{ tariff_service.currency }}
+                    <div class="input-group-btn">
+                        <a type="button" class="btn col-xs-12 btn-default">
+                            <i class="fa fa-trash delete-form"></i> <span class="check_delete" hidden>{{ tariff_service.DELETE }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        <a id="addNewForm" class="btn btn-default">Добавить</a>
         <div class="col-xs-12 text-center">
             <div class="form-group">
                 <a href="{% url 'admin_panel:tariff_list' %}" class="btn btn-default">Отменить</a>
@@ -58,5 +62,33 @@
             </div>
         </div>
     </form>
-
+    </div>
+    </div>
 {% endblock content %}
+
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
+<script>
+    const prefix = "tariff_service";
+    const form_class = ".form";
+    const image = undefined;
+    const index_class = undefined;
+    const default_image = undefined;
+
+    // after rendering page set hidden form
+    $("document").ready(function () {
+        addHiddenForm(prefix, form_class, image, default_image);
+    });
+    // if clicked trash icon than delete current form
+    $(".delete-form").click(function (e) {
+        deleteForm(e, prefix, form_class, image, index_class);
+    });
+    //if clicked add new form form button than add new form
+    $("#addNewForm").click(function () {
+        addNewForm(prefix, form_class, index_class);
+    });
+
+</script>
+{% endblock scripts %}

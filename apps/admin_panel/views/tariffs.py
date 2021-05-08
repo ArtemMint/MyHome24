@@ -22,19 +22,32 @@ class TariffList(ListView):
 
 
 def tariff_update_view(request, pk):
-    tariff_form = TariffForm(request.POST or None,
-                             instance=Tariff.objects.get(id=pk))
-    tariff_service_formset = TariffServiceDisplayFormset(
+    tariff_form = TariffForm(
         request.POST or None,
-        instance=Tariff.objects.get(id=pk),)
+        instance=Tariff.objects.get(id=pk),
+    )
+    tariff_service_formset = TariffServiceFormset(
+        request.POST or None,
+        instance=Tariff.objects.get(id=pk),
+    )
     if request.POST:
-        if tariff_form.is_valid() and tariff_service_formset.is_valid():
+        if tariff_form.is_valid() and \
+                tariff_service_formset.is_valid():
             tariff_form.save()
             tariff_service_formset.save()
-            return redirect('admin_panel:tariff_list')
+            messages.success(request, 'Все данные обновлены!')
+            return redirect('admin_panel:tariff_update', pk)
+    else:
+        tariff_form = TariffForm(
+            instance=Tariff.objects.get(id=pk),
+        )
+        tariff_service_formset = TariffServiceFormset(
+            instance=Tariff.objects.get(id=pk),
+        )
+
     return render(
         request,
-        'admin_panel/tariffs/create.html',
+        'admin_panel/tariffs/update.html',
         {
             'tariff_form': tariff_form,
             'tariff_service_formset': tariff_service_formset,
@@ -48,21 +61,24 @@ def tariff_copy_view(request, pk):
     """
     tariff_form = TariffForm(
         request.POST or None,
-        instance=Tariff.get_tariff_for_copy(pk=pk),)
+        instance=Tariff.get_tariff_for_copy(pk=pk),
+    )
     tariff_service_formset = TariffServiceDisplayFormset(
         request.POST or None,
-        instance=Tariff.objects.get(id=pk),)
+        instance=Tariff.objects.get(id=pk),
+    )
 
     if request.POST:
-        if tariff_form.is_valid() \
-                and tariff_service_formset.is_valid():
+        if tariff_form.is_valid() and \
+                tariff_service_formset.is_valid():
             tariff_form.save()
             tariff_service_formset.save()
+            messages.success(request, 'Создана новая копия!')
             return redirect('admin_panel:tariff_list')
 
     return render(
         request,
-        'admin_panel/tariffs/create.html',
+        'admin_panel/tariffs/update.html',
         {
             'tariff_form': tariff_form,
             'tariff_service_formset': tariff_service_formset,
