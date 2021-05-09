@@ -1,15 +1,13 @@
 from django import forms
 from django.forms import inlineformset_factory
 
-from admin_panel.models import (
-    House,
-    HousePreview,
-)
+from admin_panel import models
+
 
 class HouseForm(forms.ModelForm):
 
     class Meta:
-        model = House
+        model = models.House
         fields = (
             'name',
             'address',
@@ -30,7 +28,7 @@ class HouseForm(forms.ModelForm):
 
 class HousePreviewForm(forms.ModelForm):
     class Meta:
-        model = HousePreview
+        model = models.HousePreview
         fields = (
             'image',
         )
@@ -44,8 +42,8 @@ class HousePreviewForm(forms.ModelForm):
 
 
 HousePreviewFormset = inlineformset_factory(
-    House,
-    HousePreview,
+    models.House,
+    models.HousePreview,
     HousePreviewForm,
     extra=5,
     max_num=5,

@@ -35,15 +35,7 @@ body {
     border-top: 0;
     color: #666;
 }
-.nav-tabs-custom {
-    margin-bottom: 20px;
-    background: #fff;
-    box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
-    border-radius: 3px;
-}
-.nav-tabs-custom>.nav-tabs>li.active {
-    border-top-color: #3c8dbc;
-}
+
 .nav-tabs-custom>.nav-tabs>li {
     border-top: 3px solid transparent;
     margin-bottom: -2px;

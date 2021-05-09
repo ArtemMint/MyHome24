@@ -27,16 +27,18 @@ def house_create_view(request):
             house_form.save()
             house_preview_formset.save()
             messages.success(request, 'Все обновлено!')
-            return redirect('admin_panel:house_update')
+            return redirect('admin_panel:houses_list')
     else:
         house_form = forms.HouseForm()
         house_preview_formset = forms.HousePreviewFormset()
+        house_section_formset = forms.HouseSectionFormset()
     return render(
         request,
         'admin_panel/houses/create.html',
         {
             'house_form': house_form,
             'house_preview_formset': house_preview_formset,
+            'house_section_formset': house_section_formset,
         }
     )
 
@@ -58,7 +60,7 @@ def house_update_view(request, pk):
             house_form.save()
             house_preview_formset.save()
             messages.success(request, 'Все данные дома обновлены!')
-            return redirect('admin_panel:house_update', pk)
+            return redirect('admin_panel:houses_list')
     else:
         house_form = forms.HouseForm(
             instance=models.House.objects.get(id=pk),
@@ -77,17 +79,12 @@ def house_update_view(request, pk):
 
 
 def house_detail_view(request, pk):
-    try:
-        house_preview = models.HousePreview.objects.filter(house=pk)
-    except None:
-        house_preview = False
-
     return render(
         request,
         'admin_panel/houses/detail.html',
         {
             'house_data': models.House.objects.get(id=pk),
-            'house_preview': house_preview,
+            'house_preview': models.HousePreview.get_queryset_all_images(pk=pk),
         }
     )
 

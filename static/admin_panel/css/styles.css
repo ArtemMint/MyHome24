@@ -108,6 +108,17 @@ a.dropdown-toggle {
     /* padding all 10px */
 }
 
+.nav-tabs-custom {
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+    border-radius: 3px;
+}
+
+.nav-tabs-custom>.nav-tabs>li.active {
+    border-top-color: #3c8dbc;
+}
+
 img.img-responsive {
     height: 49px;
     /* */
@@ -497,7 +508,6 @@ h4.box-title {
     /* replace to the right of title */
     color: #c90303;
 }
-
 
 .fa.fa-trash:hover {
     cursor: pointer;

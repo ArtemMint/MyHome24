@@ -70,9 +70,42 @@
                     {% endfor %}
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col-xs-12 col-lg-12">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item active">
+                                <a class="nav-link active" href="#tab-sections" data-toggle="tab" aria-expanded="true">Секции</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tab-floors" data-toggle="tab" aria-expanded="false">Этажи</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tab-houseuseradmins" data-toggle="tab" aria-expanded="false">Пользователи</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active clearfix" id="tab-sections">
+                                <div class="form">
+                                    {{ house_section_formset }}
+                                </div>
+                                <a id="addNewSection" class="btn btn-success pull-right form-row-add-section-btn" type="button">Добавить</a>
+                            </div>
+                            <div class="tab-pane clearfix" id="tab-floors">
+                                <div id="form-floor-rows">
+                                </div>
+                                <a id="addNewFloor" class="btn btn-success pull-right form-row-add-floor-btn" type="button">Добавить</a>
+                            </div>
+                            <div class="tab-pane clearfix" id="tab-houseuseradmins">
+                                <div id="form-houseuseradmin-rows">
+                                </div>
+                                <a id="addNewUserAdmin" class="btn btn-success pull-right form-row-add-houseuseradmin-btn" type="button">Добавить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <a id="addNewForm" class="btn btn-default">Добавить</a>
         <div class="col-xs-12 text-center">
             <div class="form-group">
                 <a href="{% url 'admin_panel:houses_list' %}" class="btn btn-default">Отменить</a>
@@ -86,27 +119,44 @@
 
 
 {% block scripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
-<script>
-    const prefix = "tariff_service";
-    const form_class = ".form";
-    const image = undefined;
-    const index_class = undefined;
-    const default_image = undefined;
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
+    <script>
+        const prefix = "house_sections";
+        const form_class = ".form";
+        const image = undefined;
+        const index_class = undefined;
+        const default_image = undefined;
 
-    // after rendering page set hidden form
-    $("document").ready(function () {
-        addHiddenForm(prefix, form_class, image, default_image);
-    });
-    // if clicked trash icon than delete current form
-    $(".delete-form").click(function (e) {
-        deleteForm(e, prefix, form_class, image, index_class);
-    });
-    //if clicked add new form form button than add new form
-    $("#addNewForm").click(function () {
-        addNewForm(prefix, form_class, index_class);
-    });
+        // after rendering page set hidden form
+        $("document").ready(function () {
+            addHiddenForm(prefix, form_class, image, default_image);
+        });
+        // if clicked trash icon than delete current form
+        $(".delete-form").click(function (e) {
+            deleteForm(e, prefix, form_class, image, index_class);
+        });
+        //if clicked add new form form button than add new form
+        $("#addNewSection").click(function () {
+            addNewForm(prefix, form_class, index_class);
+        });
 
-</script>
+    </script>
+
+    <!-- Switching between tabs -->
+    <script>
+        $('#myTab a[href="#tab-sections"]').on('click', function (e) {
+          e.preventDefault()
+          $(this).tab('show')
+        })
+        $('#myTab a[href="#tab-floors"]').on('click', function (e) {
+          e.preventDefault()
+          $(this).tab('show')
+        })
+        $('#myTab a[href="#tab-houseuseradmins"]').on('click', function (e) {
+          e.preventDefault()
+          $(this).tab('show')
+        })
+    </script>
+    <!-- End switching between tabs -->
 {% endblock scripts %}
