@@ -77,11 +77,17 @@ def house_update_view(request, pk):
 
 
 def house_detail_view(request, pk):
+    try:
+        house_preview = models.HousePreview.objects.filter(house=pk)
+    except None:
+        house_preview = False
+
     return render(
         request,
         'admin_panel/houses/detail.html',
         {
-
+            'house_data': models.House.objects.get(id=pk),
+            'house_preview': house_preview,
         }
     )
 

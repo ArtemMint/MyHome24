@@ -1,0 +1,147 @@
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">{{ house_data|truncatechars:30 }}</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:houses_list' %}">Дома</a></li>
+        <li class="breadcrumb-item active"> {{ house_data|truncatechars:20 }} </li>
+    </ul>
+{% endblock %}
+
+{% block header %}
+
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+        <div class="box-tools">
+            <a href="{% url 'admin_panel:house_update' house_data.id %}" class="btn btn-primary btn-sm float-right">
+                Редактировать дом
+                <i class="fa fa-pencil visible-xs" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-md-4">
+                <table class="table table-bordered table-striped table-view">
+                    <tbody>
+                        <tr>
+                            <td>Название</td>
+                            <td>{{ house_data.name|truncatechars:40 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Адрес</td>
+                            <td>{{ house_data.address|truncatechars:40 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Секций</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Этажей</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>Пользователи</td>
+                            <td>
+                                <p class="no-margin"><strong>Электрик:</strong>
+                                    <a href="/admin/user-admin/3">Александр Пушкин</a>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    {% for item in house_preview %}
+                        {% if forloop.first %}
+                        <div class="col-xs-12 col-md-6">
+                            <img class="largeImg margin-bottom-30"
+                                {% if item.image %}
+                                    src="/media/{{ item.image }}"
+                                    alt="{{ item.image }}"
+                                {% else %}
+                                     src="{% static 'admin_panel/img/default_image.jpeg' %}"
+                                     alt="default_image"
+                                {% endif %}>
+                        </div>
+                        {% else %}
+                            {% if forloop.counter|divisibleby:2 %}
+                            <div class="col-xs-6 col-md-3">
+                                <img class="smallImg margin-bottom-30"
+                                    {% if item.image %}
+                                        src="/media/{{ item.image }}"
+                                        alt="{{ item.image }}"
+                                    {% else %}
+                                         src="{% static 'admin_panel/img/default_image.jpeg' %}"
+                                         alt="default_image"
+                                    {% endif %}>
+                            {% else %}
+                                <img class="smallImg margin-bottom-30"
+                                    {% if item.image %}
+                                        src="/media/{{ item.image }}"
+                                        alt="{{ item.image }}"
+                                    {% else %}
+                                         src="{% static 'admin_panel/img/default_image.jpeg' %}"
+                                         alt="default_image"
+                                    {% endif %}>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <a id="addNewForm" class="btn btn-default">Добавить</a>
+        <div class="col-xs-12 text-center">
+            <div class="form-group">
+                <a href="{% url 'admin_panel:houses_list' %}" class="btn btn-default">Отменить</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </div>
+        </div>
+    </form>
+    </div>
+    </div>
+{% endblock content %}
+
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
+<script>
+    const prefix = "tariff_service";
+    const form_class = ".form";
+    const image = undefined;
+    const index_class = undefined;
+    const default_image = undefined;
+
+    // after rendering page set hidden form
+    $("document").ready(function () {
+        addHiddenForm(prefix, form_class, image, default_image);
+    });
+    // if clicked trash icon than delete current form
+    $(".delete-form").click(function (e) {
+        deleteForm(e, prefix, form_class, image, index_class);
+    });
+    //if clicked add new form form button than add new form
+    $("#addNewForm").click(function () {
+        addNewForm(prefix, form_class, index_class);
+    });
+
+</script>
+{% endblock scripts %}
