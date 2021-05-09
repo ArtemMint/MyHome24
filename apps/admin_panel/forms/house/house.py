@@ -34,6 +34,13 @@ class HousePreviewForm(forms.ModelForm):
         fields = (
             'image',
         )
+        widgets = {
+            'image': forms.FileInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+        }
 
 
 HousePreviewFormset = inlineformset_factory(

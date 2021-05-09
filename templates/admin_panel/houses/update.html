@@ -36,13 +36,13 @@
                         {% if forloop.first %}
                         <div class="col-xs-12 col-md-6">
                             <img class="largeImg margin-bottom-30"
-                                        {% if house_preview_form.image.value %}
-                                            src="/media/{{ house_preview_form.image.value }}"
-                                            alt="{{ house_preview_form.image.url }}"
-                                        {% else %}
-                                             src="{% static 'admin_panel/img/default_image.jpeg' %}"
-                                             alt="default_image"
-                                        {% endif %}>
+                                {% if house_preview_form.image.value %}
+                                    src="/media/{{ house_preview_form.image.value }}"
+                                    alt="{{ house_preview_form.image.url }}"
+                                {% else %}
+                                     src="{% static 'admin_panel/img/default_image.jpeg' %}"
+                                     alt="default_image"
+                                {% endif %}>
                         </div>
                         {% else %}
                             {% if forloop.counter|divisibleby:2 %}

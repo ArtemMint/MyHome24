@@ -629,9 +629,11 @@ h4.box-title {
     height: auto;
 }
 
-.table a
-{
+.table a {
     display:block;
     text-decoration:none;
     color: black;
+}
+.table td:hover{
+    cursor: pointer;
 }
