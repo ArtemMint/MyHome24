@@ -40,9 +40,9 @@
             <tbody>
                 {% for field in houses_list %}
                     <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td><a href="{% url 'admin_panel:house_detail' field.pk %}">{{ field.name }}</a></td>
-                        <td>{{ field.address }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ forloop.counter }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.name|truncatechars:50 }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.address|truncatechars:50 }}</td>
                         <td>
                             <div class="btn-group ">
                                 <a class="btn btn-default btn-sm" href="{% url 'admin_panel:house_update' field.pk %}" title="Редактировать">

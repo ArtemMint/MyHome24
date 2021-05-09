@@ -39,9 +39,9 @@
             <tbody>
             {% for field in tariff_list %}
                 <tr>
-                    <td><a href="{% url 'admin_panel:tariff_detail' field.pk %}">{{ field.name }}</a></td>
-                    <td>{{ field.description }}</td>
-                    <td>{{ field.editing_date }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:tariff_detail' field.pk %}'">{{ field.name }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:tariff_detail' field.pk %}'">{{ field.description }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:tariff_detail' field.pk %}'">{{ field.editing_date }}</td>
                     <td>
                         <div class="btn-group ">
                             <a class="btn btn-default btn-sm" href="{% url 'admin_panel:tariff_copy' field.pk %}" title="Копировать">
