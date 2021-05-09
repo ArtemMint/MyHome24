@@ -15,8 +15,10 @@ from admin_panel.forms.services.metrics import MetricsFormset
 from admin_panel.forms.services.services import ServicesFormset
 
 # Tariff
-from admin_panel.forms.tariff import TariffForm,\
-    TariffServiceForm, TariffServiceDisplayFormset, TariffServiceFormset
+from admin_panel.forms.tariff import *
 
-# TranactionPurpose
+# TransactionPurpose
 from admin_panel.forms.transaction_purpose import TransactionPurposeForm
+
+# House
+from admin_panel.forms.house.house import *

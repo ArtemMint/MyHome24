@@ -67,8 +67,28 @@ urlpatterns = [
     # Houses
     path(
         'house/index/',
-        views.HousesList.as_view(),
-        name='house_list'
+        views.HousesListView.as_view(),
+        name='houses_list'
+    ),
+    path(
+        'house/create/',
+        views.house_create_view,
+        name='house_create'
+    ),
+    path(
+        'house/update/<int:pk>/',
+        views.house_update_view,
+        name='house_update'
+    ),
+    path(
+        'house/detail/<int:pk>/',
+        views.house_detail_view,
+        name='house_detail'
+    ),
+    path(
+        'house/delete/<int:pk>',
+        views.HouseDeleteView.as_view(),
+        name='house_delete'
     ),
 
     # Messsages

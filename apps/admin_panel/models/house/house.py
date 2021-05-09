@@ -36,3 +36,6 @@ class HousePreview(models.Model):
 
     def __str__(self):
         return f'Дом: {self.house} - изображение: {self.id}'
+
+    def get_queryset_all_images(self):
+        return HousePreview.objects.all()

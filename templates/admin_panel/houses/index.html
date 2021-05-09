@@ -1,5 +1,65 @@
 {% extends 'admin_panel/base/base.html' %}
+{% load static %}
+{% block title %} <h1 class="m-0">Дома</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item active"> Дома </li>
+    </ul>
+{% endblock %}
 
 {% block content %}
-    <h1 class="text-center">Houses</h1>
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="pull-right margin-bottom" style="float: right">
+                <a class="btn btn-success" href="{% url 'admin_panel:house_create' %}">Добавить дом</a>
+            </div>
+        </div>
+    </div>
+
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    {% if houses_list %}
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 40px; min-width: 40px">#</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Адрес</th>
+                    <th style="width: 80px; min-width: 80px">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for field in houses_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url 'admin_panel:house_detail' field.pk %}">{{ field.name }}</a></td>
+                        <td>{{ field.address }}</td>
+                        <td>
+                            <div class="btn-group ">
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:house_update' field.pk %}" title="Редактировать">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:house_delete' field.pk %}" title="Удалить">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2 class="text-center">Список домов пуст!</h2>
+    {% endif %}
+    </form>
+
 {% endblock content %}

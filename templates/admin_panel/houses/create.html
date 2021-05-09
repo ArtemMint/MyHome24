@@ -1,0 +1,92 @@
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Дома</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:houses_list' %}">Дома</a></li>
+        <li class="breadcrumb-item active"> Новый дом </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-md-4">
+                {{ house_form.as_p }}
+                {{ house_preview_formset.management_form }}
+                {% for house_preview_form in house_preview_formset %}
+                    <b>Изображение #{{ forloop.counter }}. Размер:{% if forloop.first %}(522x350){% else %}(248x160) {% endif %}</b>
+                    <p>{{ house_preview_form.image }}</p>
+                {% endfor %}
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                {% for house_preview_form in house_preview_formset %}
+                    <div class="{% if forloop.first %}col-xs-12 col-md-6
+                                {% else %}col-xs-6 col-md-3
+                                {% endif %}">
+                        <img class="{% if forloop.first %}largeImg
+                                    {% else %}smallImg
+                                    {% endif %}margin-bottom-30"
+                                {% if house_preview_form.image.value %}
+                                src="/media/{{ house_preview_form.image.value }}"
+                                alt="{{ house_preview_form.image }}"
+                        {% else %}
+                             src="{% static 'admin_panel/img/default_image.jpeg' %}"
+                             alt="default_image"
+                        {% endif %}>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+
+        </div>
+        <a id="addNewForm" class="btn btn-default">Добавить</a>
+        <div class="col-xs-12 text-center">
+            <div class="form-group">
+                <a href="{% url 'admin_panel:houses_list' %}" class="btn btn-default">Отменить</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </div>
+        </div>
+    </form>
+    </div>
+    </div>
+{% endblock content %}
+
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
+<script>
+    const prefix = "tariff_service";
+    const form_class = ".form";
+    const image = undefined;
+    const index_class = undefined;
+    const default_image = undefined;
+
+    // after rendering page set hidden form
+    $("document").ready(function () {
+        addHiddenForm(prefix, form_class, image, default_image);
+    });
+    // if clicked trash icon than delete current form
+    $(".delete-form").click(function (e) {
+        deleteForm(e, prefix, form_class, image, index_class);
+    });
+    //if clicked add new form form button than add new form
+    $("#addNewForm").click(function () {
+        addNewForm(prefix, form_class, index_class);
+    });
+
+</script>
+{% endblock scripts %}
