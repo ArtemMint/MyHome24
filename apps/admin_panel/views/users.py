@@ -13,16 +13,18 @@ class UsersListView(generic.ListView):
 
 
 def user_create_view(request):
+    user_form = forms.UserCreateUserForm()
     if request.POST:
         user_form = forms.UserCreateUserForm(
             request.POST or None,
             request.FILES,
         )
         if user_form.is_valid():
-            user_form.save()
+            user = user_form.save(commit=False)
+            raw_password = user_form.cleaned_data['password']
+            user.set_password(raw_password)
+            user.save()
             return redirect('admin_panel:users_list')
-    else:
-        user_form = forms.UserCreateUserForm()
     return render(
         request,
         'admin_panel/users/create.html',
