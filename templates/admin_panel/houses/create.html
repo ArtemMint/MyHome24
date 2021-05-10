@@ -24,6 +24,9 @@
         <div class="row">
             <div class="col-md-4">
                 {{ house_form.as_p }}
+                {% for error in house_form.errors %}
+                    {{ error }}
+                {% endfor %}
                 {{ house_preview_formset.management_form }}
                 {% for house_preview_form in house_preview_formset %}
                     <b>Изображение #{{ forloop.counter }}. Размер:{% if forloop.first %}(522x350){% else %}(248x160) {% endif %}</b>
@@ -86,9 +89,15 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active clearfix" id="tab-sections">
-                                <div class="form">
-                                    {{ house_section_formset }}
-                                </div>
+                                {{ house_section_formset.management_form }}
+                                    {% for form in house_section_formset %}
+                                    <div class="form">
+                                            {{ form.as_p }}
+                                            {% for error in form.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                    </div>
+                                    {% endfor %}
                                 <a id="addNewSection" class="btn btn-success pull-right form-row-add-section-btn" type="button">Добавить</a>
                             </div>
                             <div class="tab-pane clearfix" id="tab-floors">

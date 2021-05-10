@@ -123,6 +123,11 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
+    full_name = models.CharField(
+        verbose_name='ФИО',
+        max_length=155,
+        blank=True,
+    )
     phone = models.CharField(
         verbose_name='phone number',
         max_length=25,

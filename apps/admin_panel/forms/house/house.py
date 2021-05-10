@@ -5,6 +5,7 @@ from admin_panel import models
 
 
 class HouseForm(forms.ModelForm):
+    prefix = 'house'
 
     class Meta:
         model = models.House

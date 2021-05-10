@@ -16,18 +16,26 @@ class HousesListView(generic.ListView):
 def house_create_view(request):
     if request.POST:
         house_form = forms.HouseForm(
-            request.POST or None,
-            request.FILES,
+            request.POST,
         )
         house_preview_formset = forms.HousePreviewFormset(
-            request.POST or None,
+            request.POST,
             request.FILES,
         )
-        if house_form.is_valid() and house_preview_formset.is_valid():
+        house_section_formset = forms.HouseSectionFormset(
+            request.POST,
+            instance=house_form.instance,
+        )
+        if house_form.is_valid() and\
+                house_preview_formset.is_valid() and\
+                house_section_formset.is_valid():
             house_form.save()
             house_preview_formset.save()
+            house_section_formset.save()
             messages.success(request, 'Все обновлено!')
             return redirect('admin_panel:houses_list')
+        else:
+            messages.error(request, 'Ошибка сохранения!')
     else:
         house_form = forms.HouseForm()
         house_preview_formset = forms.HousePreviewFormset()
@@ -55,10 +63,16 @@ def house_update_view(request, pk):
             request.FILES,
             instance=house_form.instance,
         )
+        house_section_formset = forms.HouseSectionFormset(
+            request.POST,
+            instance=house_form.instance,
+        )
         if house_form.is_valid() and \
-                house_preview_formset.is_valid():
+                house_preview_formset.is_valid() and \
+                house_section_formset.is_valid():
             house_form.save()
             house_preview_formset.save()
+            house_section_formset.save()
             messages.success(request, 'Все данные дома обновлены!')
             return redirect('admin_panel:houses_list')
     else:
@@ -68,12 +82,16 @@ def house_update_view(request, pk):
         house_preview_formset = forms.HousePreviewFormset(
             instance=house_form.instance,
         )
+        house_section_formset = forms.HouseSectionFormset(
+            instance=house_form.instance,
+        )
     return render(
         request,
         'admin_panel/houses/update.html',
         {
             'house_form': house_form,
             'house_preview_formset': house_preview_formset,
+            'house_section_formset': house_section_formset,
         }
     )
 
@@ -85,6 +103,7 @@ def house_detail_view(request, pk):
         {
             'house_data': models.House.objects.get(id=pk),
             'house_preview': models.HousePreview.get_queryset_all_images(pk=pk),
+            'house_section': models.HouseSection.get_sections_count(pk=pk),
         }
     )
 

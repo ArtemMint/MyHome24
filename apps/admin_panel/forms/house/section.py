@@ -5,6 +5,8 @@ from admin_panel import models
 
 
 class HouseSectionForm(forms.ModelForm):
+    prefix = 'house_section'
+
     class Meta:
         model = models.HouseSection
         fields = (

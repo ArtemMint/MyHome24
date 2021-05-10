@@ -49,7 +49,7 @@
                         </tr>
                         <tr>
                             <td>Секций</td>
-                            <td>3</td>
+                            <td>{{ house_section }}</td>
                         </tr>
                         <tr>
                             <td>Этажей</td>
@@ -118,30 +118,3 @@
     </div>
     </div>
 {% endblock content %}
-
-
-{% block scripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
-<script>
-    const prefix = "tariff_service";
-    const form_class = ".form";
-    const image = undefined;
-    const index_class = undefined;
-    const default_image = undefined;
-
-    // after rendering page set hidden form
-    $("document").ready(function () {
-        addHiddenForm(prefix, form_class, image, default_image);
-    });
-    // if clicked trash icon than delete current form
-    $(".delete-form").click(function (e) {
-        deleteForm(e, prefix, form_class, image, index_class);
-    });
-    //if clicked add new form form button than add new form
-    $("#addNewForm").click(function () {
-        addNewForm(prefix, form_class, index_class);
-    });
-
-</script>
-{% endblock scripts %}

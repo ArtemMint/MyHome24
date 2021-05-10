@@ -4,7 +4,6 @@ from admin_panel.models import House
 
 
 class HouseSection(models.Model):
-
     house = models.ForeignKey(
         House,
         on_delete=models.CASCADE,
@@ -12,7 +11,7 @@ class HouseSection(models.Model):
         default=None,
     )
     name = models.CharField(
-        verbose_name="Название",
+        verbose_name="Название секции",
         max_length=50,
         blank=True,
     )
@@ -22,3 +21,9 @@ class HouseSection(models.Model):
     editing_date = models.DateTimeField(
         auto_now=True,
     )
+
+    def __str__(self):
+        return f'{self.name}'
+
+    def get_sections_count(pk):
+        return HouseSection.objects.filter(house=pk).count()
