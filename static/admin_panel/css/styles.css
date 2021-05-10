@@ -659,3 +659,9 @@ h4.box-title {
     color: #333;
     white-space: nowrap;
 }
+
+.userAvatar img {
+    margin: 0 15px 15px 0;
+    height: 160px;
+    width: 160px;
+}

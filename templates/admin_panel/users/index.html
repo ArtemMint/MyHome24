@@ -23,7 +23,7 @@
             <div class="dropdown pull-right margin-bottom" style="float: right">
                 <button class="dropdown-toggle btn btn-success" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Выберите действие</button>
                 <ul class="dropdown-menu">
-                    <li><a href="">Добавить владельца квартиры</a></li>
+                    <li><a href="{% url 'admin_panel:user_create' %}">Добавить владельца квартиры</a></li>
                     <li><a href="">Отправить сообщение должникам</a></li>
                     <li><a href="">Отправить приглашение</a></li>
                 </ul>
@@ -51,24 +51,24 @@
             <tbody>
                 {% for field in users_list %}
                     <tr>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.id }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.full_name  |truncatechars:50 }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.phone|truncatechars:50 }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.email|truncatechars:50 }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.house|truncatechars:50 }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.flat|truncatechars:50 }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.created_date|truncatechars:50 }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.status|truncatechars:50 }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.none|truncatechars:50 }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.id }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.full_name  |truncatechars:50 }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.phone|truncatechars:50 }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.email|truncatechars:50 }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.house|truncatechars:50 }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.flat|truncatechars:50 }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.created_date|truncatechars:50 }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.status|truncatechars:50 }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.none|truncatechars:50 }}</td>
                         <td>
                             <div class="btn-group ">
                                 <a class="btn btn-default btn-sm" href="" title="Отправить сообщение" data-toggle="tooltip">
                                     <i class="fa fa-envelope"></i>
                                 </a>
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:house_update' field.pk %}" title="Редактировать">
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_update' field.pk %}" title="Редактировать">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:house_delete' field.pk %}" title="Удалить">
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_delete' field.pk %}" title="Удалить">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </div>

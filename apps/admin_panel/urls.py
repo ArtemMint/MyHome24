@@ -63,6 +63,26 @@ urlpatterns = [
         views.UsersListView.as_view(),
         name='users_list'
     ),
+    path(
+      'user/create/',
+      views.user_create_view,
+      name='user_create'
+    ),
+    path(
+      'user/update/<int:pk>',
+      views.user_update_view,
+      name='user_update'
+    ),
+    path(
+      'user/detail/<int:pk>',
+      views.user_detail_view,
+      name='user_detail'
+    ),
+    path(
+      'user/delete/<int:pk>',
+      views.UserDeleteView.as_view(),
+      name='user_delete'
+    ),
 
     # Houses
     path(
@@ -76,12 +96,12 @@ urlpatterns = [
         name='house_create'
     ),
     path(
-        'house/update/<int:pk>/',
+        'house/update/<int:pk>',
         views.house_update_view,
         name='house_update'
     ),
     path(
-        'house/detail/<int:pk>/',
+        'house/detail/<int:pk>',
         views.house_detail_view,
         name='house_detail'
     ),
@@ -138,22 +158,22 @@ urlpatterns = [
         name='tariff_create'
     ),
     path(
-        'tariff/detail/<int:pk>/',
+        'tariff/detail/<int:pk>',
         views.TariffDetail.as_view(),
         name='tariff_detail'
     ),
     path(
-        'tariff/update/<int:pk>/',
+        'tariff/update/<int:pk>',
         views.tariff_update_view,
         name='tariff_update'
     ),
     path(
-        'tariff/copy/<int:pk>/',
+        'tariff/copy/<int:pk>',
         views.tariff_copy_view,
         name='tariff_copy'
     ),
     path(
-        'tariff/delete/<int:pk>/',
+        'tariff/delete/<int:pk>',
         views.TariffDelete.as_view(),
         name='tariff_delete'
     ),
@@ -191,12 +211,12 @@ urlpatterns = [
         name='transaction_purpose_create'
     ),
     path(
-        'transaction-purpose/update/<int:pk>/',
+        'transaction-purpose/update/<int:pk>',
         views.TransactionPurposeUpdate.as_view(),
         name='transaction_purpose_update'
     ),
     path(
-        'transaction-purpose/delete/<int:pk>/',
+        'transaction-purpose/delete/<int:pk>',
         views.TransactionPurposeDelete.as_view(),
         name='transaction_purpose_delete'
     ),

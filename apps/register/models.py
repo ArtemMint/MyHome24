@@ -154,9 +154,8 @@ class User(AbstractUser):
     )
     birth_date = models.DateField(
         verbose_name='date joined',
-        auto_now_add=True,
+        default=None,
         blank=True,
-        null=True,
     )
     status = models.CharField(
         verbose_name='status of the user',
@@ -173,6 +172,11 @@ class User(AbstractUser):
         null=True,
         default=ROLE[0][0],
         choices=ROLE,
+    )
+    image = models.ImageField(
+        blank=True,
+        upload_to='images/users/user_image/',
+        verbose_name='Сменить изображение',
     )
 
     def get_users_count(self):
