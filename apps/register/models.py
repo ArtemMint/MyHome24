@@ -75,7 +75,7 @@ class AbstractUser(AbstractBaseUser):
 
     class Meta:
         abstract = True
-        ordering = ('full_name',)
+        ordering = ('-id',)
 
     def __str__(self):
         return self.email
@@ -183,6 +183,9 @@ class User(AbstractUser):
 
     def get_user_by_pk(pk):
         return User.objects.get(pk=pk)
+
+    def get_password(pk):
+        return User.objects.get(pk=pk).password
 
     def get_users_count(self):
         return User.objects.all().count()

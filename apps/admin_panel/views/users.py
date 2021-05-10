@@ -38,7 +38,7 @@ def user_update_view(request, pk):
     user_form = forms.UserCreateUserForm(
         instance=models.User.get_user_by_pk(pk),
         initial={
-            'password': models.User.objects.get(pk=pk).password
+            'password': models.User.get_password(pk)
         }
     )
     if request.POST:
@@ -67,7 +67,7 @@ def user_detail_view(request, pk):
         request,
         'admin_panel/users/detail.html',
         {
-
+            'user_form': models.User.get_user_by_pk(pk=pk)
         }
     )
 
