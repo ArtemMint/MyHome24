@@ -52,7 +52,7 @@
                 {% for field in users_list %}
                     <tr>
                         <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.id }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.get_full_name|truncatechars:50 }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.full_name  |truncatechars:50 }}</td>
                         <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.phone|truncatechars:50 }}</td>
                         <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.email|truncatechars:50 }}</td>
                         <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.house|truncatechars:50 }}</td>

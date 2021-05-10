@@ -60,8 +60,8 @@ urlpatterns = [
     # Users
     path(
         'user/index/',
-        views.UsersList.as_view(),
-        name='user_list'
+        views.UsersListView.as_view(),
+        name='users_list'
     ),
 
     # Houses

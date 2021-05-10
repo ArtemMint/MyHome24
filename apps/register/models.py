@@ -124,7 +124,7 @@ class User(AbstractUser):
         null=True,
     )
     full_name = models.CharField(
-        verbose_name='ФИО',
+        verbose_name='full name',
         max_length=155,
         blank=True,
     )
@@ -175,26 +175,5 @@ class User(AbstractUser):
         choices=ROLE,
     )
 
-    def get_full_name(self):
-        return f'{self.first_name} {self.last_name} {self.middle_name}'
-
-
-# class UserSocialNetwork(models.Model):
-#     """
-#     Social network of the user - Telegram and Viber
-#     """
-#     pass
-#
-#
-# class UserProfile(models.Model):
-#     """
-#     Profile extend for User model
-#     """
-#     pass
-#
-#
-# class UserPhone(models.Model):
-#     """
-#     Phone of the User
-#     """
-#     pass
+    def get_users_count(self):
+        return User.objects.all().count()
