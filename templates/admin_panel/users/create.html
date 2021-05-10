@@ -6,7 +6,7 @@
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:houses_list' %}">Дома</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:users_list' %}">Владельцы квартир</a></li>
         <li class="breadcrumb-item active"> Новый владелец </li>
     </ul>
 {% endblock %}
@@ -75,28 +75,3 @@
         </div>
     </form>
 {% endblock content %}
-
-{% block scripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
-    <script>
-        const prefix = "house_sections";
-        const form_class = ".form";
-        const image = undefined;
-        const index_class = undefined;
-        const default_image = undefined;
-
-        // after rendering page set hidden form
-        $("document").ready(function () {
-            addHiddenForm(prefix, form_class, image, default_image);
-        });
-        // if clicked trash icon than delete current form
-        $(".delete-form").click(function (e) {
-            deleteForm(e, prefix, form_class, image, index_class);
-        });
-        //if clicked add new form form button than add new form
-        $("#addNewSection").click(function () {
-            addNewForm(prefix, form_class, index_class);
-        });
-    </script>
-{% endblock scripts %}

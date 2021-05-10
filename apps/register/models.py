@@ -75,6 +75,7 @@ class AbstractUser(AbstractBaseUser):
 
     class Meta:
         abstract = True
+        ordering = ('full_name',)
 
     def __str__(self):
         return self.email
@@ -155,6 +156,7 @@ class User(AbstractUser):
     birth_date = models.DateField(
         verbose_name='date joined',
         default=None,
+        null=True,
         blank=True,
     )
     status = models.CharField(
@@ -178,6 +180,9 @@ class User(AbstractUser):
         upload_to='images/users/user_image/',
         verbose_name='Сменить изображение',
     )
+
+    def get_user_by_pk(pk):
+        return User.objects.get(pk=pk)
 
     def get_users_count(self):
         return User.objects.all().count()

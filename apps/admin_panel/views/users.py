@@ -35,11 +35,29 @@ def user_create_view(request):
 
 
 def user_update_view(request, pk):
+    user_form = forms.UserCreateUserForm(
+        instance=models.User.get_user_by_pk(pk),
+        initial={
+            'password': models.User.objects.get(pk=pk).password
+        }
+    )
+    if request.POST:
+        user_form = forms.UserCreateUserForm(
+            request.POST or None,
+            request.FILES,
+            instance=models.User.get_user_by_pk(pk),
+        )
+        if user_form.is_valid():
+            user = user_form.save(commit=False)
+            raw_password = user_form.cleaned_data['password']
+            user.set_password(raw_password)
+            user.save()
+            return redirect('admin_panel:users_list')
     return render(
         request,
         'admin_panel/users/update.html',
         {
-
+            'user_form': user_form,
         }
     )
 

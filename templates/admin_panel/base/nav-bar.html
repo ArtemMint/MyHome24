@@ -57,9 +57,12 @@
                 
                     <!-- User image -->
                     <li class="user-header">
-                        <!--<img src="/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="admin admin">-->
-                        <span><i class="fa fa-user-circle text-purple bg-gray-light img-circle"></i></span>
-                        <p> {{ request.user }} </p>
+                        {% if request.user %}
+                            <img src="{{ request.user.image.url }}" class="img-circle" alt="admin admin">
+                        {% else %}
+                            <span><i class="fa fa-user-circle text-purple bg-gray-light img-circle"></i></span>
+                        {% endif %}
+                        <p> {{ request.user.full_name }} </p>
                         <p>({{ request.user.role }})</p>
                     </li>
 
