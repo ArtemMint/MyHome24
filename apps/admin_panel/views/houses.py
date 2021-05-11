@@ -2,17 +2,21 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from admin_panel import models
 from admin_panel import forms
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class HousesListView(generic.ListView):
     model = models.House
     context_object_name = 'houses_list'
     template_name = "admin_panel/houses/index.html"
 
 
+@login_required(login_url='/admin/site/login')
 def house_create_view(request):
     house_form = forms.HouseForm()
     house_preview_formset = forms.HousePreviewFormset()
@@ -58,6 +62,7 @@ def house_create_view(request):
     )
 
 
+@login_required(login_url='/admin/site/login')
 def house_update_view(request, pk):
     house_form = forms.HouseForm(
         instance=models.House.objects.get(id=pk),
@@ -111,7 +116,7 @@ def house_update_view(request, pk):
         }
     )
 
-
+@login_required(login_url='/admin/site/login')
 def house_detail_view(request, pk):
     return render(
         request,
@@ -125,6 +130,7 @@ def house_detail_view(request, pk):
     )
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class HouseDeleteView(generic.DeleteView):
     model = models.House
     success_url = reverse_lazy('admin_panel:houses_list')

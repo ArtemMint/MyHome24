@@ -1,6 +1,8 @@
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.views.generic import (
     ListView,
     CreateView,
@@ -16,11 +18,13 @@ from admin_panel.forms import (
 )
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class TariffList(ListView):
     queryset = Tariff.objects.all()
     template_name = "admin_panel/tariffs/index.html"
 
 
+@login_required(login_url='/admin/site/login')
 def tariff_update_view(request, pk):
     tariff_form = TariffForm(
         request.POST or None,
@@ -55,6 +59,7 @@ def tariff_update_view(request, pk):
     )
 
 
+@login_required(login_url='/admin/site/login')
 def tariff_copy_view(request, pk):
     """
     Copy current item and save as new
@@ -86,6 +91,7 @@ def tariff_copy_view(request, pk):
     )
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class TariffCreate(CreateView):
     model = Tariff
     form_class = TariffForm
@@ -132,12 +138,14 @@ class TariffCreate(CreateView):
         return super(TariffCreate, self).form_valid(tariff_form)
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class TariffDelete(DeleteView):
     model = Tariff
     template_name = 'admin_panel/tariffs/delete.html'
     success_url = reverse_lazy('admin_panel:tariff_list')
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class TariffDetail(DetailView):
     template_name = 'admin_panel/tariffs/detail.html'
     success_url = reverse_lazy('admin_panel:tariff_list')

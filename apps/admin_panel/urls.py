@@ -8,6 +8,7 @@ __author__ = 'Artem Yurchak'
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
+from django.contrib.auth.views import LogoutView
 
 from admin_panel import views
 from register import views as register_views
@@ -17,8 +18,15 @@ urlpatterns = [
     # Admin login
     path(
         'site/login',
-        register_views.AdminLoginPage.as_view(),
+        register_views.AdminLoginView.as_view(),
         name='admin_login'
+    ),
+
+    # Admin logout
+    path(
+        'site/logout',
+        LogoutView.as_view(next_page='admin_panel:admin_login'),
+        name='admin_logout'
     ),
 
     # Statistics

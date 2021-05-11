@@ -10,7 +10,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 from register.forms import (
     UserRegisterForm,
-    UserAuthenticationForm,
 )
 
 
@@ -19,31 +18,34 @@ class UserLoginView(LoginView):
     redirect_authenticated_user = True
 
     def get(self, request):
-        return render(request, self.template_name)
+        return render(
+            request,
+            self.template_name
+        )
 
     def post(self, request):
         email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(email=email, password=password)
+        user = authenticate(email=email,
+                            password=password)
         context = {}
 
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect(self.request.GET.get('next', 'personal_cabinet:summary'))
+                return redirect(
+                    self.request.GET.get('next', 'personal_cabinet:summary'),
+                )
             else:
                 context['error_message'] = "user is not active"
         else:
             context['error_message'] = "email or password not correct"
 
-        return render(request, self.template_name, context)
-
-
-class UserLogoutView(View):
-    def get(self, request):
-        logout(request)
-        return reverse_lazy('personal_cabinet:user_login')
-
+        return render(
+            request,
+            self.template_name,
+            context
+        )
 
 class UserRegisterView(SuccessMessageMixin, CreateView):
     template_name = 'register/user/register.html'

@@ -5,6 +5,8 @@ Services and metrics view
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from admin_panel.forms import (
     MetricsFormset,
@@ -12,6 +14,7 @@ from admin_panel.forms import (
 )
 
 
+@login_required(login_url='/admin/site/login')
 def service_update_view(request):
     if request.POST:
         service_formset = ServicesFormset(
@@ -33,6 +36,7 @@ def service_update_view(request):
     )
 
 
+@login_required(login_url='/admin/site/login')
 def metrics_update_view(request):
     if request.POST:
         metrics_formset = MetricsFormset(

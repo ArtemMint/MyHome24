@@ -1,17 +1,20 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from register import models
 from register import forms
 
-
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class UsersListView(generic.ListView):
     model = models.User
     context_object_name = 'users_list'
     template_name = "admin_panel/users/index.html"
 
 
+@login_required(login_url='/admin/site/login')
 def user_create_view(request):
     user_form = forms.UserCreateUserForm()
     if request.POST:
@@ -34,6 +37,7 @@ def user_create_view(request):
     )
 
 
+@login_required(login_url='/admin/site/login')
 def user_update_view(request, pk):
     user_form = forms.UserCreateUserForm(
         instance=models.User.get_user_by_pk(pk),
@@ -62,6 +66,7 @@ def user_update_view(request, pk):
     )
 
 
+@login_required(login_url='/admin/site/login')
 def user_detail_view(request, pk):
     return render(
         request,
@@ -72,6 +77,7 @@ def user_detail_view(request, pk):
     )
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class UserDeleteView(generic.DeleteView):
     model = models.User
     success_url = reverse_lazy('admin_panel:users_list')

@@ -6,11 +6,14 @@ Views of site data
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import UpdateView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from admin_panel import models
 from admin_panel import forms
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class IndexSettings(SuccessMessageMixin, UpdateView):
     """IndexSettings page is render page with forms and
     data from DB and can change these data in forms
@@ -181,6 +184,7 @@ class IndexSettings(SuccessMessageMixin, UpdateView):
         )
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class AboutSettings(SuccessMessageMixin, UpdateView):
     """AboutSetting is render page with forms and
     data from DB and can change these data in forms
@@ -385,6 +389,7 @@ class AboutSettings(SuccessMessageMixin, UpdateView):
         )
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class ServicesSettings(SuccessMessageMixin, UpdateView):
     """ServicesSettings page is render page with forms and
     data from DB and can change these data in forms
@@ -499,6 +504,7 @@ class ServicesSettings(SuccessMessageMixin, UpdateView):
         )
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class ContactsSettings(SuccessMessageMixin, UpdateView):
     """ContactsSettings page is render page with forms and
     data from DB and can change these data in forms

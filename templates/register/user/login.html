@@ -21,6 +21,14 @@
             <div class="login-box-body">
                 <form class="form" method="post">{% csrf_token %}
                     <p class="login-box-msg">Вход в личный кабинет</p>
+                    <!-- Message if all saved -->
+                    {% if messages %}
+                         {% for message in messages %}
+                             <ul class="text-center alert alert-{{ message.tags }}">
+                                {{ message|safe }}
+                            </ul>
+                         {% endfor %}
+                    {% endif %}
                     <input class="form-control" type="email" name="email" placeholder="E-mail или ID" required><br>
                     <input class="form-control" type="password" name="password" placeholder="Пароль" required><br>
 

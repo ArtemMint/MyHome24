@@ -5,11 +5,14 @@ Pay company view
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from apps.admin_panel import models
 from apps.admin_panel import forms
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class PayCompany(SuccessMessageMixin, UpdateView):
     """PayCompany view that can update and
     display all information about pay company
