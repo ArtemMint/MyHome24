@@ -109,20 +109,20 @@ class User(AbstractUser):
     first_name = models.CharField(
         verbose_name='first name',
         max_length=50,
+        default='',
         blank=True,
-        null=True,
     )
     last_name = models.CharField(
         verbose_name='last name',
         max_length=50,
+        default='',
         blank=True,
-        null=True,
     )
     middle_name = models.CharField(
         verbose_name='middle name',
         max_length=50,
+        default='',
         blank=True,
-        null=True,
     )
     full_name = models.CharField(
         verbose_name='full name',
@@ -132,30 +132,29 @@ class User(AbstractUser):
     phone = models.CharField(
         verbose_name='phone number',
         max_length=25,
+        default='',
         blank=True,
-        null=False,
     )
     telegram = models.CharField(
         verbose_name='telegram',
         max_length=100,
+        default='',
         blank=True,
-        null=True,
     )
     viber = models.CharField(
         verbose_name='viber',
         max_length=100,
+        default='',
         blank=True,
-        null=True,
     )
     notes = models.TextField(
         verbose_name='notes about',
         max_length=1500,
+        default='',
         blank=True,
-        null=True,
     )
     birth_date = models.DateField(
         verbose_name='date joined',
-        default=None,
         null=True,
         blank=True,
     )
