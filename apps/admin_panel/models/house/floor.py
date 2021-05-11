@@ -3,7 +3,7 @@ from django.db import models
 from admin_panel.models import House
 
 
-class Floor(models.Model):
+class HouseFloor(models.Model):
     house = models.ForeignKey(
         House,
         on_delete=models.CASCADE,
@@ -27,4 +27,4 @@ class Floor(models.Model):
 
     @staticmethod
     def get_sections_count(pk):
-        return Floor.objects.filter(house=pk).count()
+        return HouseFloor.objects.filter(house=pk).count()

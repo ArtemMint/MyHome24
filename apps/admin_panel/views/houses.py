@@ -68,6 +68,9 @@ def house_update_view(request, pk):
     house_section_formset = forms.HouseSectionFormset(
         instance=house_form.instance,
     )
+    house_floor_formset = forms.HouseFloorFormset(
+        instance=house_form.instance,
+    )
     if request.POST:
         house_form = forms.HouseForm(
             request.POST or None,
@@ -83,12 +86,18 @@ def house_update_view(request, pk):
             request.POST,
             instance=house_form.instance,
         )
+        house_floor_formset = forms.HouseFloorFormset(
+            request.POST,
+            instance=house_form.instance,
+        )
         if house_form.is_valid() and \
                 house_preview_formset.is_valid() and \
-                house_section_formset.is_valid():
+                house_section_formset.is_valid() and\
+                house_floor_formset.is_valid():
             house_form.save()
             house_preview_formset.save()
             house_section_formset.save()
+            house_floor_formset.save()
             messages.success(request, 'Все данные дома обновлены!')
             return redirect('admin_panel:houses_list')
     return render(
@@ -98,6 +107,7 @@ def house_update_view(request, pk):
             'house_form': house_form,
             'house_preview_formset': house_preview_formset,
             'house_section_formset': house_section_formset,
+            'house_floor_formset': house_floor_formset,
         }
     )
 
@@ -110,6 +120,7 @@ def house_detail_view(request, pk):
             'house_data': models.House.objects.get(id=pk),
             'house_preview': models.HousePreview.get_queryset_all_images(pk=pk),
             'house_section': models.HouseSection.get_sections_count(pk=pk),
+            'house_floor': models.HouseFloor.get_sections_count(pk),
         }
     )
 

@@ -8,7 +8,7 @@ class FloorForm(forms.ModelForm):
     prefix = 'house_floor'
 
     class Meta:
-        model = models.Floor
+        model = models.HouseFloor
         fields = (
             'name',
         )
@@ -23,7 +23,7 @@ class FloorForm(forms.ModelForm):
 
 HouseFloorFormset = inlineformset_factory(
     models.House,
-    models.HouseSection,
+    models.HouseFloor,
     FloorForm,
     extra=1,
     can_delete=True,

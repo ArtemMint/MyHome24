@@ -91,11 +91,11 @@
                             <div class="tab-pane active clearfix" id="tab-sections">
                                 {{ house_section_formset.management_form }}
                                     {% for form in house_section_formset %}
-                                    <div class="form">
-                                            {{ form.as_p }}
-                                            {% for error in form.errors %}
-                                                {{ error }}
-                                            {% endfor %}
+                                    <div class="form-house-section">
+                                        {{ form.as_p }}
+                                        {% for error in form.errors %}
+                                            {{ error }}
+                                        {% endfor %}
                                     </div>
                                     {% endfor %}
                                 <a id="addNewSection" class="btn btn-success pull-right form-row-add-section-btn" type="button">Добавить</a>
@@ -103,17 +103,17 @@
                             <div class="tab-pane clearfix" id="tab-floors">
                                 {{ house_floor_formset.management_form }}
                                     {% for form in house_floor_formset %}
-                                    <div class="form">
-                                            {{ form.as_p }}
-                                            {% for error in form.errors %}
-                                                {{ error }}
-                                            {% endfor %}
+                                    <div class="form-house-floor">
+                                        {{ form.as_p }}
+                                        {% for error in form.errors %}
+                                            {{ error }}
+                                        {% endfor %}
                                     </div>
                                     {% endfor %}
                                 <a id="addNewFloor" class="btn btn-success pull-right form-row-add-floor-btn" type="button">Добавить</a>
                             </div>
                             <div class="tab-pane clearfix" id="tab-houseuseradmins">
-                                <div id="form-houseuseradmin-rows">
+                                <div id="form-houseuseradmin">
                                 </div>
                                 <a id="addNewUserAdmin" class="btn btn-success pull-right form-row-add-houseuseradmin-btn" type="button">Добавить</a>
                             </div>
@@ -138,23 +138,44 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
     <script>
-        const prefix = "house_sections";
-        const form_class = ".form";
+        const prefix1 = "house_sections";
+        const form_class1 = ".form-house-section";
+        const prefix2 = "house_floor";
+        const form_class2 = ".form-house-floor";
+        {#const prefix3 = "house_house-useradmin";#}
+        {#const form_class3 = ".form-housesection";#}
         const image = undefined;
         const index_class = undefined;
         const default_image = undefined;
 
         // after rendering page set hidden form
         $("document").ready(function () {
-            addHiddenForm(prefix, form_class, image, default_image);
+            addHiddenForm(prefix1, form_class1, image, default_image);
+        });
+        $("document").ready(function () {
+            addHiddenForm(prefix2, form_class2, image, default_image);
+        });
+
+
+
+        // if clicked trash icon than delete current form
+        $(".delete-form").click(function (e) {
+            deleteForm(e, prefix1, form_class1, image, index_class);
         });
         // if clicked trash icon than delete current form
         $(".delete-form").click(function (e) {
-            deleteForm(e, prefix, form_class, image, index_class);
+            deleteForm(e, prefix2, form_class2, image, index_class);
         });
+
+
+
         //if clicked add new form form button than add new form
         $("#addNewSection").click(function () {
-            addNewForm(prefix, form_class, index_class);
+            addNewForm(prefix1, form_class1, index_class);
+        });
+        //if clicked add new form form button than add new form
+        $("#addNewFloor").click(function () {
+            addNewForm(prefix2, form_class2, index_class);
         });
 
     </script>
@@ -168,12 +189,10 @@
         $('#myTab a[href="#tab-floors"]').on('click', function (e) {
             e.preventDefault();
             $(this).tab('show');
-
         })
         $('#myTab a[href="#tab-houseuseradmins"]').on('click', function (e) {
             e.preventDefault();
             $(this).tab('show');
-            $(this).
         })
     </script>
     <!-- End switching between tabs -->
