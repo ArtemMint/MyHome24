@@ -14,9 +14,11 @@ from admin_panel.models.services.metrics import Metrics
 # Tariff
 from admin_panel.models.tariffs import Tariff, TariffService
 
-#TransactionPurpose
+# TransactionPurpose
 from admin_panel.models.transaction_purpose import TransactionPurpose
 
 # House
-from admin_panel.models.house.house import House, HousePreview
-from admin_panel.models.house.section import HouseSection
+from admin_panel.models.house.house import *
+from admin_panel.models.house.section import *
+from admin_panel.models.house.floor import *
+from admin_panel.models.house.flat import *

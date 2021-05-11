@@ -17,6 +17,7 @@ def house_create_view(request):
     house_form = forms.HouseForm()
     house_preview_formset = forms.HousePreviewFormset()
     house_section_formset = forms.HouseSectionFormset()
+    house_floor_formset = forms.HouseFloorFormset()
     if request.POST:
         house_form = forms.HouseForm(
             request.POST,
@@ -29,12 +30,18 @@ def house_create_view(request):
             request.POST,
             instance=house_form.instance,
         )
+        house_floor_formset = forms.HouseFloorFormset(
+            request.POST,
+            instance=house_form.instance,
+        )
         if house_form.is_valid() and\
                 house_preview_formset.is_valid() and\
-                house_section_formset.is_valid():
+                house_section_formset.is_valid() and\
+                house_floor_formset.is_valid():
             house_form.save()
             house_preview_formset.save()
             house_section_formset.save()
+            house_floor_formset.save()
             messages.success(request, 'Все обновлено!')
             return redirect('admin_panel:houses_list')
         else:
@@ -46,6 +53,7 @@ def house_create_view(request):
             'house_form': house_form,
             'house_preview_formset': house_preview_formset,
             'house_section_formset': house_section_formset,
+            'house_floor_formset': house_floor_formset,
         }
     )
 

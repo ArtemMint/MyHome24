@@ -44,5 +44,6 @@ class HousePreview(models.Model):
     def __str__(self):
         return f'Дом: {self.house} - изображение: {self.id}'
 
+    @staticmethod
     def get_queryset_all_images(pk):
         return HousePreview.objects.filter(house=pk)

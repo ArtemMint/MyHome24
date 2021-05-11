@@ -101,8 +101,15 @@
                                 <a id="addNewSection" class="btn btn-success pull-right form-row-add-section-btn" type="button">Добавить</a>
                             </div>
                             <div class="tab-pane clearfix" id="tab-floors">
-                                <div id="form-floor-rows">
-                                </div>
+                                {{ house_floor_formset.management_form }}
+                                    {% for form in house_floor_formset %}
+                                    <div class="form">
+                                            {{ form.as_p }}
+                                            {% for error in form.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                    </div>
+                                    {% endfor %}
                                 <a id="addNewFloor" class="btn btn-success pull-right form-row-add-floor-btn" type="button">Добавить</a>
                             </div>
                             <div class="tab-pane clearfix" id="tab-houseuseradmins">
@@ -155,16 +162,18 @@
     <!-- Switching between tabs -->
     <script>
         $('#myTab a[href="#tab-sections"]').on('click', function (e) {
-          e.preventDefault()
-          $(this).tab('show')
+            e.preventDefault();
+            $(this).tab('show');
         })
         $('#myTab a[href="#tab-floors"]').on('click', function (e) {
-          e.preventDefault()
-          $(this).tab('show')
+            e.preventDefault();
+            $(this).tab('show');
+
         })
         $('#myTab a[href="#tab-houseuseradmins"]').on('click', function (e) {
-          e.preventDefault()
-          $(this).tab('show')
+            e.preventDefault();
+            $(this).tab('show');
+            $(this).
         })
     </script>
     <!-- End switching between tabs -->
