@@ -21,34 +21,44 @@ class Flat(models.Model):
         House,
         on_delete=models.CASCADE,
         related_name='flats',
-        default='',
+        null=True,
         blank=False,
     )
     section = models.ForeignKey(
         HouseSection,
         on_delete=models.CASCADE,
         related_name='flats',
-        default='',
+        null=True,
         blank=True,
     )
     floor = models.ForeignKey(
         HouseFloor,
         on_delete=models.CASCADE,
         related_name='flats',
-        default='',
+        null=True,
         blank=True,
     )
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='flats',
-        default='',
+        null=True,
         blank=True,
     )
     tariff = models.ForeignKey(
         Tariff,
         on_delete=models.CASCADE,
         related_name='flats',
-        default='',
+        null=True,
         blank=True,
     )
+
+    def __str__(self):
+        return f'Квартира №{self.number} - {self.house}'
+
+    class Meta:
+        ordering = ('house',)
+
+    @staticmethod
+    def get_flat_by_pk(pk):
+        return Flat.objects.get(pk=pk)

@@ -80,7 +80,7 @@ def house_update_view(request, pk):
         house_form = forms.HouseForm(
             request.POST or None,
             request.FILES,
-            instance=models.House.objects.get(id=pk),
+            instance=models.House.get_house_by_pk(pk=pk),
         )
         house_preview_formset = forms.HousePreviewFormset(
             request.POST or None,

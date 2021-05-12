@@ -61,27 +61,27 @@ urlpatterns = [
     # Flats
     path(
         'flat/index/',
-        views.FlatsList.as_view(),
+        views.FlatsListView.as_view(),
         name='flats_list'
     ),
     path(
       'flat/create/',
-      views.FlatsList.as_view(),
+      views.flat_create_view,
       name='flat_create'
     ),
     path(
       'flat/update/<int:pk>',
-      views.FlatsList.as_view(),
+      views.flat_update_view,
       name='flat_update'
     ),
     path(
       'flat/detail/<int:pk>',
-      views.FlatsList.as_view(),
+      views.flat_detail_view,
       name='flat_detail'
     ),
     path(
       'flat/delete/<int:pk>',
-      views.FlatsList.as_view(),
+      views.FlatDeleteView.as_view(),
       name='flat_delete'
     ),
 

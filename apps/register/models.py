@@ -77,9 +77,6 @@ class AbstractUser(AbstractBaseUser):
         abstract = True
         ordering = ('-id',)
 
-    def __str__(self):
-        return self.email
-
     def has_perm(self, perm, obj=None):
         return self.is_admin
 
@@ -179,6 +176,9 @@ class User(AbstractUser):
         upload_to='images/users/user_image/',
         verbose_name='Сменить изображение',
     )
+
+    def __str__(self):
+        return self.full_name
 
     def get_user_by_pk(pk):
         return User.objects.get(pk=pk)

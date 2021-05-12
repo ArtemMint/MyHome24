@@ -26,6 +26,10 @@ class House(models.Model):
     def __str__(self):
         return f'Дом : {self.name}'
 
+    @staticmethod
+    def get_house_by_pk(pk):
+        return House.objects.get(pk=pk)
+
 
 class HousePreview(models.Model):
 

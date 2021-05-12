@@ -1,23 +1,23 @@
 ﻿{% extends 'admin_panel/base/base.html' %}
 {% load static %}
 
-{% block title %} <h1 class="m-0">Тарифы</h1> {% endblock %}
+{% block title %} <h1 class="m-0"> Квартира: {{ flat_data }} </h1> {% endblock %}
 
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:tariff_list' %}">Тарифы</a></li>
-        <li class="breadcrumb-item active"> Тариф:{{ tariff_form.name }} </li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:flats_list' %}">Квартиры</a></li>
+        <li class="breadcrumb-item active"> Квартира: {{ flat_data }} </li>
     </ul>
 {% endblock %}
 
 {% block header %}
 
     <div class="box-header with-border">
-        <h3 class="box-title"></h3>
+        <h3 class="box-title">Просмотр квартиры</h3>
         <div class="box-tools">
-            <a href="{% url 'admin_panel:tariff_update' tariff_form.id %}" class="btn btn-primary btn-sm float-right">
-                Редактировать тариф
+            <a href="{% url 'admin_panel:flat_update' flat_data.id %}" class="btn btn-primary btn-sm float-right">
+                Редактировать квартиру
                 <i class="fa fa-pencil visible-xs" aria-hidden="true"></i>
             </a>
         </div>
@@ -26,23 +26,52 @@
 {% endblock %}
 
 {% block content %}
+    <div class="d-flex justify-content-between" style="padding: 0 10px">
 
+    </div>
     <table class="table table-bordered table-striped table-view">
-        <tbody>
-            <tr>
-                <td>Название тарифа</td>
-                <td>{{ tariff_form.name }}</td>
-            </tr>
-            <tr>
-                <td>Описание тарифа</td>
-                <td>{{ tariff_form.description|truncatechars:100 }}</td>
-            </tr>
-            <tr>
-                <td>Дата редактирования</td>
-                <td>{{ tariff_form.editing_date }}</td>
-            </tr>
-        </tbody>
+        <tr>
+            <td>Лицевой счёт</td>
+            <td>!!!Нет лицевого счёта!!!</td>
+        </tr>
+        <tr>
+            <td>Номер квартиры</td>
+            <td>{{ flat_data.number }}</td>
+        </tr>
+        <tr>
+            <td>Площадь</td>
+            <td>{{ flat_data.area }} м2</td>
+        </tr>
+        <tr>
+            <td>Дом</td>
+            <td>{{ flat_data.house}}</td>
+        </tr>
+        <tr>
+            <td>Секция</td>
+            <td>{{ flat_data.section }}</td>
+        </tr>
+        <tr>
+            <td>Этаж</td>
+            <td>{{ flat_data.floor }}</td>
+        </tr>
+        <tr>
+            <td>Владелец</td>
+            <td>{{ flat_data.owner}}</td>
+        </tr>
+        <tr>
+            <td>Тариф</td>
+            <td>{{ flat_data.tariff }}</td>
+        </tr>
     </table>
+    <div class="col">
+        <a href="#">Посмотреть показания счётчиков</a>
+    </div>
+    <div class="col">
+        <a href="#">Посмотреть приходы</a>
+    </div>
+    <div class="col">
+        <a href="#">Посмотреть квитанции</a>
+    </div>
 
     {% if tariff_service_list %}
     <div class="table-responsive no-padding margin-top-15">
