@@ -9,11 +9,16 @@ from admin_panel import models
 from admin_panel import forms
 
 
-@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class FlatsListView(generic.ListView):
-    model = models.Flat
-    context_object_name = 'flats_list'
-    template_name = "admin_panel/flats/index.html"
+@login_required(login_url='/admin/site/login')
+def flats_list_view(request):
+    return render(
+        request,
+        'admin_panel/flats/index.html',
+        {
+            'flats_list': models.Flat.get_flats_list(),
+            'flats_count': models.Flat.get_flats_count(),
+        }
+    )
 
 
 def flat_create_view(request):

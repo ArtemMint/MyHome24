@@ -9,11 +9,16 @@ from admin_panel import models
 from admin_panel import forms
 
 
-@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class HousesListView(generic.ListView):
-    model = models.House
-    context_object_name = 'houses_list'
-    template_name = "admin_panel/houses/index.html"
+@login_required(login_url='/admin/site/login')
+def houses_list_view(request):
+    return render(
+        request,
+        'admin_panel/houses/index.html',
+        {
+            'houses_list': models.House.get_houses_list(),
+            'houses_count': models.House.get_houses_count(),
+        }
+    )
 
 
 @login_required(login_url='/admin/site/login')

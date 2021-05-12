@@ -181,6 +181,10 @@ class User(AbstractUser):
         return self.full_name
 
     @staticmethod
+    def get_users_list():
+        return User.objects.all()
+
+    @staticmethod
     def get_user_by_pk(pk):
         return User.objects.get(pk=pk)
 

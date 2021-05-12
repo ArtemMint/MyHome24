@@ -61,7 +61,7 @@ urlpatterns = [
     # Flats
     path(
         'flat/index/',
-        views.FlatsListView.as_view(),
+        views.flats_list_view,
         name='flats_list'
     ),
     path(
@@ -88,7 +88,7 @@ urlpatterns = [
     # Users
     path(
         'user/index/',
-        views.UsersListView.as_view(),
+        views.users_list_view,
         name='users_list'
     ),
     path(
@@ -115,7 +115,7 @@ urlpatterns = [
     # Houses
     path(
         'house/index/',
-        views.HousesListView.as_view(),
+        views.houses_list_view,
         name='houses_list'
     ),
     path(

@@ -27,6 +27,14 @@ class House(models.Model):
         return f'Дом : {self.name}'
 
     @staticmethod
+    def get_houses_count():
+        return House.objects.all().count()
+
+    @staticmethod
+    def get_houses_list():
+        return House.objects.all()
+
+    @staticmethod
     def get_house_by_pk(pk):
         return House.objects.get(pk=pk)
 

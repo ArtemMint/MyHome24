@@ -8,11 +8,16 @@ from register import models
 from register import forms
 
 
-@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class UsersListView(generic.ListView):
-    model = models.User
-    context_object_name = 'users_list'
-    template_name = "admin_panel/users/index.html"
+@login_required(login_url='/admin/site/login')
+def users_list_view(request):
+    return render(
+        request,
+        "admin_panel/users/index.html",
+        {
+            'users_list': models.User.get_users_list(),
+            'users_count': models.User.get_users_count(),
+        }
+    )
 
 
 @login_required(login_url='/admin/site/login')

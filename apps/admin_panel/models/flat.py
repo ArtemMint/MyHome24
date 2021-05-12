@@ -60,5 +60,13 @@ class Flat(models.Model):
         ordering = ('house',)
 
     @staticmethod
+    def get_flats_count():
+        return Flat.objects.all().count()
+
+    @staticmethod
+    def get_flats_list():
+        return Flat.objects.all()
+
+    @staticmethod
     def get_flat_by_pk(pk):
         return Flat.objects.get(pk=pk)
