@@ -180,11 +180,14 @@ class User(AbstractUser):
     def __str__(self):
         return self.full_name
 
+    @staticmethod
     def get_user_by_pk(pk):
         return User.objects.get(pk=pk)
 
+    @staticmethod
     def get_password(pk):
         return User.objects.get(pk=pk).password
 
-    def get_users_count(self):
+    @staticmethod
+    def get_users_count():
         return User.objects.all().count()
