@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from register import models
 from register import forms
 
+
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class UsersListView(generic.ListView):
     model = models.User
@@ -68,11 +69,12 @@ def user_update_view(request, pk):
 
 @login_required(login_url='/admin/site/login')
 def user_detail_view(request, pk):
+    user = models.User.get_user_by_pk(pk=pk)
     return render(
         request,
         'admin_panel/users/detail.html',
         {
-            'user_form': models.User.get_user_by_pk(pk=pk)
+            'user_form': user,
         }
     )
 

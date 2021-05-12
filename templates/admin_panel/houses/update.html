@@ -35,6 +35,7 @@
             </div>
             <div class="col-md-8">
                 <div class="row">
+                    {{ house_preview_formset.management_form }}
                     {% for house_preview_form in house_preview_formset %}
                         {% if forloop.first %}
                         <div class="col-xs-12 col-md-6">
