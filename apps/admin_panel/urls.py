@@ -62,7 +62,27 @@ urlpatterns = [
     path(
         'flat/index/',
         views.FlatsList.as_view(),
-        name='flat_list'
+        name='flats_list'
+    ),
+    path(
+      'flat/create/',
+      views.FlatsList.as_view(),
+      name='flat_create'
+    ),
+    path(
+      'flat/update/<int:pk>',
+      views.FlatsList.as_view(),
+      name='flat_update'
+    ),
+    path(
+      'flat/detail/<int:pk>',
+      views.FlatsList.as_view(),
+      name='flat_detail'
+    ),
+    path(
+      'flat/delete/<int:pk>',
+      views.FlatsList.as_view(),
+      name='flat_delete'
     ),
 
     # Users

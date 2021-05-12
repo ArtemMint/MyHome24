@@ -1,0 +1,76 @@
+﻿{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Тарифы</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:tariff_list' %}">Тарифы</a></li>
+        <li class="breadcrumb-item active"> Тариф:{{ tariff_form.name }} </li>
+    </ul>
+{% endblock %}
+
+{% block header %}
+
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+        <div class="box-tools">
+            <a href="{% url 'admin_panel:tariff_update' tariff_form.id %}" class="btn btn-primary btn-sm float-right">
+                Редактировать тариф
+                <i class="fa fa-pencil visible-xs" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <table class="table table-bordered table-striped table-view">
+        <tbody>
+            <tr>
+                <td>Название тарифа</td>
+                <td>{{ tariff_form.name }}</td>
+            </tr>
+            <tr>
+                <td>Описание тарифа</td>
+                <td>{{ tariff_form.description|truncatechars:100 }}</td>
+            </tr>
+            <tr>
+                <td>Дата редактирования</td>
+                <td>{{ tariff_form.editing_date }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% if tariff_service_list %}
+    <div class="table-responsive no-padding margin-top-15">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Услуга</th>
+                    <th>Ед. изм.</th>
+                    <th>Цена за ед., грн</th>
+                    <th>Валюта</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ tariff_service_formset.management_form }}
+                {% for tariff_service in tariff_service_formset %}
+                    <tr role="row">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ tariff_service.service }}</td>
+                        <td>{{ tariff_service.metric }}</td>
+                        <td>{{ tariff_service.price }}</td>
+                        <td>{{ tariff_service.currency }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+{% endblock content %}
+
