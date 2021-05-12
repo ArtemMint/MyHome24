@@ -37,12 +37,13 @@ class HousePreview(models.Model):
         House,
         on_delete=models.CASCADE,
         related_name='house_preview',
-        default=None,
+        null=True,
     )
     image = models.ImageField(
-        blank=True,
         upload_to='images/house/preview/',
         verbose_name='Изображение',
+        blank=True,
+        null=True,
     )
 
     def __str__(self):

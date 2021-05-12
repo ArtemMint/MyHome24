@@ -47,7 +47,7 @@ class AbstractUser(AbstractBaseUser):
         max_length=100,
         unique=True,
     )
-    date_joined = models.DateTimeField(
+    date_joined = models.DateField(
         verbose_name='date joined',
         auto_now_add=True,
     )

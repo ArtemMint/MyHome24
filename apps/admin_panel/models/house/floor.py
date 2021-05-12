@@ -26,5 +26,5 @@ class HouseFloor(models.Model):
         return f'{self.name}'
 
     @staticmethod
-    def get_sections_count(pk):
+    def get_floor_count(pk):
         return HouseFloor.objects.filter(house=pk).count()

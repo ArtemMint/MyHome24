@@ -29,8 +29,12 @@
                 {% endfor %}
                 {{ house_preview_formset.management_form }}
                 {% for house_preview_form in house_preview_formset %}
+                    {{ house_preview_form.id }}
                     <b>Изображение #{{ forloop.counter }}. Размер:{% if forloop.first %}(522x350){% else %}(248x160) {% endif %}</b>
                     <p>{{ house_preview_form.image }}</p>
+                    {% for error in house_preview_form.errors %}
+                        {{ error }}
+                    {% endfor %}
                 {% endfor %}
             </div>
             <div class="col-md-8">

@@ -29,6 +29,7 @@ def house_create_view(request):
         house_preview_formset = forms.HousePreviewFormset(
             request.POST or None,
             request.FILES,
+            instance=house_form.instance,
         )
         house_section_formset = forms.HouseSectionFormset(
             request.POST or None,
@@ -105,7 +106,8 @@ def house_update_view(request, pk):
             messages.success(request, 'Все данные дома обновлены!')
             return redirect('admin_panel:houses_list')
         else:
-            messages.warning(request, '1!')
+            messages.error(request, 'Ошибка сохранения!')
+            return redirect('admin_panel:house_update', pk=pk)
     return render(
         request,
         'admin_panel/houses/update.html',
@@ -127,7 +129,7 @@ def house_detail_view(request, pk):
             'house_data': models.House.objects.get(id=pk),
             'house_preview': models.HousePreview.get_queryset_all_images(pk=pk),
             'house_section': models.HouseSection.get_sections_count(pk=pk),
-            'house_floor': models.HouseFloor.get_sections_count(pk),
+            'house_floor': models.HouseFloor.get_floor_count(pk),
         }
     )
 

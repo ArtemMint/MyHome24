@@ -48,5 +48,4 @@ HousePreviewFormset = inlineformset_factory(
     HousePreviewForm,
     extra=5,
     max_num=5,
-    min_num=5,
 )
