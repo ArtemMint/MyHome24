@@ -1,7 +1,8 @@
+run: collectstatic migrations-migrate collectstatic runserver
+migrations-migrate: makemigrations migrate
+
 runserver:
 	./manage.py runserver
-
-mm: makemigrations migrate
 
 makemigrations:
 	./manage.py makemigrations
@@ -11,3 +12,6 @@ migrate:
 
 test_all:
 	./manage.py test
+
+collectstatic:
+	./manage.py collectstatic --no-input
