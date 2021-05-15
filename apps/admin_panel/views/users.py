@@ -22,9 +22,9 @@ def users_list_view(request):
 
 @login_required(login_url='/admin/site/login')
 def user_create_view(request):
-    user_form = forms.UserCreateUserForm()
+    user_form = forms.UserCreateForm()
     if request.POST:
-        user_form = forms.UserCreateUserForm(
+        user_form = forms.UserCreateForm(
             request.POST or None,
             request.FILES,
         )
@@ -45,14 +45,14 @@ def user_create_view(request):
 
 @login_required(login_url='/admin/site/login')
 def user_update_view(request, pk):
-    user_form = forms.UserCreateUserForm(
+    user_form = forms.UserCreateForm(
         instance=models.User.get_user_by_pk(pk),
         initial={
             'password': models.User.get_password(pk)
         }
     )
     if request.POST:
-        user_form = forms.UserCreateUserForm(
+        user_form = forms.UserCreateForm(
             request.POST or None,
             request.FILES,
             instance=models.User.get_user_by_pk(pk),

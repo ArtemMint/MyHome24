@@ -17,6 +17,12 @@ class FlatForm(forms.ModelForm):
             'owner',
             'tariff',
         )
+        house = forms.ModelChoiceField(
+            queryset=models.House.objects.all()
+        )
+        section = forms.ModelChoiceField(
+            queryset=models.HouseSection.objects.filter(house__name=house)
+        )
         widgets = {
             'number': forms.TextInput(
                 attrs={

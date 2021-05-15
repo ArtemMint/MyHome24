@@ -88,7 +88,7 @@ urlpatterns = [
     # Users
     path(
         'user/index/',
-        views.users_list_view,
+        views.users_admin_list_view,
         name='users_list'
     ),
     path(
@@ -216,8 +216,28 @@ urlpatterns = [
     # User admin
     path(
         'user-admin/index/',
-        views.UsersAdminList.as_view(),
+        views.users_admin_list_view,
         name='user_admin_list'
+    ),
+    path(
+        'user/create/',
+        views.user_create_view,
+        name='user_create'
+    ),
+    path(
+        'user/update/<int:pk>',
+        views.user_update_view,
+        name='user_update'
+    ),
+    path(
+        'user/detail/<int:pk>',
+        views.user_detail_view,
+        name='user_detail'
+    ),
+    path(
+        'user/delete/<int:pk>',
+        views.UserDeleteView.as_view(),
+        name='user_delete'
     ),
 
     # Pay company

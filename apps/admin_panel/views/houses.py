@@ -27,6 +27,12 @@ def house_create_view(request):
     house_preview_formset = forms.HousePreviewFormset()
     house_section_formset = forms.HouseSectionFormset()
     house_floor_formset = forms.HouseFloorFormset()
+    if request.GET.get('house_flat-house'):
+        print(request.GET.get('house_flat-house'))
+        featured_filter = request.GET.get('house_flat-house')
+        sections = models.HouseSection.objects.filter(house__name=featured_filter)
+    else:
+        sections = models.HouseSection.objects.all()
     if request.POST:
         house_form = forms.HouseForm(
             request.POST or None,
@@ -64,6 +70,7 @@ def house_create_view(request):
             'house_preview_formset': house_preview_formset,
             'house_section_formset': house_section_formset,
             'house_floor_formset': house_floor_formset,
+            'sections': sections
         }
     )
 

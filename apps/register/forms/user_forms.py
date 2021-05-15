@@ -3,7 +3,7 @@ from django import forms
 from register.models import User
 
 
-class UserCreateUserForm(forms.ModelForm):
+class UserCreateForm(forms.ModelForm):
 
     class Meta:
         model = User
