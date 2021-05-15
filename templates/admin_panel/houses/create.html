@@ -24,6 +24,7 @@
         <div class="row">
             <div class="col-md-4">
                 {{ house_form.as_p }}
+            {{ sections }}
                 {% for error in house_form.errors %}
                     {{ error }}
                 {% endfor %}

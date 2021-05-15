@@ -38,7 +38,7 @@ urlpatterns = [
 
     # Cash register
     path(
-        'account-transaction/index',
+        'account-transaction/index/',
         views.AccountTransactionList.as_view(),
         name='account_transaction_list'
     ),
@@ -46,26 +46,26 @@ urlpatterns = [
 
     # Invoice
     path(
-        'invoice/index',
+        'invoice/index/',
         views.InvoiceList.as_view(),
         name='invoice_list'
     ),
 
     # Personal account
     path(
-        'account/index',
+        'account/index/',
         views.PersonalAccountList.as_view(),
         name='account_list'
     ),
 
     # Flats
     path(
-        'flat/index',
+        'flat/index/',
         views.flats_list_view,
         name='flats_list'
     ),
     path(
-      'flat/create',
+      'flat/create/',
       views.flat_create_view,
       name='flat_create'
     ),
@@ -87,12 +87,12 @@ urlpatterns = [
 
     # Users
     path(
-        'user/index',
+        'user/index/',
         views.users_admin_list_view,
         name='users_list'
     ),
     path(
-      'user/create',
+      'user/create/',
       views.user_create_view,
       name='user_create'
     ),
@@ -114,12 +114,12 @@ urlpatterns = [
 
     # Houses
     path(
-        'house/index',
+        'house/index/',
         views.houses_list_view,
         name='houses_list'
     ),
     path(
-        'house/create',
+        'house/create/',
         views.house_create_view,
         name='house_create'
     ),
@@ -139,49 +139,49 @@ urlpatterns = [
         name='house_delete'
     ),
 
-    # Messages
+    # Messsages
     path(
-        'message/index',
+        'message/index/',
         views.MessagesList.as_view(),
         name='message_list'
     ),
 
     # Master requests
     path(
-        'master-request/index',
+        'master-request/index/',
         views.MasterRequestsList.as_view(),
         name='master_request_list'
     ),
 
     # Meter readings
     path(
-        'meter-readings/index',
+        'meter-readings/index/',
         views.MeterReadingsList.as_view(),
         name='meter_readings_list'
     ),
 
     # Services
     path(
-        'service/index',
+        'service/index/',
         views.service_update_view,
         name='services_list'
     ),
 
     # Metrics
     path(
-        'metrics/index',
+        'metrics/index/',
         views.metrics_update_view,
         name='metrics_list'
     ),
 
     # Tariffs
     path(
-        'tariff/index',
+        'tariff/index/',
         views.TariffList.as_view(),
         name='tariff_list'
     ),
     path(
-        'tariff/create',
+        'tariff/create/',
         views.TariffCreate.as_view(),
         name='tariff_create'
     ),
@@ -208,20 +208,20 @@ urlpatterns = [
 
     # Roles
     path(
-        'user-admin/role',
+        'user-admin/role/',
         views.RolesList.as_view(),
         name='role_list'
     ),
 
     # User-admin
     path(
-        'user-admin/index',
+        'user-admin/index/',
         views.users_admin_list_view,
         name='users_admin_list'
     ),
     path(
-        'user-admin/create',
-        views.user_create_view,
+        'user-admin/create/',
+        views.user_admin_create_view,
         name='user_admin_create'
     ),
     path(
@@ -231,30 +231,30 @@ urlpatterns = [
     ),
     path(
         'user-admin/detail/<int:pk>',
-        views.user_detail_view,
+        views.user_admin_detail_view,
         name='user_admin_detail'
     ),
     path(
         'user-admin/delete/<int:pk>',
-        views.UserDeleteView.as_view(),
+        views.UserAdminDeleteView.as_view(),
         name='user_admin_delete'
     ),
 
     # Pay company
     path(
-        'pay_company/index',
+        'pay_company/index/',
         views.PayCompany.as_view(),
         name='pay_company'
     ),
 
     # Transaction-purpose
     path(
-        'transaction-purpose/index',
+        'transaction-purpose/index/',
         views.TransactionPurposeList.as_view(),
         name='transaction_purpose_list'
     ),
     path(
-        'transaction-purpose/create',
+        'transaction-purpose/create/',
         views.TransactionPurposeCreate.as_view(),
         name='transaction_purpose_create'
     ),
@@ -271,22 +271,22 @@ urlpatterns = [
 
     # Manage site
     path(
-        'website/home',
+        'website/home/',
         views.IndexSettings.as_view(),
         name='index'
     ),
     path(
-        'website/about',
+        'website/about/',
         views.AboutSettings.as_view(),
         name='about'
     ),
     path(
-        'website/services_metrics',
+        'website/services_metrics/',
         views.ServicesSettings.as_view(),
         name='services_metrics'
     ),
     path(
-        'website/contacts',
+        'website/contacts/',
         views.ContactsSettings.as_view(),
         name='contacts'
     ),

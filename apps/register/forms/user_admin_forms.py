@@ -12,10 +12,9 @@ class UserAdminCreateForm(forms.ModelForm):
             'last_name',
             'phone',
             'role',
-            'status'
+            'status',
             'email',
-            'password1',
-            'password2',
+            'password',
         )
         widgets = {
             'first_name': forms.TextInput(

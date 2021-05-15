@@ -14,31 +14,31 @@ def users_admin_list_view(request):
         request,
         "admin_panel/users_admin/index.html",
         {
-            'users_list': models.User.get_users_list(),
-            'users_count': models.User.get_users_count(),
+            'users_admin_list': models.User.get_users_admin_list(),
+            'users_admin_count': models.User.get_users_admin_count(),
         }
     )
 
 
 @login_required(login_url='/admin/site/login')
 def user_admin_create_view(request):
-    user_form = forms.UserCreateForm()
+    user_admin_form = forms.UserAdminCreateForm()
     if request.POST:
-        user_form = forms.UserCreateForm(
+        user_admin_form = forms.UserAdminCreateForm(
             request.POST or None,
-            request.FILES,
         )
-        if user_form.is_valid():
-            user = user_form.save(commit=False)
-            raw_password = user_form.cleaned_data['password']
+        if user_admin_form.is_valid():
+            user = user_admin_form.save(commit=False)
+            raw_password = user_admin_form.cleaned_data['password']
             user.set_password(raw_password)
+            user.is_staff = True
             user.save()
-            return redirect('admin_panel:users_list')
+            return redirect('admin_panel:users_admin_list')
     return render(
         request,
-        'admin_panel/users/create.html',
+        'admin_panel/users_admin/create.html',
         {
-            'user_form': user_form,
+            'user_admin_form': user_admin_form,
         }
     )
 
@@ -62,10 +62,10 @@ def user_admin_update_view(request, pk):
             raw_password = user_form.cleaned_data['password']
             user.set_password(raw_password)
             user.save()
-            return redirect('admin_panel:users_list')
+            return redirect('admin_panel:users_admin_list')
     return render(
         request,
-        'admin_panel/users/update.html',
+        'admin_panel/users_admin/update.html',
         {
             'user_form': user_form,
         }
@@ -77,7 +77,7 @@ def user_admin_detail_view(request, pk):
     user = models.User.get_user_by_pk(pk=pk)
     return render(
         request,
-        'admin_panel/users/detail.html',
+        'admin_panel/users_admin/detail.html',
         {
             'user_form': user,
         }
@@ -87,5 +87,5 @@ def user_admin_detail_view(request, pk):
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class UserAdminDeleteView(generic.DeleteView):
     model = models.User
-    success_url = reverse_lazy('admin_panel:users_list')
-    template_name = 'admin_panel/users/delete.html'
+    success_url = reverse_lazy('admin_panel:users_admin_list')
+    template_name = 'admin_panel/users_admin/delete.html'

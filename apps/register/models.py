@@ -185,6 +185,18 @@ class User(AbstractUser):
         return User.objects.all()
 
     @staticmethod
+    def get_users_admin_list():
+        return User.objects.filter(is_staff=True)
+
+    @staticmethod
+    def get_users_count():
+        return User.objects.all().count()
+
+    @staticmethod
+    def get_users_admin_count():
+        return User.objects.filter(is_staff=True).count()
+
+    @staticmethod
     def get_user_by_pk(pk):
         return User.objects.get(pk=pk)
 
@@ -192,6 +204,4 @@ class User(AbstractUser):
     def get_password(pk):
         return User.objects.get(pk=pk).password
 
-    @staticmethod
-    def get_users_count():
-        return User.objects.all().count()
+

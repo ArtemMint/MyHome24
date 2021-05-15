@@ -1,0 +1,77 @@
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Профиль владельца</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:users_list' %}">Владельцы квартир</a></li>
+        <li class="breadcrumb-item">Профиль владельца</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="userAvatar">
+        <img class="img-circle pull-left img-responsive"
+             {% if user_form.image %}
+                src="{{ user_form.image.url }}"
+             {% else %}
+                src="{% static 'default_profile_image.png' %}"
+            {% endif %}>
+    </div>
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <table class="table table-bordered table-striped">
+            <tr>
+                <td>Статус</td>
+                <td>{{ user_form.status }}</td>
+            </tr>
+            <tr>
+                <td>ID</td>
+                <td>{{ user_form.id }}</td>
+            </tr>
+            <tr>
+                <td>Фамилия</td>
+                <td>{{ user_form.last_name }}</td>
+            </tr>
+            <tr>
+                <td>Имя</td>
+                <td>{{ user_form.first_name }}</td>
+            </tr>
+            <tr>
+                <td>Отчество</td>
+                <td>{{ user_form.middle_name }}</td>
+            </tr>
+            <tr>
+                <td>Дата рождения</td>
+                <td>{{ user_form.birth_date }}</td>
+            </tr>
+            <tr>
+                <td>О владельце (заметки)</td>
+                <td>{{ user_form.notes }}</td>
+            </tr>
+            <tr>
+                <td>Телефон</td>
+                <td>{{ user_form.phone }}</td>
+            </tr>
+            <tr>
+                <td>Вайбер</td>
+                <td>{{ user_form.viber }}</td>
+            </tr>
+            <tr>
+                <td>Телеграм</td>
+                <td>{{ user_form.telegram }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ user_form.email }}</td>
+            </tr>
+        </table>
+        <div class="col-xs-12 text-center">
+            <div class="form-group">
+                <a href="{% url 'admin_panel:users_list' %}" class="btn btn-default">Отменить</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </div>
+        </div>
+    </form>
+{% endblock content %}

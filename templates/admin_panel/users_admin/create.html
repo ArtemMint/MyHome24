@@ -1,0 +1,52 @@
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Новый пользователь</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:users_admin_list' %}">Пользователи</a></li>
+        <li class="breadcrumb-item active"> Новый пользователь </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <label>Имя</label>
+                {{ user_admin_form.last_name }}
+                <label>Фамилия</label>
+                {{ user_admin_form.first_name }}
+                <label>Телефон</label>
+                {{ user_admin_form.phone }}
+                <label>Роль</label>
+                {{ user_admin_form.role }}
+                <label>Статус</label>
+                {{ user_admin_form.status }}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <label>Email(логин)</label>
+                {{ user_admin_form.email }}
+                <h2 class="page-header">Изменить пароль</h2>
+                <label>Пароль</label>
+                {{ user_admin_form.password }}
+            </div>
+        </div>
+        <div class="col-xs-12 text-center">
+            <div class="form-group">
+                <a href="{% url 'admin_panel:houses_list' %}" class="btn btn-default">Отменить</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </div>
+        </div>
+    </form>
+{% endblock content %}
