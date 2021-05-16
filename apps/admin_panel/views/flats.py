@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.forms import ModelChoiceField
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib import messages
@@ -22,6 +21,7 @@ def flats_list_view(request):
     )
 
 
+@login_required(login_url='/admin/site/login')
 def flat_create_view(request):
     flat_form = forms.FlatForm()
     if request.POST:
@@ -41,6 +41,7 @@ def flat_create_view(request):
     )
 
 
+@login_required(login_url='/admin/site/login')
 def flat_update_view(request, pk):
     flat_form = forms.FlatForm(
         instance=models.Flat.get_flat_by_pk(pk),
@@ -63,6 +64,7 @@ def flat_update_view(request, pk):
     )
 
 
+@login_required(login_url='/admin/site/login')
 def flat_detail_view(request, pk):
     return render(
         request,
@@ -73,6 +75,7 @@ def flat_detail_view(request, pk):
     )
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class FlatDeleteView(generic.DeleteView):
     model = models.Flat
     success_url = reverse_lazy('admin_panel:flats_list')
