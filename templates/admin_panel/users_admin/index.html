@@ -68,10 +68,10 @@
                                 <a class="btn btn-default btn-sm" href="" title="Отправить сообщение" data-toggle="tooltip">
                                     <i class="fas fa-redo-alt"></i>
                                 </a>
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_update' field.pk %}" title="Редактировать">
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_admin_update' field.pk %}" title="Редактировать">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_delete' field.pk %}" title="Удалить">
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_admin_delete' field.pk %}" title="Удалить">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </div>

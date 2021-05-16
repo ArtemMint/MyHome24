@@ -1,77 +1,62 @@
 {% extends 'admin_panel/base/base.html' %}
 {% load static %}
 
-{% block title %} <h1 class="m-0">Профиль владельца</h1> {% endblock %}
+{% block title %} <h1 class="m-0">Пользователи</h1> {% endblock %}
 
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:users_list' %}">Владельцы квартир</a></li>
-        <li class="breadcrumb-item">Профиль владельца</li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:users_admin_list' %}">Пользователи</a></li>
+        <li class="breadcrumb-item">Пользователь</li>
     </ul>
+{% endblock %}
+
+{% block header %}
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+        <div class="box-tools">
+            <a href="{% url 'admin_panel:user_admin_update' user_admin.id %}" class="btn btn-primary btn-sm float-right">
+                Редактировать пользователя
+                <i class="fa fa-pencil visible-xs" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
 {% endblock %}
 
 {% block content %}
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-        <table class="table table-bordered table-striped">
+    <div class="row">
+        <div class="col-xs-12 col-log-4">
+            <table class="table table-bordered table-striped">
+            <tr>
+                <td>Пользователь</td>
+                <td>{{ user_admin.full_name }}</td>
+            </tr>
+            <tr>
+                <td>Роль</td>
+                <td>{{ user_admin.role }}</td>
+            </tr>
+            <tr>
+                <td>Телефон</td>
+                <td>{{ user_admin.phone }}</td>
+            </tr>
+                <td>Email</td>
+                <td>{{ user_admin.email }}</td>
+            </tr>
             <tr>
                 <td>Статус</td>
-                {% if user_admin_form.status == 'Активен' %}
-                    <td style="color: #00ba13"><small class="label label-success">{{ user_admin_form.status }}</small></td>
-                {% elif user_admin_form.status == 'Новый' %}
-                    <td style="color: #00ba13"><small class="label label-warning">{{ user_admin_form.status }}</small></td>
-                {% elif user_admin_form.status == 'Отключен' %}
-                    <td style="color: #00ba13"><small class="label label-danger">{{ user_admin_form.status }}</small></td>
+                {% if user_admin.status == 'Активен' %}
+                    <td style="color: #00ba13"><small class="label label-success">{{ user_admin.status }}</small></td>
+                {% elif user_admin.status == 'Новый' %}
+                    <td style="color: #00ba13"><small class="label label-warning">{{ user_admin.status }}</small></td>
+                {% elif user_admin.status == 'Отключен' %}
+                    <td style="color: #00ba13"><small class="label label-danger">{{ user_admin.status }}</small></td>
                 {% else %}
                     <td></td>
                 {% endif %}
             </tr>
-            <tr>
-                <td>ID</td>
-                <td>{{ user_form.id }}</td>
-            </tr>
-            <tr>
-                <td>Фамилия</td>
-                <td>{{ user_form.last_name }}</td>
-            </tr>
-            <tr>
-                <td>Имя</td>
-                <td>{{ user_form.first_name }}</td>
-            </tr>
-            <tr>
-                <td>Отчество</td>
-                <td>{{ user_form.middle_name }}</td>
-            </tr>
-            <tr>
-                <td>Дата рождения</td>
-                <td>{{ user_form.birth_date }}</td>
-            </tr>
-            <tr>
-                <td>О владельце (заметки)</td>
-                <td>{{ user_form.notes }}</td>
-            </tr>
-            <tr>
-                <td>Телефон</td>
-                <td>{{ user_form.phone }}</td>
-            </tr>
-            <tr>
-                <td>Вайбер</td>
-                <td>{{ user_form.viber }}</td>
-            </tr>
-            <tr>
-                <td>Телеграм</td>
-                <td>{{ user_form.telegram }}</td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td>{{ user_form.email }}</td>
-            </tr>
         </table>
-        <div class="col-xs-12 text-center">
-            <div class="form-group">
-                <a href="{% url 'admin_panel:users_list' %}" class="btn btn-default">Отменить</a>
-                <button type="submit" class="btn btn-success">Сохранить</button>
-            </div>
         </div>
+    </div>
     </form>
 {% endblock content %}

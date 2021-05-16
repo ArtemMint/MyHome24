@@ -88,7 +88,7 @@ urlpatterns = [
     # Users
     path(
         'user/index/',
-        views.users_admin_list_view,
+        views.users_list_view,
         name='users_list'
     ),
     path(
@@ -226,7 +226,7 @@ urlpatterns = [
     ),
     path(
         'user-admin/update/<int:pk>',
-        views.user_update_view,
+        views.user_admin_update_view,
         name='user_admin_update'
     ),
     path(

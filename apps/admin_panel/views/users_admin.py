@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
+from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
@@ -33,6 +34,7 @@ def user_admin_create_view(request):
             user.set_password(raw_password)
             user.is_staff = True
             user.save()
+            messages.success(request, 'Пользователь создан!')
             return redirect('admin_panel:users_admin_list')
     return render(
         request,
@@ -45,29 +47,30 @@ def user_admin_create_view(request):
 
 @login_required(login_url='/admin/site/login')
 def user_admin_update_view(request, pk):
-    user_form = forms.UserCreateForm(
+    user_admin_form = forms.UserCreateForm(
         instance=models.User.get_user_by_pk(pk),
         initial={
             'password': models.User.get_password(pk)
         }
     )
     if request.POST:
-        user_form = forms.UserCreateForm(
+        user_admin_form = forms.UserCreateForm(
             request.POST or None,
             request.FILES,
             instance=models.User.get_user_by_pk(pk),
         )
-        if user_form.is_valid():
-            user = user_form.save(commit=False)
-            raw_password = user_form.cleaned_data['password']
+        if user_admin_form.is_valid():
+            user = user_admin_form.save(commit=False)
+            raw_password = user_admin_form.cleaned_data['password']
             user.set_password(raw_password)
             user.save()
+            messages.success(request, 'Данные пользователя обновлены!')
             return redirect('admin_panel:users_admin_list')
     return render(
         request,
         'admin_panel/users_admin/update.html',
         {
-            'user_form': user_form,
+            'user_admin_form': user_admin_form,
         }
     )
 
@@ -79,7 +82,7 @@ def user_admin_detail_view(request, pk):
         request,
         'admin_panel/users_admin/detail.html',
         {
-            'user_admin_form': user_admin,
+            'user_admin': user_admin,
         }
     )
 

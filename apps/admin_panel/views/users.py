@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
+from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
@@ -33,6 +34,7 @@ def user_create_view(request):
             raw_password = user_form.cleaned_data['password']
             user.set_password(raw_password)
             user.save()
+            messages.success(request, 'Владелец квартиры создан!')
             return redirect('admin_panel:users_list')
     return render(
         request,
@@ -62,6 +64,7 @@ def user_update_view(request, pk):
             raw_password = user_form.cleaned_data['password']
             user.set_password(raw_password)
             user.save()
+            messages.success(request, 'Данные владельца квартиры обновлены!')
             return redirect('admin_panel:users_list')
     return render(
         request,

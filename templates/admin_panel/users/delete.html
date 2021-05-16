@@ -6,13 +6,12 @@
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:houses_list' %}">Владельцы квартир</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:users_list' %}">Владельцы квартир</a></li>
         <li class="breadcrumb-item active"> Удалить владельца </li>
     </ul>
 {% endblock %}
 
 {% block content %}
-
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
 
         <div class="col-xs-12 text-center">
@@ -23,5 +22,4 @@
             </div>
         </div>
     </form>
-
 {% endblock content %}
