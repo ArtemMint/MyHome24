@@ -1,5 +1,132 @@
 {% extends 'admin_panel/base/base.html' %}
+{% load static %}
+{% block title %} <h1 class="m-0">Владельцы квартир</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item active"> Владельцы квартир </li>
+    </ul>
+{% endblock %}
+
+{% block header %}
+    <div class="row" style="margin: 5px 0 0 10px">
+        <div class="col-xs-12 col-lg-9">
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3>number грн</h3>
+                            <p>Состояние кассы</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="small-box bg-blue overflow-hidden">
+                        <div class="inner">
+                            <h3>number грн</h3>
+                            <p>Баланс по счетам</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="small-box bg-red overflow-hidden">
+                        <div class="inner">
+                            <h3>number грн</h3>
+                            <p>Задолженность по счетам</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-lg-3">
+            <div class="dropdown pull-right">
+                <div class="dropdown pull-right margin-bottom" style="float: right">
+                    <button class="dropdown-toggle btn btn-success" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Выберите действие</button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'admin_panel:account_create' %}">Добавить лицевой счет</a></li>
+                        <li><a href="">Выгрузить в Excel</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
-    <h1 class="text-center">Personal account</h1>
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    {% if accounts_list %}
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 40px; min-width: 40px">№</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Квартира</th>
+                    <th scope="col">Дом</th>
+                    <th scope="col">Секция</th>
+                    <th scope="col">Владелец</th>
+                    <th scope="col">Остаток</th>
+                    <th style="width: 80px; min-width: 80px">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for field in accounts_list %}
+                    <tr>
+                        <td onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.number }}</td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
+                            {% if field.status == 'Активен' %}
+                                <small class="label label-success">{{ field.status }}</small></td>
+                            {% elif field.status == 'Новый' %}
+                                <small class="label label-warning">{{ field.status }}</small></td>
+                            {% elif field.status == 'Отключен' %}
+                                <small class="label label-danger">{{ field.status }}</small></td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.flat|truncatechars:50 }}</td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.house|truncatechars:50 }}</td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.section|truncatechars:50 }}</td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.flats.owner|truncatechars:50 }}</td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.account_balance|truncatechars:50 }}</td>
+                        <td>
+                            <div class="btn-group ">
+                                <a class="btn btn-default btn-sm" href="" title="Отправить сообщение" data-toggle="tooltip">
+                                    <i class="fa fa-envelope"></i>
+                                </a>
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_update' field.pk %}" title="Редактировать">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_delete' field.pk %}" title="Удалить">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="box-footer">
+            <div>Количество счетов: <span class="text-bold">{{ accounts_count }}</span></div>
+        </div>
+    {% else %}
+        <h2 class="text-center">Список счетов пуст!</h2>
+    {% endif %}
+    </form>
 {% endblock content %}

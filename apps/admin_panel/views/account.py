@@ -14,24 +14,42 @@ def accounts_list_view(request):
         request,
         "admin_panel/account/index.html",
         {
-
+            "accounts_list": models.Account.get_accounts_list(),
         }
     )
 
 
 @login_required(login_url='/admin/site/login')
 def account_create_view(request):
-    pass
+    return render(
+        request,
+        "admin_panel/account/create.html",
+        {
+
+        }
+    )
 
 
 @login_required(login_url='/admin/site/login')
 def account_update_view(request):
-    pass
+    return render(
+        request,
+        "admin_panel/account/update.html",
+        {
+
+        }
+    )
 
 
 @login_required(login_url='/admin/site/login')
 def account_detail_view(request):
-    pass
+    return render(
+        request,
+        "admin_panel/account/detail.html",
+        {
+
+        }
+    )
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
