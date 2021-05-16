@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %} <h1 class="m-0">Новый лицевой счет</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:accounts_list' %}">Лицевые счета</a></li>
+        <li class="breadcrumb-item active">Новый лицевой счет</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                {{ account_form.as_p }}
+                <div class="col-xs-12 text-center">
+                    <div class="form-group">
+                        <a href="{% url 'admin_panel:accounts_list' %}" class="btn btn-default">Отменить</a>
+                        <button type="submit" class="btn btn-success">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

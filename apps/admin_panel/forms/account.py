@@ -7,7 +7,7 @@ class AccountForm(forms.ModelForm):
     prefix = 'account'
 
     class Meta:
-        models = models.Account
+        model = models.Account
         fields = (
             'number',
             'status',

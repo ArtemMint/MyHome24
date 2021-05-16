@@ -6,6 +6,7 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required
 
 from admin_panel import models
+from admin_panel import forms
 
 
 @login_required(login_url='/admin/site/login')
@@ -21,11 +22,20 @@ def accounts_list_view(request):
 
 @login_required(login_url='/admin/site/login')
 def account_create_view(request):
+    account_form = forms.AccountForm()
+    if request.POST:
+        account_form = forms.AccountForm(
+            request.POST,
+        )
+        if account_form.is_valid():
+            account_form.save()
+            messages.success(request, 'Новый лицевой счет создан!')
+            return redirect('admin_panel:accounts_list')
     return render(
         request,
         "admin_panel/account/create.html",
         {
-
+            'account_form': account_form,
         }
     )
 
