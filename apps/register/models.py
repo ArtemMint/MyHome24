@@ -182,7 +182,7 @@ class User(AbstractUser):
 
     @staticmethod
     def get_users_list():
-        return User.objects.all()
+        return User.objects.filter(is_staff=False)
 
     @staticmethod
     def get_users_admin_list():
@@ -190,7 +190,7 @@ class User(AbstractUser):
 
     @staticmethod
     def get_users_count():
-        return User.objects.all().count()
+        return User.objects.filter(is_staff=False).count()
 
     @staticmethod
     def get_users_admin_count():
