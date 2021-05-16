@@ -7,6 +7,7 @@
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:houses_list' %}">Дома</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:house_detail' house_form.instance.pk %}">{{ house_form.instance }}</a></li>
         <li class="breadcrumb-item active"> Редактирование </li>
     </ul>
 {% endblock %}
