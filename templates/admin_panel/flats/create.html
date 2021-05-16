@@ -9,7 +9,7 @@
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:flats_list' %}">Квартиры</a></li>
         <li class="breadcrumb-item active"> Новая квартира </li>
     </ul>
-{% endblock %}
+{% endblock %}{{ account_form.as_p }}
 
 {% block content %}
     <!-- Message if all saved -->
