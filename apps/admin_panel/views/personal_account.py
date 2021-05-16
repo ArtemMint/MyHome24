@@ -6,4 +6,4 @@ from django.contrib.auth.decorators import login_required
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class PersonalAccountList(TemplateView):
-    template_name = "admin_panel/personal_account/index.html"
+    template_name = "admin_panel/account/index.html"
