@@ -21,6 +21,7 @@ class Flat(models.Model):
         House,
         on_delete=models.CASCADE,
         related_name='flats',
+        verbose_name='Дом',
         null=True,
         blank=False,
     )
@@ -28,6 +29,7 @@ class Flat(models.Model):
         HouseSection,
         on_delete=models.CASCADE,
         related_name='flats',
+        verbose_name='Секция',
         null=True,
         blank=True,
     )
@@ -35,6 +37,7 @@ class Flat(models.Model):
         HouseFloor,
         on_delete=models.CASCADE,
         related_name='flats',
+        verbose_name='Этаж',
         null=True,
         blank=True,
     )
@@ -42,6 +45,7 @@ class Flat(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='flats',
+        verbose_name='Владелец',
         null=True,
         blank=True,
     )
@@ -49,6 +53,7 @@ class Flat(models.Model):
         Tariff,
         on_delete=models.CASCADE,
         related_name='flats',
+        verbose_name='Тариф  ',
         null=True,
         blank=True,
     )
