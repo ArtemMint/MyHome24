@@ -11,7 +11,7 @@ from admin_panel.views.manage_site import *
 from admin_panel.views.meter_readings import *
 from admin_panel.views.pay_company import *
 from admin_panel.views.transaction_purpose import *
-from admin_panel.views.personal_account import *
+from admin_panel.views.account import *
 from admin_panel.views.statistics import *
 from admin_panel.views.roles import *
 from admin_panel.views.tariffs import *
