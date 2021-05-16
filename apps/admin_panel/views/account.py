@@ -15,7 +15,8 @@ def accounts_list_view(request):
         request,
         "admin_panel/account/index.html",
         {
-            "accounts_list": models.Account.get_accounts_list(),
+            'accounts_list': models.Account.get_accounts_list(),
+            'accounts_count': models.Account.get_accounts_count(),
         }
     )
 
@@ -41,23 +42,35 @@ def account_create_view(request):
 
 
 @login_required(login_url='/admin/site/login')
-def account_update_view(request):
+def account_update_view(request, pk):
+    account_form = forms.AccountForm(
+        instance=models.Account.get_account_by_pk(pk=pk),
+    )
+    if request.POST:
+        account_form = forms.AccountForm(
+            request.POST,
+            instance=models.Account.get_account_by_pk(pk=pk),
+        )
+        if account_form.is_valid():
+            account_form.save()
+            messages.success(request, 'Лицевой счет обновлен!')
+            return redirect('admin_panel:accounts_list')
     return render(
         request,
         "admin_panel/account/update.html",
         {
-
+            'account_form': account_form,
         }
     )
 
 
 @login_required(login_url='/admin/site/login')
-def account_detail_view(request):
+def account_detail_view(request, pk):
     return render(
         request,
         "admin_panel/account/detail.html",
         {
-
+            'account_data': models.Account.get_account_by_pk(pk=pk),
         }
     )
 

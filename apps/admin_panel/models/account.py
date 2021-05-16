@@ -66,3 +66,7 @@ class Account(models.Model):
     @staticmethod
     def get_account_by_pk(pk):
         return Account.objects.get(pk=pk)
+
+    @staticmethod
+    def get_accounts_count():
+        return Account.objects.all().count()

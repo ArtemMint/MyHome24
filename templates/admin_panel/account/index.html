@@ -93,9 +93,7 @@
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
                             {% if field.status == 'Активен' %}
                                 <small class="label label-success">{{ field.status }}</small>
-                            {% elif field.status == 'Новый' %}
-                                <small class="label label-warning">{{ field.status }}</small>
-                            {% elif field.status == 'Отключен' %}
+                            {% elif field.status == 'Неактивен' %}
                                 <small class="label label-danger">{{ field.status }}</small>
                             {% else %}
                             {% endif %}
@@ -107,10 +105,10 @@
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.account_balance|truncatechars:50 }}</td>
                         <td>
                             <div class="btn-group ">
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_update' field.pk %}" title="Редактировать">
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:account_update' field.pk %}" title="Редактировать">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_delete' field.pk %}" title="Удалить">
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:account_delete' field.pk %}" title="Удалить">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </div>
