@@ -15,3 +15,6 @@ test_all:
 
 collectstatic:
 	./manage.py collectstatic --no-input
+
+shell:
+	./manage.py shell
