@@ -74,12 +74,12 @@ def user_admin_update_view(request, pk):
 
 @login_required(login_url='/admin/site/login')
 def user_admin_detail_view(request, pk):
-    user = models.User.get_user_by_pk(pk=pk)
+    user_admin = models.User.get_user_by_pk(pk=pk)
     return render(
         request,
         'admin_panel/users_admin/detail.html',
         {
-            'user_form': user,
+            'user_admin_form': user_admin,
         }
     )
 

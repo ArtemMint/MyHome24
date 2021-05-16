@@ -12,19 +12,19 @@
 {% endblock %}
 
 {% block content %}
-    <div class="userAvatar">
-        <img class="img-circle pull-left img-responsive"
-             {% if user_form.image %}
-                src="{{ user_form.image.url }}"
-             {% else %}
-                src="{% static 'default_profile_image.png' %}"
-            {% endif %}>
-    </div>
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
         <table class="table table-bordered table-striped">
             <tr>
                 <td>Статус</td>
-                <td>{{ user_form.status }}</td>
+                {% if user_admin_form.status == 'Активен' %}
+                    <td style="color: #00ba13"><small class="label label-success">{{ user_admin_form.status }}</small></td>
+                {% elif user_admin_form.status == 'Новый' %}
+                    <td style="color: #00ba13"><small class="label label-warning">{{ user_admin_form.status }}</small></td>
+                {% elif user_admin_form.status == 'Отключен' %}
+                    <td style="color: #00ba13"><small class="label label-danger">{{ user_admin_form.status }}</small></td>
+                {% else %}
+                    <td></td>
+                {% endif %}
             </tr>
             <tr>
                 <td>ID</td>

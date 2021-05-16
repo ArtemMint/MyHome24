@@ -48,7 +48,21 @@
                         <td onclick="location.href='{% url 'admin_panel:user_admin_detail' field.pk %}'">{{ field.role|truncatechars:50 }}</td>
                         <td onclick="location.href='{% url 'admin_panel:user_admin_detail' field.pk %}'">{{ field.phone|truncatechars:50 }}</td>
                         <td onclick="location.href='{% url 'admin_panel:user_admin_detail' field.pk %}'">{{ field.email|truncatechars:50 }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:user_admin_detail' field.pk %}'">{{ field.status|truncatechars:50 }}</td>
+                        {% if field.status == 'Активен' %}
+                            <td onclick="location.href='{% url 'admin_panel:user_admin_detail' field.pk %}'"
+                                style="color: #00ba13"><small class="label label-success">{{ field.status }}</small>
+                            </td>
+                        {% elif field.status == 'Новый' %}
+                            <td onclick="location.href='{% url 'admin_panel:user_admin_detail' field.pk %}'"
+                                style="color: #00ba13"><small class="label label-warning">{{ field.status }}</small>
+                            </td>
+                        {% elif field.status == 'Отключен' %}
+                            <td onclick="location.href='{% url 'admin_panel:user_admin_detail' field.pk %}'"
+                                style="color: #00ba13"><small class="label label-danger">{{ field.status }}</small>
+                            </td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
                         <td>
                             <div class="btn-group ">
                                 <a class="btn btn-default btn-sm" href="" title="Отправить сообщение" data-toggle="tooltip">
