@@ -19,8 +19,11 @@ from admin_panel.models.transaction_purpose import TransactionPurpose
 
 # House
 from admin_panel.models.house.house import *
-from admin_panel.models.house.section import *
-from admin_panel.models.house.floor import *
+from admin_panel.models.house.section import HouseSection
+from admin_panel.models.house.floor import HouseFloor
 
 # Flat
-from admin_panel.models.flat import *
+from admin_panel.models.flat import Flat
+
+# Account
+from admin_panel.models.account import Account
