@@ -22,9 +22,8 @@
     {% endif %}
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-xs-12 col-md-4">
                 {{ house_form.as_p }}
-            {{ sections }}
                 {% for error in house_form.errors %}
                     {{ error }}
                 {% endfor %}
@@ -34,20 +33,20 @@
                     <p>{{ house_preview_form.image }}</p>
                 {% endfor %}
             </div>
-            <div class="col-md-8">
+            <div class="col-xs-12 col-md-8">
                 <div class="row">
                     {% for house_preview_form in house_preview_formset %}
                         {% if forloop.first %}
-                        <div class="col-xs-12 col-md-6">
-                            <img class="largeImg margin-bottom-30"
-                                {% if house_preview_form.image.value %}
-                                    src="/media/{{ house_preview_form.image.value }}"
-                                    alt="{{ house_preview_form.image.url }}"
-                                {% else %}
-                                     src="{% static 'admin_panel/img/default_image.jpeg' %}"
-                                     alt="default_image"
-                                {% endif %}>
-                        </div>
+                            <div class="col-xs-12 col-md-6">
+                                <img class="largeImg margin-bottom-30"
+                                    {% if house_preview_form.image.value %}
+                                        src="/media/{{ house_preview_form.image.value }}"
+                                        alt="{{ house_preview_form.image.url }}"
+                                    {% else %}
+                                         src="{% static 'admin_panel/img/default_image.jpeg' %}"
+                                         alt="default_image"
+                                    {% endif %}>
+                            </div>
                         {% else %}
                             {% if forloop.counter|divisibleby:2 %}
                             <div class="col-xs-6 col-md-3">
@@ -75,7 +74,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-lg-12">
+                <div class="col-xs-12 col-lg-12" style="margin-left: 10px;">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item active">
