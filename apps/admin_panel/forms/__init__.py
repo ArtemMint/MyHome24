@@ -27,3 +27,6 @@ from admin_panel.forms.house.floor import *
 
 # Flat
 from admin_panel.forms.flat import *
+
+# Account
+from admin_panel.forms.account import AccountForm
