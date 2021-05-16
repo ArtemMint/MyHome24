@@ -51,11 +51,31 @@ urlpatterns = [
         name='invoice_list'
     ),
 
-    # Personal account
+    # Account
     path(
         'account/index/',
-        views.PersonalAccountList.as_view(),
-        name='account_list'
+        views.accounts_list_view,
+        name='accounts_list'
+    ),
+    path(
+      'account/create/',
+      views.account_create_view,
+      name='account_create'
+    ),
+    path(
+      'account/update/<int:pk>',
+      views.account_update_view,
+      name='account_update'
+    ),
+    path(
+      'account/detail/<int:pk>',
+      views.account_detail_view,
+      name='account_detail'
+    ),
+    path(
+      'account/delete/<int:pk>',
+      views.AccountDeleteView.as_view(),
+      name='account_delete'
     ),
 
     # Flats
