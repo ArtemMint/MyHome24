@@ -58,7 +58,21 @@
                         <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.house|truncatechars:50 }}</td>
                         <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{% for flat in field.flats.all %}{{ flat|truncatechars:50 }},<br>{% endfor %}</td>
                         <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.date_joined|truncatechars:50 }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.status|truncatechars:50 }}</td>
+                        {% if field.status == 'Активен' %}
+                            <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'"
+                                style="color: #00ba13"><small class="label label-success">{{ field.status }}</small>
+                            </td>
+                        {% elif field.status == 'Новый' %}
+                            <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'"
+                                style="color: #00ba13"><small class="label label-warning">{{ field.status }}</small>
+                            </td>
+                        {% elif field.status == 'Отключен' %}
+                            <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'"
+                                style="color: #00ba13"><small class="label label-danger">{{ field.status }}</small>
+                            </td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
                         <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.none|truncatechars:50 }}</td>
                         <td>
                             <div class="btn-group ">
