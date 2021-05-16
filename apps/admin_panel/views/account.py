@@ -20,22 +20,22 @@ def accounts_list_view(request):
 
 
 @login_required(login_url='/admin/site/login')
-def account_create(request):
+def account_create_view(request):
     pass
 
 
 @login_required(login_url='/admin/site/login')
-def account_update(request):
+def account_update_view(request):
     pass
 
 
 @login_required(login_url='/admin/site/login')
-def account_detail(request):
+def account_detail_view(request):
     pass
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class HouseDeleteView(generic.DeleteView):
-    model = models.House
-    success_url = reverse_lazy('admin_panel:houses_list')
-    template_name = 'admin_panel/houses/delete.html'
+class AccountDeleteView(generic.DeleteView):
+    model = models.Account
+    success_url = reverse_lazy('admin_panel:accounts_list')
+    template_name = 'admin_panel/account/delete.html'
