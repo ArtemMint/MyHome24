@@ -20,12 +20,40 @@
             </ul>
          {% endfor %}
     {% endif %}
-
+    <div class="col-lg-6" style="padding-left: 0px;">
+        <div class="page-header-spec">
+            <div class="form-group field-account-uid required">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        №
+                    </div>
+                    {{ account_form.number }}
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-7">
             <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                {{ account_form.as_p }}
-                <div class="col-xs-12 text-center">
+                {{ account_form.house.label_tag }}
+                <p>{{ account_form.house }}</p>
+                {{ account_form.section.label_tag }}
+                <p>{{ account_form.section }}</p>
+                {{ account_form.flat.label_tag }}
+                <p>{{ account_form.flat }}</p>
+                <p>
+                    <b>Владелец:</b>
+                    <span id="user-fullname">
+                        <a href="/admin/user/1">get user by filter</a>
+                    </span>
+                </p>
+                <p>
+                    <b>Телефон:</b>
+                    <span id="user-fullname">
+                        <a href="/admin/user/1">get phone by filter</a>
+                    </span>
+                </p>
+                <div class="col-xs-12 text-right">
                     <div class="form-group">
                         <a href="{% url 'admin_panel:accounts_list' %}" class="btn btn-default">Отменить</a>
                         <button type="submit" class="btn btn-success">Сохранить</button>
