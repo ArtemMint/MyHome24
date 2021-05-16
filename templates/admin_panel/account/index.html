@@ -92,14 +92,14 @@
                         <td onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.number }}</td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
                             {% if field.status == 'Активен' %}
-                                <small class="label label-success">{{ field.status }}</small></td>
+                                <small class="label label-success">{{ field.status }}</small>
                             {% elif field.status == 'Новый' %}
-                                <small class="label label-warning">{{ field.status }}</small></td>
+                                <small class="label label-warning">{{ field.status }}</small>
                             {% elif field.status == 'Отключен' %}
-                                <small class="label label-danger">{{ field.status }}</small></td>
+                                <small class="label label-danger">{{ field.status }}</small>
                             {% else %}
-                                <td></td>
                             {% endif %}
+                        </td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.flat.number|truncatechars:50 }}</td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.house.name|truncatechars:50 }}</td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.section|truncatechars:50 }}</td>
