@@ -46,3 +46,23 @@ class Account(models.Model):
         related_name='accounts',
         blank=False,
     )
+    created_date = models.DateTimeField(
+        auto_now_add=True,
+    )
+    editing_date = models.DateTimeField(
+        auto_now=True,
+    )
+
+    def __str__(self):
+        return f'Лицевой счет №{self.number}'
+
+    class Meta:
+        ordering = ('-editing_date',)
+
+    @staticmethod
+    def get_accounts_list():
+        return Account.objects.all()
+
+    @staticmethod
+    def get_account_by_pk(pk):
+        return Account.objects.get(pk=pk)

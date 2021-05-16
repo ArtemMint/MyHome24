@@ -57,12 +57,18 @@ class Flat(models.Model):
         null=True,
         blank=True,
     )
+    created_date = models.DateTimeField(
+        auto_now_add=True,
+    )
+    editing_date = models.DateTimeField(
+        auto_now=True,
+    )
 
     def __str__(self):
         return f'Квартира №{self.number} - {self.house}'
 
     class Meta:
-        ordering = ('house',)
+        ordering = ('-editing_date',)
 
     @staticmethod
     def get_flats_count():
