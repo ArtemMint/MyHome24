@@ -55,8 +55,16 @@
                         <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.full_name|truncatechars:50 }}</td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.phone|truncatechars:50 }}</td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.email|truncatechars:50 }}</td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.house|truncatechars:50 }}</td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{% for flat in field.flats.all %}{{ flat|truncatechars:50 }},<br>{% endfor %}</td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
+                            {% for flat in field.flats.all %}
+                                <a href="{% url 'admin_panel:house_detail' flat.house.pk %}">{{ flat.house|truncatechars:50 }}</a><br>
+                            {% endfor %}
+                        </td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
+                            {% for flat in field.flats.all %}
+                                <a href="{% url 'admin_panel:flat_detail' flat.pk %}">{{ flat|truncatechars:50 }}</a><br>
+                            {% endfor %}
+                        </td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.date_joined|truncatechars:50 }}</td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
                             {% if field.status == 'Активен' %}

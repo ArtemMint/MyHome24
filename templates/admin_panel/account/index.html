@@ -1,11 +1,11 @@
 {% extends 'admin_panel/base/base.html' %}
 {% load static %}
-{% block title %} <h1 class="m-0">Владельцы квартир</h1> {% endblock %}
+{% block title %} <h1 class="m-0">Лицевые счета</h1> {% endblock %}
 
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item active"> Владельцы квартир </li>
+        <li class="breadcrumb-item active">Лицевые счета</li>
     </ul>
 {% endblock %}
 
@@ -102,7 +102,7 @@
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.house.name|truncatechars:50 }}</td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.section|truncatechars:50 }}</td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.flat.owner|truncatechars:50 }}</td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.account_balance|truncatechars:50 }}</td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.balance|truncatechars:50 }}</td>
                         <td>
                             <div class="btn-group ">
                                 <a class="btn btn-default btn-sm" href="{% url 'admin_panel:account_update' field.pk %}" title="Редактировать">

@@ -44,7 +44,7 @@
         </tr>
         <tr>
             <td>Дом</td>
-            <td>{{ flat_data.house}}</td>
+            <td><a href="{% url 'admin_panel:house_detail' flat_data.house.id%}">{{ flat_data.house}}</a></td>
         </tr>
         <tr>
             <td>Секция</td>
@@ -56,11 +56,11 @@
         </tr>
         <tr>
             <td>Владелец</td>
-            <td>{{ flat_data.owner}}</td>
+            <td><a href="{% url 'admin_panel:user_detail' flat_data.owner.id%}">{{ flat_data.owner}}</a></td>
         </tr>
         <tr>
             <td>Тариф</td>
-            <td>{{ flat_data.tariff }}</td>
+            <td><a href="{% url 'admin_panel:tariff_detail' flat_data.tariff.id%}">{{ flat_data.tariff }}</a></td>
         </tr>
     </table>
     <div class="col">
