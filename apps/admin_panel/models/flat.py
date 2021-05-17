@@ -65,7 +65,7 @@ class Flat(models.Model):
     )
 
     def __str__(self):
-        return f'Квартира №{self.number} - {self.house}'
+        return f'№{self.number} - {self.house}'
 
     class Meta:
         ordering = ('-editing_date',)

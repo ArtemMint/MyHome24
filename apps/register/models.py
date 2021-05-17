@@ -185,6 +185,10 @@ class User(AbstractUser):
         return User.objects.filter(is_staff=False)
 
     @staticmethod
+    def get_active_users():
+        return User.objects.filter(status='Активен', is_staff=False)
+
+    @staticmethod
     def get_users_admin_list():
         return User.objects.filter(is_staff=True)
 
