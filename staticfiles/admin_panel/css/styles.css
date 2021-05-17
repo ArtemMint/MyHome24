@@ -642,11 +642,12 @@ h4.box-title {
     height: auto;
 }
 
-.table a {
-    display:block;
-    text-decoration:none;
-    color: black;
-}
+/*.table a {*/
+/*    display:block;*/
+/*    text-decoration:none;*/
+/*    color: black;*/
+/*}*/
+
 .table td:hover{
     cursor: pointer;
 }
@@ -731,5 +732,9 @@ h4.box-title {
 }
 .page-header-spec {
     justify-content: left;
+}
+
+a {
+    color: #3c8dbc;
 }
 

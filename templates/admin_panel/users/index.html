@@ -57,7 +57,7 @@
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.email|truncatechars:50 }}</td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
                             {% for flat in field.flats.all %}
-                                <a href="{% url 'admin_panel:house_detail' flat.house.pk %}">{{ flat.house|truncatechars:50 }}</a><br>
+                                <a href="{% url 'admin_panel:house_detail' flat.house.pk %}">{{ flat.house.name|truncatechars:50 }}</a><br>
                             {% endfor %}
                         </td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
