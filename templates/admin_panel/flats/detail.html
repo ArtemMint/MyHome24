@@ -1,7 +1,7 @@
 ﻿{% extends 'admin_panel/base/base.html' %}
 {% load static %}
 
-{% block title %} <h1 class="m-0"> Квартира: {{ flat_data }} </h1> {% endblock %}
+{% block title %} <h1 class="m-0">{{ flat_data }} </h1> {% endblock %}
 
 {% block breadcrumb %}
     <ul class="breadcrumb">
@@ -17,8 +17,8 @@
         <h3 class="box-title">Просмотр квартиры</h3>
         <div class="box-tools">
             <a href="{% url 'admin_panel:flat_update' flat_data.id %}" class="btn btn-primary btn-sm float-right">
+                <i class="fas fa-pencil-alt"></i>
                 Редактировать квартиру
-                <i class="fa fa-pencil visible-xs" aria-hidden="true"></i>
             </a>
         </div>
     </div>
