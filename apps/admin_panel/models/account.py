@@ -20,7 +20,7 @@ class Account(models.Model):
         verbose_name='Статус',
         blank=False,
     )
-    account_balance = models.FloatField(
+    balance = models.FloatField(
         max_length=50,
         verbose_name='Остаток',
         default=0,
