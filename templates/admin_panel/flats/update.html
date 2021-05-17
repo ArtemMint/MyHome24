@@ -7,7 +7,7 @@
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:flats_list' %}">Квартиры</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:flat_detail' flat_form.instance.pk %}">{{ flat_form.instance }}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:flat_detail' flat_form.instance.pk %}">Квартира {{ flat_form.instance }}</a></li>
         <li class="breadcrumb-item active">Обновить квартиру</li>
     </ul>
 {% endblock %}
