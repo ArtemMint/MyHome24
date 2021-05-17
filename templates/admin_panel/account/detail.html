@@ -1,10 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %} <h1 class="m-0">{{ account_data|truncatechars:30 }}</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:accounts_list' %}">Лицевые счета</a></li>
+        <li class="breadcrumb-item">{{ account_data }}</li>
+    </ul>
+{% endblock %}
+
+{% block header %}
+
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            Просмотр лицевого cчета
+        </h3>
+        <div class="box-tools">
+            <a href="{% url 'admin_panel:account_update' account_data.id %}" class="btn btn-primary btn-sm float-right">
+                <i class="fas fa-pencil-alt"></i>
+                Редактировать лицевой счет
+            </a>
+            <a href="{% url 'admin_panel:statistics'%}" class="btn btn-default btn-sm float-right">
+                <i class="far fa-copy"></i>
+                Оформить квитанцию
+            </a>
+            <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default btn-sm float-right">
+                <i class="fas fa-dollar-sign"></i>
+                Принять платеж
+            </a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-striped table-view">
+                    <tbody>
+                        <tr>
+                            <td>Статус</td>
+                            <td>
+                                {% if account_data.status == 'Активен' %}
+                                    <small class="label label-success">{{ account_data.status }}</small>
+                                {% elif field.status == 'Неактивен' %}
+                                    <small class="label label-danger">{{ account_data.status }}</small>
+                                {% else %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Дом</td>
+                            <td><a href="{% url 'admin_panel:house_detail' account_data.house.id%}">{{ account_data.house|truncatechars:40 }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Секций</td>
+                            <td>{{ account_data.section|truncatechars:40 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Квартира</td>
+                            <td><a href="{% url 'admin_panel:flat_detail' account_data.flat.id%}">{{ account_data.flat|truncatechars:40 }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Владелец</td>
+                            <td><a href="{% url 'admin_panel:user_detail' account_data.flat.owner.id%}">{{ account_data.flat.owner|truncatechars:40 }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Остаток</td>
+                            <td>{{ account_data.balance|truncatechars:40 }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="col">
+                    <a href="#">Посмотреть показания счётчиков</a>
+                </div>
+                <div class="col">
+                    <a href="#">Посмотреть приходы</a>
+                </div>
+                <div class="col">
+                    <a href="#">Посмотреть квитанции</a>
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+    </div>
+{% endblock content %}
