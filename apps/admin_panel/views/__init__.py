@@ -12,6 +12,6 @@ from admin_panel.views.meter_readings import *
 from admin_panel.views.pay_company import *
 from admin_panel.views.transaction_purpose import *
 from admin_panel.views.account import *
-from admin_panel.views.statistics import *
+from admin_panel.views.statistics_view import *
 from admin_panel.views.roles import *
 from admin_panel.views.tariffs import *

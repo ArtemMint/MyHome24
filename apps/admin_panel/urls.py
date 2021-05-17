@@ -32,7 +32,7 @@ urlpatterns = [
     # Statistics
     path(
         '',
-        views.Statistics.as_view(),
+        views.statistics_view,
         name='statistics'
     ),
 
