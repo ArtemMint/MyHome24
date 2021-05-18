@@ -16,6 +16,6 @@ shell:
 
 # Docker
 docker-build:
-	docker build --tag myhome24 .
+	docker-compose build
 docker-run:
-	docker run --publish 8000:8000 myhome24
+	docker-compose exec
