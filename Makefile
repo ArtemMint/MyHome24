@@ -15,3 +15,7 @@ shell:
 	./manage.py shell
 
 # Docker
+docker-build:
+	docker build --tag myhome24 .
+docker-run:
+	docker run --publish 8000:8000 myhome24

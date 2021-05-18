@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
+    '0.0.0.0',
     'localhost',
     'testserver',
 ]
@@ -98,7 +99,7 @@ DATABASES = {
         'NAME': 'myhome24_db',
         'USER': 'artemmint',
         'PASSWORD': '12345',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
