@@ -11,7 +11,7 @@ services:
     depends_on:
       - db
   db:
-    image: postgres
+    image: postgres:13-alpine
     container_name: postgresdb
     environment:
       - POSTGRES_DB=myhome24_db
