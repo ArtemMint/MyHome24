@@ -42,6 +42,6 @@ class ServicesForm(forms.ModelForm):
 ServicesFormset = modelformset_factory(
     Services,
     ServicesForm,
-    extra=0,
+    extra=1,
     can_delete=True,
 )
