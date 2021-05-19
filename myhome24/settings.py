@@ -99,7 +99,7 @@ DATABASES = {
         'NAME': 'myhome24_db',
         'USER': 'artemmint',
         'PASSWORD': '12345',
-        'HOST': 'db',
+        'HOST': 'pgdb',
         'PORT': '5432',
     }
 }
