@@ -9,15 +9,17 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
-  db:
+      - pgdb
+  pgdb:
     image: postgres:13-alpine
     container_name: postgresdb
     environment:
-      - POSTGRES_DB=myhome24_db
-      - POSTGRES_USER=artemmint
-      - POSTGRES_PASSWORD=12345
-      - POSTGRES_HOST=db
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=pgdb
       - POSTGRES_PORT=5432
-    ports:
-      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+volumes:
+  pgdata:
