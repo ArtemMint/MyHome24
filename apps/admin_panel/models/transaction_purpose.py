@@ -16,7 +16,6 @@ class TransactionPurpose(models.Model):
         max_length=150,
         verbose_name='Приход/Расход',
         choices=TYPE,
-        default=TYPE[0][0],
     )
 
     def __str__(self):
