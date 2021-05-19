@@ -57,7 +57,7 @@
 
                     <!-- User image -->
                     <li class="user-header">
-                        {% if request.user %}
+                        {% if request.user.image %}
                             <img src="{{ request.user.image.url }}" class="img-circle" alt="admin admin">
                         {% else %}
                             <span><i class="fa fa-user-circle text-purple bg-gray-light img-circle"></i></span>
