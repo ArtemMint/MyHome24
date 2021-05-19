@@ -1,4 +1,5 @@
 FROM python:3.8.5
+MAINTAINER Artem Yurchak (nemnovus@gmail.com)
 ENV PYTHONBUFFERED=1
 WORKDIR /usr/src/app
 COPY requirements.txt .
