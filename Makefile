@@ -34,8 +34,6 @@ docker-stop:
 docker-prune:
 	docker image prune -f
 docker-migrations:
-	docker-compose exec web ./manage.py makemigrations
-	#docker exec -it myhome24 ./manage.py makemigrations
+	docker-compose exec django ./manage.py makemigrations
 docker-migrate:
-	docker-compose exec web ./manage.py migrate
-	#docker exec -it myhome24 ./manage.py migrate
+	docker-compose exec django ./manage.py migrate
