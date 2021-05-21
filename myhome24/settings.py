@@ -27,12 +27,7 @@ SECRET_KEY = '=m90oq_&^1ostwsg1vz_h_x_adhq$l24vu(x5fe+*^53@w^200'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    '0.0.0.0',
-    'localhost',
-    'testserver',
-]
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'register.User'
 
