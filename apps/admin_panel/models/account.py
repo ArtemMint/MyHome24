@@ -54,7 +54,7 @@ class Account(models.Model):
     )
 
     def __str__(self):
-        return f'Лицевой счет №{self.number}'
+        return f'{self.number}'
 
     class Meta:
         ordering = ('-editing_date',)
