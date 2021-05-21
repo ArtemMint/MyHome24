@@ -50,7 +50,7 @@ def user_admin_update_view(request, pk):
     user_admin_form = forms.UserCreateForm(
         instance=models.User.get_user_by_pk(pk),
         initial={
-            'password': models.User.get_password(pk)
+            'password': '',
         }
     )
     if request.POST:
