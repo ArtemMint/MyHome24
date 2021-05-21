@@ -32,6 +32,7 @@ class FlatForm(forms.ModelForm):
             'floor',
             'owner',
             'tariff',
+            'account',
         )
         widgets = {
             'number': forms.TextInput(
@@ -60,6 +61,11 @@ class FlatForm(forms.ModelForm):
                 }
             ),
             'tariff': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'account': forms.Select(
                 attrs={
                     'class': 'form-control',
                 }

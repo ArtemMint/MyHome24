@@ -203,9 +203,3 @@ class User(AbstractUser):
     @staticmethod
     def get_user_by_pk(pk):
         return User.objects.get(pk=pk)
-
-    @staticmethod
-    def get_password(pk):
-        return User.objects.get(pk=pk).password
-
-

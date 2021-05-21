@@ -1,6 +1,6 @@
 from django.db import models
 
-from admin_panel.models import *
+from admin_panel import models as admin_models
 from register.models import User
 
 
@@ -18,7 +18,7 @@ class Flat(models.Model):
         null=True,
     )
     house = models.ForeignKey(
-        House,
+        admin_models.House,
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Дом',
@@ -26,7 +26,7 @@ class Flat(models.Model):
         blank=False,
     )
     section = models.ForeignKey(
-        HouseSection,
+        admin_models.HouseSection,
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Секция',
@@ -34,7 +34,7 @@ class Flat(models.Model):
         blank=True,
     )
     floor = models.ForeignKey(
-        HouseFloor,
+        admin_models.HouseFloor,
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Этаж',
@@ -50,10 +50,18 @@ class Flat(models.Model):
         blank=True,
     )
     tariff = models.ForeignKey(
-        Tariff,
+        admin_models.Tariff,
         on_delete=models.CASCADE,
         related_name='flats',
-        verbose_name='Тариф  ',
+        verbose_name='Тариф',
+        null=True,
+        blank=True,
+    )
+    account = models.ForeignKey(
+        'admin_panel.Account',
+        on_delete=models.CASCADE,
+        related_name='flats',
+        verbose_name='Лицевой счет',
         null=True,
         blank=True,
     )

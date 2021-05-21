@@ -90,10 +90,11 @@ class UserCreateForm(forms.ModelForm):
                     'class': 'form-control',
                 }
             ),
-            'password': forms.TextInput(
+            'password': forms.PasswordInput(
                 attrs={
-                    # 'type': 'Password',
+                    'type': 'Password',
                     'class': 'form-control',
+                    'required': 'false',
                 }
             ),
         }
