@@ -27,3 +27,6 @@ from admin_panel.models.flat import Flat
 
 # Account
 from admin_panel.models.account import Account
+
+# AccountTransaction
+from admin_panel.models.account_transaction import AccountTransaction

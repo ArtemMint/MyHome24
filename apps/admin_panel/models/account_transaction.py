@@ -53,7 +53,7 @@ class AccountTransaction(models.Model):
     )
     type = models.CharField(
         max_length=50,
-        verbose_name='Приход/расход'
+        verbose_name='Приход/расход',
     )
     created_date = models.DateTimeField(
         auto_now_add=True,
