@@ -6,7 +6,7 @@ from register import models as register_models
 
 class AccountTransactionForm(forms.ModelForm):
     prefix = 'account_transaction'
-    
+
     manager = forms.ModelChoiceField(
         queryset=register_models.User.get_users_admin_list(),
         widget=forms.Select(
