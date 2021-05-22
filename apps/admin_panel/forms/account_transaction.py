@@ -1,4 +1,5 @@
 from django import forms
+import datetime
 
 from admin_panel import models
 from register import models as register_models
@@ -13,7 +14,7 @@ class AccountTransactionForm(forms.ModelForm):
             attrs={
                 'class': 'form-control',
             }
-        )
+        ),
     )
     owner = forms.ModelChoiceField(
         queryset=register_models.User.get_active_users(),
@@ -29,7 +30,7 @@ class AccountTransactionForm(forms.ModelForm):
         fields = (
             'number',
             'created_date',
-            'confirm'
+            'confirm',
             'owner',
             'account',
             'transaction',
@@ -49,24 +50,16 @@ class AccountTransactionForm(forms.ModelForm):
                     '%d-%m-%Y'
                 ),
                 attrs={
-                    'type': "date",
-                    'placeholder': 'Введите дату рождения',
-                    'class': "form-control",
-                }
+                    'type': 'date',
+                    'class': 'form-control datepicker',
+                    # 'value': datetime.datetime.now().strftime("%d/%m/%Y"),
+                },
             ),
-            'confirm': forms.CheckboxInput(
+            'confirm': forms.CheckboxInput(),
+            'total': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                }
-            ),
-            'owner': forms.Select(
-                attrs={
-                    'class': 'form-control',
-                }
-            ),
-            'total': forms.IntegerField(
-                attrs={
-                    'class': 'form-control',
+                    'type': 'number',
                 }
             ),
             'transaction': forms.Select(
