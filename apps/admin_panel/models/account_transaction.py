@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class AccountTransaction(models.Model):
@@ -56,7 +57,7 @@ class AccountTransaction(models.Model):
         verbose_name='Приход/расход',
     )
     created_date = models.DateTimeField(
-        auto_now_add=True,
+        default=timezone.now,
     )
     editing_date = models.DateTimeField(
         auto_now=True,
