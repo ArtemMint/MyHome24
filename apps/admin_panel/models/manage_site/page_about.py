@@ -6,7 +6,6 @@ from django.db import models
 
 from ckeditor.fields import RichTextField
 from solo.models import SingletonModel
-from .page_seo import SEO
 
 
 class AboutPage(SingletonModel):
@@ -30,7 +29,7 @@ class AboutPage(SingletonModel):
         blank=True,
     )
     seo = models.OneToOneField(
-        SEO,
+        'admin_panel.SEO',
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -47,7 +46,7 @@ class AboutGallery(models.Model):
     Gallery in About
     """
     about = models.ForeignKey(
-        AboutPage,
+        'admin_panel.AboutPage',
         on_delete=models.CASCADE,
         related_name='gallery',
     )
@@ -63,7 +62,7 @@ class AboutExtraInfo(models.Model):
     Additional info in About
     """
     about = models.OneToOneField(
-        AboutPage,
+        'admin_panel.AboutPage',
         on_delete=models.CASCADE,
         related_name='extra_info',
     )
@@ -88,7 +87,7 @@ class AboutExtraGallery(models.Model):
     Gallery in About
     """
     about = models.ForeignKey(
-        AboutPage,
+        'admin_panel.AboutPage',
         on_delete=models.CASCADE,
         related_name='extra_gallery',
     )
@@ -104,7 +103,7 @@ class AboutDocument(models.Model):
     Document in About
     """
     about = models.ForeignKey(
-        AboutPage,
+        'admin_panel.AboutPage',
         on_delete=models.CASCADE,
         related_name='documents',
     )

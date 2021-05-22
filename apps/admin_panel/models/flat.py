@@ -1,8 +1,5 @@
 from django.db import models
 
-from admin_panel import models as admin_models
-from register.models import User
-
 
 class Flat(models.Model):
     number = models.CharField(
@@ -18,7 +15,7 @@ class Flat(models.Model):
         null=True,
     )
     house = models.ForeignKey(
-        admin_models.House,
+        'admin_panel.House',
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Дом',
@@ -26,7 +23,7 @@ class Flat(models.Model):
         blank=False,
     )
     section = models.ForeignKey(
-        admin_models.HouseSection,
+        'admin_panel.HouseSection',
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Секция',
@@ -34,7 +31,7 @@ class Flat(models.Model):
         blank=True,
     )
     floor = models.ForeignKey(
-        admin_models.HouseFloor,
+        'admin_panel.HouseFloor',
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Этаж',
@@ -42,7 +39,7 @@ class Flat(models.Model):
         blank=True,
     )
     owner = models.ForeignKey(
-        User,
+        'admin_panel.User',
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Владелец',
@@ -50,7 +47,7 @@ class Flat(models.Model):
         blank=True,
     )
     tariff = models.ForeignKey(
-        admin_models.Tariff,
+        'admin_panel.Tariff',
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Тариф',

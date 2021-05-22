@@ -4,8 +4,6 @@ Services model
 
 from django.db import models
 
-from .metrics import Metrics
-
 
 class Services(models.Model):
     """
@@ -17,7 +15,7 @@ class Services(models.Model):
         blank=False,
     )
     metric = models.ForeignKey(
-        Metrics,
+        'admin_panel.Metrics',
         on_delete=models.CASCADE,
         blank=False,
         verbose_name='Ед.изм.',
