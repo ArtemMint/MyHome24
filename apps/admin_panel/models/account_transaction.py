@@ -11,28 +11,28 @@ class AccountTransaction(models.Model):
         'register.User',
         on_delete=models.CASCADE,
         verbose_name='Владелец квартиры',
-        related_name='accounts',
+        related_name='account_transactions_owners',
         blank=False,
     )
     manager = models.ForeignKey(
         'register.User',
         on_delete=models.CASCADE,
         verbose_name='Менеджер',
-        related_name='accounts',
+        related_name='account_transactions_managers',
         blank=False,
     )
     account = models.ForeignKey(
         'admin_panel.Account',
         on_delete=models.CASCADE,
         verbose_name='Лицевой счет',
-        related_name='accounts',
+        related_name='account_transactions',
         blank=False,
     )
     transaction = models.ForeignKey(
         'admin_panel.TransactionPurpose',
         on_delete=models.CASCADE,
         verbose_name='Статья',
-        related_name='accounts',
+        related_name='account_transactions',
         blank=False,
     )
     total = models.FloatField(
@@ -67,3 +67,7 @@ class AccountTransaction(models.Model):
 
     class Meta:
         ordering = ('-editing_date',)
+
+    @staticmethod
+    def get_queryset_list():
+        return AccountTransaction.objects.all()

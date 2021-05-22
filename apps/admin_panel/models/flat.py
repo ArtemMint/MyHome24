@@ -39,7 +39,7 @@ class Flat(models.Model):
         blank=True,
     )
     owner = models.ForeignKey(
-        'admin_panel.User',
+        'register.User',
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Владелец',
