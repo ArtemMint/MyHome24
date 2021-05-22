@@ -1,0 +1,67 @@
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Новый лицевой счет</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:accounts_list' %}">Лицевые счета</a></li>
+        <li class="breadcrumb-item active">Новый лицевой счет</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="col-lg-6" style="padding-left: 0px;">
+            <div class="page-header-spec">
+                <div class="form-group field-account-uid required">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            №
+                        </div>
+                        {{ account_form.number }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-7">
+                {{ account_form.status.label_tag }}
+                <p>{{ account_form.status }}</p>
+                {{ account_form.house.label_tag }}
+                <p>{{ account_form.house }}</p>
+                {{ account_form.section.label_tag }}
+                <p>{{ account_form.section }}</p>
+                {{ account_form.flat.label_tag }}
+                <p>{{ account_form.flat }}</p>
+                <p>
+                    <b>Владелец:</b>
+                    <span id="user-fullname">
+                        <a href="/admin/user/1">get user by filter</a>
+                    </span>
+                </p>
+                <p>
+                    <b>Телефон:</b>
+                    <span id="user-fullname">
+                        <a href="/admin/user/1">get phone by filter</a>
+                    </span>
+                </p>
+                <div class="col-xs-12 text-right">
+                    <div class="form-group">
+                        <a href="{% url 'admin_panel:accounts_list' %}" class="btn btn-default">Отменить</a>
+                        <button type="submit" class="btn btn-success">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock content %}
