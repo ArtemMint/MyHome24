@@ -30,3 +30,6 @@ from admin_panel.forms.flat import *
 
 # Account
 from admin_panel.forms.account import AccountForm
+
+# AccountTransaction
+from admin_panel.forms.account_transaction import AccountTransactionForm
