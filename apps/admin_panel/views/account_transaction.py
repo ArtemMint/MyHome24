@@ -3,8 +3,6 @@ View of account transitions of users
 """
 
 from django.shortcuts import render, redirect
-from django.views import generic
-import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -22,12 +20,14 @@ def account_transactions_list(request):
         'admin_panel/account_transaction/index.html',
         {
             'account_transactions_list': models.AccountTransaction.get_queryset_list(),
+            'total_income': models.AccountTransaction.get_total_income(),
+            'total_expenditure': models.AccountTransaction.get_total_expenditure(),
         }
     )
 
 
 @login_required(login_url='/admin/site/login')
-def account_transactions_create(request):
+def account_transactions_create_in(request):
     account_transaction_form = forms.AccountTransactionForm()
     if request.POST:
         account_transaction_form = forms.AccountTransactionForm(
@@ -37,11 +37,37 @@ def account_transactions_create(request):
             a_t = account_transaction_form.save(commit=False)
             a_t.type = 'Приход'
             a_t.save()
-            messages.success(request, 'Новая ведомость создан!')
+            messages.success(request, 'Приходная ведомость создан!')
             return redirect('admin_panel:account_transactions_list')
+        else:
+            messages.success(request, 'Ошибка создания ведомости!')
     return render(
         request,
-        'admin_panel/account_transaction/create.html',
+        'admin_panel/account_transaction/create_in.html',
+        {
+            'account_transaction_form': account_transaction_form,
+        }
+    )
+
+
+def account_transactions_create_out(request):
+    account_transaction_form = forms.AccountTransactionForm()
+    if request.POST:
+        account_transaction_form = forms.AccountTransactionForm(
+            request.POST,
+        )
+        if account_transaction_form.is_valid():
+            a_t = account_transaction_form.save(commit=False)
+            a_t.total = -a_t.total
+            a_t.type = 'Расход'
+            a_t.save()
+            messages.success(request, 'Расходная ведомость создан!')
+            return redirect('admin_panel:account_transactions_list')
+        else:
+            messages.success(request, 'Ошибка создания ведомости!')
+    return render(
+        request,
+        'admin_panel/account_transaction/create_out.html',
         {
             'account_transaction_form': account_transaction_form,
         }
@@ -49,13 +75,40 @@ def account_transactions_create(request):
 
 
 @login_required(login_url='/admin/site/login')
-def account_transactions_update(request):
-    pass
+def account_transactions_update(request, pk):
+    account_transaction = models.AccountTransaction.get_account_transaction_by_pk(pk=pk)
+    account_transaction_form = forms.AccountTransactionForm(
+        instance=account_transaction,
+    )
+    if request.POST:
+        account_transaction_form = forms.AccountTransactionForm(
+            request.POST,
+            instance=account_transaction,
+        )
+        if account_transaction_form.is_valid():
+            account_transaction_form.save()
+            messages.success(request, 'Ведомость обновлена!')
+            return redirect('admin_panel:account_transactions_list')
+        else:
+            messages.success(request, 'Ошибка обновления ведомости!')
+    return render(
+        request,
+        'admin_panel/account_transaction/update.html',
+        {
+            'account_transaction_form': account_transaction_form,
+        }
+    )
 
 
 @login_required(login_url='/admin/site/login')
-def account_transactions_detail(request):
-    pass
+def account_transactions_detail(request, pk):
+    return render(
+        request,
+        'admin_panel/account_transaction/detail.html',
+        {
+            'account_transaction_data': models.AccountTransaction.get_account_transaction_by_pk(pk=pk),
+        }
+    )
 
 
 @login_required(login_url='/admin/site/login')
