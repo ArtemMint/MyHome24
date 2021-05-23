@@ -1,13 +1,13 @@
 {% extends 'admin_panel/base/base.html' %}
 {% load static %}
 
-{% block title %} <h1 class="m-0">Лицевые счета</h1> {% endblock %}
+{% block title %} <h1 class="m-0">Ведомость №{{ account_transaction_data }}</h1> {% endblock %}
 
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:accounts_list' %}">Лицевые счета</a></li>
-        <li class="breadcrumb-item active">Удалить лицевой счет</li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:account_transactions_list' %}">Платежи</a></li>
+        <li class="breadcrumb-item active">Удалить ведомость</li>
     </ul>
 {% endblock %}
 
@@ -17,9 +17,9 @@
 
         <div class="col-xs-12 text-center">
             <div class="form-group">
-                <h1>Удалить {{ object }}?</h1>
+                <h1>Удалить ведомость №{{ account_transaction_data }}?</h1>
                 <input class="btn btn-danger" type="submit" value="Удалить!">
-                <a class="btn btn-default" href="{% url 'admin_panel:accounts_list' %}">Отменить</a>
+                <a class="btn btn-default" href="{% url 'admin_panel:account_transactions_list' %}">Отменить</a>
             </div>
         </div>
     </form>
