@@ -43,22 +43,27 @@ urlpatterns = [
         name='account_transactions_list'
     ),
     path(
-        'account-transaction/create/',
-        views.account_transactions_create,
-        name='account_transaction_create'
+        'account-transaction/create-in',
+        views.account_transactions_create_in,
+        name='account_transaction_create_in'
     ),
     path(
-        'account-transaction/index/<int:pk>',
+        'account-transaction/create-out',
+        views.account_transactions_create_out,
+        name='account_transaction_create_out'
+    ),
+    path(
+        'account-transaction/update/<int:pk>',
         views.account_transactions_update,
         name='account_transaction_update'
     ),
     path(
-        'account-transaction/index/<int:pk>',
+        'account-transaction/detail/<int:pk>',
         views.account_transactions_detail,
         name='account_transaction_detail'
     ),
     path(
-        'account-transaction/index/<int:pk>',
+        'account-transaction/delete/<int:pk>',
         views.account_transactions_delete,
         name='account_transaction_delete'
     ),
