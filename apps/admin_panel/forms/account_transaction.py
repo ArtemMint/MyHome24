@@ -43,6 +43,7 @@ class AccountTransactionForm(forms.ModelForm):
             'number': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Номер ведомости..',
                 }
             ),
             'created_date': forms.DateInput(
@@ -52,7 +53,7 @@ class AccountTransactionForm(forms.ModelForm):
                 attrs={
                     'type': 'date',
                     'class': 'form-control datepicker',
-                    # 'value': datetime.datetime.now().strftime("%d/%m/%Y"),
+                    'value': datetime.datetime.now().strftime("%d/%m/%Y"),
                 },
             ),
             'confirm': forms.CheckboxInput(),
@@ -60,6 +61,7 @@ class AccountTransactionForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                     'type': 'number',
+                    'placeholder': 'Введите сумму..',
                 }
             ),
             'transaction': forms.Select(
@@ -75,7 +77,8 @@ class AccountTransactionForm(forms.ModelForm):
             'comment': forms.Textarea(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Напишите комментарий..'
+                    'placeholder': 'Напишите комментарий..',
+                    'rows': 4,
                 }
             ),
         }
