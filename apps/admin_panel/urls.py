@@ -193,8 +193,28 @@ urlpatterns = [
     # Master requests
     path(
         'master-request/index/',
-        views.MasterRequestsList.as_view(),
-        name='master_request_list'
+        views.master_requests_list,
+        name='master_requests_list'
+    ),
+    path(
+        'master-request/create/',
+        views.master_request_create,
+        name='master_request_create'
+    ),
+    path(
+        'master-request/update/<int:pk>',
+        views.master_request_update,
+        name='master_request_update'
+    ),
+    path(
+        'master-request/detail/<int:pk>',
+        views.master_request_detail,
+        name='master_request_detail'
+    ),
+    path(
+        'master-request/delete/<int:pk>',
+        views.master_request_delete,
+        name='master_request_delete'
     ),
 
     # Meter readings
