@@ -1,13 +1,13 @@
 {% extends 'admin_panel/base/base.html' %}
 {% load static %}
 
-{% block title %} <h1 class="m-0">Новая ведомость</h1> {% endblock %}
+{% block title %} <h1 class="m-0">Расходная ведомость</h1> {% endblock %}
 
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:account_transactions_list' %}">Платежи</a></li>
-        <li class="breadcrumb-item active">Новая ведомость</li>
+        <li class="breadcrumb-item active">Расходная ведомость</li>
     </ul>
 {% endblock %}
 
@@ -44,9 +44,13 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6" style="float: right">
+                    {{ account_transaction_form.confirm }}
+                    {{ account_transaction_form.confirm.label_tag }}
+                </div>
+            </div>
             <div class="col-lg-6">
-                {{ account_transaction_form.confirm.label_tag }}
-                {{ account_transaction_form.confirm }}<br>
                 {{ account_transaction_form.owner.label_tag }}
                 <p>{{ account_transaction_form.owner }}</p>
                 {{ account_transaction_form.account.label_tag }}
@@ -55,17 +59,21 @@
                 <p>{{ account_transaction_form.transaction }}</p>
                 {{ account_transaction_form.total.label_tag }}
                 <p>{{ account_transaction_form.total }}</p>
+            </div>
+            <div class="col-lg-6">
                 {{ account_transaction_form.manager.label_tag }}
                 <p>{{ account_transaction_form.manager }}</p>
-                {{ account_transaction_form.comment.label_tag }}
-                <p>{{ account_transaction_form.comment }}</p>
-                <div class="col-xs-12 text-right">
+            </div>
+        </div>
+        <div class="col-lg-12 text-right">
                     <div class="form-group">
                         <a href="{% url 'admin_panel:accounts_list' %}" class="btn btn-default">Отменить</a>
                         <button type="submit" class="btn btn-success">Сохранить</button>
                     </div>
                 </div>
-            </div>
-        </div>
+                <div class="col-lg-12">
+                    {{ account_transaction_form.comment.label_tag }}
+                    <p>{{ account_transaction_form.comment }}</p>
+                </div>
     </form>
 {% endblock content %}
