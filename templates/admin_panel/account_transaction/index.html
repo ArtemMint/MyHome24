@@ -5,7 +5,7 @@
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item active">Лицевые счета</li>
+        <li class="breadcrumb-item active">Платежи</li>
     </ul>
 {% endblock %}
 
@@ -53,8 +53,8 @@
                 <div class="dropdown pull-right margin-bottom" style="float: right">
                     <button class="dropdown-toggle btn btn-success" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Выберите действие</button>
                     <ul class="dropdown-menu">
-                        <li><a href="{% url 'admin_panel:account_transaction_create' %}">Создать приход</a></li>
-                        <li><a href="{% url 'admin_panel:account_create' %}">Создать расход</a></li>
+                        <li><a href="{% url 'admin_panel:account_transaction_create_in' %}">Создать приход</a></li>
+                        <li><a href="{% url 'admin_panel:account_transaction_create_out' %}">Создать расход</a></li>
                         <li><a href="">Выгрузить в Excel</a></li>
                     </ul>
                 </div>
@@ -91,33 +91,41 @@
             <tbody>
                 {% for field in account_transactions_list %}
                     <tr>
-                        <td onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
+                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
                             {{ field.number }}
                         </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
-                            {{ field.created_date }}
+                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
+                            {{ field.created_date.date }}
                         </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
+                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
                             {% if field.confirm %}
                                 Проведен
                             {% else %}
                                 Не проведен
                             {% endif %}
                         </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
+                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
                             {{ field.transaction|truncatechars:50 }}
                         </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
+                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
                             {{ field.owner|truncatechars:50 }}
                         </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
+                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
                             {{ field.account|truncatechars:50 }}
                         </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
-                            {{ field.type|truncatechars:50 }}
+                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
+                            {% if field.type == 'Приход' %}
+                                <span style="color: #00a65a">{{ field.type|truncatechars:50 }}</span>
+                            {% else %}
+                                <span style="color: #dd4b39">{{ field.type|truncatechars:50 }}</span>
+                            {% endif %}
                         </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
-                            {{ field.total|truncatechars:50 }}
+                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
+                            {% if field.type == 'Приход' %}
+                                <span style="color: #00a65a">{{ field.total|truncatechars:50 }}</span>
+                            {% else %}
+                                <span style="color: #dd4b39">{{ field.total|truncatechars:50 }}</span>
+                            {% endif %}
                         </td>
                         <td>
                             <div class="btn-group ">
@@ -134,8 +142,8 @@
             </tbody>
         </table>
         <div class="box-footer">
-            <div>Проведен приход: <span class="text-bold">{{ accounts_count }}</span></div>
-            <div>Проведен расход: <span class="text-bold">{{ accounts_count }}</span></div>
+            <div>Проведен приход: <span class="text-bold">{{ total_income }} грн.</span></div>
+            <div>Проведен расход: <span class="text-bold">{{ total_expenditure }} грн.</span></div>
         </div>
     {% else %}
         <h2 class="text-center">Список ведомостей пуст!</h2>
