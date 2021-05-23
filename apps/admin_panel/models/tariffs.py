@@ -1,10 +1,4 @@
 from django.db import models
-from django.utils import timezone
-
-from admin_panel.models import (
-    Services,
-    Metrics,
-)
 
 
 class Tariff(models.Model):
@@ -27,17 +21,16 @@ class Tariff(models.Model):
     )
 
     class Meta:
-        ordering = ['-editing_date',]
+        ordering = ['-editing_date', ]
 
     def __str__(self):
         return self.name
 
+    @staticmethod
     def get_tariff_for_copy(pk):
-        tarriff = Tariff.objects.get(id=pk)
-        tarriff.id = None
-        return tarriff
-
-
+        tariff = Tariff.objects.get(id=pk)
+        tariff.id = None
+        return tariff
 
 
 class TariffService(models.Model):
@@ -45,13 +38,13 @@ class TariffService(models.Model):
     TariffService model
     """
     tariff = models.ForeignKey(
-        Tariff,
+        'admin_panel.Tariff',
         on_delete=models.CASCADE,
         related_name='tariff_service',
         verbose_name='Тариф',
     )
     service = models.ForeignKey(
-        Services,
+        'admin_panel.Services',
         on_delete=models.CASCADE,
         related_name='tariff_services',
         verbose_name='Услуга',
@@ -67,7 +60,7 @@ class TariffService(models.Model):
         default='грн',
     )
     metric = models.ForeignKey(
-        Metrics,
+        'admin_panel.Metrics',
         on_delete=models.CASCADE,
         related_name='tariff_metrics',
         verbose_name='Ед.изм.',

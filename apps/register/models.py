@@ -178,7 +178,10 @@ class User(AbstractUser):
     )
 
     def __str__(self):
-        return self.full_name
+        if self.is_staff:
+            return f'{self.role} - {self.full_name}'
+        else:
+            return self.full_name
 
     @staticmethod
     def get_users_list():

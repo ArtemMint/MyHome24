@@ -6,7 +6,6 @@ from django.db import models
 
 from ckeditor.fields import RichTextField
 from solo.models import SingletonModel
-from .page_seo import SEO
 
 
 class IndexPage(SingletonModel):
@@ -29,7 +28,7 @@ class IndexPage(SingletonModel):
         verbose_name='Показать ссылки на приложения',
     )
     seo = models.OneToOneField(
-        SEO,
+        'admin_panel.SEO',
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -49,7 +48,7 @@ class IndexSlider(models.Model):
     Slider on main page
     """
     index = models.ForeignKey(
-        IndexPage,
+        'admin_panel.IndexPage',
         on_delete=models.CASCADE,
         related_name='slider'
     )
@@ -68,7 +67,7 @@ class IndexBlock(models.Model):
     Places near building
     """
     index = models.ForeignKey(
-        IndexPage,
+        'admin_panel.IndexPage',
         on_delete=models.CASCADE,
         verbose_name='Title of the block',
         related_name='block',

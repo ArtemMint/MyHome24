@@ -1,7 +1,5 @@
 from django.db import models
 
-from admin_panel import models as admin_models
-
 
 class Account(models.Model):
     STATUS = (
@@ -26,21 +24,21 @@ class Account(models.Model):
         default=0,
     )
     house = models.ForeignKey(
-        admin_models.House,
+        'admin_panel.House',
         on_delete=models.CASCADE,
         verbose_name='Дом',
         related_name='accounts',
         blank=False,
     )
     section = models.ForeignKey(
-        admin_models.HouseSection,
+        'admin_panel.HouseSection',
         on_delete=models.CASCADE,
         verbose_name='Секция',
         related_name='accounts',
         blank=False,
     )
     flat = models.ForeignKey(
-        admin_models.Flat,
+        'admin_panel.Flat',
         on_delete=models.CASCADE,
         verbose_name='Квартира',
         related_name='accounts',
