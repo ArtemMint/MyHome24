@@ -80,10 +80,14 @@ class MasterRequest(models.Model):
         ordering = ('-editing_date',)
 
     @staticmethod
-    def get_queryset_list():
+    def get_all_queryset_list():
         return MasterRequest.objects.all()
 
     @staticmethod
     def get_account_transaction_by_pk(pk):
         return MasterRequest.objects.get(pk=pk)
+
+    @staticmethod
+    def get_all_queryset_count():
+        return MasterRequest.objects.all().count()
 
