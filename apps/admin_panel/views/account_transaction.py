@@ -112,5 +112,15 @@ def account_transactions_detail(request, pk):
 
 
 @login_required(login_url='/admin/site/login')
-def account_transactions_delete(request):
-    pass
+def account_transactions_delete(request, pk):
+    account_transaction = models.AccountTransaction.get_account_transaction_by_pk(pk=pk)
+    if request.POST:
+        account_transaction.delete()
+        return redirect('admin_panel:account_transactions_list')
+    return render(
+        request,
+        'admin_panel/account_transaction/delete.html',
+        {
+            'account_transaction_data': account_transaction,
+        }
+    )
