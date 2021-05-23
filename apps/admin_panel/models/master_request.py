@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from ckeditor.fields import RichTextField
 
 
 class MasterRequest(models.Model):
@@ -59,7 +60,7 @@ class MasterRequest(models.Model):
         related_name='master_request_managers',
         blank=True,
     )
-    comment = models.CharField(
+    comment = RichTextField(
         max_length=500,
         verbose_name='Комментарий',
         blank=True,

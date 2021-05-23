@@ -31,3 +31,6 @@ from admin_panel.models.account import Account
 
 # AccountTransaction
 from admin_panel.models.account_transaction import AccountTransaction
+
+# MasterRequest
+from admin_panel.models.master_request import MasterRequest
