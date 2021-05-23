@@ -27,34 +27,40 @@
     </div>
 
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    {% if flats_list %}
+    {% if master_requests_list %}
         <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
-                    <th style="width: 125px; min-width: 125px">№ квартиры</th>
-                    <th style="width: 300px; min-width: auto">Дом</th>
-                    <th style="width: 120px; min-width: 120px">Секция</th>
-                    <th style="width:auto">Этаж</th>
-                    <th style="min-width: 200px">Владелец</th>
-                    <th style="min-width: 160px">Остаток (грн)</th>
-                    <th style="width: 80px; min-width: 80px">&nbsp;</th></tr>
+                    <th style="width: 125px; min-width: 125px">№ заявки</th>
+                    <th style="width: 300px; min-width: auto">Удобное время</th>
+                    <th style="width: 120px; min-width: 120px">Тип мастера</th>
+                    <th style="width:auto">Описание</th>
+                    <th style="min-width: 200px">Квартира</th>
+                    <th style="min-width: 160px">Владелец</th>
+                    <th style="min-width: 160px">Телефон</th>
+                    <th style="min-width: 160px">Мастер</th>
+                    <th style="min-width: 160px">Статус</th>
+                    <th style="width: 80px; min-width: 80px">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
-            {% for field in flats_list %}
+            {% for field in master_requests_list %}
                 <tr>
-                    <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.number }}</td>
-                    <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.house }}</td>
-                    <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.section }}</td>
-                    <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.floor }}</td>
-                    <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.owner }}</td>
-                    <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.none }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.id }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.created_date.date }} - {{ field.time }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.master_type }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.description }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.flat }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.owner }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.owner.phone }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.master }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.status }}</td>
                     <td>
                         <div class="btn-group ">
-                            <a class="btn btn-default btn-sm" href="{% url 'admin_panel:flat_update' field.pk %}" title="Редактировать">
+                            <a class="btn btn-default btn-sm" href="{% url 'admin_panel:master_request_update' field.pk %}" title="Редактировать">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
-                            <a class="btn btn-default btn-sm" href="{% url 'admin_panel:flat_delete' field.pk %}" title="Удалить">
+                            <a class="btn btn-default btn-sm" href="{% url 'admin_panel:master_request_delete' field.pk %}" title="Удалить">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </div>
@@ -64,10 +70,10 @@
             </tbody>
         </table>
         <div class="box-footer">
-            <div>Количество квартир: <span class="text-bold">{{ flats_count }}</span></div>
+            <div>Количество заявок: <span class="text-bold">{{ master_request_count }}</span></div>
         </div>
     {% else %}
-        <h2 class="text-center">Список квартир пуст!</h2>
+        <h2 class="text-center">Список заявок пуст!</h2>
     {% endif %}
     </form>
 
