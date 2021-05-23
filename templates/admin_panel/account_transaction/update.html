@@ -1,13 +1,25 @@
-{% extends 'admin_panel/base/base.updatehtml' %}
+{% extends 'admin_panel/base/base.html' %}
 {% load static %}
 
-{% block title %} <h1 class="m-0">Редактирование</h1> {% endblock %}
+{% block title %} <h1 class="m-0">
+    {% if account_transaction_form.instance.type == 'Приход' %}
+        Приходная
+    {% else %}
+        Расходная
+    {% endif %} ведомость</h1>
+{% endblock %}
 
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:accounts_list' %}">Лицевые счета</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:account_detail' account_form.instance.pk %}">Лицевой счет</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:account_transactions_list' %}">Платежи</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:account_transaction_detail' account_transaction_form.instance.id %}">
+            {% if account_transaction_form.instance.type == 'Приход' %}
+                Приходная
+            {% else %}
+                Расходная
+            {% endif %}
+            ведомость №{{ account_transaction_form.instance }}</a></li>
         <li class="breadcrumb-item active">Редактирование</li>
     </ul>
 {% endblock %}
@@ -21,46 +33,60 @@
             </ul>
          {% endfor %}
     {% endif %}
-    <div class="col-lg-6" style="padding-left: 0px;">
-        <div class="page-header-spec">
-            <div class="form-group field-account-uid required">
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        №
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        {{ account_transaction_form.id }}
+        <div class="col-lg-6" style="padding-left: 0px;">
+            <div class="page-header-spec">
+                <div class="form-group field-account-uid required">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            №
+                        </div>
+                        {{ account_transaction_form.number }}
                     </div>
-                    {{ account_form.number }}
+                </div>
+                <span class="label-mid">от</span>
+                <div class="form-group field-accounttransaction-uid_date required">
+                    <div id="accounttransaction-uid_date-kvdate" class="input-group date">
+                        <span class="input-group-addon kv-date-calendar" title="Выбрать дату">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                        {{ account_transaction_form.created_date }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-7">
-            <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                {{ account_form.house.label_tag }}
-                <p>{{ account_form.house }}</p>
-                {{ account_form.section.label_tag }}
-                <p>{{ account_form.section }}</p>
-                {{ account_form.flat.label_tag }}
-                <p>{{ account_form.flat }}</p>
-                <p>
-                    <b>Владелец:</b>
-                    <span id="user-fullname">
-                        <a href="/admin/user/1">get user by filter</a>
-                    </span>
-                </p>
-                <p>
-                    <b>Телефон:</b>
-                    <span id="user-fullname">
-                        <a href="/admin/user/1">get phone by filter</a>
-                    </span>
-                </p>
-                <div class="col-xs-12 text-right">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6" style="float: right">
+                    {{ account_transaction_form.confirm }}
+                    {{ account_transaction_form.confirm.label_tag }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                {{ account_transaction_form.owner.label_tag }}
+                <p>{{ account_transaction_form.owner }}</p>
+                {{ account_transaction_form.account.label_tag }}
+                <p>{{ account_transaction_form.account }}</p>
+                {{ account_transaction_form.transaction.label_tag }}
+                <p>{{ account_transaction_form.transaction }}</p>
+                {{ account_transaction_form.total.label_tag }}
+                <p>{{ account_transaction_form.total }}</p>
+            </div>
+            <div class="col-lg-6">
+                {{ account_transaction_form.manager.label_tag }}
+                <p>{{ account_transaction_form.manager }}</p>
+            </div>
+        </div>
+        <div class="col-lg-12 text-right">
                     <div class="form-group">
                         <a href="{% url 'admin_panel:accounts_list' %}" class="btn btn-default">Отменить</a>
                         <button type="submit" class="btn btn-success">Сохранить</button>
                     </div>
                 </div>
-            </form>
-        </div>
-    </div>
+                <div class="col-lg-12">
+                    {{ account_transaction_form.comment.label_tag }}
+                    <p>{{ account_transaction_form.comment }}</p>
+                </div>
+    </form>
 {% endblock content %}
