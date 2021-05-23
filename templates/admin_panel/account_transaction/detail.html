@@ -6,19 +6,18 @@
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:accounts_list' %}">Лицевые счета</a></li>
-        <li class="breadcrumb-item">{{ account_data }}</li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:account_transactions_list' %}">Лицевые счета</a></li>
+        <li class="breadcrumb-item">{{ account_transaction_data }}</li>
     </ul>
 {% endblock %}
 
 {% block header %}
-
     <div class="box-header with-border">
         <h3 class="box-title">
             Просмотр лицевого cчета
         </h3>
         <div class="box-tools">
-            <a href="{% url 'admin_panel:account_update' account_data.id %}" class="btn btn-primary btn-sm float-right">
+            <a href="{% url 'admin_panel:account_transaction_update' account_transaction_data.id %}" class="btn btn-primary btn-sm float-right">
                 <i class="fas fa-pencil-alt"></i>
                 Редактировать лицевой счет
             </a>
@@ -30,6 +29,27 @@
                 <i class="fas fa-dollar-sign"></i>
                 Принять платеж
             </a>
+        </div>
+    </div>
+    <div class="col-lg-6" style="padding-left: 0px;">
+        <div class="page-header-spec">
+            <div class="form-group field-account-uid required">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        №
+                    </div>
+                    <input class="form-control" value="{{ account_transaction_data.number }}" type="text" readonly>
+                </div>
+            </div>
+            <span class="label-mid">от</span>
+            <div class="form-group field-accounttransaction-uid_date required">
+                <div id="accounttransaction-uid_date-kvdate" class="input-group date">
+                    <span class="input-group-addon kv-date-calendar" title="Выбрать дату">
+                        <i class="fas fa-calendar-alt"></i>
+                    </span>
+                    <input class="form-control" value="{{ account_transaction_data.created_date.date }}" type="text" readonly>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -44,56 +64,55 @@
             </ul>
          {% endfor %}
     {% endif %}
+
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
         <div class="row">
             <div class="col-lg-12">
-                <table class="table table-bordered table-striped table-view">
-                    <tbody>
-                        <tr>
-                            <td>Статус</td>
-                            <td>
-                                {% if account_data.status == 'Активен' %}
-                                    <small class="label label-success">{{ account_data.status }}</small>
-                                {% elif field.status == 'Неактивен' %}
-                                    <small class="label label-danger">{{ account_data.status }}</small>
-                                {% else %}
-                                {% endif %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Дом</td>
-                            <td><a href="{% url 'admin_panel:house_detail' account_data.house.id%}">{{ account_data.house|truncatechars:40 }}</a></td>
-                        </tr>
-                        <tr>
-                            <td>Секций</td>
-                            <td>{{ account_data.section|truncatechars:40 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Квартира</td>
-                            <td><a href="{% url 'admin_panel:flat_detail' account_data.flat.id%}">{{ account_data.flat|truncatechars:40 }}</a></td>
-                        </tr>
-                        <tr>
-                            <td>Владелец</td>
-                            <td><a href="{% url 'admin_panel:user_detail' account_data.flat.owner.id%}">{{ account_data.flat.owner|truncatechars:40 }}</a></td>
-                        </tr>
-                        <tr>
-                            <td>Остаток</td>
-                            <td>{{ account_data.balance|truncatechars:40 }}</td>
-                        </tr>
-                    </tbody>
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td>Владелец квартиры</td>
+                        <td>
+                            <a href="{% url 'admin_panel:user_detail' account_transaction_data.owner.id %}">{{ account_transaction_data.owner }}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Лицевой счёт</td>
+                        <td>
+                            <a href="{% url 'admin_panel:account_detail' account_transaction_data.account.id %}">{{ account_transaction_data.account }}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Статья</td>
+                        <td>{{ account_transaction_data.type }}</td>
+                    </tr>
+                    <tr>
+                        <td>Квитанция</td>
+                        <td>{{ account_transaction_data.none }}</td>
+                    </tr>
+                    <tr>
+                        <td>Услуга</td>
+                        <td>{{ account_transaction_data.transaction }}</td>
+                    </tr>
+                    <tr>
+                        <td>Менеджер</td>
+                        <td>
+                            <a href="{% url 'admin_panel:user_admin_detail' account_transaction_data.manager.id %}">{{ account_transaction_data.manager }}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Сумма</td>
+                        {% if account_transaction_data.type == 'Приход' %}
+                            <td style="color: #00ba13">{{ account_transaction_data.total }}</td>
+                        {% else %}
+                            <td style="color: #c62232">{{ account_transaction_data.total }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Комментарий</td>
+                        <td>{{ account_transaction_data.comment }}</td>
+                    </tr>
                 </table>
-                <div class="col">
-                    <a href="#">Посмотреть показания счётчиков</a>
-                </div>
-                <div class="col">
-                    <a href="#">Посмотреть приходы</a>
-                </div>
-                <div class="col">
-                    <a href="#">Посмотреть квитанции</a>
-                </div>
             </div>
         </div>
     </form>
-    </div>
-    </div>
 {% endblock content %}
