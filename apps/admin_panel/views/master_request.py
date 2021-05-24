@@ -71,7 +71,7 @@ def master_request_detail(request, pk):
         request,
         "admin_panel/master_request/detail.html",
         {
-            'master_requests_list': models.MasterRequest.get_all_queryset_list(),
+            'master_request_data': models.MasterRequest.get_master_request_by_pk(pk=pk),
         }
     )
 
