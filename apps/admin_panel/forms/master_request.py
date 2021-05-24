@@ -33,6 +33,7 @@ class MasterRequestForm(forms.ModelForm):
             ),
             'time': forms.TimeInput(
                 attrs={
+                    'type': 'time',
                     'class': 'form-control',
                 },
             ),
