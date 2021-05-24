@@ -84,10 +84,17 @@ class MasterRequest(models.Model):
         return MasterRequest.objects.all()
 
     @staticmethod
-    def get_account_transaction_by_pk(pk):
+    def get_master_request_by_pk(pk):
         return MasterRequest.objects.get(pk=pk)
 
     @staticmethod
     def get_all_queryset_count():
         return MasterRequest.objects.all().count()
 
+    @staticmethod
+    def get_new_request_count():
+        return MasterRequest.objects.filter(status='Новое').count()
+
+    @staticmethod
+    def get_in_work_request_count():
+        return MasterRequest.objects.filter(status='В работе').count()
