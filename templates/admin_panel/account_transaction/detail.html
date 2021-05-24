@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block title %} <h1 class="m-0">
-            {% if account_transaction_data.instance.type == 'Приход' %}
-                Приходная
-            {% else %}
-                Расходная
-            {% endif %}
-            ведомость</h1>
+    {% if account_transaction_data.instance.type == 'Приход' %}
+        Приходная
+    {% else %}
+        Расходная
+    {% endif %}
+    ведомость</h1>
 {% endblock %}
 
 {% block breadcrumb %}
