@@ -15,6 +15,7 @@ class AccountTransactionForm(forms.ModelForm):
                 'class': 'form-control',
             }
         ),
+        label='Менеджер',
     )
     owner = forms.ModelChoiceField(
         queryset=register_models.User.get_active_users(),
@@ -22,7 +23,8 @@ class AccountTransactionForm(forms.ModelForm):
             attrs={
                 'class': 'form-control',
             }
-        )
+        ),
+        label='Владелец',
     )
 
     class Meta:
