@@ -46,19 +46,29 @@
             <tbody>
             {% for field in master_requests_list %}
                 <tr>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.id }}</td>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.created_date.date }} - {{ field.time }}</td>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.master_type }}</td>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.description|truncatechars:15 }}</td>
                     <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                        {{ field.flat }}
+                        {{ field.id }}
                     </td>
                     <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                        {{ field.owner }}
+                        {{ field.created_date.date }} - {{ field.time }}
                     </td>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">{{ field.owner.phone }}</td>
                     <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                        {{ field.master }}
+                        {{ field.master_type }}
+                    </td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                        {{ field.description|truncatechars:15 }}
+                    </td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                        <a href="{% url 'admin_panel:flat_detail' field.flat.id %}">{{ field.flat }}</a>
+                    </td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                         <a href="{% url 'admin_panel:user_detail' field.owner.id %}">{{ field.owner }}</a>
+                    </td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                        {{ field.owner.phone }}
+                    </td>
+                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                         <a href="{% url 'admin_panel:user_admin_detail' field.master.id %}">{{ field.master }}</a>
                     </td>
                     <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
                         {% if field.status == 'Новое' %}
@@ -84,7 +94,7 @@
             </tbody>
         </table>
         <div class="box-footer">
-            <div>Количество заявок: <span class="text-bold">{{ master_request_count }}</span></div>
+            <div>Количество заявок: <span class="text-bold">{{ master_request_number }}</span></div>
         </div>
     {% else %}
         <h2 class="text-center">Список заявок пуст!</h2>
