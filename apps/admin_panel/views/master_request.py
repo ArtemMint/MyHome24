@@ -13,6 +13,7 @@ def master_requests_list(request):
         "admin_panel/master_request/index.html",
         {
             'master_requests_list': models.MasterRequest.get_all_queryset_list(),
+            'master_request_number': models.MasterRequest.get_all_queryset_count(),
         }
     )
 
@@ -41,11 +42,25 @@ def master_request_create(request):
 
 @login_required(login_url='/admin/site/login')
 def master_request_update(request, pk):
+    master_request_form = forms.MasterRequestForm(
+        instance=models.MasterRequest.get_master_request_by_pk(pk=pk),
+    )
+    if request.POST:
+        master_request_form = forms.MasterRequestForm(
+            request.POST,
+            instance=models.MasterRequest.get_master_request_by_pk(pk=pk),
+        )
+        if master_request_form.is_valid():
+            master_request_form.save()
+            messages.success(request, 'Заявка мастеру обновлена')
+            return redirect('admin_panel:master_requests_list')
+        else:
+            messages.success(request, 'Ошибка обновления заявки!')
     return render(
         request,
-        "admin_panel/master_request/index.html",
+        "admin_panel/master_request/update.html",
         {
-            'master_requests_list': models.MasterRequest.get_all_queryset_list(),
+            'master_request_form': master_request_form,
         }
     )
 
@@ -54,7 +69,7 @@ def master_request_update(request, pk):
 def master_request_detail(request, pk):
     return render(
         request,
-        "admin_panel/master_request/index.html",
+        "admin_panel/master_request/detail.html",
         {
             'master_requests_list': models.MasterRequest.get_all_queryset_list(),
         }
@@ -63,10 +78,14 @@ def master_request_detail(request, pk):
 
 @login_required(login_url='/admin/site/login')
 def master_request_delete(request, pk):
+    master_request_data = models.MasterRequest.get_master_request_by_pk(pk=pk)
+    if request.POST:
+        master_request_data.delete()
+        return redirect('admin_panel:master_requests_list')
     return render(
         request,
-        "admin_panel/master_request/index.html",
+        "admin_panel/master_request/delete.html",
         {
-            'master_requests_list': models.MasterRequest.get_all_queryset_list(),
+            'master_request_data': master_request_data,
         }
     )
