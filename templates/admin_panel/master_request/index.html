@@ -72,12 +72,12 @@
                     </td>
                     <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
                         {% if field.status == 'Новое' %}
-                                <small class="label label-primary">{{ field.status|truncatechars:50 }}</small>
-                            {% elif field.status == 'В работе' %}
-                                <small class="label label-mid">{{ field.status|truncatechars:50 }}</small>
-                            {% else %}
-                                <small class="label label-success">{{ field.status|truncatechars:50 }}</small>
-                            {% endif %}
+                            <small class="label label-primary">{{ field.status|truncatechars:50 }}</small>
+                        {% elif field.status == 'В работе' %}
+                            <small class="label label-mid">{{ field.status|truncatechars:50 }}</small>
+                        {% else %}
+                            <small class="label label-success">{{ field.status|truncatechars:50 }}</small>
+                        {% endif %}
                     </td>
                     <td>
                         <div class="btn-group ">
