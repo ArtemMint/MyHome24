@@ -63,6 +63,7 @@ class AccountTransactionForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                     'type': 'number',
+                    'step': "0.01",
                     'placeholder': 'Введите сумму..',
                 }
             ),
