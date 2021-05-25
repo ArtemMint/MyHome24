@@ -17,11 +17,13 @@ class HouseForm(forms.ModelForm):
             'name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Введите название дома..',
                 }
             ),
             'address': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Введите адрес дома..',
                 }
             ),
         }

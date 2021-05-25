@@ -32,11 +32,13 @@ class FlatForm(forms.ModelForm):
             'number': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Номер квартиры..',
                 }
             ),
             'area': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Площадь квартиры..',
                 }
             ),
             'house': forms.Select(

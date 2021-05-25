@@ -37,16 +37,19 @@ class UserCreateForm(forms.ModelForm):
             'first_name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Введите имя..',
                 }
             ),
             'last_name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Введите фамилию..',
                 }
             ),
             'middle_name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Введите отчество..',
                 }
             ),
             'birth_date': forms.DateInput(
@@ -63,31 +66,35 @@ class UserCreateForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                     'rows': '11',
-                    'placeholder': 'Введите описание',
+                    'placeholder': 'Напишите о себе...',
                 }
             ),
             'phone': forms.TextInput(
                 attrs={
                     'input_type': 'text',
                     'class': 'form-control',
+                    'placeholder': 'Введите ваш телефон +380991234567..',
                 }
             ),
             'telegram': forms.TextInput(
                 attrs={
                     'input_type': 'text',
                     'class': 'form-control',
+                    'placeholder': 'Введите Telegram..',
                 }
             ),
             'viber': forms.TextInput(
                 attrs={
                     'input_type': 'text',
                     'class': 'form-control',
+                    'placeholder': 'Введите Viber..',
                 }
             ),
             'email': forms.TextInput(
                 attrs={
                     'type': 'email',
                     'class': 'form-control',
+                    'placeholder': 'Введите ваш e-mail..',
                 }
             ),
             'password': forms.PasswordInput(
@@ -95,6 +102,7 @@ class UserCreateForm(forms.ModelForm):
                     'type': 'Password',
                     'class': 'form-control',
                     'required': 'false',
+                    'placeholder': 'Введите пароль..',
                 }
             ),
         }
