@@ -1,15 +1,15 @@
 from django.db import models
 
 
-class HouseSection(models.Model):
+class HouseUserAdmin(models.Model):
     house = models.ForeignKey(
         'admin_panel.House',
         on_delete=models.CASCADE,
-        related_name='house_sections',
+        related_name='house_user_admin',
         default=None,
     )
     name = models.CharField(
-        verbose_name="Название секции",
+        verbose_name="ФИО",
         max_length=50,
         blank=True,
         null=True,
@@ -25,5 +25,5 @@ class HouseSection(models.Model):
         return f'{self.name}'
 
     @staticmethod
-    def get_sections_count(pk):
-        return HouseSection.objects.filter(house=pk).count()
+    def get_user_admin_list(pk):
+        return HouseUserAdmin.objects.filter(house=pk)

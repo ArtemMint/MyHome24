@@ -24,6 +24,7 @@ from admin_panel.forms.transaction_purpose import TransactionPurposeForm
 from admin_panel.forms.house.house import *
 from admin_panel.forms.house.section import *
 from admin_panel.forms.house.floor import *
+from admin_panel.forms.house.user_admin import *
 
 # Flat
 from admin_panel.forms.flat import *
