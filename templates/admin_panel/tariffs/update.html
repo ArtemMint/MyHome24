@@ -44,17 +44,22 @@
                 </div>
                 <div class="col-md-3">
                     {{ tariff_service.currency.label_tag }}
-                    {{ tariff_service.currency }}
-                    <div class="input-group-btn">
-                        <a type="button" class="btn col-xs-12 btn-default">
-                            <i class="fa fa-trash delete-form"></i> <span class="check_delete" hidden>{{ tariff_service.DELETE }}</span>
-                        </a>
+                    <div class="input-group">
+                        {{ tariff_service.currency }}
+                        <div class="input-group-addon btn col-xs-12 btn-default delete-form">
+                            <i class="fa fa-trash"></i>
+                            <span class="check_delete" hidden>
+                                {{ tariff_service.DELETE }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
         {% endfor %}
         </div>
-        <a id="addNewForm" class="btn btn-default">Добавить</a>
+        <div class="col-lg-12" style="padding: 10px 0 0 0">
+            <a id="addNewForm" class="btn btn-default">Добавить</a>
+        </div>
         <div class="col-xs-12 text-center">
             <div class="form-group">
                 <a href="{% url 'admin_panel:tariff_list' %}" class="btn btn-default">Отменить</a>
