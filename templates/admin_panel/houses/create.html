@@ -73,50 +73,68 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-lg-12" style="margin-left: 10px;">
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item active">
-                                <a class="nav-link active" href="#tab-sections" data-toggle="tab" aria-expanded="true">Секции</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#tab-floors" data-toggle="tab" aria-expanded="false">Этажи</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#tab-houseuseradmins" data-toggle="tab" aria-expanded="false">Пользователи</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active clearfix" id="tab-sections">
-                                {{ house_section_formset.management_form }}
-                                    {% for form in house_section_formset %}
-                                    <div class="form-house-section">
-                                        {{ form.as_p }}
-                                        {% for error in form.errors %}
-                                            {{ error }}
-                                        {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-lg-8" style="margin-left: 10px;">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item active">
+                            <a class="nav-link active" href="#tab-sections" data-toggle="tab" aria-expanded="true">Секции</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tab-floors" data-toggle="tab" aria-expanded="false">Этажи</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tab-houseuseradmins" data-toggle="tab" aria-expanded="false">Пользователи</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active clearfix" id="tab-sections">
+                            {{ house_section_formset.management_form }}
+                                {% for form in house_section_formset %}
+                                <div class="form-house-section">
+                                    {{ form.name.label_tag }}
+                                    <div class="input-group">
+                                        {{ form.name }}
+                                        <div class="input-group-addon btn col-xs-12 btn-default delete-form">
+                                            <i class="fa fa-trash"></i>
+                                            <span class="check_delete" hidden>
+                                                {{ metric_form.DELETE }}
+                                            </span>
+                                        </div>
                                     </div>
+                                    {% for error in form.errors %}
+                                        {{ error }}
                                     {% endfor %}
-                                <a id="addNewSection" class="btn btn-success pull-right form-row-add-section-btn" type="button">Добавить</a>
-                            </div>
-                            <div class="tab-pane clearfix" id="tab-floors">
-                                {{ house_floor_formset.management_form }}
-                                    {% for form in house_floor_formset %}
-                                    <div class="form-house-floor">
-                                        {{ form.as_p }}
-                                        {% for error in form.errors %}
-                                            {{ error }}
-                                        {% endfor %}
-                                    </div>
-                                    {% endfor %}
-                                <a id="addNewFloor" class="btn btn-success pull-right form-row-add-floor-btn" type="button">Добавить</a>
-                            </div>
-                            <div class="tab-pane clearfix" id="tab-houseuseradmins">
-                                <div id="form-houseuseradmin">
                                 </div>
-                                <a id="addNewUserAdmin" class="btn btn-success pull-right form-row-add-houseuseradmin-btn" type="button">Добавить</a>
+                                {% endfor %}
+                            <a id="addNewSection" class="btn btn-success pull-right form-row-add-section-btn" type="button" style="margin: 10px 0 10px 0">Добавить</a>
+                        </div>
+                        <div class="tab-pane clearfix" id="tab-floors">
+                            {{ house_floor_formset.management_form }}
+                                {% for form in house_floor_formset %}
+                                <div class="form-house-floor">
+                                    {{ form.name.label_tag }}
+                                    <div class="input-group">
+                                        {{ form.name }}
+                                        <div class="input-group-addon btn col-xs-12 btn-default delete-form">
+                                            <i class="fa fa-trash"></i>
+                                            <span class="check_delete" hidden>
+                                                {{ metric_form.DELETE }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    {% for error in form.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endfor %}
+                            <a id="addNewFloor" class="btn btn-success pull-right form-row-add-floor-btn" type="button" style="margin: 10px 0 10px 0">Добавить</a>
+                        </div>
+                        <div class="tab-pane clearfix" id="tab-houseuseradmins">
+                            <div id="form-houseuseradmin">
                             </div>
+                            <a id="addNewUserAdmin" class="btn btn-success pull-right form-row-add-houseuseradmin-btn" type="button">Добавить</a>
                         </div>
                     </div>
                 </div>
@@ -129,8 +147,6 @@
             </div>
         </div>
     </form>
-    </div>
-    </div>
 {% endblock content %}
 
 
