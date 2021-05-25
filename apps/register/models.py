@@ -1,4 +1,5 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -126,7 +127,7 @@ class User(AbstractUser):
         max_length=155,
         blank=True,
     )
-    phone = models.CharField(
+    phone = PhoneNumberField(
         verbose_name='phone number',
         max_length=25,
         default='',
