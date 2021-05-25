@@ -3,7 +3,7 @@ from django.utils import timezone
 
 
 class AccountTransaction(models.Model):
-    number = models.BigIntegerField(
+    number = models.CharField(
         verbose_name='№',
         unique=True,
         blank=False,
