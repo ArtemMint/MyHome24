@@ -6,6 +6,8 @@ venv
 
 media
 
+staticfiles
+
 myhome24/__pycache__
 
 apps/admin_panel/__pycache__
