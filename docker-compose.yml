@@ -3,9 +3,11 @@ services:
   django:
     build: .
     container_name: myhome24
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn myhome24.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - .:/usr/src/app
+      - .:/usr/src/myhome24
+      - ./staticfiles/:/usr/src/myhome24/static
+      - ./media/:/usr/src/myhome24/media
     ports:
       - "8000:8000"
     depends_on:
@@ -21,5 +23,15 @@ services:
       - POSTGRES_PORT=5432
     volumes:
       - pgdata:/var/lib/postgresql/data/
+  nginx:
+    build: ./nginx
+    depends_on:
+      - django
+      - pgdb
+    ports:
+    - "80:80"
+    volumes:
+    - ./staticfiles/:/home/myhome24/static
+    - ./media/:/home/myhome24/media
 volumes:
   pgdata:

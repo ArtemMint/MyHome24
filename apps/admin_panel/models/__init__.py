@@ -22,6 +22,7 @@ from admin_panel.models.transaction_purpose import TransactionPurpose
 from admin_panel.models.house.house import *
 from admin_panel.models.house.section import HouseSection
 from admin_panel.models.house.floor import HouseFloor
+from admin_panel.models.house.user_admin import HouseUserAdmin
 
 # Flat
 from admin_panel.models.flat import Flat

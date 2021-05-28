@@ -38,11 +38,14 @@
                     {% for metric_form in metrics_formset %}{{ metric_form.id }}
                     <div class="form">
                         {{ metric_form.name.label_tag }}
-                        {{ metric_form.name }}
-                        <div class="input-group-btn">
-                            <a type="button" class="btn col-xs-12 btn-default">
-                                <i class="fa fa-trash delete-form"></i> <span class="check_delete" hidden>{{ metric_form.DELETE }}</span>
-                            </a>
+                        <div class="input-group">
+                            {{ metric_form.name }}
+                            <div class="input-group-addon btn col-xs-12 btn-default delete-form">
+                                <i class="fa fa-trash"></i>
+                                <span class="check_delete" hidden>
+                                    {{ metric_form.DELETE }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                     {% endfor %}

@@ -6,7 +6,8 @@ class Account(models.Model):
         ('Активен', 'Активен'),
         ('Неактивен', 'Неактивен'),
     )
-    number = models.BigIntegerField(
+    number = models.CharField(
+        max_length=20,
         verbose_name='№',
         unique=True,
         blank=False,

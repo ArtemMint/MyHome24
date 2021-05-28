@@ -45,5 +45,5 @@ ServicesSiteFormset = forms.inlineformset_factory(
     ServicesPage,
     ServicesSite,
     ServicesSiteForm,
-    extra=0,
+    extra=1,
 )

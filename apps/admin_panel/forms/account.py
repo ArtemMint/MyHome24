@@ -19,6 +19,7 @@ class AccountForm(forms.ModelForm):
             'number': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Заполните номер лицевого счета..',
                 }
             ),
             'status': forms.Select(

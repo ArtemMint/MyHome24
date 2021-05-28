@@ -6,12 +6,6 @@ from register import models as reg_models
 
 class FlatForm(forms.ModelForm):
     prefix = 'house_flat'
-    # house = forms.ModelChoiceField(
-    #     queryset=models.House.objects.all(),
-    # )
-    # section = forms.ModelChoiceField(
-    #     queryset=models.HouseSection.objects.filter(house_id=house),
-    # )
     owner = forms.ModelChoiceField(
         queryset=reg_models.User.get_active_users(),
         widget=forms.Select(
@@ -38,11 +32,13 @@ class FlatForm(forms.ModelForm):
             'number': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Номер квартиры..',
                 }
             ),
             'area': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Площадь квартиры..',
                 }
             ),
             'house': forms.Select(

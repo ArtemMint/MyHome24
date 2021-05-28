@@ -4,7 +4,6 @@ About models for web-site
 
 from django.db import models
 
-from ckeditor.fields import RichTextField
 from solo.models import SingletonModel
 
 
@@ -18,7 +17,7 @@ class AboutPage(SingletonModel):
         blank=False,
         verbose_name='Заголовок',
     )
-    short_text = RichTextField(
+    short_text = models.CharField(
         blank=False,
         max_length=3000,
         verbose_name='Краткий текст',
@@ -72,7 +71,7 @@ class AboutExtraInfo(models.Model):
         blank=True,
         verbose_name='Заголовок',
     )
-    short_text = RichTextField(
+    short_text = models.CharField(
         blank=True,
         max_length=1000,
         verbose_name='Краткий текст',
