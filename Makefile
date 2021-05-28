@@ -39,3 +39,5 @@ docker-migrate:
 	docker-compose exec django ./manage.py migrate
 docker-shell:
 	docker-compose exec django ./manage.py shell
+docker-collectstatic:
+	docker-compose exec django ./manage.py collectstatic

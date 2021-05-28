@@ -7,6 +7,7 @@ services:
     volumes:
       - .:/usr/src/myhome24
       - ./static/:/usr/src/myhome24/static
+      - ./media/:/usr/src/myhome24/media
     ports:
       - "8000:8000"
     depends_on:
@@ -31,5 +32,6 @@ services:
     - "80:80"
     volumes:
     - ./staticfiles/:/home/django/static
+    - ./media/:/usr/src/myhome24/media
 volumes:
   pgdata:
