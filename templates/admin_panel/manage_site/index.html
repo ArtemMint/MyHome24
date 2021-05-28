@@ -1,6 +1,10 @@
 {% extends 'admin_panel/base/base.html' %}
 {% load static %}
 
+{% block head %}
+    <script src="https://cdn.tiny.cloud/1/0j0r7eiw43jgvevxwht831cn2gunm038xe68rydtg0qjn1zw/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+{% endblock %}
+
 {% block title %} <h1 class="m-0">Главная страница</h1> {% endblock %}
 
 {% block breadcrumb %}
@@ -124,6 +128,11 @@
 {% block scripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea#id_short_text'
+    });
+</script>
 <script>
     const prefix = "block";
     const form_class = ".form";

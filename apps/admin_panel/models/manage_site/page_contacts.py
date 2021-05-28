@@ -5,7 +5,6 @@ Contacts models for web-site
 from django.db import models
 
 from solo.models import SingletonModel
-from ckeditor.fields import RichTextField
 
 
 class ContactsPage(SingletonModel):
@@ -18,7 +17,7 @@ class ContactsPage(SingletonModel):
         blank=True,
         verbose_name='Заголовок',
     )
-    short_text = RichTextField(
+    short_text = models.CharField(
         max_length=1000,
         default='',
         blank=True,

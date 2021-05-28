@@ -25,7 +25,7 @@
 
 {% block content %}
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    <div class="row">
+    <div class="row" style="margin: 0 0 0 20px">
         <div class="col-xs-12 col-log-4">
             <table class="table table-bordered table-striped">
             <tr>
@@ -40,6 +40,7 @@
                 <td>Телефон</td>
                 <td>{{ user_admin.phone }}</td>
             </tr>
+            <tr>
                 <td>Email</td>
                 <td>{{ user_admin.email }}</td>
             </tr>

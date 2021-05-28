@@ -4,7 +4,6 @@ Module with main page tables of the website
 
 from django.db import models
 
-from ckeditor.fields import RichTextField
 from solo.models import SingletonModel
 
 
@@ -18,7 +17,7 @@ class IndexPage(SingletonModel):
         blank=True,
         verbose_name='Заголовок',
     )
-    short_text = RichTextField(
+    short_text = models.CharField(
         blank=False,
         max_length=1000,
         verbose_name='Краткий текст',
