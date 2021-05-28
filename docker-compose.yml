@@ -5,7 +5,8 @@ services:
     container_name: myhome24
     command: gunicorn myhome24.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - .:/usr/src/app
+      - .:/usr/src/myhome24
+      - ./static/:/usr/src/myhome24/static
     ports:
       - "8000:8000"
     depends_on:
@@ -29,6 +30,6 @@ services:
     ports:
     - "80:80"
     volumes:
-    - ./static/:/static
+    - ./staticfiles/:/home/django/static
 volumes:
   pgdata:
