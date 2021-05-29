@@ -8,6 +8,10 @@ media
 
 staticfiles
 
+**/**/migrations/
+
+!**/migrations/__init__.py
+
 myhome24/__pycache__
 
 apps/admin_panel/__pycache__
