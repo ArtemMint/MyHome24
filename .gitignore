@@ -8,7 +8,7 @@ media
 
 staticfiles
 
-**/**/migrations/
+**/migrations/
 
 !**/migrations/__init__.py
 
