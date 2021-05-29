@@ -16,6 +16,7 @@ class FloorForm(forms.ModelForm):
             'name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Этаж..',
                 }
             ),
         }

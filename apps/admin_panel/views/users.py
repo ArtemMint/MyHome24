@@ -50,7 +50,7 @@ def user_update_view(request, pk):
     user_form = forms.UserCreateForm(
         instance=models.User.get_user_by_pk(pk),
         initial={
-            'password': models.User.get_password(pk)
+            'password': '',
         }
     )
     if request.POST:
@@ -62,7 +62,8 @@ def user_update_view(request, pk):
         if user_form.is_valid():
             user = user_form.save(commit=False)
             raw_password = user_form.cleaned_data['password']
-            user.set_password(raw_password)
+            if not raw_password:
+                user.set_password(raw_password)
             user.save()
             messages.success(request, 'Данные владельца квартиры обновлены!')
             return redirect('admin_panel:users_list')

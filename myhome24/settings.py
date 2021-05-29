@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 import sys
-from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,11 +26,7 @@ SECRET_KEY = '=m90oq_&^1ostwsg1vz_h_x_adhq$l24vu(x5fe+*^53@w^200'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'testserver',
-]
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'register.User'
 
@@ -53,7 +48,7 @@ INSTALLED_APPS = [
     'personal_cabinet',
     'website',
     'register',
-    'ckeditor',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -98,7 +93,7 @@ DATABASES = {
         'NAME': 'myhome24_db',
         'USER': 'artemmint',
         'PASSWORD': '12345',
-        'HOST': 'localhost',
+        'HOST': 'pgdb',
         'PORT': '5432',
     }
 }
@@ -139,7 +134,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+STATIC_ROOT = os.path.join(BASE_DIR, '/staticfiles/')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [

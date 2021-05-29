@@ -16,6 +16,7 @@ class HouseSectionForm(forms.ModelForm):
             'name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Секция..',
                 }
             ),
         }

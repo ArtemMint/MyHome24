@@ -5,12 +5,11 @@ Services page on website
 from django.db import models
 
 from solo.models import SingletonModel
-from .page_seo import SEO
 
 
 class ServicesPage(SingletonModel):
     seo = models.OneToOneField(
-        SEO,
+        'admin_panel.SEO',
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -39,7 +38,7 @@ class ServicesSite(models.Model):
         verbose_name='Описание услуги'
     )
     services_page = models.ForeignKey(
-        ServicesPage,
+        'admin_panel.ServicesPage',
         on_delete=models.CASCADE,
         blank=True,
         null=True,

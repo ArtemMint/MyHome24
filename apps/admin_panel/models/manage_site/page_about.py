@@ -4,9 +4,7 @@ About models for web-site
 
 from django.db import models
 
-from ckeditor.fields import RichTextField
 from solo.models import SingletonModel
-from .page_seo import SEO
 
 
 class AboutPage(SingletonModel):
@@ -19,7 +17,7 @@ class AboutPage(SingletonModel):
         blank=False,
         verbose_name='Заголовок',
     )
-    short_text = RichTextField(
+    short_text = models.CharField(
         blank=False,
         max_length=3000,
         verbose_name='Краткий текст',
@@ -30,7 +28,7 @@ class AboutPage(SingletonModel):
         blank=True,
     )
     seo = models.OneToOneField(
-        SEO,
+        'admin_panel.SEO',
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -47,7 +45,7 @@ class AboutGallery(models.Model):
     Gallery in About
     """
     about = models.ForeignKey(
-        AboutPage,
+        'admin_panel.AboutPage',
         on_delete=models.CASCADE,
         related_name='gallery',
     )
@@ -63,7 +61,7 @@ class AboutExtraInfo(models.Model):
     Additional info in About
     """
     about = models.OneToOneField(
-        AboutPage,
+        'admin_panel.AboutPage',
         on_delete=models.CASCADE,
         related_name='extra_info',
     )
@@ -73,7 +71,7 @@ class AboutExtraInfo(models.Model):
         blank=True,
         verbose_name='Заголовок',
     )
-    short_text = RichTextField(
+    short_text = models.CharField(
         blank=True,
         max_length=1000,
         verbose_name='Краткий текст',
@@ -88,7 +86,7 @@ class AboutExtraGallery(models.Model):
     Gallery in About
     """
     about = models.ForeignKey(
-        AboutPage,
+        'admin_panel.AboutPage',
         on_delete=models.CASCADE,
         related_name='extra_gallery',
     )
@@ -104,7 +102,7 @@ class AboutDocument(models.Model):
     Document in About
     """
     about = models.ForeignKey(
-        AboutPage,
+        'admin_panel.AboutPage',
         on_delete=models.CASCADE,
         related_name='documents',
     )

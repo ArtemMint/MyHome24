@@ -1,0 +1,94 @@
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+
+{% block head %}
+    <script src="https://cdn.tiny.cloud/1/0j0r7eiw43jgvevxwht831cn2gunm038xe68rydtg0qjn1zw/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+{% endblock %}
+
+{% block title %} <h1 class="m-0">Новая заявка</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:master_requests_list' %}">Вызов мастера</a></li>
+        <li class="breadcrumb-item active">Новая заявка</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        {{ master_request_form.id }}
+        <div class="col-lg-6" style="padding-left: 0px;">
+            <div class="page-header-spec">
+                <div class="form-group field-account-uid required">
+                    <div class="input-group">
+                        <span class="input-group-addon kv-date-calendar" title="Выбрать дату">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                        {{ master_request_form.created_date }}
+                    </div>
+                </div>
+                <span class="label-mid">от</span>
+                <div class="form-group field-accounttransaction-uid_date required">
+                    <div id="accounttransaction-uid_date-kvdate" class="input-group date">
+                        <span class="input-group-addon kv-date-calendar" title="Выбрать дату">
+                            <i class="fas fa-clock"></i>
+                        </span>
+                        {{ master_request_form.time }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 row">
+                <div class="col-lg-6">
+                    {{ master_request_form.owner.label_tag }}
+                    {{ master_request_form.owner }}
+                </div>
+            </div>
+            <div class="col-lg-12 row">
+                <div class="col-lg-6">
+                    {{ master_request_form.description.label_tag }}
+                    <p>{{ master_request_form.description }}</p>
+                </div>
+                <div class="col-lg-6">
+                    {{ master_request_form.flat.label_tag }}
+                    <p>{{ master_request_form.flat }}</p>
+                    {{ master_request_form.master_type.label_tag }}
+                    <p>{{ master_request_form.master_type }}</p>
+                    {{ master_request_form.status.label_tag }}
+                    <p>{{ master_request_form.status }}</p>
+                    {{ master_request_form.master.label_tag }}
+                    <p>{{ master_request_form.master }}</p>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                {{ master_request_form.media }}
+                {{ master_request_form.comment.label_tag }}
+                <p>{{ master_request_form.comment }}</p>
+            </div>
+        </div>
+        <div class="col-lg-12 text-right">
+            <div class="form-group">
+                <a href="{% url 'admin_panel:master_requests_list' %}" class="btn btn-default">Отменить</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </div>
+        </div>
+    </form>
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        tinymce.init({
+            selector: 'textarea#id_master_request-comment'
+        });
+    </script>
+{% endblock %}

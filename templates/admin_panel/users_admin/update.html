@@ -1,13 +1,13 @@
 {% extends 'admin_panel/base/base.html' %}
 {% load static %}
 
-{% block title %} <h1 class="m-0">Обновить владельца</h1> {% endblock %}
+{% block title %} <h1 class="m-0">Пользователи</h1> {% endblock %}
 
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:users_list' %}">Владельцы квартир</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:user_detail' user_admin_form.instance.id %}">Профиль владельца</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:users_list' %}">Пользователи</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:user_detail' user_admin_form.instance.id %}">Пользователь</a></li>
         <li class="breadcrumb-item active"> Редактирование </li>
     </ul>
 {% endblock %}
@@ -39,7 +39,7 @@
                 {{ user_admin_form.password }}
             </div>
         </div>
-        <div class="col-xs-12 text-center">
+        <div class="col-xs-12 text-center" style="padding: 10px 0 0 0">
             <div class="form-group">
                 <a href="{% url 'admin_panel:users_admin_list' %}" class="btn btn-default">Отменить</a>
                 <button type="submit" class="btn btn-success">Сохранить</button>

@@ -1,0 +1,82 @@
+﻿{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Заявка №{{ master_request_data }} </h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:master_requests_list' %}">Заявки вызова мастера</a></li>
+        <li class="breadcrumb-item active">Заявка №{{ master_request_data }} </li>
+    </ul>
+{% endblock %}
+
+{% block header %}
+    <div class="box-header with-border">
+        <h3 class="box-title">
+        </h3>
+        <div class="box-tools">
+            <a href="{% url 'admin_panel:master_request_update' master_request_data.id %}" class="btn btn-primary btn-sm float-right">
+                <i class="fas fa-pencil-alt"></i>
+                Редактировать заявку
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between" style="padding: 0 10px">
+        <table class="table table-bordered table-striped table-view">
+            <tr>
+                <td>Статус</td>
+                <td>{% if master_request_data.status == 'Новое' %}
+                        <small class="label label-primary">{{ master_request_data.status }}</small>
+                    {% elif master_request_data.status == 'В работе' %}
+                        <small class="label label-mid">{{ master_request_data.status }}</small>
+                    {% else %}
+                        <small class="label label-success">{{ master_request_data.status }}</small>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Владелец</td>
+                <td>
+                    <a href="{% url 'admin_panel:user_detail' master_request_data.owner.id %}">
+                        {{ master_request_data.owner }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>Телефон</td>
+                <td>{{ master_request_data.owner.phone }}</td>
+            </tr>
+            <tr>
+                <td>Квартира</td>
+                <td><a href="{% url 'admin_panel:flat_detail' master_request_data.flat.id %}">{{ master_request_data.flat}}</a></td>
+            </tr>
+            <tr>
+                <td>Тип мастера</td>
+                <td>{{ master_request_data.master_type }}</td>
+            </tr>
+            <tr>
+                <td>Мастер</td>
+                <td>
+                    <a href="{% url 'admin_panel:user_admin_detail' master_request_data.master.id %}">
+                        {{ master_request_data.master }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>Описание</td>
+                <td>{{ master_request_data.description|truncatechars:100 }}</td>
+            </tr>
+            <tr>
+                <td>Добавлено</td>
+                <td>
+                    {{ master_request_data.created_date.date }} - {{ master_request_data.time }}
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endblock content %}
+

@@ -36,6 +36,12 @@
                         {{ user_form.image }}
                     </div>
                 </div>
+            {% if user_form.errors %}
+                <p>NOT VALID</p>
+                {% for error in user_form.errors %}
+                    {{ error  }}<br>
+                {% endfor %}
+            {% endif %}
             </div>
             <div class="col-xs-12 col-sm-6">
                 <label>Статус</label>
@@ -52,7 +58,6 @@
                 {{ user_form.birth_date }}
             </div>
             <div class="col-xs-6 col-sm-6">
-                <label>Статус</label>
                 <label>О владельце (заметки)</label>
                 {{ user_form.notes }}
             </div>
@@ -73,7 +78,7 @@
                 {{ user_form.password }}
             </div>
         </div>
-        <div class="col-xs-12 text-center">
+        <div class="col-xs-12 text-center" style="padding: 10px 0 0 0">
             <div class="form-group">
                 <a href="{% url 'admin_panel:users_list' %}" class="btn btn-default">Отменить</a>
                 <button type="submit" class="btn btn-success">Сохранить</button>

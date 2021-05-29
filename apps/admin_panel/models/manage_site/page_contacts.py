@@ -5,8 +5,6 @@ Contacts models for web-site
 from django.db import models
 
 from solo.models import SingletonModel
-from ckeditor.fields import RichTextField
-from ...models import SEO
 
 
 class ContactsPage(SingletonModel):
@@ -19,7 +17,7 @@ class ContactsPage(SingletonModel):
         blank=True,
         verbose_name='Заголовок',
     )
-    short_text = RichTextField(
+    short_text = models.CharField(
         max_length=1000,
         default='',
         blank=True,
@@ -30,7 +28,7 @@ class ContactsPage(SingletonModel):
         verbose_name='Ссылка на коммерческий сайт',
     )
     seo = models.OneToOneField(
-        SEO,
+        'admin_panel.SEO',
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -77,7 +75,7 @@ class ContactsAddress(models.Model):
         verbose_name='E-mail',
     )
     contacts = models.ForeignKey(
-        ContactsPage,
+        'admin_panel.ContactsPage',
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -100,7 +98,7 @@ class ContactsMap(models.Model):
         verbose_name='Код карты',
     )
     contacts = models.ForeignKey(
-        ContactsPage,
+        'admin_panel.ContactsPage',
         on_delete=models.CASCADE,
         null=True,
         blank=True,

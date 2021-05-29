@@ -49,22 +49,10 @@ class UserAdminCreateForm(forms.ModelForm):
                     'class': 'form-control',
                 }
             ),
-            'password': forms.TextInput(
+            'password': forms.PasswordInput(
                 attrs={
-                    # 'type': 'Password',
+                    'type': 'Password',
                     'class': 'form-control',
                 }
             ),
-            # 'password1': forms.TextInput(
-            #     attrs={
-            #         # 'type': 'Password',
-            #         'class': 'form-control',
-            #     }
-            # ),
-            # 'password2': forms.TextInput(
-            #     attrs={
-            #         # 'type': 'Password',
-            #         'class': 'form-control',
-            #     }
-            # ),
         }

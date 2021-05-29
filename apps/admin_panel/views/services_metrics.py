@@ -22,7 +22,7 @@ def service_update_view(request):
         )
         if service_formset.is_valid():
             service_formset.save()
-            messages.success(request, 'Все данные обновлены!')
+            messages.success(request, 'Все услуги обновлены!')
             return redirect('admin_panel:services_list')
 
     else:
@@ -44,7 +44,7 @@ def metrics_update_view(request):
         )
         if metrics_formset.is_valid():
             metrics_formset.save()
-            messages.success(request, 'Все данные обновлены!')
+            messages.success(request, 'Все ед. изм. обновлены!')
             return redirect('admin_panel:metrics_list')
 
     else:

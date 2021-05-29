@@ -58,9 +58,11 @@
                         <tr>
                             <td>Пользователи</td>
                             <td>
-                                <p class="no-margin"><strong>Электрик:</strong>
-                                    <a href="/admin/user-admin/3">Александр Пушкин</a>
+                                <p>
+                                {% for user_admin in house_user_admin_list %}
+                                    <a href="#">{{ user_admin }}</a>
                                 </p>
+                                {% endfor %}
                             </td>
                         </tr>
                     </tbody>

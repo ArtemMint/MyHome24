@@ -12,9 +12,11 @@ def statistics_view(request):
         request,
         'admin_panel/statistics/index.html',
         {
-            'houses_count': models.House.get_houses_count(),
-            'flats_count': models.Flat.get_flats_count(),
-            'active_users': reg_models.User.get_active_users().count(),
-            'accounts_count': models.Account.get_accounts_count(),
+            'houses_number': models.House.get_houses_count(),
+            'flats_number': models.Flat.get_flats_count(),
+            'active_users_number': reg_models.User.get_active_users().count(),
+            'accounts_number': models.Account.get_accounts_count(),
+            'new_master_request_number': models.MasterRequest.get_new_request_count(),
+            'in_work_master_request_number': models.MasterRequest.get_in_work_request_count(),
         }
     )

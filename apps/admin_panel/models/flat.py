@@ -1,8 +1,5 @@
 from django.db import models
 
-from admin_panel.models import *
-from register.models import User
-
 
 class Flat(models.Model):
     number = models.CharField(
@@ -18,7 +15,7 @@ class Flat(models.Model):
         null=True,
     )
     house = models.ForeignKey(
-        House,
+        'admin_panel.House',
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Дом',
@@ -26,7 +23,7 @@ class Flat(models.Model):
         blank=False,
     )
     section = models.ForeignKey(
-        HouseSection,
+        'admin_panel.HouseSection',
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Секция',
@@ -34,7 +31,7 @@ class Flat(models.Model):
         blank=True,
     )
     floor = models.ForeignKey(
-        HouseFloor,
+        'admin_panel.HouseFloor',
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Этаж',
@@ -42,7 +39,7 @@ class Flat(models.Model):
         blank=True,
     )
     owner = models.ForeignKey(
-        User,
+        'register.User',
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Владелец',
@@ -50,10 +47,18 @@ class Flat(models.Model):
         blank=True,
     )
     tariff = models.ForeignKey(
-        Tariff,
+        'admin_panel.Tariff',
         on_delete=models.CASCADE,
         related_name='flats',
-        verbose_name='Тариф  ',
+        verbose_name='Тариф',
+        null=True,
+        blank=True,
+    )
+    account = models.ForeignKey(
+        'admin_panel.Account',
+        on_delete=models.CASCADE,
+        related_name='flats',
+        verbose_name='Лицевой счет',
         null=True,
         blank=True,
     )

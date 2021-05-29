@@ -1,11 +1,9 @@
 from django.db import models
 
-from admin_panel.models import House
-
 
 class HouseFloor(models.Model):
     house = models.ForeignKey(
-        House,
+        'admin_panel.House',
         on_delete=models.CASCADE,
         related_name='house_floor',
         default=None,
@@ -14,6 +12,7 @@ class HouseFloor(models.Model):
         verbose_name="Номер этажа",
         max_length=50,
         blank=True,
+        null=True,
     )
     created_date = models.DateTimeField(
         auto_now_add=True,

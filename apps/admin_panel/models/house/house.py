@@ -42,7 +42,7 @@ class House(models.Model):
 class HousePreview(models.Model):
 
     house = models.ForeignKey(
-        House,
+        'admin_panel.House',
         on_delete=models.CASCADE,
         related_name='house_preview',
         null=True,

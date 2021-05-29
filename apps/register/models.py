@@ -1,4 +1,5 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -126,7 +127,7 @@ class User(AbstractUser):
         max_length=155,
         blank=True,
     )
-    phone = models.CharField(
+    phone = PhoneNumberField(
         verbose_name='phone number',
         max_length=25,
         default='',
@@ -178,7 +179,10 @@ class User(AbstractUser):
     )
 
     def __str__(self):
-        return self.full_name
+        if self.is_staff:
+            return f'{self.role} - {self.full_name}'
+        else:
+            return self.full_name
 
     @staticmethod
     def get_users_list():
@@ -203,9 +207,3 @@ class User(AbstractUser):
     @staticmethod
     def get_user_by_pk(pk):
         return User.objects.get(pk=pk)
-
-    @staticmethod
-    def get_password(pk):
-        return User.objects.get(pk=pk).password
-
-

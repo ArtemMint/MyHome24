@@ -1,11 +1,9 @@
 from django.db import models
 
-from admin_panel.models import House
-
 
 class HouseSection(models.Model):
     house = models.ForeignKey(
-        House,
+        'admin_panel.House',
         on_delete=models.CASCADE,
         related_name='house_sections',
         default=None,
@@ -14,6 +12,7 @@ class HouseSection(models.Model):
         verbose_name="Название секции",
         max_length=50,
         blank=True,
+        null=True,
     )
     created_date = models.DateTimeField(
         auto_now_add=True,

@@ -382,6 +382,11 @@ span.label.label-warning {
     /* */
 }
 
+.label-primary {
+    background-color: #3c8dbc!important;
+    /* */
+}
+
 .site-main-slider img {
     width: 100%;
     /* */

@@ -21,21 +21,31 @@
             </ul>
          {% endfor %}
     {% endif %}
-    <div class="col-lg-6" style="padding-left: 0px;">
-        <div class="page-header-spec">
-            <div class="form-group field-account-uid required">
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        №
+
+    {% if account_form.errors %}
+        <p>NOT VALID</p>
+        {% for error in account_form.errors %}
+            {{ error  }}<br>
+        {% endfor %}
+    {% endif %}
+
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="col-lg-6" style="padding-left: 0px;">
+            <div class="page-header-spec">
+                <div class="form-group field-account-uid required">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            №
+                        </div>
+                        {{ account_form.number }}
                     </div>
-                    {{ account_form.number }}
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-7">
-            <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-lg-7">
+                {{ account_form.status.label_tag }}
+                <p>{{ account_form.status }}</p>
                 {{ account_form.house.label_tag }}
                 <p>{{ account_form.house }}</p>
                 {{ account_form.section.label_tag }}
@@ -60,7 +70,7 @@
                         <button type="submit" class="btn btn-success">Сохранить</button>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 {% endblock content %}

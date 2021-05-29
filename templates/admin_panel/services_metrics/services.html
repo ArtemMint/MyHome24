@@ -26,10 +26,10 @@
             <hr>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="services-tab" data-toggle="tab" href="#services" role="tab">Услуги</a>
+                    <a class="nav-link active" id="services-tab" data-toggle="tab" href="#services" role="tab" style="color: #444">Услуги</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="metric-tab" data-toggle="tab" href="{% url 'admin_panel:metrics_list' %}" role="tab">Единицы измерения</a>
+                    <a class="nav-link" id="metric-tab" data-toggle="tab" href="{% url 'admin_panel:metrics_list' %}" role="tab" style="color: #444">Единицы измерения</a>
                 </li>
             </ul>
 
@@ -44,13 +44,17 @@
                                     {{ form.name.label_tag }}
                                     {{ form.name }}
                                 </div>
+
                                 <div class="col-md-5">
                                     {{ form.metric.label_tag }}
-                                    {{ form.metric }}
-                                    <div class="input-group-btn">
-                                        <a type="button" class="btn col-xs-12 btn-default">
-                                            <i class="fa fa-trash delete-form"></i> <span class="check_delete" hidden>{{ form.DELETE }}</span>
-                                        </a>
+                                    <div class="input-group">
+                                        {{ form.metric }}
+                                        <div class="input-group-addon btn col-xs-12 btn-default  delete-form">
+                                            <i class="fa fa-trash"></i>
+                                            <span class="check_delete" hidden>
+                                                {{ metric_form.DELETE }}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
