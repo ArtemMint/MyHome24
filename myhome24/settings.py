@@ -21,12 +21,13 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))  # add apps to the path
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=m90oq_&^1ostwsg1vz_h_x_adhq$l24vu(x5fe+*^53@w^200'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'soefv2n83rv23vhwmef__WDaw')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS')
+ALLOWED_HOSTS = ALLOWED_HOSTS.split(" ") if ALLOWED_HOSTS else ["*"]
 
 AUTH_USER_MODEL = 'register.User'
 
@@ -89,12 +90,13 @@ WSGI_APPLICATION = 'myhome24.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'myhome24_db',
-        'USER': 'artemmint',
-        'PASSWORD': '12345',
-        'HOST': 'pgdb',
-        'PORT': '5432',
+        'ENGINE': os.environ.get('POSTGRES_ENGINE',
+                                 'django.db.backends.postgresql_psycopg2'),
+        'NAME': os.environ.get('POSTGRES_DB', 'myhome24_db'),
+        'USER': os.environ.get('POSTGRES_USER', 'artemmint'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '12345'),
+        'HOST': os.environ.get('POSTGRES_HOST', 'pgdb'),
+        'PORT': os.environ.get('POSTGRES_POR', '5432')
     }
 }
 
