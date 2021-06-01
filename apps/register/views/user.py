@@ -39,12 +39,12 @@ class UserLoginView(LoginView):
             else:
                 context['error_message'] = "user is not active"
         else:
-            context['error_message'] = "email or password not correct"
+            context['error_message'] = "Email or password not correct"
 
         return render(
             request,
             self.template_name,
-            context
+            context,
         )
 
 class UserRegisterView(SuccessMessageMixin, CreateView):
