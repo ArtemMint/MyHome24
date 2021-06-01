@@ -6,7 +6,7 @@ services:
     command: gunicorn myhome24.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/usr/src/myhome24
-      - ./staticfiles/:/usr/src/myhome24/static
+      - ./static/:/usr/src/myhome24/static
       - ./media/:/usr/src/myhome24/media
     ports:
       - "8000:8000"
