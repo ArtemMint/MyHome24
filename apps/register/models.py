@@ -85,6 +85,22 @@ class AbstractUser(AbstractBaseUser):
         return True
 
 
+class UserAdminManager(models.Manager):
+    """
+    Class that filter only UserAdmin
+    """
+    def get_queryset(self):
+        return super(UserAdminManager, self).get_queryset().filter(is_staff=True)
+
+
+class UserManager(models.Manager):
+    """
+    Class that filter only UserAdmin
+    """
+    def get_queryset(self):
+        return super(UserManager, self).get_queryset().filter(role='Владелец квартиры')
+
+
 class User(AbstractUser):
     """
     Custom User model to register and
@@ -177,6 +193,9 @@ class User(AbstractUser):
         upload_to='images/users/user_image/',
         verbose_name='Сменить изображение',
     )
+
+    users_admin = UserAdminManager()
+    users = UserManager()
 
     def __str__(self):
         if self.is_staff:

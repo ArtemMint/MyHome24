@@ -7,7 +7,7 @@ from register import models as reg_models
 class FlatForm(forms.ModelForm):
     prefix = 'house_flat'
     owner = forms.ModelChoiceField(
-        queryset=reg_models.User.get_active_users(),
+        queryset=reg_models.User.users.get_queryset(),
         widget=forms.Select(
             attrs={
                 'class': 'form-control',

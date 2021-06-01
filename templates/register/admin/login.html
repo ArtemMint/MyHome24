@@ -19,7 +19,7 @@
 
         <div class="tab-pane fade show active" id="users" role="tabpanel">
             <div class="login-box-body">
-                <form class="form">
+                <form class="form" method="post">{% csrf_token %}
                     <p class="login-box-msg">Вход в панель управления</p>
                     <input class="form-control" type="email" name="email" placeholder="E-mail" required><br>
                     <input class="form-control" type="password" name="password" placeholder="Пароль" required><br>
