@@ -9,7 +9,7 @@ class AccountTransactionForm(forms.ModelForm):
     prefix = 'account_transaction'
 
     manager = forms.ModelChoiceField(
-        queryset=register_models.User.get_users_admin_list(),
+        queryset=register_models.User.users_admin.get_queryset(),
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
@@ -18,7 +18,7 @@ class AccountTransactionForm(forms.ModelForm):
         label='Менеджер',
     )
     owner = forms.ModelChoiceField(
-        queryset=register_models.User.get_active_users(),
+        queryset=register_models.User.users.get_queryset(),
         widget=forms.Select(
             attrs={
                 'class': 'form-control',

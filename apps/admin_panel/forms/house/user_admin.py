@@ -9,7 +9,7 @@ class HouseUserAdminForm(forms.ModelForm):
     prefix = 'house_user_admin'
 
     name = forms.ModelChoiceField(
-        queryset=register_models.User.get_users_admin_list(),
+        queryset=register_models.User.users_admin.get_queryset(),
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
