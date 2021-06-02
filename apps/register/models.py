@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import UserManager
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -195,7 +194,7 @@ class User(AbstractUser):
         verbose_name='Сменить изображение',
     )
 
-    objects = UserManager()
+    objects = CustomUserManager()
     users_admin = UserAdminManager()
     users = OwnersManager()
 
