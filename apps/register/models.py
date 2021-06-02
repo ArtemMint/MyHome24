@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import UserManager
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -93,12 +94,12 @@ class UserAdminManager(models.Manager):
         return super(UserAdminManager, self).get_queryset().filter(is_staff=True)
 
 
-class UserManager(models.Manager):
+class OwnersManager(models.Manager):
     """
     Class that filter only UserAdmin
     """
     def get_queryset(self):
-        return super(UserManager, self).get_queryset().filter(role='Владелец квартиры')
+        return super(OwnersManager, self).get_queryset().filter(role='Владелец квартиры')
 
 
 class User(AbstractUser):
@@ -194,8 +195,9 @@ class User(AbstractUser):
         verbose_name='Сменить изображение',
     )
 
+    objects = UserManager()
     users_admin = UserAdminManager()
-    users = UserManager()
+    users = OwnersManager()
 
     def __str__(self):
         if self.is_staff:

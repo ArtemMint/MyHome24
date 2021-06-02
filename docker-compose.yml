@@ -6,7 +6,7 @@ services:
     command: gunicorn myhome24.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/usr/src/myhome24
-      - ./static/:/usr/src/myhome24/static
+      - ./staticfiles/:/usr/src/myhome24/static
       - ./media/:/usr/src/myhome24/media
     ports:
       - "8000:8000"
@@ -16,7 +16,7 @@ services:
     image: postgres:13-alpine
     container_name: postgresdb
     env_file:
-      - .env.dev
+      - .env
     volumes:
       - pgdata:/var/lib/postgresql/data/
   nginx:
