@@ -91,8 +91,8 @@ WSGI_APPLICATION = 'myhome24.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('POSTGRES_ENGINE',
-                                 'django.db.backends.postgresql_psycopg2'),
-        'NAME': os.environ.get('POSTGRES_DB', 'myhome24_db'),
+                                 'django.db.backends.sqlite3'),
+        'NAME': os.environ.get('POSTGRES_DB', 'db.sqlite3'),
         'USER': os.environ.get('POSTGRES_USER', 'artemmint'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '12345'),
         'HOST': os.environ.get('POSTGRES_HOST', 'pgdb'),
