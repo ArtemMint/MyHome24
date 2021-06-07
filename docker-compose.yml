@@ -16,6 +16,7 @@ services:
     image: postgres:13-alpine
     container_name: postgresdb
     environment:
+      - POSTGRES_DB=myhome24_db
       - POSTGRES_USER=artemmint
       - POSTGRES_PASSWORD=12345
     ports:
