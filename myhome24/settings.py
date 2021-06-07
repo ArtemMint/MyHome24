@@ -93,7 +93,7 @@ DATABASES = {
         "ENGINE": 'django.db.backends.postgresql',
         "NAME": 'myhome24_db',
         "USER": 'artemmint',
-        "PASSWORD": '12345',
+        "PASSWORD": 12345,
         "HOST": 'pgdb',
         "PORT": 5432,
     }
