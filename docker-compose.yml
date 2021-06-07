@@ -15,15 +15,8 @@ services:
   pgdb:
     image: postgres:13-alpine
     container_name: postgresdb
-    environment:
-      - POSTGRES_ENGINE=django.db.backends.postgresql
-      - POSTGRES_DB=myhome24_db
-      - POSTGRES_USER=artemmint
-      - POSTGRES_PASSWORD=12345
-      - POSTGRES_HOST=pgdb
-      - POSTGRES_PORT=5423
-    ports:
-      - '5432:5432'
+    env_file:
+      - .env
     volumes:
       - pgdata:/var/lib/postgresql/data/
   nginx:
