@@ -15,8 +15,10 @@ services:
   pgdb:
     image: postgres:13-alpine
     container_name: postgresdb
-    env_file:
-      - .env
+    environment:
+      - POSTGRES_USER=artemmint
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_PORT=5432
     volumes:
       - pgdata:/var/lib/postgresql/data/
   nginx:
