@@ -91,12 +91,12 @@ WSGI_APPLICATION = 'myhome24.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('POSTGRES_ENGINE',
-                                 'django.db.backends.postgresql_psycopg2'),
+                                 'django.db.backends.postgresql'),
         'NAME': os.environ.get('POSTGRES_DB', 'myhome24_db'),
         'USER': os.environ.get('POSTGRES_USER', 'artemmint'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '12345'),
         'HOST': os.environ.get('POSTGRES_HOST', 'pgdb'),
-        'PORT': os.environ.get('POSTGRES_POR', '5432')
+        'PORT': os.environ.get('POSTGRES_PORT', '5432')
     }
 }
 
