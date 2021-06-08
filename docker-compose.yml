@@ -6,9 +6,9 @@ services:
     command: gunicorn myhome24.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./:/usr/src/myhome24
-      - ./staticfiles/:/home/myhome24/static
+      - ./staticfiles/:/home/myhome24/static/
     ports:
-      - "8000:8000"
+    - "8000:8000"
     depends_on:
       - pgdb
   pgdb:
@@ -26,6 +26,6 @@ services:
     ports:
     - "80:80"
     volumes:
-    - ./staticfiles/:/home/myhome24/static
+    - ./staticfiles/:/home/myhome24/static/
 volumes:
   pgdata:
