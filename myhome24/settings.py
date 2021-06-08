@@ -91,12 +91,12 @@ WSGI_APPLICATION = 'myhome24.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('POSTGRES_ENGINE',
-                                 'django.db.backends.sqlite3'),
-        'NAME': os.environ.get('POSTGRES_DB', 'db.sqlite3'),
+                                 'django.db.backends.postgresql_psycopg2'),
+        'NAME': os.environ.get('POSTGRES_DB', 'myhome24_db'),
         'USER': os.environ.get('POSTGRES_USER', 'artemmint'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '12345'),
         'HOST': os.environ.get('POSTGRES_HOST', 'pgdb'),
-        'PORT': os.environ.get('POSTGRES_PORT', '5432')
+        'PORT': os.environ.get('POSTGRES_POR', '5432')
     }
 }
 
@@ -136,11 +136,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_URL = "/staticfiles/"
-if DEBUG:
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
