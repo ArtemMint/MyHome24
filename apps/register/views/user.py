@@ -1,16 +1,6 @@
-from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
-from django.views.generic import View
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import LoginView
-from django.views.generic.edit import CreateView
-
-from django.contrib.messages.views import SuccessMessageMixin
-
-
-from register.forms import (
-    UserRegisterForm,
-)
 
 
 class UserLoginView(LoginView):
