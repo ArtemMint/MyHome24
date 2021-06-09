@@ -30,14 +30,15 @@ function addHiddenForm(prefix, form_class, image_class=undefined, default_image=
         // hide form from page and set it before all forms
         hiddenForm.css('display', 'none');
         $(firstForm).before(hiddenForm);
-    };
+    }
 
     function addNewForm(prefix, form_class, index_class) {
 
         let firstForm = form_class + ":first";
         let lastForm = form_class + ":last";
         let newForm = $(firstForm).clone(true);
-        let totalForms = $('#id_' + prefix + '-TOTAL_FORMS').val()
+        let selectTotalForms = $('#id_' + prefix + '-TOTAL_FORMS')
+        let totalForms = selectTotalForms.val()
         let allForms = $(form_class + ":not(:hidden)");
 
         // get input
@@ -59,7 +60,7 @@ function addHiddenForm(prefix, form_class, image_class=undefined, default_image=
         totalForms++;
 
         // set TOTAL_FORMS number
-        $('#id_' + prefix + '-TOTAL_FORMS').val(totalForms);
+        selectTotalForms.val(totalForms);
 
         // set last index
         newForm.find(index_class).each(function() {
@@ -82,8 +83,11 @@ function addHiddenForm(prefix, form_class, image_class=undefined, default_image=
             form.find(":input").each(function () {
                 updateFormIndex(form, prefix, i-1);
             });
-        };
-    };
+        }
+        tinymce.init({
+            selector: 'textarea:not([id^="id_seo_"])'
+        });
+    }
 
     function updateFormIndex(form, prefix, index) {
         let idRegex = new RegExp('(' + prefix + '-\\d+)');
@@ -95,7 +99,7 @@ function addHiddenForm(prefix, form_class, image_class=undefined, default_image=
             'name': name,
             'id': id,
         }).val('');
-    };
+    }
 
     function deleteForm(e, prefix, form_class, index_class=undefined) {
 
@@ -111,11 +115,13 @@ function addHiddenForm(prefix, form_class, image_class=undefined, default_image=
         // get all forms which not hidden
         let allForms = $(form_class + ":not(:hidden)");
 
+        let selectTotalForms = $('#id_' + prefix + '-TOTAL_FORMS')
+
         // get number of all forms
-        let totalForms = $("#id_" + prefix + "-TOTAL_FORMS").val() - 1;
+        let totalForms = selectTotalForms.val() - 1;
 
         // set new number of all forms
-        $("#id_" + prefix + "-TOTAL_FORMS").val(totalForms);
+        selectTotalForms.val(totalForms);
 
         // cycle for updating all indexes of forms
         for (let i = 0, count = allForms.length; i < count; i++) {
@@ -130,5 +136,5 @@ function addHiddenForm(prefix, form_class, image_class=undefined, default_image=
             form.find(":input").each(function () {
                 updateFormIndex(form, prefix, i-1);
             });
-        };
-    };
+        }
+    }
