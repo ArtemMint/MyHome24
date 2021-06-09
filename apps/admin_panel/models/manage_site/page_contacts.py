@@ -25,6 +25,7 @@ class ContactsPage(SingletonModel):
     )
     url = models.URLField(
         max_length=500,
+        blank=True,
         verbose_name='Ссылка на коммерческий сайт',
     )
     seo = models.OneToOneField(
