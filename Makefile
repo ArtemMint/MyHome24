@@ -5,6 +5,7 @@ reboot: down up
 up: docker-build docker-up docker-prune
 down: docker-down
 update-db: docker-migrations docker-migrate
+collectstatic: docker-collectstatic
 
 # Simple commands
 docker-build:
