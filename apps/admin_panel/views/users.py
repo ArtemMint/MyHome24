@@ -23,9 +23,9 @@ def users_list_view(request):
 
 @login_required(login_url='/admin/site/login')
 def user_create_view(request):
-    user_form = forms.UserCreateForm()
+    user_form = forms.CreateUserForm()
     if request.POST:
-        user_form = forms.UserCreateForm(
+        user_form = forms.CreateUserForm(
             request.POST or None,
             request.FILES,
         )
@@ -47,23 +47,21 @@ def user_create_view(request):
 
 @login_required(login_url='/admin/site/login')
 def user_update_view(request, pk):
-    user_form = forms.UserCreateForm(
+    user_form = forms.UpdateUserForm(
         instance=models.User.get_user_by_pk(pk),
         initial={
             'password': '',
         }
     )
     if request.POST:
-        user_form = forms.UserCreateForm(
+        user_form = forms.UpdateUserForm(
             request.POST or None,
             request.FILES,
             instance=models.User.get_user_by_pk(pk),
         )
+
         if user_form.is_valid():
             user = user_form.save(commit=False)
-            raw_password = user_form.cleaned_data['password']
-            if not raw_password:
-                user.set_password(raw_password)
             user.save()
             messages.success(request, 'Данные владельца квартиры обновлены!')
             return redirect('admin_panel:users_list')
