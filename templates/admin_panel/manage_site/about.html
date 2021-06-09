@@ -148,7 +148,10 @@
 {% block scripts %}
     <script>
         tinymce.init({
-            selector: 'textarea:not([id^="id_seo_"])'
+            selector: 'textarea#id_short_text'
+        });
+        tinymce.init({
+            selector: 'textarea#id_extra_info-0-short_text'
         });
     </script>
 {% endblock %}
