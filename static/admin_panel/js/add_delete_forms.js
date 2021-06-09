@@ -84,8 +84,9 @@ function addHiddenForm(prefix, form_class, image_class=undefined, default_image=
                 updateFormIndex(form, prefix, i-1);
             });
         }
+        let newFormId = newForm.find('textarea').attr('id')
         tinymce.init({
-            selector: 'textarea:not([id^="id_seo_"])'
+            selector: '#' + newFormId,
         });
     }
 
