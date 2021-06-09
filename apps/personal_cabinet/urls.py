@@ -35,13 +35,6 @@ urlpatterns = [
         name='user_logout'
     ),
 
-    # User register
-    path(
-        'site/register',
-        views.UserRegisterView.as_view(),
-        name='user_register'
-    ),
-
     # Summary
     path(
         '',

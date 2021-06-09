@@ -46,10 +46,3 @@ class UserLoginView(LoginView):
             self.template_name,
             context,
         )
-
-class UserRegisterView(SuccessMessageMixin, CreateView):
-    template_name = 'register/user/register.html'
-    success_url = reverse_lazy('personal_cabinet:user_login')
-    form_class = UserRegisterForm
-    success_message = 'Вы успешло зарегистрированы.'
-    context_object_name = 'registration_form'
