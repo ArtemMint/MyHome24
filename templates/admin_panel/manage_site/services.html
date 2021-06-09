@@ -84,15 +84,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
 <script>
-    {#tinymce.init({#}
-    {#    selector: 'textarea:not([id^="id_seo_"])'#}
-    {# });#}
+    tinymce.init({
+        selector: 'textarea:not([id^="id_seo_"])'
+     });
 </script>
 <script>
-    const prefix = "form";
+    const prefix = "services";
     const form_class = ".form";
     const image = undefined;
-    const index_class = undefined;
+    const index_class = ".form-index";
     const default_image = undefined;
 
     // after rendering page set hidden form

@@ -130,7 +130,7 @@
 <script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
 <script>
     tinymce.init({
-        selector: 'textarea#id_short_text'
+        selector: 'textarea:not([id^="id_seo_"])'
     });
 </script>
 <script>
