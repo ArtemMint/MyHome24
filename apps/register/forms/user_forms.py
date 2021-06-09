@@ -3,7 +3,7 @@ from django import forms
 from register.models import User
 
 
-class UserCreateForm(forms.ModelForm):
+class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
@@ -20,7 +20,6 @@ class UserCreateForm(forms.ModelForm):
             'telegram',
             'viber',
             'email',
-            'password',
         )
         widgets = {
             'image': forms.FileInput(),
@@ -97,12 +96,56 @@ class UserCreateForm(forms.ModelForm):
                     'placeholder': 'Введите ваш e-mail..',
                 }
             ),
-            'password': forms.PasswordInput(
-                attrs={
-                    'type': 'Password',
-                    'class': 'form-control',
-                    'required': 'false',
-                    'placeholder': 'Введите пароль..',
-                }
-            ),
         }
+
+
+class CreateUserForm(UserForm):
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control to_valid',
+                'type': 'password',
+            }
+        ),
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control to_valid',
+                'type': 'password',
+            }
+        ),
+    )
+
+
+class UpdateUserForm(UserForm):
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control to_valid',
+                'type': 'password',
+            }
+        ),
+        required=False,
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control to_valid',
+                'type': 'password',
+            }
+        ),
+        required=False,
+    )
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data['password1']
+        if password:
+            user.set_password(password)
+        else:
+            old_pass = User.objects.get(pk=self.instance.pk).password
+            user.password = old_pass
+        if commit:
+            user.save()
+        return user
