@@ -134,7 +134,7 @@
                         <div class="tab-pane clearfix" id="tab-houseuseradmins">
                             {{ house_user_admin_formset.management_form }}
                             {% for form in house_user_admin_formset %}
-                            <div class="form-house-floor">
+                            <div class="form-house-useradmins">
                                 {{ form.name.label_tag }}
                                 <div class="input-group">
                                     {{ form.name }}
@@ -187,7 +187,6 @@
         $("document").ready(function () {
             addHiddenForm(prefix2, form_class2, image, default_image);
         });
-
 
 
         // if clicked trash icon than delete current form
