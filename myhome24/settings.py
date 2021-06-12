@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))  # add apps to the path
 SECRET_KEY = os.environ.get('SECRET_KEY', 'soefv2n83rv23vhwmef__WDaw')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG")
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS')
 ALLOWED_HOSTS = ALLOWED_HOSTS.split(" ") if ALLOWED_HOSTS else ["*"]
