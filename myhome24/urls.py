@@ -22,8 +22,8 @@ urlpatterns = [
         include('personal_cabinet.urls')
     ),
     path(
-        'api/',
-        include('api.urls')
+        'rest_api/',
+        include('rest_api.urls')
     ),
     path(
         '',

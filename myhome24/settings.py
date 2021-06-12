@@ -46,9 +46,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'admin_panel.apps.AdminPanelConfig',
-    'personal_cabinet',
-    'website',
-    'register',
+    'personal_cabinet.apps.PersonalCabinetConfig',
+    'website.apps.WebSiteConfig',
+    'register.apps.RegisterConfig',
+    'rest_api',
+    'rest_framework',
     'phonenumber_field',
 ]
 
