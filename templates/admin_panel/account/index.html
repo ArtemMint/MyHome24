@@ -102,7 +102,7 @@
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.house.name|truncatechars:50 }}</td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.section|truncatechars:50 }}</td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.flat.owner|truncatechars:50 }}</td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.balance|truncatechars:50 }}</td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.get_account_balance|truncatechars:50 }}</td>
                         <td>
                             <div class="btn-group ">
                                 <a class="btn btn-default btn-sm" href="{% url 'admin_panel:account_update' field.pk %}" title="Редактировать">
