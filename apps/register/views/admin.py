@@ -18,8 +18,10 @@ class AdminLoginView(LoginView):
     def post(self, request):
         email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(email=email,
-                            password=password,)
+        user = authenticate(
+            email=email,
+            password=password,
+        )
         context = {}
 
         if user is not None:

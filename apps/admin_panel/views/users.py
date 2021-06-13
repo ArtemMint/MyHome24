@@ -59,7 +59,6 @@ def user_update_view(request, pk):
             request.FILES,
             instance=models.User.get_user_by_pk(pk),
         )
-
         if user_form.is_valid():
             user = user_form.save(commit=False)
             user.save()
