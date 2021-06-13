@@ -49,9 +49,6 @@ def user_admin_create_view(request):
 def user_admin_update_view(request, pk):
     user_admin_form = forms.UpdateUserAdminForm(
         instance=models.User.get_user_by_pk(pk),
-        initial={
-            'password': '',
-        }
     )
     if request.POST:
         user_admin_form = forms.UpdateUserAdminForm(
@@ -61,8 +58,6 @@ def user_admin_update_view(request, pk):
         )
         if user_admin_form.is_valid():
             user = user_admin_form.save(commit=False)
-            raw_password = user_admin_form.cleaned_data['password1']
-            user.set_password(raw_password)
             user.save()
             messages.success(request, 'Данные пользователя обновлены!')
             return redirect('admin_panel:users_admin_list')

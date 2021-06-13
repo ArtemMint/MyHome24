@@ -49,9 +49,6 @@ def user_create_view(request):
 def user_update_view(request, pk):
     user_form = forms.UpdateUserForm(
         instance=models.User.get_user_by_pk(pk),
-        initial={
-            'password': '',
-        }
     )
     if request.POST:
         user_form = forms.UpdateUserForm(
