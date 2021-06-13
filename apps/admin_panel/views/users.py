@@ -31,7 +31,7 @@ def user_create_view(request):
         )
         if user_form.is_valid():
             user = user_form.save(commit=False)
-            raw_password = user_form.cleaned_data['password']
+            raw_password = user_form.cleaned_data['password1']
             user.set_password(raw_password)
             user.save()
             messages.success(request, 'Владелец квартиры создан!')
