@@ -31,12 +31,16 @@
                 {{ user_admin_form.first_name }}
                 <label>Телефон</label>
                 {{ user_admin_form.phone }}
+                <label>Роль</label>
+                {{ user_admin_form.role }}
             </div>
             <div class="col-xs-12 col-sm-6">
                 <label>Email</label>
                 {{ user_admin_form.email }}
                 <label>Пароль</label>
-                {{ user_admin_form.password }}
+                {{ user_admin_form.password1 }}
+                <label>Повтор пароля</label>
+                {{ user_admin_form.password2 }}
             </div>
         </div>
         <div class="col-xs-12 text-center" style="padding: 10px 0 0 0">

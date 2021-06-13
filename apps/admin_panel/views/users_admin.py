@@ -23,14 +23,14 @@ def users_admin_list_view(request):
 
 @login_required(login_url='/admin/site/login')
 def user_admin_create_view(request):
-    user_admin_form = forms.UserAdminCreateForm()
+    user_admin_form = forms.CreateUserAdminForm()
     if request.POST:
-        user_admin_form = forms.UserAdminCreateForm(
+        user_admin_form = forms.CreateUserAdminForm(
             request.POST or None,
         )
         if user_admin_form.is_valid():
             user = user_admin_form.save(commit=False)
-            raw_password = user_admin_form.cleaned_data['password']
+            raw_password = user_admin_form.cleaned_data['password1']
             user.set_password(raw_password)
             user.is_staff = True
             user.save()
@@ -47,21 +47,21 @@ def user_admin_create_view(request):
 
 @login_required(login_url='/admin/site/login')
 def user_admin_update_view(request, pk):
-    user_admin_form = forms.UserCreateForm(
+    user_admin_form = forms.UpdateUserAdminForm(
         instance=models.User.get_user_by_pk(pk),
         initial={
             'password': '',
         }
     )
     if request.POST:
-        user_admin_form = forms.UserCreateForm(
+        user_admin_form = forms.UpdateUserAdminForm(
             request.POST or None,
             request.FILES,
             instance=models.User.get_user_by_pk(pk),
         )
         if user_admin_form.is_valid():
             user = user_admin_form.save(commit=False)
-            raw_password = user_admin_form.cleaned_data['password']
+            raw_password = user_admin_form.cleaned_data['password1']
             user.set_password(raw_password)
             user.save()
             messages.success(request, 'Данные пользователя обновлены!')

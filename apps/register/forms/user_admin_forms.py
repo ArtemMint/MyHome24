@@ -3,7 +3,7 @@ from django import forms
 from register.models import User
 
 
-class UserAdminCreateForm(forms.ModelForm):
+class UserAdminForm(forms.ModelForm):
 
     class Meta:
         model = User
@@ -14,7 +14,6 @@ class UserAdminCreateForm(forms.ModelForm):
             'role',
             'status',
             'email',
-            'password',
         )
         widgets = {
             'first_name': forms.TextInput(
@@ -49,10 +48,56 @@ class UserAdminCreateForm(forms.ModelForm):
                     'class': 'form-control',
                 }
             ),
-            'password': forms.PasswordInput(
-                attrs={
-                    'type': 'Password',
-                    'class': 'form-control',
-                }
-            ),
         }
+
+
+class CreateUserAdminForm(UserAdminForm):
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'type': 'password',
+            }
+        ),
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'type': 'password',
+            }
+        ),
+    )
+
+
+class UpdateUserAdminForm(UserAdminForm):
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'type': 'password',
+            }
+        ),
+        required=False,
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'type': 'password',
+            }
+        ),
+        required=False,
+    )
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data['password1']
+        if password:
+            user.set_password(password)
+        else:
+            old_pass = User.objects.get(pk=self.instance.pk).password
+            user.password = old_pass
+        if commit:
+            user.save()
+        return user

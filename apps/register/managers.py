@@ -39,4 +39,4 @@ class OwnersManager(models.Manager):
     Class that filter only UserAdmin
     """
     def get_queryset(self):
-        return super(OwnersManager, self).get_queryset().filter(role='Владелец квартиры')
+        return super(OwnersManager, self).get_queryset().filter(role='Владелец квартиры', status='Активен').exclude(is_staff=True)
