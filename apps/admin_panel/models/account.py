@@ -62,9 +62,11 @@ class Account(models.Model):
         if not self.account_transactions:
             return 0.00
         incomes = self.account_transactions.filter(
-            account__status='Активен').aggregate(models.Sum('total'))['total__sum'] or 0.00
+            account__status='Активен'
+        ).aggregate(models.Sum('total'))['total__sum'] or 0.00
         outcomes = self.account_transactions.filter(
-            account__status='Неактивен').aggregate(models.Sum('total'))['total__sum'] or 0.00
+            account__status='Неактивен'
+        ).aggregate(models.Sum('total'))['total__sum'] or 0.00
         return round((incomes - outcomes), 2)
 
     @staticmethod
