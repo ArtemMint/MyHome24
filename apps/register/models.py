@@ -1,33 +1,7 @@
-from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    BaseUserManager,
-)
+from django.contrib.auth.models import AbstractBaseUser
 
-
-class CustomUserManager(BaseUserManager):
-
-    def create_user(self, email, password=None):
-        if not email:
-            raise ValueError('User must have an email address.')
-        user = self.model(
-            email=self.normalize_email(email),
-        )
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email, password=None):
-        user = self.create_user(
-            email=self.normalize_email(email),
-            password=password,
-        )
-        user.is_admin = True
-        user.is_staff = True
-        user.is_superuser = True
-        user.save(using=self._db)
-        return user
+from register.managers import *
 
 
 def get_profile_image_filepath(self):
@@ -81,24 +55,9 @@ class AbstractUser(AbstractBaseUser):
     def has_perm(self, perm, obj=None):
         return self.is_admin
 
+    @staticmethod
     def has_module_perms(self, app_label):
         return True
-
-
-class UserAdminManager(models.Manager):
-    """
-    Class that filter only UserAdmin
-    """
-    def get_queryset(self):
-        return super(UserAdminManager, self).get_queryset().filter(is_staff=True)
-
-
-class OwnersManager(models.Manager):
-    """
-    Class that filter only UserAdmin
-    """
-    def get_queryset(self):
-        return super(OwnersManager, self).get_queryset().filter(role='Владелец квартиры')
 
 
 class User(AbstractUser):
