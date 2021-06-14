@@ -30,7 +30,7 @@
                 src="{{ user_form.image.url }}"
              {% else %}
                 src="{% static 'default_profile_image.png' %}"
-            {% endif %}>
+            {% endif %} alt="{{ user_form.image }}">
     </div>
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
         <table class="table table-bordered table-striped">
@@ -72,7 +72,11 @@
             </tr>
             <tr>
                 <td>Телефон</td>
-                <td>{{ user_form.phone }}</td>
+                <td>
+                    <a href="tel:{{ user_form.phone }}">
+                        {{ user_form.phone }}
+                    </a>
+                </td>
             </tr>
             <tr>
                 <td>Вайбер</td>
@@ -84,7 +88,11 @@
             </tr>
             <tr>
                 <td>Email</td>
-                <td>{{ user_form.email }}</td>
+                <td>
+                    <a href="mail:{{ user_form.email }}">
+                        {{ user_form.email }}
+                    </a>
+                </td>
             </tr>
         </table>
         {% if user_form.flats.all %}
