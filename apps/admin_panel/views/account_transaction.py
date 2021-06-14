@@ -77,14 +77,23 @@ def account_transactions_create_out(request):
 @login_required(login_url='/admin/site/login')
 def account_transactions_update(request, pk):
     account_transaction = models.AccountTransaction.get_account_transaction_by_pk(pk=pk)
-    account_transaction_form = forms.AccountTransactionForm(
-        instance=account_transaction,
-    )
-    if request.POST:
-        account_transaction_form = forms.AccountTransactionForm(
-            request.POST,
+    if account_transaction.transaction.type == 'Приход':
+        account_transaction_form = forms.AccountTransactionIncomeForm(
             instance=account_transaction,
         )
+    else:
+        account_transaction_form = forms.AccountTransactionExpenditureForm(
+            instance=account_transaction,
+        )
+    if request.POST:
+        if account_transaction.transaction.type == 'Приход':
+            account_transaction_form = forms.AccountTransactionIncomeForm(
+                instance=account_transaction,
+            )
+        else:
+            account_transaction_form = forms.AccountTransactionExpenditureForm(
+                instance=account_transaction,
+            )
         if account_transaction_form.is_valid():
             account_transaction_form.save()
             messages.success(request, 'Ведомость обновлена!')
