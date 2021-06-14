@@ -7,15 +7,6 @@ from register import models as register_models
 
 class AccountTransactionForm(forms.ModelForm):
     prefix = 'account_transaction'
-    transaction = forms.ModelChoiceField(
-        queryset=models.TransactionPurpose.objects.all(),
-        widget=forms.Select(
-            attrs={
-                'class': 'form-control',
-            }
-        ),
-        label='Статья',
-    )
     manager = forms.ModelChoiceField(
         queryset=register_models.User.users_admin.get_queryset(),
         widget=forms.Select(

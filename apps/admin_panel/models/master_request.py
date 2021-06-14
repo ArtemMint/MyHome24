@@ -78,17 +78,22 @@ class MasterRequest(models.Model):
     class Meta:
         ordering = ('-editing_date',)
 
-    def get_all_queryset_list(self):
-        return self.objects.all()
+    @classmethod
+    def get_all_queryset_list(cls):
+        return cls.objects.all()
 
-    def get_master_request_by_pk(self, pk):
-        return self.objects.get(pk=pk)
+    @classmethod
+    def get_master_request_by_pk(cls, pk):
+        return cls.objects.get(pk=pk)
 
-    def get_all_queryset_count(self):
-        return self.objects.all().count()
+    @classmethod
+    def get_all_queryset_count(cls):
+        return cls.objects.all().count()
 
-    def get_new_request_count(self):
-        return self.objects.filter(status='Новое').count()
+    @classmethod
+    def get_new_request_count(cls):
+        return cls.objects.filter(status='Новое').count()
 
-    def get_in_work_request_count(self):
-        return self.objects.filter(status='В работе').count()
+    @classmethod
+    def get_in_work_request_count(cls):
+        return cls.objects.filter(status='В работе').count()

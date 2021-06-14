@@ -70,22 +70,26 @@ class AccountTransaction(models.Model):
     class Meta:
         ordering = ('-editing_date',)
 
-    def get_queryset_list(self,):
-        return self.objects.all()
+    @classmethod
+    def get_queryset_list(cls,):
+        return cls.objects.all()
 
-    def get_account_transaction_by_pk(self, pk):
-        return self.objects.get(pk=pk)
+    @classmethod
+    def get_account_transaction_by_pk(cls, pk):
+        return cls.objects.get(pk=pk)
 
-    def get_total_income(self,):
+    @classmethod
+    def get_total_income(cls,):
         income = 0
-        queryset = self.objects.filter(type='Приход')
+        queryset = cls.objects.filter(type='Приход')
         for value in queryset:
             income += value.total
         return income
 
-    def get_total_expenditure(self,):
+    @classmethod
+    def get_total_expenditure(cls,):
         expenditure = 0
-        queryset = self.objects.filter(type='Расход')
+        queryset = cls.objects.filter(type='Расход')
         for value in queryset:
             expenditure += value.total
         return abs(expenditure)
