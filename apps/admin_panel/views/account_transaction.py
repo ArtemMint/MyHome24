@@ -28,9 +28,9 @@ def account_transactions_list(request):
 
 @login_required(login_url='/admin/site/login')
 def account_transactions_create_in(request):
-    account_transaction_form = forms.AccountTransactionForm()
+    account_transaction_form = forms.AccountTransactionIncomeForm()
     if request.POST:
-        account_transaction_form = forms.AccountTransactionForm(
+        account_transaction_form = forms.AccountTransactionIncomeForm(
             request.POST,
         )
         if account_transaction_form.is_valid():
@@ -51,9 +51,9 @@ def account_transactions_create_in(request):
 
 
 def account_transactions_create_out(request):
-    account_transaction_form = forms.AccountTransactionForm()
+    account_transaction_form = forms.AccountTransactionExpenditureForm()
     if request.POST:
-        account_transaction_form = forms.AccountTransactionForm(
+        account_transaction_form = forms.AccountTransactionExpenditureForm(
             request.POST,
         )
         if account_transaction_form.is_valid():
