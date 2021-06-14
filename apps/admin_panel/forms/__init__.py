@@ -33,7 +33,7 @@ from admin_panel.forms.flat import *
 from admin_panel.forms.account import AccountForm
 
 # AccountTransaction
-from admin_panel.forms.account_transaction import AccountTransactionForm
+from admin_panel.forms.account_transaction import *
 
 # MasterRequest
 from admin_panel.forms.master_request import MasterRequestForm
