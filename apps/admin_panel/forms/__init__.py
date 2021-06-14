@@ -30,11 +30,13 @@ from admin_panel.forms.house.user_admin import *
 from admin_panel.forms.flat import *
 
 # Account
-from admin_panel.forms.account import AccountForm
+from admin_panel.forms.account import *
 
 # AccountTransaction
 from admin_panel.forms.account_transaction import *
 
 # MasterRequest
-from admin_panel.forms.master_request import MasterRequestForm
+from admin_panel.forms.master_request import *
 
+# Message
+from admin_panel.forms.message import *
