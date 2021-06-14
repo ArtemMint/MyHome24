@@ -40,7 +40,7 @@ def account_transactions_create_in(request):
             messages.success(request, 'Приходная ведомость создан!')
             return redirect('admin_panel:account_transactions_list')
         else:
-            messages.success(request, 'Ошибка создания ведомости!')
+            messages.warning(request, 'Ошибка создания ведомости!')
     return render(
         request,
         'admin_panel/account_transaction/create_in.html',
@@ -64,7 +64,7 @@ def account_transactions_create_out(request):
             messages.success(request, 'Расходная ведомость создан!')
             return redirect('admin_panel:account_transactions_list')
         else:
-            messages.success(request, 'Ошибка создания ведомости!')
+            messages.warning(request, 'Ошибка создания ведомости!')
     return render(
         request,
         'admin_panel/account_transaction/create_out.html',
@@ -88,10 +88,12 @@ def account_transactions_update(request, pk):
     if request.POST:
         if account_transaction.transaction.type == 'Приход':
             account_transaction_form = forms.AccountTransactionIncomeForm(
+                request.POST,
                 instance=account_transaction,
             )
         else:
             account_transaction_form = forms.AccountTransactionExpenditureForm(
+                request.POST,
                 instance=account_transaction,
             )
         if account_transaction_form.is_valid():
@@ -99,7 +101,7 @@ def account_transactions_update(request, pk):
             messages.success(request, 'Ведомость обновлена!')
             return redirect('admin_panel:account_transactions_list')
         else:
-            messages.success(request, 'Ошибка обновления ведомости!')
+            messages.warning(request, 'Ошибка обновления ведомости!')
     return render(
         request,
         'admin_panel/account_transaction/update.html',
