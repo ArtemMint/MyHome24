@@ -70,7 +70,7 @@ class Flat(models.Model):
     )
 
     def __str__(self):
-        return f'№{self.number} - {self.house}'
+        return f'кв.{self.number}'
 
     class Meta:
         ordering = ('-editing_date',)
