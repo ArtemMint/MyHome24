@@ -24,6 +24,5 @@ class HouseUserAdmin(models.Model):
     def __str__(self):
         return f'{self.name}'
 
-    @staticmethod
-    def get_user_admin_list(pk):
-        return HouseUserAdmin.objects.filter(house=pk)
+    def get_user_admin_list(self, pk):
+        return self.objects.filter(house=pk)

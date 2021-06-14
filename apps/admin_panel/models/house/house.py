@@ -26,17 +26,17 @@ class House(models.Model):
     def __str__(self):
         return f'Дом : {self.name}'
 
-    @staticmethod
-    def get_houses_count():
-        return House.objects.all().count()
+    @classmethod
+    def get_houses_count(cls):
+        return cls.objects.all().count()
 
-    @staticmethod
-    def get_houses_list():
-        return House.objects.all()
+    @classmethod
+    def get_houses_list(cls):
+        return cls.objects.all()
 
-    @staticmethod
-    def get_house_by_pk(pk):
-        return House.objects.get(pk=pk)
+    @classmethod
+    def get_house_by_pk(cls, pk):
+        return cls.objects.get(pk=pk)
 
 
 class HousePreview(models.Model):
@@ -57,6 +57,6 @@ class HousePreview(models.Model):
     def __str__(self):
         return f'Дом: {self.house} - изображение: {self.id}'
 
-    @staticmethod
-    def get_queryset_all_images(pk):
-        return HousePreview.objects.filter(house=pk)
+    @classmethod
+    def get_queryset_all_images(cls, pk):
+        return cls.objects.filter(house=pk)

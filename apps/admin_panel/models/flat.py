@@ -75,14 +75,14 @@ class Flat(models.Model):
     class Meta:
         ordering = ('-editing_date',)
 
-    @staticmethod
-    def get_flats_count():
-        return Flat.objects.all().count()
+    @classmethod
+    def get_flats_count(cls):
+        return cls.objects.all().count()
 
-    @staticmethod
-    def get_flats_list():
-        return Flat.objects.all()
+    @classmethod
+    def get_flats_list(cls):
+        return cls.objects.all()
 
-    @staticmethod
-    def get_flat_by_pk(pk):
-        return Flat.objects.get(pk=pk)
+    @classmethod
+    def get_flat_by_pk(cls, pk):
+        return cls.objects.get(pk=pk)
