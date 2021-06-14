@@ -12,8 +12,14 @@ app_name = 'rest_api'
 urlpatterns = [
     path('house/',
          views.HouseList.as_view(),
-         name='houses_list'
-    ),
+         name='houses_list'),
+    path('house/create/',
+         views.HouseCreate.as_view(),
+         name='house_create'),
 
+
+    path('flat/',
+         views.FlatList.as_view(),
+         name='flats_list'),
 
 ]
