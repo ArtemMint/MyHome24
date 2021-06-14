@@ -7,7 +7,6 @@ from register import models as register_models
 
 class AccountTransactionForm(forms.ModelForm):
     prefix = 'account_transaction'
-
     manager = forms.ModelChoiceField(
         queryset=register_models.User.users_admin.get_queryset(),
         widget=forms.Select(
@@ -67,11 +66,6 @@ class AccountTransactionForm(forms.ModelForm):
                     'placeholder': 'Введите сумму..',
                 }
             ),
-            'transaction': forms.Select(
-                attrs={
-                    'class': 'form-control',
-                }
-            ),
             'account': forms.Select(
                 attrs={
                     'class': 'form-control',
@@ -85,3 +79,27 @@ class AccountTransactionForm(forms.ModelForm):
                 }
             ),
         }
+
+
+class AccountTransactionIncomeForm(AccountTransactionForm):
+    transaction = forms.ModelChoiceField(
+        queryset=models.TransactionPurpose.get_income(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        label='Статья',
+    )
+
+
+class AccountTransactionExpenditureForm(AccountTransactionForm):
+    transaction = forms.ModelChoiceField(
+        queryset=models.TransactionPurpose.get_expenditure(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        label='Статья',
+    )
