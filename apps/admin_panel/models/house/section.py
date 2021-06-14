@@ -24,6 +24,5 @@ class HouseSection(models.Model):
     def __str__(self):
         return f'{self.name}'
 
-    @staticmethod
-    def get_sections_count(pk):
-        return HouseSection.objects.filter(house=pk).count()
+    def get_sections_count(self, pk):
+        return self.objects.filter(house=pk).count()

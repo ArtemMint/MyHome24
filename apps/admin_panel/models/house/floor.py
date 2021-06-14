@@ -24,6 +24,5 @@ class HouseFloor(models.Model):
     def __str__(self):
         return f'{self.name}'
 
-    @staticmethod
-    def get_floor_count(pk):
-        return HouseFloor.objects.filter(house=pk).count()
+    def get_floor_count(self, pk):
+        return self.objects.filter(house=pk).count()

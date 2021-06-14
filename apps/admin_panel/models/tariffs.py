@@ -26,9 +26,8 @@ class Tariff(models.Model):
     def __str__(self):
         return self.name
 
-    @staticmethod
-    def get_tariff_for_copy(pk):
-        tariff = Tariff.objects.get(id=pk)
+    def get_tariff_for_copy(self, pk):
+        tariff = self.objects.get(id=pk)
         tariff.id = None
         return tariff
 

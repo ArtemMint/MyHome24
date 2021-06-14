@@ -21,10 +21,8 @@ class TransactionPurpose(models.Model):
     def __str__(self):
         return self.name
 
-    @staticmethod
-    def get_income():
-        return TransactionPurpose.objects.filter(type='Приход')
+    def get_income(self):
+        return self.objects.filter(type='Приход')
 
-    @staticmethod
-    def get_expenditure():
-        return TransactionPurpose.objects.filter(type='Расход')
+    def get_expenditure(self):
+        return self.objects.filter(type='Расход')

@@ -162,26 +162,20 @@ class User(AbstractUser):
         else:
             return self.full_name
 
-    @staticmethod
-    def get_users_list():
-        return User.objects.filter(is_staff=False)
+    def get_users_list(self):
+        return self.objects.filter(is_staff=False)
 
-    @staticmethod
-    def get_active_users():
-        return User.objects.filter(status='Активен', is_staff=False)
+    def get_active_users(self):
+        return self.objects.filter(status='Активен', is_staff=False)
 
-    @staticmethod
-    def get_users_admin_list():
-        return User.objects.filter(is_staff=True)
+    def get_users_admin_list(self):
+        return self.objects.filter(is_staff=True)
 
-    @staticmethod
-    def get_users_count():
-        return User.objects.filter(is_staff=False).count()
+    def get_users_count(self):
+        return self.objects.filter(is_staff=False).count()
 
-    @staticmethod
-    def get_users_admin_count():
-        return User.objects.filter(is_staff=True).count()
+    def get_users_admin_count(self):
+        return self.objects.filter(is_staff=True).count()
 
-    @staticmethod
-    def get_user_by_pk(pk):
-        return User.objects.get(pk=pk)
+    def get_user_by_pk(self, pk):
+        return self.objects.get(pk=pk)

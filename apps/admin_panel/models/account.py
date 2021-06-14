@@ -69,14 +69,11 @@ class Account(models.Model):
         ).aggregate(models.Sum('total'))['total__sum'] or 0.00
         return round((incomes - outcomes), 2)
 
-    @staticmethod
-    def get_accounts_list():
-        return Account.objects.all()
+    def get_accounts_list(self,):
+        return self.objects.all()
 
-    @staticmethod
-    def get_account_by_pk(pk):
-        return Account.objects.get(pk=pk)
+    def get_account_by_pk(self, pk):
+        return self.objects.get(pk=pk)
 
-    @staticmethod
-    def get_accounts_count():
-        return Account.objects.all().count()
+    def get_accounts_count(self,):
+        return self.objects.all().count()
