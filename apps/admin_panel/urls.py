@@ -183,11 +183,21 @@ urlpatterns = [
         name='house_delete'
     ),
 
-    # Messsages
+    # Messages
     path(
         'message/index/',
-        views.MessagesList.as_view(),
+        views.message_list_view,
         name='message_list'
+    ),
+    path(
+        'message/create/',
+        views.message_create_view,
+        name='message_create'
+    ),
+    path(
+        'message/<int:pk>/',
+        views.MessageDetailView.as_view(),
+        name='message_detail'
     ),
 
     # Master requests
