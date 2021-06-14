@@ -76,4 +76,4 @@ class Account(models.Model):
         return self.objects.get(pk=pk)
 
     def get_accounts_count(self,):
-        return self.objects.all().count()
+        return self.get_accounts_list().count()
