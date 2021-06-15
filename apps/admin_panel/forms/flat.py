@@ -14,6 +14,7 @@ class FlatForm(forms.ModelForm):
             }
         ),
         label='Владелец квартиры',
+        required=False,
     )
 
     class Meta:
