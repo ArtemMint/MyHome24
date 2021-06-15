@@ -51,7 +51,6 @@ class CounterDataForm(forms.ModelForm):
         widget=forms.Select(
 
         ),
-        empty_label='Выберите...',
         label='Статус',
     )
 

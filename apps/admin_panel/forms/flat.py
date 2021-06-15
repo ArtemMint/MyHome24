@@ -16,6 +16,16 @@ class FlatForm(forms.ModelForm):
         label='Владелец квартиры',
         required=False,
     )
+    account = forms.ModelChoiceField(
+        queryset=models.Account.get_free_accounts(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        label='Лицевой счет',
+        required=False,
+    )
 
     class Meta:
         model = models.Flat
@@ -27,7 +37,6 @@ class FlatForm(forms.ModelForm):
             'floor',
             'owner',
             'tariff',
-            'account',
         )
         widgets = {
             'number': forms.TextInput(
@@ -58,11 +67,6 @@ class FlatForm(forms.ModelForm):
                 }
             ),
             'tariff': forms.Select(
-                attrs={
-                    'class': 'form-control',
-                }
-            ),
-            'account': forms.Select(
                 attrs={
                     'class': 'form-control',
                 }

@@ -6,6 +6,17 @@ from admin_panel import models
 class AccountForm(forms.ModelForm):
     prefix = 'account'
 
+    flat = forms.ModelChoiceField(
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        queryset=models.Flat.get_free_flats(),
+        label='Квартира',
+        required=False,
+    )
+
     class Meta:
         model = models.Account
         fields = (
@@ -13,7 +24,6 @@ class AccountForm(forms.ModelForm):
             'status',
             'house',
             'section',
-            'flat',
         )
         widgets = {
             'number': forms.TextInput(
@@ -33,11 +43,6 @@ class AccountForm(forms.ModelForm):
                 }
             ),
             'section': forms.Select(
-                attrs={
-                    'class': 'form-control',
-                }
-            ),
-            'flat': forms.Select(
                 attrs={
                     'class': 'form-control',
                 }
