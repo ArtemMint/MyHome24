@@ -19,8 +19,9 @@ class Flat(models.Model):
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Дом',
-        null=True,
         blank=False,
+        null=True,
+
     )
     section = models.ForeignKey(
         'admin_panel.HouseSection',
@@ -38,9 +39,9 @@ class Flat(models.Model):
         null=True,
         blank=True,
     )
-    owner = models.ForeignKey(
+    owner = models.OneToOneField(
         'register.User',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='flats',
         verbose_name='Владелец',
         null=True,
@@ -54,9 +55,9 @@ class Flat(models.Model):
         null=True,
         blank=True,
     )
-    account = models.ForeignKey(
+    account = models.OneToOneField(
         'admin_panel.Account',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='flats',
         verbose_name='Лицевой счет',
         null=True,
