@@ -17,3 +17,7 @@ class Metrics(models.Model):
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def get_metrics_list(cls):
+        return cls.objects.all()
