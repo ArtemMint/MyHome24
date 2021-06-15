@@ -29,21 +29,24 @@ class Account(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Дом',
         related_name='accounts',
-        blank=False,
+        null=True,
+        blank=True,
     )
     section = models.ForeignKey(
         'admin_panel.HouseSection',
         on_delete=models.CASCADE,
         verbose_name='Секция',
         related_name='accounts',
-        blank=False,
+        null=True,
+        blank=True,
     )
     flat = models.OneToOneField(
         'admin_panel.Flat',
         on_delete=models.CASCADE,
         verbose_name='Квартира',
         related_name='accounts',
-        blank=False,
+        null=True,
+        blank=True,
     )
     created_date = models.DateTimeField(
         auto_now_add=True,
@@ -80,3 +83,10 @@ class Account(models.Model):
     @classmethod
     def get_accounts_count(cls,):
         return cls.get_accounts_list().count()
+
+    @classmethod
+    def get_free_accounts(cls):
+        return cls.get_accounts_list().filter(
+            flat__isnull=True,
+            status__exact='Активен',
+        )

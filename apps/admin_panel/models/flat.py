@@ -71,7 +71,7 @@ class Flat(models.Model):
     )
 
     def __str__(self):
-        return f'кв.{self.number}'
+        return self.number
 
     class Meta:
         ordering = ('-editing_date',)
@@ -87,3 +87,7 @@ class Flat(models.Model):
     @classmethod
     def get_flat_by_pk(cls, pk):
         return cls.objects.get(pk=pk)
+
+    @classmethod
+    def get_free_flats(cls):
+        return cls.get_flats_list().filter(accounts__isnull=True)
