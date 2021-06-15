@@ -68,14 +68,15 @@
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.date_joined|truncatechars:50 }}</td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
                             {% if field.status == 'Активен' %}
-                                <small class="label label-success">{{ field.status }}</small></td>
+                                <small class="label label-success">{{ field.status }}</small>
                             {% elif field.status == 'Новый' %}
-                                <small class="label label-warning">{{ field.status }}</small></td>
+                                <small class="label label-warning">{{ field.status }}</small>
                             {% elif field.status == 'Отключен' %}
-                                <small class="label label-danger">{{ field.status }}</small></td>
+                                <small class="label label-danger">{{ field.status }}</small>
                             {% else %}
-                                <td></td>
+
                             {% endif %}
+                        </td>
                         <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.none|truncatechars:50 }}</td>
                         <td>
                             <div class="btn-group ">
