@@ -195,9 +195,14 @@ urlpatterns = [
         name='message_create'
     ),
     path(
-        'message/<int:pk>/',
-        views.MessageDetailView.as_view(),
+        'message/detail/<int:pk>/',
+        views.message_detail_view,
         name='message_detail'
+    ),
+    path(
+        'message/delete/<int:pk>/',
+        views.message_delete_view,
+        name='message_delete'
     ),
 
     # Master requests
