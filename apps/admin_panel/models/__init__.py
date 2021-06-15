@@ -38,3 +38,6 @@ from admin_panel.models.master_request import MasterRequest
 
 # Message
 from admin_panel.models.message import Message
+
+# CounterData
+from admin_panel.models.counter_data import CounterData
