@@ -63,11 +63,9 @@ class Message(models.Model):
     def get_messages_list(cls):
         return cls.objects.all()
 
-    def get_short_message(self):
-        if len(self.text) > 40:
-            return f'<strong>{self.title}</strong> - {self.text[:39]}..'
-        else:
-            return f'<strong>{self.title}</strong> - {self.text}'
+    @classmethod
+    def get_message(cls, pk):
+        return cls.objects.get(pk=pk)
 
     @property
     def recipient(self):
