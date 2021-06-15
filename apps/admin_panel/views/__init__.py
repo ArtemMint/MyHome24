@@ -8,7 +8,7 @@ from admin_panel.views.flats import *
 from admin_panel.views.account_transaction import *
 from admin_panel.views.houses import *
 from admin_panel.views.manage_site import *
-from admin_panel.views.meter_readings import *
+from admin_panel.views.counter_data import *
 from admin_panel.views.pay_company import *
 from admin_panel.views.transaction_purpose import *
 from admin_panel.views.account import *
