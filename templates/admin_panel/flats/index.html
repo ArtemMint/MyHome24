@@ -50,13 +50,13 @@
                     <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.owner }}</td>
                     <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">
                         {% if field.account.get_account_balance < 0 %}
-                            <small style='color: #dd4b39'>
+                            <span style='color: #dd4b39'>
                                 {{ field.account.get_account_balance }}
-                            </small>
+                            </span>
                         {% else %}
-                            <small style='color: #00a65a'>
+                            <span style='color: #00a65a'>
                                 {{ field.account.get_account_balance }}
-                            </small>
+                            </span>
                         {% endif %}
                     </td>
                     <td>
