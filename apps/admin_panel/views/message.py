@@ -42,7 +42,19 @@ def message_create_view(request):
     )
 
 
-class MessageDetailView(generic.DetailView):
-    model = models.Message
-    template_name = 'admin_panel/messages/detail.html'
-    context_object_name = 'message'
+@login_required(login_url='/admin/site/login')
+def message_detail_view(request, pk):
+    return render(
+        request,
+        'admin_panel/messages/detail.html',
+        {
+            'message': models.Message.get_message(pk)
+        }
+    )
+
+
+@login_required(login_url='/admin/site/login')
+def message_delete_view(request, pk):
+    message = models.Message.get_message(pk)
+    message.delete()
+    return redirect('admin_panel:message_list')
