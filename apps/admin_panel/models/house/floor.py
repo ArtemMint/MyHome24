@@ -28,5 +28,6 @@ class HouseFloor(models.Model):
     def get_floor_list(cls):
         return cls.objects.all()
 
-    def get_floor_count(self, pk):
-        return self.objects.filter(house=pk).count()
+    @classmethod
+    def get_floor_count(cls, pk):
+        return cls.objects.filter(house=pk).count()
