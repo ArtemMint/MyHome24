@@ -19,8 +19,9 @@ class Flat(models.Model):
         on_delete=models.CASCADE,
         related_name='flats',
         verbose_name='Дом',
-        null=True,
         blank=False,
+        null=True,
+
     )
     section = models.ForeignKey(
         'admin_panel.HouseSection',
@@ -38,9 +39,9 @@ class Flat(models.Model):
         null=True,
         blank=True,
     )
-    owner = models.ForeignKey(
+    owner = models.OneToOneField(
         'register.User',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='flats',
         verbose_name='Владелец',
         null=True,
@@ -54,9 +55,9 @@ class Flat(models.Model):
         null=True,
         blank=True,
     )
-    account = models.ForeignKey(
+    account = models.OneToOneField(
         'admin_panel.Account',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='flats',
         verbose_name='Лицевой счет',
         null=True,
@@ -70,7 +71,7 @@ class Flat(models.Model):
     )
 
     def __str__(self):
-        return f'кв.{self.number}'
+        return self.number
 
     class Meta:
         ordering = ('-editing_date',)
@@ -86,3 +87,7 @@ class Flat(models.Model):
     @classmethod
     def get_flat_by_pk(cls, pk):
         return cls.objects.get(pk=pk)
+
+    @classmethod
+    def get_free_flats(cls):
+        return cls.get_flats_list().filter(accounts__isnull=True)

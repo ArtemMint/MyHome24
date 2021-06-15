@@ -40,3 +40,6 @@ from admin_panel.forms.master_request import *
 
 # Message
 from admin_panel.forms.message import *
+
+# Counter data
+from admin_panel.forms.counter_data import CounterDataForm

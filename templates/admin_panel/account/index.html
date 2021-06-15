@@ -98,11 +98,48 @@
                             {% else %}
                             {% endif %}
                         </td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.flat.number|truncatechars:50 }}</td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.house.name|truncatechars:50 }}</td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.section|truncatechars:50 }}</td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.flat.owner|truncatechars:50 }}</td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">{{ field.get_account_balance|truncatechars:50 }}</td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
+                            {% if field.flat.id %}
+                                <a href="{% url 'admin_panel:flat_detail' field.flat.id%}">{{ field.flat|truncatechars:40 }}</a>
+                            {% else %}
+                                (не задано)
+                            {% endif %}
+                        </td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
+                            {% if field.house.id %}
+                                <a href="{% url 'admin_panel:house_detail' field.house.id%}">{{ field.house|truncatechars:40 }}</a>
+                            {% else %}
+                                (не задано)
+                            {% endif %}
+                        </td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
+                            {% if field.section.id %}
+                                    {{ field.section|truncatechars:40 }}
+                                {% else %}
+                                    (не задано)
+                                {% endif %}
+                        </td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
+                            {% if field.flat.owner.id %}
+                                    <a href="{% url 'admin_panel:user_detail' field.flat.owner.id%}">{{ field.flat.owner|truncatechars:40 }}</a>
+                                {% else %}
+                                    (не задано)
+                                {% endif %}
+                        </td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
+                            {% if field.get_account_balance > 0 %}
+                                <span style="color: #00a65a">
+                                    {{ field.get_account_balance|truncatechars:50 }}
+                                </span>
+                            {% elif field.get_account_balance < 0 %}
+                                <span style="color: #dd4b39">
+                                    {{ field.get_account_balance|truncatechars:50 }}
+                                </span>
+                            {% else %}
+                                {{ field.get_account_balance|truncatechars:50 }}
+                            {% endif %}
+
+                        </td>
                         <td>
                             <div class="btn-group ">
                                 <a class="btn btn-default btn-sm" href="{% url 'admin_panel:account_update' field.pk %}" title="Редактировать">

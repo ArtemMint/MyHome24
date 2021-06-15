@@ -20,17 +20,35 @@
             </ul>
          {% endfor %}
     {% endif %}
-    <div class="row">
-        <div class="col-lg-7">
-            <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                {{ flat_form.as_p }}
-                <div class="col-xs-12 text-center">
-                    <div class="form-group">
-                        <a href="{% url 'admin_panel:flats_list' %}" class="btn btn-default">Отменить</a>
-                        <button type="submit" class="btn btn-success">Сохранить</button>
-                    </div>
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-lg-6">
+                <p>{{ flat_form.number.label_tag }}</p>
+                <p>{{ flat_form.number }}</p>
+                <p>{{ flat_form.area.label_tag }}</p>
+                <p>{{ flat_form.area }}</p>
+                <p>{{ flat_form.house.label_tag }}</p>
+                <p>{{ flat_form.house }}</p>
+                <p>{{ flat_form.section.label_tag }}</p>
+                <p>{{ flat_form.section }}</p>
+                <p>{{ flat_form.floor.label_tag }}</p>
+                <p>{{ flat_form.floor }}</p>
+                <p>{{ flat_form.owner.label_tag }}</p>
+                <p>{{ flat_form.owner }}</p>
+                <p>{{ flat_form.tariff.label_tag }}</p>
+                <p>{{ flat_form.tariff }}</p>
+            </div>
+            <div class="col-lg-6">
+                <p>{{ flat_form.account.label_tag }}</p>
+                <p>{{ flat_form.account }}</p>
+            </div>
+            <div class="col-xs-12 text-right">
+                <div class="form-group">
+                    <a href="{% url 'admin_panel:flats_list' %}" class="btn btn-default">Отменить</a>
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                    <input type="submit" class="btn btn-success" style="background-color: #1c7430" href="{% url 'admin_panel:flat_create' %}" value="Сохранить и добавить новую">
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 {% endblock content %}

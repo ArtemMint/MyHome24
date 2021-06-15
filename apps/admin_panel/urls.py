@@ -232,11 +232,21 @@ urlpatterns = [
         name='master_request_delete'
     ),
 
-    # Meter readings
+    # Counter data
     path(
-        'meter-readings/index/',
-        views.MeterReadingsList.as_view(),
-        name='meter_readings_list'
+        'counter-data/counters/',
+        views.CountersView.as_view(),
+        name='counters'
+    ),
+    path(
+        'counter-data/counters_list/',
+        views.CountersListView.as_view(),
+        name='counter_list'
+    ),
+    path(
+        'counter-data/create/',
+        views.CounterCreateView.as_view(),
+        name='counter_create'
     ),
 
     # Services

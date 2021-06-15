@@ -114,7 +114,7 @@
                         <td><a href="{% url 'admin_panel:house_detail' flat.house.id %}">{{ flat.house }}</a></td>
                         <td>{{ flat.section }}</td>
                         <td><a href="{% url 'admin_panel:flat_detail' flat.id %}">{{ flat.number }}</a></td>
-                        <td><a href="{% url 'admin_panel:account_detail' flat.account.id %}">{{ flat.account }}</a></td>
+                        <td><a href="{% url 'admin_panel:account_detail' flat.account.pk %}">{{ flat.account }}</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
