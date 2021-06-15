@@ -1,13 +1,13 @@
 {% extends 'admin_panel/base/base.html' %}
 {% load static %}
 
-{% block title %} <h1 class="m-0">{{ account_data|truncatechars:30 }}</h1> {% endblock %}
+{% block title %} <h1 class="m-0">Лицевой счет</h1> {% endblock %}
 
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:accounts_list' %}">Лицевые счета</a></li>
-        <li class="breadcrumb-item">{{ account_data }}</li>
+        <li class="breadcrumb-item">Лицевой счет №{{ account_data }}</li>
     </ul>
 {% endblock %}
 
@@ -62,19 +62,43 @@
                         </tr>
                         <tr>
                             <td>Дом</td>
-                            <td><a href="{% url 'admin_panel:house_detail' account_data.house.id%}">{{ account_data.house|truncatechars:40 }}</a></td>
+                            <td>
+                                {% if account_data.house.id %}
+                                    <a href="{% url 'admin_panel:house_detail' account_data.house.id%}">{{ account_data.house|truncatechars:40 }}</a>
+                                {% else %}
+                                    (не задано)
+                                {% endif %}
+                            </td>
                         </tr>
                         <tr>
                             <td>Секций</td>
-                            <td>{{ account_data.section|truncatechars:40 }}</td>
+                            <td>
+                                {% if account_data.section.id %}
+                                    {{ account_data.section|truncatechars:40 }}
+                                {% else %}
+                                    (не задано)
+                                {% endif %}
+                            </td>
                         </tr>
                         <tr>
                             <td>Квартира</td>
-                            <td><a href="{% url 'admin_panel:flat_detail' account_data.flat.id%}">{{ account_data.flat|truncatechars:40 }}</a></td>
+                            <td>
+                                {% if account_data.flat.id %}
+                                    <a href="{% url 'admin_panel:flat_detail' account_data.flat.id%}">{{ account_data.flat|truncatechars:40 }}</a>
+                                {% else %}
+                                    (не задано)
+                                {% endif %}
+                            </td>
                         </tr>
                         <tr>
                             <td>Владелец</td>
-                            <td><a href="{% url 'admin_panel:user_detail' account_data.flat.owner.id%}">{{ account_data.flat.owner|truncatechars:40 }}</a></td>
+                            <td>
+                                {% if account_data.flat.owner.id %}
+                                    <a href="{% url 'admin_panel:user_detail' account_data.flat.owner.id%}">{{ account_data.flat.owner|truncatechars:40 }}</a>
+                                {% else %}
+                                    (не задано)
+                                {% endif %}
+                            </td>
                         </tr>
                         <tr>
                             <td>Остаток</td>

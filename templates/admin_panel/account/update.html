@@ -55,9 +55,13 @@
                 <p>
                     <b>Владелец:</b>
                     <span id="user-fullname">
-                        <a href="{% url 'admin_panel:user_detail' account_form.instance.flat.owner.pk %}">
-                            {{ account_form.instance.flat.owner }}
-                        </a>
+                        {% if account_form.instance.flat.owner.pk %}
+                            <a href="{% url 'admin_panel:user_detail' account_form.instance.flat.owner.pk %}">
+                                {{ account_form.instance.flat.owner }}
+                            </a>
+                        {% else %}
+                            (не задано)
+                        {% endif %}
                     </span>
                 </p>
                 <p>
