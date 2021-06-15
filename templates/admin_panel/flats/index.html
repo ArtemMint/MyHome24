@@ -48,7 +48,17 @@
                     <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.section }}</td>
                     <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.floor }}</td>
                     <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.owner }}</td>
-                    <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.none }}</td>
+                    <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">
+                        {% if field.account.get_account_balance < 0 %}
+                            <small style='color: #dd4b39'>
+                                {{ field.account.get_account_balance }}
+                            </small>
+                        {% else %}
+                            <small style='color: #00a65a'>
+                                {{ field.account.get_account_balance }}
+                            </small>
+                        {% endif %}
+                    </td>
                     <td>
                         <div class="btn-group ">
                             <a class="btn btn-default btn-sm" href="{% url 'admin_panel:flat_update' field.pk %}" title="Редактировать">

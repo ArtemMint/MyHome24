@@ -5,6 +5,13 @@ from apps.admin_panel import models
 
 
 class HouseList(generics.ListAPIView):
-    model = models.House
     serializer_class = serializers.HouseSerializer
     queryset = models.House.get_houses_list()
+
+
+class HouseCreate(generics.CreateAPIView):
+    model = models.House
+    http_method_names = ['post']
+    serializer_class = serializers.HouseSerializer
+
+

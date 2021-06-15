@@ -10,6 +10,7 @@ class HouseSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'name',
+            'address',
         )
 
 
@@ -40,7 +41,7 @@ class UserSerializer(serializers.ModelSerializer):
             'id',
             'first_name',
             'last_name',
-            'phone_number',
+            'phone',
         )
 
 

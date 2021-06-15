@@ -1,0 +1,42 @@
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Сообщения</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item active"><a href="{% url 'admin_panel:message_list' %}"> Сообщения </a></li>
+        <li class="breadcrumb-item active"> Сообщение </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <p>{{ message.title }}</p>
+        </div>
+        <div class="col-lg-12 d-flex justify-content-end">
+            <div class="col">
+                От: {{ message.sender }}
+            </div>
+            <div class="col d-flex justify-content-end">
+                {{ message.created_date }}
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <hr>
+            <p>{{ message.text|safe }}</p>
+            <hr>
+        </div>
+        <div class="row">
+            <a href="{% url 'admin_panel:message_delete' message.pk %}" type="button" class="btn btn-default margin-bottom-15">Удалить</a>
+        </div>
+{% endblock content %}
