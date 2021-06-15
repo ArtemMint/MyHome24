@@ -38,7 +38,7 @@ class Account(models.Model):
         related_name='accounts',
         blank=False,
     )
-    flat = models.ForeignKey(
+    flat = models.OneToOneField(
         'admin_panel.Flat',
         on_delete=models.CASCADE,
         verbose_name='Квартира',
