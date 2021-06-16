@@ -99,28 +99,28 @@
                             {% endif %}
                         </td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
-                            {% if field.flat.id %}
-                                <a href="{% url 'admin_panel:flat_detail' field.flat.id%}">{{ field.flat|truncatechars:40 }}</a>
+                            {% if field.flat %}
+                                <a href="{% url 'admin_panel:flat_detail' field.flat.id %}">{{ field.flat|truncatechars:40 }}</a>
                             {% else %}
                                 (не задано)
                             {% endif %}
                         </td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
-                            {% if field.house.id %}
+                            {% if field.house %}
                                 <a href="{% url 'admin_panel:house_detail' field.house.id%}">{{ field.house|truncatechars:40 }}</a>
                             {% else %}
                                 (не задано)
                             {% endif %}
                         </td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
-                            {% if field.section.id %}
+                            {% if field.section %}
                                     {{ field.section|truncatechars:40 }}
                                 {% else %}
                                     (не задано)
                                 {% endif %}
                         </td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
-                            {% if field.flat.owner.id %}
+                            {% if field.flat.owner %}
                                     <a href="{% url 'admin_panel:user_detail' field.flat.owner.id%}">{{ field.flat.owner|truncatechars:40 }}</a>
                                 {% else %}
                                     (не задано)
