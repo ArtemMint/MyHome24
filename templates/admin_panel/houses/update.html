@@ -98,6 +98,7 @@
                         <div class="tab-pane active clearfix" id="tab-sections">
                             {{ house_section_formset.management_form }}
                             {% for form in house_section_formset %}
+                                {{ form.id }}
                             <div class="form-house-section">
                                 {{ form.name.label_tag }}
                                 <div class="input-group">
@@ -119,6 +120,7 @@
                         <div class="tab-pane clearfix" id="tab-floors">
                             {{ house_floor_formset.management_form }}
                             {% for form in house_floor_formset %}
+                                {{ form.id }}
                             <div class="form-house-floor">
                                 {{ form.name.label_tag }}
                                 <div class="input-group">
@@ -140,7 +142,8 @@
                         <div class="tab-pane clearfix" id="tab-houseuseradmins">
                             {{ house_user_admin_formset.management_form }}
                             {% for form in house_user_admin_formset %}
-                            <div class="row form-house-floor">
+                                {{ form.id }}
+                            <div class="form-user-admin">
                                 {{ form.name.label_tag }}
                                 <div class="input-group">
                                     {{ form.name }}
@@ -180,8 +183,8 @@
         const form_class1 = ".form-house-section";
         const prefix2 = "house_floor";
         const form_class2 = ".form-house-floor";
-        {#const prefix3 = "house_house-useradmin";#}
-        {#const form_class3 = ".form-housesection";#}
+        const prefix3 = "house_user_admin";
+        const form_class3 = ".form-user-admin";
         const image = undefined;
         const index_class = undefined;
         const default_image = undefined;
@@ -192,6 +195,9 @@
         });
         $("document").ready(function () {
             addHiddenForm(prefix2, form_class2, image, default_image);
+        });
+        $("document").ready(function () {
+            addHiddenForm(prefix3, form_class3, image, default_image);
         });
 
 
@@ -204,6 +210,9 @@
         $(".delete-form").click(function (e) {
             deleteForm(e, prefix2, form_class2, image, index_class);
         });
+        $(".delete-form").click(function (e) {
+            deleteForm(e, prefix3, form_class3, image, index_class);
+        });
 
 
 
@@ -215,7 +224,9 @@
         $("#addNewFloor").click(function () {
             addNewForm(prefix2, form_class2, index_class);
         });
-
+        $("#addNewUserAdmin").click(function () {
+            addNewForm(prefix3, form_class3, index_class);
+        });
     </script>
 
     <!-- Switching between tabs -->
