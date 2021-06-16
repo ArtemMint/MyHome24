@@ -39,7 +39,7 @@ class Flat(models.Model):
         null=True,
         blank=True,
     )
-    owner = models.OneToOneField(
+    owner = models.ForeignKey(
         'register.User',
         on_delete=models.SET_NULL,
         related_name='flats',
@@ -55,7 +55,7 @@ class Flat(models.Model):
         null=True,
         blank=True,
     )
-    account = models.OneToOneField(
+    account = models.ForeignKey(
         'admin_panel.Account',
         on_delete=models.SET_NULL,
         related_name='flats',
@@ -91,3 +91,15 @@ class Flat(models.Model):
     @classmethod
     def get_free_flats(cls):
         return cls.get_flats_list().filter(accounts__isnull=True)
+
+    @property
+    def get_account_balance(self):
+        if not self.account:
+            return 0.00
+        incomes = self.account.account_transactions.filter(
+            account__status='Активен'
+        ).aggregate(models.Sum('total'))['total__sum'] or 0.00
+        outcomes = self.account.account_transactions.filter(
+            account__status='Неактивен'
+        ).aggregate(models.Sum('total'))['total__sum'] or 0.00
+        return round((incomes - outcomes), 2)
