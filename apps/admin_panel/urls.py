@@ -248,6 +248,16 @@ urlpatterns = [
         views.CounterCreateView.as_view(),
         name='counter_create'
     ),
+    path(
+        'counter-data/update/<int:pk>/',
+        views.CounterUpdateView.as_view(),
+        name='counter_update'
+    ),
+    path(
+        'counter-data/detail/<int:pk>/',
+        views.CounterDetailView.as_view(),
+        name='counter_detail'
+    ),
 
     # Services
     path(

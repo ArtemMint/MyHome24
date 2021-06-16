@@ -44,6 +44,17 @@
             </a>
         </div>
     </div>
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
     <div class="col-lg-6" style="padding-left: 0px;">
         <div class="page-header-spec">
             <div class="form-group field-account-uid required">
@@ -65,19 +76,6 @@
             </div>
         </div>
     </div>
-
-{% endblock %}
-
-{% block content %}
-    <!-- Message if all saved -->
-    {% if messages %}
-         {% for message in messages %}
-             <ul class="text-center alert alert-{{ message.tags }}">
-                {{ message|safe }}
-            </ul>
-         {% endfor %}
-    {% endif %}
-
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
         <div class="row">
             <div class="col-lg-12">

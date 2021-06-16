@@ -24,6 +24,7 @@ class AccountForm(forms.ModelForm):
             'status',
             'house',
             'section',
+            'flat',
         )
         widgets = {
             'number': forms.TextInput(

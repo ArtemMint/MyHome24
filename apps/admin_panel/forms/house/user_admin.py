@@ -8,20 +8,20 @@ from register import models as register_models
 class HouseUserAdminForm(forms.ModelForm):
     prefix = 'house_user_admin'
 
-    name = forms.ModelChoiceField(
-        queryset=register_models.User.users_admin.get_queryset(),
+    user_admin = forms.ModelChoiceField(
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
             }
         ),
+        queryset=register_models.User.users_admin.get_queryset(),
         label='ФИО',
     )
 
     class Meta:
         model = models.HouseUserAdmin
         fields = (
-            'name',
+            'user_admin',
         )
 
 

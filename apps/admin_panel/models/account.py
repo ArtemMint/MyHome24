@@ -40,7 +40,7 @@ class Account(models.Model):
         null=True,
         blank=True,
     )
-    flat = models.OneToOneField(
+    flat = models.ForeignKey(
         'admin_panel.Flat',
         on_delete=models.CASCADE,
         verbose_name='Квартира',
@@ -61,17 +61,6 @@ class Account(models.Model):
     class Meta:
         ordering = ('-editing_date',)
 
-    def get_account_balance(self):
-        if not self.account_transactions:
-            return 0.00
-        incomes = self.account_transactions.filter(
-            account__status='Активен'
-        ).aggregate(models.Sum('total'))['total__sum'] or 0.00
-        outcomes = self.account_transactions.filter(
-            account__status='Неактивен'
-        ).aggregate(models.Sum('total'))['total__sum'] or 0.00
-        return round((incomes - outcomes), 2)
-
     @classmethod
     def get_accounts_list(cls,):
         return cls.objects.all()
@@ -90,3 +79,14 @@ class Account(models.Model):
             flat__isnull=True,
             status__exact='Активен',
         )
+
+    def get_account_balance(self):
+        if not self.account_transactions:
+            return 0.00
+        incomes = self.account_transactions.filter(
+            account__status='Активен'
+        ).aggregate(models.Sum('total'))['total__sum'] or 0.00
+        outcomes = self.account_transactions.filter(
+            account__status='Неактивен'
+        ).aggregate(models.Sum('total'))['total__sum'] or 0.00
+        return round((incomes - outcomes), 2)

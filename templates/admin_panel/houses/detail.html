@@ -59,8 +59,8 @@
                             <td>Пользователи</td>
                             <td>
                                 <p>
-                                {% for user_admin in house_user_admin_list %}
-                                    <a href="#">{{ user_admin }}</a>
+                                {% for user in house_user_admin_list %}
+                                    <a href="{% url 'admin_panel:user_admin_detail' user.user_admin.pk %}">{{ user }}</a>
                                 </p>
                                 {% endfor %}
                             </td>

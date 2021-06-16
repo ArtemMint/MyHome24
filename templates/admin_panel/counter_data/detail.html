@@ -1,10 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %} <h1 class="m-0">Показания счетчиков</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:accounts_list' %}">Лицевые счета</a></li>
+        <li class="breadcrumb-item">Показания счетчиков, кв.{{ counter_data.flat.number }}</li>
+        <li class="breadcrumb-item">Показания счетчика №{{ counter_data.number }}</li>
+    </ul>
+{% endblock %}
+
+{% block header %}
+    <div class="box-header with-border">
+        <h3 class="box-title">
+        </h3>
+        <div class="box-tools">
+            <a href="{% url 'admin_panel:counter_update' %}" class="btn btn-primary btn-sm float-right">
+                <i class="fas fa-pencil-alt"></i>
+                Редактировать показания
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+
+    <div class="col-lg-6" style="padding-left: 0px;">
+        <div class="page-header-spec">
+            <div class="form-group field-account-uid required">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        №
+                    </div>
+                    <input class="form-control" value="{{ counter_data.number }}" type="text" readonly>
+                </div>
+            </div>
+            <span class="label-mid">от</span>
+            <div class="form-group field-accounttransaction-uid_date required">
+                <div id="accounttransaction-uid_date-kvdate" class="input-group date">
+                    <span class="input-group-addon kv-date-calendar" title="Выбрать дату">
+                        <i class="fas fa-calendar-alt"></i>
+                    </span>
+                    <input class="form-control" value="{{ counter_data.created_date.date }}" type="text" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-lg-4">
+                <table class="table table-bordered table-striped table-view">
+                    <tbody>
+                        <tr>
+                            <td>Счетчик</td>
+                            <td>
+                                {{ counter_data.counter.name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Дом</td>
+                            <td>
+                                <a href="{% url 'admin_panel:house_detail' counter_data.house.id %}">
+                                    {{ counter_data.house }}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Секция</td>
+                            <td>
+                                {{ counter_data.section }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Квартира</td>
+                            <td>
+                                <a href="{% url 'admin_panel:flat_detail' counter_data.flat.id %}">
+                                    {{ counter_data.flat }}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Пользователь</td>
+                            <td>
+                                <a href="{% url 'admin_panel:user_detail' counter_data.flat.owner.id %}">
+                                    {{ counter_data.flat.owner }}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Текущие показания</td>
+                            <td>
+                                {{ counter_data.value }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ед.изм.</td>
+                            <td>
+                                {{ counter_data.counter.metric }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Статус</td>
+                            <td>
+                                <span class="label {% if counter_data.status == 'Новое' %}
+                                                    label-default
+                                                    {% elif counter_data.status == 'Нулевое' %}
+                                                    label-default
+                                                    {% else %}
+                                                    label-success
+                                                    {% endif %}">
+                                    {{ counter_data.status }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+{% endblock content %}

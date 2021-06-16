@@ -78,20 +78,21 @@ def house_create_view(request):
 
 @login_required(login_url='/admin/site/login')
 def house_update_view(request, pk):
+    house = models.House.get_house_by_pk(pk=pk)
     house_form = forms.HouseForm(
-        instance=models.House.get_house_by_pk(pk=pk),
+        instance=house,
     )
     house_preview_formset = forms.HousePreviewFormset(
-        instance=house_form.instance,
+        instance=house,
     )
     house_section_formset = forms.HouseSectionFormset(
-        instance=house_form.instance,
+        instance=house,
     )
     house_floor_formset = forms.HouseFloorFormset(
-        instance=house_form.instance,
+        instance=house,
     )
     house_user_admin_formset = forms.HouseUserAdminFormset(
-        instance=house_form.instance,
+        instance=house,
     )
     if request.POST:
         house_form = forms.HouseForm(
@@ -149,11 +150,11 @@ def house_detail_view(request, pk):
         request,
         'admin_panel/houses/detail.html',
         {
-            'house_data': models.House.objects.get(id=pk),
-            'house_preview': models.HousePreview.get_queryset_all_images(pk=pk),
-            'house_section': models.HouseSection.get_sections_count(pk=pk),
+            'house_data': models.House.objects.get(pk=pk),
+            'house_preview': models.HousePreview.get_queryset_all_images(pk),
+            'house_section': models.HouseSection.get_sections_count(pk),
             'house_floor': models.HouseFloor.get_floor_count(pk),
-            'house_user_admin_list': models.HouseUserAdmin.get_user_admin_list(pk=pk),
+            'house_user_admin_list': models.HouseUserAdmin.get_user_admin_list(pk),
         }
     )
 

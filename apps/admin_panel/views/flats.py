@@ -23,9 +23,9 @@ def flats_list_view(request):
 
 @login_required(login_url='/admin/site/login')
 def flat_create_view(request):
-    flat_form = forms.FlatForm()
+    flat_form = forms.FlatCreateForm()
     if request.POST:
-        flat_form = forms.FlatForm(
+        flat_form = forms.FlatCreateForm(
             request.POST,
         )
         if flat_form.is_valid():
@@ -43,11 +43,11 @@ def flat_create_view(request):
 
 @login_required(login_url='/admin/site/login')
 def flat_update_view(request, pk):
-    flat_form = forms.FlatForm(
+    flat_form = forms.FlatUpdateForm(
         instance=models.Flat.get_flat_by_pk(pk),
     )
     if request.POST:
-        flat_form = forms.FlatForm(
+        flat_form = forms.FlatUpdateForm(
             request.POST,
             instance=models.Flat.get_flat_by_pk(pk),
         )

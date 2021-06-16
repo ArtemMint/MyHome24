@@ -47,16 +47,26 @@
                     <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.house }}</td>
                     <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.section }}</td>
                     <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.floor }}</td>
-                    <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.owner }}</td>
                     <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">
-                        {% if field.account.get_account_balance < 0 %}
+                        {% if field.owner %}
+                            {{ field.owner|truncatechars:40 }}
+                        {% else %}
+                            (не задано)
+                        {% endif %}
+                    </td>
+                    <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">
+                        {% if not field.account %}
+                            (нет счета)
+                        {% elif field.account.get_account_balance < 0 %}
                             <span style='color: #dd4b39'>
                                 {{ field.account.get_account_balance }}
                             </span>
-                        {% else %}
+                        {% elif field.account.get_account_balance > 0 %}
                             <span style='color: #00a65a'>
                                 {{ field.account.get_account_balance }}
                             </span>
+                        {% else %}
+                            {{ field.get_account_balance }}
                         {% endif %}
                     </td>
                     <td>
