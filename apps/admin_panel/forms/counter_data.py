@@ -43,7 +43,7 @@ class CounterDataForm(forms.ModelForm):
                 'class': 'form-control',
             }
         ),
-        queryset=models.Services.get_service_list(),
+        queryset=models.Services.get_active_services(),
         empty_label='Выберите...',
         label='Cчетчик',
     )

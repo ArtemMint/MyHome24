@@ -77,7 +77,15 @@
 
                             {% endif %}
                         </td>
-                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.none|truncatechars:50 }}</td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
+                            {% for flat in field.flats.all %}
+                                {% if flat.get_account_balance < 0 %}
+                                    ДА<br>
+                                {% else %}
+                                    <br>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
                         <td>
                             <div class="btn-group ">
                                 <a class="btn btn-default btn-sm" href="" title="Отправить сообщение" data-toggle="tooltip">

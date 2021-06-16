@@ -23,7 +23,6 @@ class Services(models.Model):
     )
     show_in_meter_reading = models.BooleanField(
         default='False',
-        blank=True,
         verbose_name='Показывать в счетчиках',
     )
 
@@ -33,3 +32,7 @@ class Services(models.Model):
     @classmethod
     def get_service_list(cls):
         return cls.objects.all()
+
+    @classmethod
+    def get_active_services(cls):
+        return cls.get_service_list().filter(show_in_meter_reading=True)
