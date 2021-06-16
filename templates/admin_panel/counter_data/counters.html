@@ -1,5 +1,84 @@
 {% extends 'admin_panel/base/base.html' %}
+{% load static %}
+{% block title %} <h1 class="m-0">Счетчики</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item active">Счетчики</li>
+    </ul>
+{% endblock %}
+
+{% block header %}
+    <div class="row" style="margin: 5px 0 0 10px">
+        <div class="col-lg-12">
+            <div class="pull-right margin-bottom" style="float: right">
+                <a class="btn btn-success" href="{% url 'admin_panel:counter_create' %}">Добавить показание</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
-    <h1 class="text-center">Meter readings</h1>
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    {% if counter_data_list %}
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 125px; min-width: 125px">Дом</th>
+                    <th style="width: 100px; min-width: 100px">Секция</th>
+                    <th style="width: 150px; min-width: 150px">№ квартиры</th>
+                    <th style="min-width: 200px">Счетчик</th>
+                    <th style="width: 160px; min-width: 65px">Текущие показания</th>
+                    <th style="min-width: 200px">Ед. изм.</th>
+                    <th style="width: 80px; min-width: 80px">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for field in counter_data_list  %}
+                    <tr>
+                        <td onclick="location.href='{% url 'admin_panel:counter_detail' field.pk %}'">
+                            {{ field.house.name }}
+                        </td>
+                        <td onclick="location.href=''">
+                            {{ field.section }}
+                        </td>
+                        <td onclick="location.href=''">
+                            {{ field.flat.number }}
+                        </td>
+                        <td onclick="location.href=''">
+                            {{ field.counter.name }}
+                        </td>
+                        <td onclick="location.href=''">
+                            {{ field.value }}
+                        </td>
+                        <td onclick="location.href=''">
+                            {{ field.counter.metric.name }}
+                        </td>
+                        <td>
+                            <div class="btn-group ">
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:account_transaction_update' field.pk %}" title="Редактировать">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:account_transaction_delete' field.pk %}" title="Удалить">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2 class="text-center">Показания счетчиков пуст!</h2>
+    {% endif %}
+    </form>
 {% endblock content %}
