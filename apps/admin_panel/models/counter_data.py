@@ -37,7 +37,7 @@ class CounterData(models.Model):
         blank=False,
     )
     counter = models.OneToOneField(
-        'admin_panel.Metrics',
+        'admin_panel.Services',
         on_delete=models.CASCADE,
         verbose_name='Квартира',
         related_name='counter_data',

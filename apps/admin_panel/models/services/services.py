@@ -28,4 +28,8 @@ class Services(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.metric.name})'
+
+    @classmethod
+    def get_service_list(cls):
+        return cls.objects.all()

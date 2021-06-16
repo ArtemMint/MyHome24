@@ -49,7 +49,7 @@ class Flat(models.Model):
     )
     tariff = models.ForeignKey(
         'admin_panel.Tariff',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='flats',
         verbose_name='Тариф',
         null=True,
@@ -77,12 +77,16 @@ class Flat(models.Model):
         ordering = ('-editing_date',)
 
     @classmethod
-    def get_flats_count(cls):
-        return cls.objects.all().count()
-
-    @classmethod
     def get_flats_list(cls):
         return cls.objects.all()
+
+    @classmethod
+    def get_flats_count(cls):
+        return cls.get_flats_list().count()
+
+    @classmethod
+    def get_flats_with_owner(cls):
+        return cls.get_flats_list().filter(owner__isnull=False)
 
     @classmethod
     def get_flat_by_pk(cls, pk):

@@ -8,9 +8,11 @@ class HouseUserAdmin(models.Model):
         related_name='house_user_admin',
         default=None,
     )
-    name = models.CharField(
+    user_admin = models.ForeignKey(
+        'register.User',
+        on_delete=models.SET_NULL,
         verbose_name="ФИО",
-        max_length=50,
+        related_name='house_user_admin',
         blank=True,
         null=True,
     )
@@ -22,7 +24,7 @@ class HouseUserAdmin(models.Model):
     )
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.user_admin}'
 
     @classmethod
     def get_user_admin_list(cls, pk):
