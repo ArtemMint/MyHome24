@@ -40,7 +40,7 @@
             <tbody>
                 {% for field in houses_list %}
                     <tr>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ forloop.counter }}</td>
+                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.id %}'">{{ forloop.counter }}</td>
                         <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.name|truncatechars:50 }}</td>
                         <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.address|truncatechars:50 }}</td>
                         <td>
