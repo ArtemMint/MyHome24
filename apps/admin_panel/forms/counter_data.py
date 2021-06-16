@@ -33,7 +33,7 @@ class CounterDataForm(forms.ModelForm):
                 'class': 'form-control',
             }
         ),
-        queryset=models.Flat.get_flats_list(),
+        queryset=models.Flat.get_flats_with_owner(),
         empty_label='Выберите...',
         label='Квартира',
     )
@@ -43,15 +43,9 @@ class CounterDataForm(forms.ModelForm):
                 'class': 'form-control',
             }
         ),
-        queryset=models.Metrics.get_metrics_list(),
+        queryset=models.Services.get_service_list(),
         empty_label='Выберите...',
         label='Cчетчик',
-    )
-    status = forms.ChoiceField(
-        widget=forms.Select(
-
-        ),
-        label='Статус',
     )
 
     class Meta:
@@ -60,7 +54,11 @@ class CounterDataForm(forms.ModelForm):
             'number',
             'created_date',
             'value',
-            # 'status',
+            'status',
+            'house',
+            'section',
+            'flat',
+            'counter',
         )
 
         widgets = {
@@ -80,11 +78,11 @@ class CounterDataForm(forms.ModelForm):
                     'value': datetime.datetime.now().strftime("%d/%m/%Y"),
                 },
             ),
-            # 'status': forms.Select(
-            #     attrs={
-            #         'class': 'form-control',
-            #     }
-            # ),
+            'status': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
             'value': forms.TextInput(
                 attrs={
                     'class': 'form-control',
