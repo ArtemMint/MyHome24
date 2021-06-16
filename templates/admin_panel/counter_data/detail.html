@@ -17,7 +17,7 @@
         <h3 class="box-title">
         </h3>
         <div class="box-tools">
-            <a href="{% url 'admin_panel:counter_update' %}" class="btn btn-primary btn-sm float-right">
+            <a href="{% url 'admin_panel:counter_update' counter_data.pk %}" class="btn btn-primary btn-sm float-right">
                 <i class="fas fa-pencil-alt"></i>
                 Редактировать показания
             </a>
