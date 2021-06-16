@@ -150,11 +150,11 @@ def house_detail_view(request, pk):
         request,
         'admin_panel/houses/detail.html',
         {
-            'house_data': models.House.objects.get(id=pk),
-            'house_preview': models.HousePreview.get_queryset_all_images(pk=pk),
-            'house_section': models.HouseSection.get_sections_count(pk=pk),
+            'house_data': models.House.objects.get(pk=pk),
+            'house_preview': models.HousePreview.get_queryset_all_images(pk),
+            'house_section': models.HouseSection.get_sections_count(pk),
             'house_floor': models.HouseFloor.get_floor_count(pk),
-            'house_user_admin_list': models.HouseUserAdmin.get_user_admin_list(pk=pk),
+            'house_user_admin_list': models.HouseUserAdmin.get_user_admin_list(pk),
         }
     )
 
