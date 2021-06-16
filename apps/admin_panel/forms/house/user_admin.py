@@ -8,7 +8,7 @@ from register import models as register_models
 class HouseUserAdminForm(forms.ModelForm):
     prefix = 'house_user_admin'
 
-    name = forms.ModelChoiceField(
+    user_admin = forms.ModelChoiceField(
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
@@ -21,7 +21,7 @@ class HouseUserAdminForm(forms.ModelForm):
     class Meta:
         model = models.HouseUserAdmin
         fields = (
-            'name',
+            'user_admin',
         )
 
 
