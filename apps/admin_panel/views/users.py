@@ -31,11 +31,18 @@ def user_create_view(request):
         )
         if user_form.is_valid():
             user = user_form.save(commit=False)
-            raw_password = user_form.cleaned_data['password1']
-            user.set_password(raw_password)
-            user.save()
-            messages.success(request, 'Владелец квартиры создан!')
-            return redirect('admin_panel:users_list')
+            raw_password1 = user_form.cleaned_data['password1']
+            raw_password2 = user_form.cleaned_data['password2']
+            if raw_password1 == raw_password2:
+                user.set_password(raw_password1)
+                user.is_staff = True
+                user.save()
+                messages.success(request, 'Владелец квартиры создан!')
+                return redirect('admin_panel:users_list')
+            else:
+                messages.success(request, 'Пароли не совпадают!')
+        else:
+            messages.success(request, 'Ошибка создания пользователя!')
     return render(
         request,
         'admin_panel/users/create.html',
@@ -58,9 +65,18 @@ def user_update_view(request, pk):
         )
         if user_form.is_valid():
             user = user_form.save(commit=False)
-            user.save()
-            messages.success(request, 'Данные владельца квартиры обновлены!')
-            return redirect('admin_panel:users_list')
+            raw_password1 = user_form.cleaned_data['password1']
+            raw_password2 = user_form.cleaned_data['password2']
+            if raw_password1 == raw_password2:
+                user.set_password(raw_password1)
+                user.is_staff = True
+                user.save()
+                messages.success(request, 'Владелец квартиры создан!')
+                return redirect('admin_panel:users_list')
+            else:
+                messages.success(request, 'Пароли не совпадают!')
+        else:
+            messages.success(request, 'Ошибка создания пользователя!')
     return render(
         request,
         'admin_panel/users/update.html',
