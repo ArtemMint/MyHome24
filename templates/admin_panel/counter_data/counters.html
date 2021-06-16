@@ -48,19 +48,19 @@
                         <td onclick="location.href='{% url 'admin_panel:counter_detail' field.pk %}'">
                             {{ field.house.name }}
                         </td>
-                        <td onclick="location.href=''">
+                        <td onclick="location.href='{% url 'admin_panel:counter_detail' field.pk %}'">
                             {{ field.section }}
                         </td>
-                        <td onclick="location.href=''">
+                        <td onclick="location.href='{% url 'admin_panel:counter_detail' field.pk %}'">
                             {{ field.flat.number }}
                         </td>
-                        <td onclick="location.href=''">
+                        <td onclick="location.href='{% url 'admin_panel:counter_detail' field.pk %}'">
                             {{ field.counter.name }}
                         </td>
-                        <td onclick="location.href=''">
+                        <td onclick="location.href='{% url 'admin_panel:counter_detail' field.pk %}'">
                             {{ field.value }}
                         </td>
-                        <td onclick="location.href=''">
+                        <td onclick="location.href='{% url 'admin_panel:counter_detail' field.pk %}'">
                             {{ field.counter.metric.name }}
                         </td>
                         <td>
