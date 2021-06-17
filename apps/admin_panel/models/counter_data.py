@@ -6,7 +6,6 @@ class CounterData(models.Model):
     STATUS = (
         ('Новое', 'Новое'),
         ('Учтено', 'Учтено'),
-        ('Учтено и оплачено', 'Учтено и оплачено'),
         ('Нулевое', 'Нулевое'),
     )
     number = models.CharField(
@@ -29,17 +28,17 @@ class CounterData(models.Model):
         related_name='counter_data',
         blank=False,
     )
-    flat = models.OneToOneField(
+    flat = models.ForeignKey(
         'admin_panel.Flat',
         on_delete=models.CASCADE,
         verbose_name='Квартира',
         related_name='counter_data',
         blank=False,
     )
-    counter = models.OneToOneField(
+    counter = models.ForeignKey(
         'admin_panel.Services',
         on_delete=models.CASCADE,
-        verbose_name='Квартира',
+        verbose_name='Cчетчик',
         related_name='counter_data',
         blank=False,
     )

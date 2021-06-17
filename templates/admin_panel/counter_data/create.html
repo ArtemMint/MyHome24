@@ -20,6 +20,14 @@
             </ul>
          {% endfor %}
     {% endif %}
+
+    {% if form.errors %}
+        <p>NOT VALID</p>
+        {% for error in form.errors %}
+            {{ error  }}<br>
+        {% endfor %}
+    {% endif %}
+
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
         {{ form.id }}
         <div class="col-lg-6" style="padding-left: 0px;">
@@ -69,12 +77,8 @@
         </div>
         <div class="col-lg-12 text-right">
             <div class="form-group">
-                <a href="{% url 'admin_panel:accounts_list' %}" class="btn btn-default">Отменить</a>
+                <a href="{% url 'admin_panel:counters' %}" class="btn btn-default">Отменить</a>
                 <button type="submit" class="btn btn-success">Сохранить</button>
-            </div>
-            <div class="col-lg-12">
-                {{ form.comment.label_tag }}
-                <p>{{ form.comment }}</p>
             </div>
         </div>
     </form>
