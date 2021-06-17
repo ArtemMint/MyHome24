@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.utils import timezone
 
@@ -55,7 +57,7 @@ class CounterData(models.Model):
         default=0,
     )
     created_date = models.DateTimeField(
-        default=timezone.now,
+        default=datetime.datetime.now().strftime('%d/%m/%y'),
     )
     editing_date = models.DateTimeField(
         auto_now=True,
