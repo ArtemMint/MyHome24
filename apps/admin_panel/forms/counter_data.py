@@ -73,9 +73,7 @@ class CounterDataForm(forms.ModelForm):
                     '%d-%m-%Y'
                 ),
                 attrs={
-                    'type': 'date',
-                    'class': 'form-control datepicker',
-                    'value': datetime.datetime.now().strftime("%d/%m/%Y"),
+                    'class': 'form-control',
                 },
             ),
             'status': forms.Select(
