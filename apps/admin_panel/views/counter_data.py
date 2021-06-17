@@ -21,6 +21,7 @@ class CountersView(generic.ListView):
         ).distinct('flat__number', 'counter__name')
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class CountersListView(generic.View):
     model = models.CounterData
     template_name = 'admin_panel/counter_data/counters_list.html'
@@ -37,10 +38,10 @@ class CountersListView(generic.View):
         )
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class CounterCreateView(generic.CreateView):
     model = models.CounterData
     form_class = forms.CounterDataForm
-    success_url = reverse_lazy('admin_panel:counters')
     template_name = 'admin_panel/counter_data/create.html'
 
     def get_initial(self):
@@ -51,7 +52,11 @@ class CounterCreateView(generic.CreateView):
             'created_date': date,
         }
 
+    def get_success_url(self, **kwargs):
+        return reverse("admin_panel:counter_detail", kwargs={'pk': self.object.pk})
 
+
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class CounterUpdateView(generic.UpdateView):
     model = models.CounterData
     form_class = forms.CounterDataForm
@@ -61,12 +66,14 @@ class CounterUpdateView(generic.UpdateView):
         return reverse("admin_panel:counter_detail", kwargs={'pk': self.object.pk})
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class CounterDetailView(generic.DetailView):
     model = models.CounterData
     context_object_name = 'counter_data'
     template_name = 'admin_panel/counter_data/detail.html'
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class CounterDeleteView(generic.DeleteView):
     model = models.CounterData
     success_url = ''
