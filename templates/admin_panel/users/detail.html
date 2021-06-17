@@ -112,9 +112,32 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td><a href="{% url 'admin_panel:house_detail' flat.house.id %}">{{ flat.house }}</a></td>
-                        <td>{{ flat.section }}</td>
-                        <td><a href="{% url 'admin_panel:flat_detail' flat.id %}">{{ flat.number }}</a></td>
-                        <td><a href="{% url 'admin_panel:account_detail' flat.account.pk %}">{{ flat.account }}</a></td>
+                        <td>
+                            {% if flat.section %}
+                                {{ flat.section }}
+                            {% else %}
+                                (не задано)
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if flat %}
+                                <a href="{% url 'admin_panel:flat_detail' flat.id %}">
+                                    {{ flat.number }}
+                                </a>
+                            {% else %}
+                                (не задано)
+                            {% endif %}
+
+                        </td>
+                        <td>
+                            {% if flat.account %}
+                            <a href="{% url 'admin_panel:account_detail' flat.account.pk %}">
+                                {{ flat.account }}
+                            </a>
+                            {% else %}
+                                (не задано)
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

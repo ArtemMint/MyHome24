@@ -28,7 +28,7 @@ class CounterCreateView(generic.CreateView):
 
 class CounterUpdateView(generic.UpdateView):
     model = models.CounterData
-    success_url = reverse_lazy('admin_panel:counters')
+    success_url = reverse_lazy('admin_panel:counter_detail')
     template_name = 'admin_panel/counter_data/update.html'
 
 

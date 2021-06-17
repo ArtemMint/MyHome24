@@ -49,7 +49,7 @@
                     <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">{{ field.floor }}</td>
                     <td onclick="location.href='{% url 'admin_panel:flat_detail' field.pk %}'">
                         {% if field.owner %}
-                            {{ field.owner|truncatechars:40 }}
+                            {{ field.owner.full_name|truncatechars:40 }}
                         {% else %}
                             (не задано)
                         {% endif %}

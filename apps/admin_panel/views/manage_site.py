@@ -51,7 +51,7 @@ class IndexSettings(SuccessMessageMixin, UpdateView):
         """
         Get IndexPage data
         """
-        # Get IndexPage instancesingletone
+        # Get IndexPage instance singleton
         obj: models.IndexPage = models.IndexPage.get_solo()
         if not obj.seo:
             # and create SEO connect if it`s empty
@@ -97,7 +97,7 @@ class IndexSettings(SuccessMessageMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
         """
-        POST method logic to upade data in models
+        POST method logic to update data in models
         using forms and instance as IndexPage
         """
         index_form = self.form_class(

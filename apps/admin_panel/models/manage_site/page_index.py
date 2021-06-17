@@ -18,7 +18,7 @@ class IndexPage(SingletonModel):
         verbose_name='Заголовок',
     )
     short_text = models.CharField(
-        blank=False,
+        blank=True,
         max_length=1000,
         verbose_name='Краткий текст',
     )
