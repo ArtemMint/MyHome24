@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.utils import timezone
 
@@ -6,7 +8,6 @@ class CounterData(models.Model):
     STATUS = (
         ('Новое', 'Новое'),
         ('Учтено', 'Учтено'),
-        ('Учтено и оплачено', 'Учтено и оплачено'),
         ('Нулевое', 'Нулевое'),
     )
     number = models.CharField(
@@ -29,17 +30,17 @@ class CounterData(models.Model):
         related_name='counter_data',
         blank=False,
     )
-    flat = models.OneToOneField(
+    flat = models.ForeignKey(
         'admin_panel.Flat',
         on_delete=models.CASCADE,
         verbose_name='Квартира',
         related_name='counter_data',
         blank=False,
     )
-    counter = models.OneToOneField(
+    counter = models.ForeignKey(
         'admin_panel.Services',
         on_delete=models.CASCADE,
-        verbose_name='Квартира',
+        verbose_name='Cчетчик',
         related_name='counter_data',
         blank=False,
     )
@@ -56,7 +57,7 @@ class CounterData(models.Model):
         default=0,
     )
     created_date = models.DateTimeField(
-        default=timezone.now,
+        default=datetime.datetime.now().strftime('%d/%m/%y'),
     )
     editing_date = models.DateTimeField(
         auto_now=True,

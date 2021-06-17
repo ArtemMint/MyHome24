@@ -239,7 +239,7 @@ urlpatterns = [
         name='counters'
     ),
     path(
-        'counter-data/counters_list/',
+        'counter-data/counter_list/flat_pk=<int:flat_pk>',
         views.CountersListView.as_view(),
         name='counter_list'
     ),

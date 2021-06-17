@@ -1,10 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %} <h1 class="m-0">Редактирование</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:counters' %}">Счетчики</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:counter_list' form.instance.flat.pk %}">Показания счетчиков, кв.{{ form.instance.flat.number }}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:counter_detail' form.instance.pk %}">Показания счетчика №{{ form.instance.number }}</a></li>
+        <li class="breadcrumb-item active">Редактирование</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+
+    {% if form.errors %}
+        <p>NOT VALID</p>
+        {% for error in form.errors %}
+            {{ error  }}<br>
+        {% endfor %}
+    {% endif %}
+
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.id }}
+        <div class="col-lg-6" style="padding-left: 0px;">
+            <div class="page-header-spec">
+                <div class="form-group field-account-uid required">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            №
+                        </div>
+                        {{ form.number }}
+                    </div>
+                </div>
+                <span class="label-mid">от</span>
+                <div class="form-group field-accounttransaction-uid_date required">
+                    <div id="accounttransaction-uid_date-kvdate" class="input-group date">
+                        <span class="input-group-addon kv-date-calendar" title="Выбрать дату">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                        {{ form.created_date }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6" style="float: right">
+                    {{ form.confirm }}
+                    {{ form.confirm.label_tag }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                {{ form.house.label_tag }}
+                <p>{{ form.house }}</p>
+                {{ form.section.label_tag }}
+                <p>{{ form.section }}</p>
+                {{ form.flat.label_tag }}
+                <p>{{ form.flat }}</p>
+                {{ form.counter.label_tag }}
+                <p>{{ form.counter }}</p>
+            </div>
+            <div class="col-lg-6">
+                {{ form.status.label_tag }}
+                <p>{{ form.status }}</p>
+                {{ form.value.label_tag }}
+                <p>{{ form.value }}</p>
+            </div>
+        </div>
+        <div class="col-lg-12 text-right">
+            <div class="form-group">
+                <a href="{% url 'admin_panel:counter_list' flat_pk=form.instance.flat.pk %}" class="btn btn-default">Отменить</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </div>
+            <div class="col-lg-12">
+                {{ form.comment.label_tag }}
+                <p>{{ form.comment }}</p>
+            </div>
+        </div>
+    </form>
+{% endblock content %}

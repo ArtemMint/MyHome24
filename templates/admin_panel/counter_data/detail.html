@@ -6,8 +6,8 @@
 {% block breadcrumb %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
-        <li class="breadcrumb-item"><a href="{% url 'admin_panel:accounts_list' %}">Лицевые счета</a></li>
-        <li class="breadcrumb-item">Показания счетчиков, кв.{{ counter_data.flat.number }}</li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:counters' %}">Счетчики</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:counter_list' counter_data.flat.pk %}">Показания счетчиков, кв.{{ counter_data.flat.number }}</a></li>
         <li class="breadcrumb-item">Показания счетчика №{{ counter_data.number }}</li>
     </ul>
 {% endblock %}
@@ -93,7 +93,7 @@
                             <td>Пользователь</td>
                             <td>
                                 <a href="{% url 'admin_panel:user_detail' counter_data.flat.owner.id %}">
-                                    {{ counter_data.flat.owner }}
+                                    {{ counter_data.flat.owner.full_name }}
                                 </a>
                             </td>
                         </tr>
