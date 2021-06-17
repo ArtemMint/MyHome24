@@ -2,7 +2,7 @@ import datetime
 
 
 def get_current_date():
-    return datetime.datetime.now().strftime('%d.%m.%y')
+    return datetime.datetime.now().strftime('%m/%d/%y')
 
 
 def generate_number(model):
