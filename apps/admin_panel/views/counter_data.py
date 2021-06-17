@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 from admin_panel import models
 from admin_panel import forms
+from admin_panel import utils
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
@@ -41,6 +42,14 @@ class CounterCreateView(generic.CreateView):
     form_class = forms.CounterDataForm
     success_url = reverse_lazy('admin_panel:counters')
     template_name = 'admin_panel/counter_data/create.html'
+
+    def get_initial(self):
+        generated_number = utils.generate_number(self.model)
+        date = utils.get_current_date()
+        return {
+            'number': generated_number,
+            'created_date': date,
+        }
 
 
 class CounterUpdateView(generic.UpdateView):
