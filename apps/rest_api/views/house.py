@@ -76,3 +76,18 @@ class HouseDelete(generics.DestroyAPIView):
         return Response(
             status=status.HTTP_200_OK
         )
+
+
+class SectionList(generics.ListAPIView):
+    """
+    Filter sections by House.
+    """
+    model = models.House
+    serializer_class = serializers.HouseSectionSerializer
+
+    def get_queryset(self):
+        queryset = models.HouseSection.get_sections_list()
+        house = self.request.query_params.get('house')
+        if house is not None:
+            queryset = queryset.filter(house=house)
+        return queryset
