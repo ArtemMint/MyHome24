@@ -15,7 +15,13 @@ urlpatterns = [
          name='houses_list'),
     path('house/create/',
          views.HouseCreate.as_view(),
-         name='house_create'),
+         name='houses_create'),
+    path('house/update/<int:pk>',
+         views.HouseUpdate.as_view(),
+         name='house_update'),
+    path('house/delete/<int:pk>',
+         views.HouseDelete.as_view(),
+         name='house_delete'),
 
 
     path('flat/',
