@@ -15,10 +15,15 @@ def account_transactions_list(request):
     """
     AccountTransaction list of all users
     """
+    filter = forms.AccountTransactionFilter(
+        request.GET,
+        queryset=models.AccountTransaction.get_queryset_list().order_by('-pk')
+    )
     return render(
         request,
         'admin_panel/account_transaction/index.html',
         {
+            'filter': filter,
             'account_transactions_list': models.AccountTransaction.get_queryset_list(),
             'total_income': models.AccountTransaction.get_total_income(),
             'total_expenditure': models.AccountTransaction.get_total_expenditure(),

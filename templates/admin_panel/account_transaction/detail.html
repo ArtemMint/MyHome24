@@ -25,22 +25,27 @@
 {% endblock %}
 
 {% block header %}
-    <div class="box-header with-border">
+    <div class="box-header with-border d-flex justify-content-between" style="margin: 0">
         <h3 class="box-title">
-            Просмотр лицевого cчета
+            {% if account_transaction_data.instance.type == 'Приход' %}
+                Приходная
+            {% else %}
+                Расходная
+            {% endif %}
+            ведомость</h1>
         </h3>
         <div class="box-tools">
-            <a href="{% url 'admin_panel:account_transaction_update' account_transaction_data.id %}" class="btn btn-primary btn-sm float-right">
-                <i class="fas fa-pencil-alt"></i>
-                Редактировать лицевой счет
+            <a href="" class="disabled btn btn-default btn-sm">
+                Копировать
             </a>
-            <a href="{% url 'admin_panel:statistics'%}" class="btn btn-default btn-sm float-right">
-                <i class="far fa-copy"></i>
-                Оформить квитанцию
+            <a href="{% url 'admin_panel:account_transaction_delete' account_transaction_data.id %}" class="btn btn-default btn-sm">
+                Удалить
             </a>
-            <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default btn-sm float-right">
-                <i class="fas fa-dollar-sign"></i>
-                Принять платеж
+            <a href="{% url 'admin_panel:account_transaction_update' account_transaction_data.id %}" class="btn btn-primary btn-sm">
+                Редактировать ведомость
+            </a>
+            <a href="" class="disabled btn btn-default btn-sm">
+                Выгрузить в Excel
             </a>
         </div>
     </div>
@@ -83,7 +88,7 @@
                     <tr>
                         <td>Владелец квартиры</td>
                         <td>
-                            <a href="{% url 'admin_panel:user_detail' account_transaction_data.owner.id %}">{{ account_transaction_data.owner }}</a>
+                            <a href="{% url 'admin_panel:user_detail' account_transaction_data.owner.id %}">{{ account_transaction_data.owner.full_name }}</a>
                         </td>
                     </tr>
                     <tr>
@@ -98,7 +103,7 @@
                     </tr>
                     <tr>
                         <td>Квитанция</td>
-                        <td>{{ account_transaction_data.none }}</td>
+                        <td>{{ account_transaction_data.number }} от {{ account_transaction_data.created_date.date }}</td>
                     </tr>
                     <tr>
                         <td>Услуга</td>
