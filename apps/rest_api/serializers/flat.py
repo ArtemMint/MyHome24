@@ -6,14 +6,16 @@ from rest_api import serializers as user_serializers
 
 
 class FlatSerializer(serializers.ModelSerializer):
-    owner = user_serializers.UserSerializer(read_only=True)
-    house = house_serializers.HouseSerializer(read_only=True)
+    # owner = user_serializers.UserSerializer()
+    # house = house_serializers.HouseSerializer()
 
     class Meta:
         model = models.Flat
         fields = (
             'id',
             'number',
+            'area',
+            'tariff',
             'owner',
             'house',
         )
