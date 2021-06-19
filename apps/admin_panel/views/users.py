@@ -15,7 +15,7 @@ def users_list_view(request):
         request,
         "admin_panel/users/index.html",
         {
-            'users_list': models.User.get_users_list(),
+            'users_list': models.User.users.get_queryset(),
             'users_count': models.User.get_users_count(),
         }
     )
@@ -35,7 +35,6 @@ def user_create_view(request):
             raw_password2 = user_form.cleaned_data['password2']
             if raw_password1 == raw_password2:
                 user.set_password(raw_password1)
-                user.is_staff = True
                 user.save()
                 messages.success(request, 'Владелец квартиры создан!')
                 return redirect('admin_panel:users_list')
@@ -69,7 +68,6 @@ def user_update_view(request, pk):
             raw_password2 = user_form.cleaned_data['password2']
             if raw_password1 == raw_password2:
                 user.set_password(raw_password1)
-                user.is_staff = True
                 user.save()
                 messages.success(request, 'Владелец квартиры создан!')
                 return redirect('admin_panel:users_list')

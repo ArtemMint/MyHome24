@@ -1,4 +1,6 @@
 from django import forms
+import django_filters
+from django_filters import DateFilter, ModelChoiceFilter
 import datetime
 
 from admin_panel import models
@@ -103,3 +105,28 @@ class AccountTransactionExpenditureForm(AccountTransactionForm):
         ),
         label='Статья',
     )
+
+
+class AccountTransactionFilter(django_filters.FilterSet):
+    owner = ModelChoiceFilter(
+        queryset=register_models.User.get_active_users()
+    )
+    created_date = DateFilter(
+        widget=forms.DateInput(
+            attrs={
+                'type': 'date',
+                'class': 'datepicker',
+            }
+        )
+    )
+
+    class Meta:
+        model = models.AccountTransaction
+        fields = (
+            'number',
+            'created_date',
+            'confirm',
+            'owner',
+            'account',
+            'transaction',
+        )
