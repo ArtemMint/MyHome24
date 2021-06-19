@@ -44,7 +44,7 @@ class Invoice(models.Model):
     )
     status = models.CharField(
         max_length=50,
-        choices=STATUS[0][0],
+        choices=STATUS,
         default=STATUS[0][0],
     )
     tariff = models.ForeignKey(
