@@ -74,6 +74,26 @@ urlpatterns = [
         views.InvoiceList.as_view(),
         name='invoice_list'
     ),
+    path(
+        'invoice/create/',
+        views.InvoiceCreate.as_view(),
+        name='invoice_create'
+    ),
+    path(
+        'invoice/update/<int:pk>',
+        views.InvoiceUpdate.as_view(),
+        name='invoice_update'
+    ),
+    path(
+        'invoice/detail/<int:pk>',
+        views.InvoiceDetail.as_view(),
+        name='invoice_detail'
+    ),
+    path(
+        'invoice/delete/<int:pk>',
+        views.InvoiceDelete.as_view(),
+        name='invoice_delete'
+    ),
 
     # Account
     path(
