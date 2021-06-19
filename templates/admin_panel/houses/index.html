@@ -25,7 +25,14 @@
             </div>
         </div>
     </div>
-
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+        <div class="box-tools">
+            <a href="{% url 'admin_panel:houses_list' %}" class="btn btn-default btn-sm">
+                <span class="hidden-xs">Очистить</span>
+            </a>
+        </div>
+    </div>
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
     {% if houses_list %}
         <table class="table table-striped table-hover table-bordered">
@@ -36,6 +43,12 @@
                     <th scope="col">Адрес</th>
                     <th style="width: 80px; min-width: 80px">&nbsp;</th>
                 </tr>
+            <tr>
+                <th></th>
+                <th><input class="form-control"></th>
+                <th><input class="form-control"></th>
+                <th>&nbsp;</th>
+            </tr>
             </thead>
             <tbody>
                 {% for field in houses_list %}
