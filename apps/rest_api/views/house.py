@@ -82,12 +82,13 @@ class SectionList(generics.ListAPIView):
     """
     Filter sections by House.
     """
-    model = models.House
+    model = models.HouseSection
     serializer_class = serializers.HouseSectionSerializer
 
     def get_queryset(self):
-        queryset = models.HouseSection.get_sections_list()
-        house = self.request.query_params.get('house')
-        if house is not None:
-            queryset = queryset.filter(house=house)
+        house = self.request.query_params.get('pk')
+        if house:
+            queryset = self.model.objects.filter(house__pk=house)
+        else:
+            queryset = []
         return queryset
