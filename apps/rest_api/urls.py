@@ -10,9 +10,12 @@ from . import views
 
 app_name = 'rest_api'
 urlpatterns = [
+    path('overview/',
+         views.ApiOverview.as_view(),
+         name='api_overview'),
 
     # House URLS.
-    path('house/',
+    path('house/list/',
          views.HouseList.as_view(),
          name='house_list'),
     path('house/create/',
@@ -26,7 +29,7 @@ urlpatterns = [
          name='house_delete'),
 
     # Flat URLS.
-    path('flat/',
+    path('flat/list/',
          views.FlatList.as_view(),
          name='flat_list'),
     path('flat/create/',
