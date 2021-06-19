@@ -16,15 +16,10 @@ class FlatCreate(generics.CreateAPIView):
     serializer_class = serializers.FlatSerializer
 
 
-class FlatUpdate(generics.UpdateAPIView):
+class FlatUpdate(generics.RetrieveUpdateAPIView):
     model = models.Flat
     queryset = models.Flat.get_flats_list()
     serializer_class = serializers.FlatSerializer
-
-    def get(self, requst, pk):
-        flat = self.get_object()
-        flatserializer = self.serializer_class(flat)
-        return Response(flatserializer.data)
 
 
 class FlatDelete(generics.DestroyAPIView):
