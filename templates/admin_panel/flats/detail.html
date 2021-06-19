@@ -20,6 +20,14 @@
                 <i class="fas fa-pencil-alt"></i>
                 Редактировать квартиру
             </a>
+            <a href="{% url 'admin_panel:statistics'%}" class="btn btn-default btn-sm float-right disabled">
+                <i class="far fa-copy"></i>
+                Оформить квитанцию
+            </a>
+            <a href="{% url 'admin_panel:statistics' %}" class="btn btn-default btn-sm float-right disabled">
+                <i class="fas fa-dollar-sign"></i>
+                Принять платеж
+            </a>
         </div>
     </div>
 
@@ -48,7 +56,13 @@
         </tr>
         <tr>
             <td>Площадь</td>
-            <td>{{ flat_data.area }} м2</td>
+            <td>
+                {% if flat_data.floor %}
+                    {{ flat_data.area }}м2
+                {% else %}
+                    (не задано)
+                {% endif %}
+            </td>
         </tr>
         <tr>
             <td>Дом</td>
@@ -56,11 +70,23 @@
         </tr>
         <tr>
             <td>Секция</td>
-            <td>{{ flat_data.section }}</td>
+            <td>
+                {% if flat_data.section %}
+                    {{ flat_data.section }}
+                {% else %}
+                    (не задано)
+                {% endif %}
+            </td>
         </tr>
         <tr>
             <td>Этаж</td>
-            <td>{{ flat_data.floor }}</td>
+            <td>
+                {% if flat_data.floor %}
+                    {{ flat_data.floor }}
+                {% else %}
+                    (не задано)
+                {% endif %}
+            </td>
         </tr>
         <tr>
             <td>Владелец</td>
