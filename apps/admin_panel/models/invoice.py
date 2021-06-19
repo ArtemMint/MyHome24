@@ -47,6 +47,14 @@ class Invoice(models.Model):
         choices=STATUS[0][0],
         default=STATUS[0][0],
     )
+    tariff = models.ForeignKey(
+        'admin_panel.Tariff',
+        on_delete=models.SET_NULL,
+        related_name='invoices',
+        verbose_name='Тариф',
+        null=True,
+        blank=True,
+    )
     start_date = models.DateTimeField(
         default=timezone.now,
     )
