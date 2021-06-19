@@ -64,6 +64,11 @@ class InvoiceForm(forms.ModelForm):
                     'class': 'form-control',
                 }
             ),
+            'account': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
             'start_date': forms.DateInput(
                 format=(
                     '%d-%m-%Y'
