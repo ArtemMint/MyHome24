@@ -6,8 +6,8 @@ from rest_api import serializers as user_serializers
 
 
 class FlatSerializer(serializers.ModelSerializer):
-    # owner = user_serializers.UserSerializer()
-    # house = house_serializers.HouseSerializer()
+    owner = user_serializers.UserSerializer()
+    house = house_serializers.HouseSerializer()
 
     class Meta:
         model = models.Flat
