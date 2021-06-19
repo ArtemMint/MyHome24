@@ -70,7 +70,14 @@
             </ul>
          {% endfor %}
     {% endif %}
-
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+        <div class="box-tools">
+            <a href="{% url 'admin_panel:accounts_list' %}" class="btn btn-default btn-sm">
+                <span class="hidden-xs">Очистить</span>
+            </a>
+        </div>
+    </div>
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
     {% if accounts_list %}
         <table class="table table-striped table-hover table-bordered">
@@ -84,6 +91,16 @@
                     <th style="min-width: 200px">Владелец</th>
                     <th style="width: 120px; min-width: 120px">Остаток(грн)</th>
                     <th style="width: 80px; min-width: 80px">&nbsp;</th>
+                </tr>
+                <tr>
+                    <th><input class="form-control"></th>
+                    <th><select class="form-control"></select></th>
+                    <th><input class="form-control"></th>
+                    <th><select class="form-control"></select></th>
+                    <th><select class="form-control"></select></th>
+                    <th><select class="form-control"></select></th>
+                    <th><select class="form-control"></select></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>

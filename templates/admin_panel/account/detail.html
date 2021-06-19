@@ -94,7 +94,7 @@
                             <td>Владелец</td>
                             <td>
                                 {% if account_data.flat.owner.id %}
-                                    <a href="{% url 'admin_panel:user_detail' account_data.flat.owner.id%}">{{ account_data.flat.owner|truncatechars:40 }}</a>
+                                    <a href="{% url 'admin_panel:user_detail' account_data.flat.owner.id%}">{{ account_data.flat.owner.full_name|truncatechars:40 }}</a>
                                 {% else %}
                                     (не задано)
                                 {% endif %}
