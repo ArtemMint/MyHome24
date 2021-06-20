@@ -55,13 +55,17 @@
                 {% for field in counter_data_list  %}
                     <tr>
                         <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'">
-                            {{ field.house.name }}
+                            <a href="{% url 'admin_panel:house_detail' field.house.pk %}">
+                                {{ field.house.name }}
+                            </a>
                         </td>
                         <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'">
                             {{ field.section }}
                         </td>
                         <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'">
-                            {{ field.flat.number }}
+                            <a href="{% url 'admin_panel:flat_detail' field.flat.pk %}">
+                                {{ field.flat.number }}
+                            </a>
                         </td>
                         <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'">
                             {{ field.counter.name }}
@@ -76,10 +80,10 @@
                         </td>
                         <td>
                             <div class="btn-group ">
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}" title="Редактировать">
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:counter_list' field.pk %}" title="Редактировать">
                                     <i class="fas fa-tachometer-alt"></i>
                                 </a>
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}" title="Удалить">
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:counter_list' field.flat.pk %}" title="Открыть историю показаний для счетчика">
                                     <i class="fas fa-eye"></i>
                                 </a>
                             </div>
