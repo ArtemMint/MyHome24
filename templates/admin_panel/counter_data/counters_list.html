@@ -31,7 +31,7 @@
 
     <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
     {% if counters_by_flat %}
-        <table class="table table-striped table-hover table-bordered">
+        <table class="table table-sm table-striped table-hover table-bordered">
             <thead>
                 <tr>
                     <th style="width: 125px; min-width: 125px">№</th>
@@ -66,8 +66,8 @@
                         <td onclick="location.href='{% url 'admin_panel:counter_detail' field.pk %}'">
                             {{ field.number }}
                         </td>
-                        <td onclick="location.href='{% url 'admin_panel:counter_detail' field.pk %}'">
-                            <span class="label {% if field.status == 'Новое' %}
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:counter_detail' field.pk %}'">
+                            <small class="label {% if field.status == 'Новое' %}
                                                     label-default
                                                     {% elif field.status == 'Нулевое' %}
                                                     label-default
@@ -75,7 +75,7 @@
                                                     label-success
                                                     {% endif %}">
                                     {{ field.status }}
-                                </span>
+                                </small>
                         </td>
                         <td onclick="location.href='{% url 'admin_panel:counter_detail' field.pk %}'">
                             {{ field.created_date|date:'d.m.Y' }}
