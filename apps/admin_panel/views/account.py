@@ -5,8 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models
-from admin_panel import forms
+from admin_panel import models, forms, utils
 
 
 @login_required(login_url='/admin/site/login')
@@ -23,7 +22,11 @@ def accounts_list_view(request):
 
 @login_required(login_url='/admin/site/login')
 def account_create_view(request):
-    account_form = forms.AccountForm()
+    account_form = forms.AccountForm(
+        initial={
+            'number': utils.generate_number(models.AccountTransaction),
+        }
+    )
     if request.POST:
         account_form = forms.AccountForm(
             request.POST,

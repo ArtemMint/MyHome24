@@ -47,7 +47,7 @@ class MasterRequestForm(forms.ModelForm):
                     '%d-%m-%Y'
                 ),
                 attrs={
-                    'type': 'date',
+                    # 'type': 'date',
                     'class': 'form-control datepicker',
                     'value': datetime.now().strftime("%d/%m/%Y"),
                 },

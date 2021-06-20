@@ -2,8 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models
-from admin_panel import forms
+from admin_panel import models, forms, utils
 
 
 @login_required(login_url='/admin/site/login')
@@ -20,7 +19,11 @@ def master_requests_list(request):
 
 @login_required(login_url='/admin/site/login')
 def master_request_create(request):
-    master_request_form = forms.MasterRequestForm()
+    master_request_form = forms.MasterRequestForm(
+        initial={
+            'created_date': utils.get_current_date(),
+        }
+    )
     if request.POST:
         master_request_form = forms.MasterRequestForm(
             request.POST,

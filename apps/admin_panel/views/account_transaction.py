@@ -6,8 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models
-from admin_panel import forms
+from admin_panel import models, forms, utils
 
 
 @login_required(login_url='/admin/site/login')
@@ -33,7 +32,12 @@ def account_transactions_list(request):
 
 @login_required(login_url='/admin/site/login')
 def account_transactions_create_in(request):
-    account_transaction_form = forms.AccountTransactionIncomeForm()
+    account_transaction_form = forms.AccountTransactionIncomeForm(
+        initial={
+            'number': utils.generate_number(models.AccountTransaction),
+            'created_date': utils.get_current_date(),
+        }
+    )
     if request.POST:
         account_transaction_form = forms.AccountTransactionIncomeForm(
             request.POST,
@@ -56,7 +60,12 @@ def account_transactions_create_in(request):
 
 
 def account_transactions_create_out(request):
-    account_transaction_form = forms.AccountTransactionExpenditureForm()
+    account_transaction_form = forms.AccountTransactionExpenditureForm(
+        initial={
+            'number': utils.generate_number(models.AccountTransaction),
+            'created_date': utils.get_current_date(),
+        }
+    )
     if request.POST:
         account_transaction_form = forms.AccountTransactionExpenditureForm(
             request.POST,
