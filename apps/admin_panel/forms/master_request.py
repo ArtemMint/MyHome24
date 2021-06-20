@@ -25,6 +25,7 @@ class MasterRequestForm(forms.ModelForm):
             }
         ),
         label='Владелец',
+        required=False,
     )
 
     class Meta:
