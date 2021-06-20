@@ -5,6 +5,7 @@ from admin_panel import models
 
 
 class InvoiceForm(forms.ModelForm):
+    prefix = 'invoice'
     house = forms.ModelChoiceField(
         widget=forms.Select(
             attrs={
@@ -46,12 +47,12 @@ class InvoiceForm(forms.ModelForm):
             ),
             'created_date': forms.DateInput(
                 format=(
-                    '%d-%m-%Y'
+                    '%m/%d/%Y'
                 ),
                 attrs={
-                    'type': 'date',
-                    'class': 'form-control datepicker',
-                    'value': datetime.datetime.now().strftime("%d/%m/%Y"),
+                    # 'type': 'date',
+                    'class': 'form-control',
+                    'value': datetime.datetime.now().strftime("%m/%d/%Y"),
                 },
             ),
             'status': forms.Select(
@@ -71,22 +72,22 @@ class InvoiceForm(forms.ModelForm):
             ),
             'start_date': forms.DateInput(
                 format=(
-                    '%d-%m-%Y'
+                    '%m/%d/%Y'
                 ),
                 attrs={
-                    'type': 'date',
-                    'class': 'form-control datepicker',
-                    'value': datetime.datetime.now().strftime("%d/%m/%Y"),
+                    # 'type': 'date',
+                    'class': 'form-control',
+                    'value': datetime.datetime.now().strftime("%m/%d/%Y"),
                 },
             ),
             'end_date': forms.DateInput(
                 format=(
-                    '%d-%m-%Y'
+                    '%m/%d/%Y'
                 ),
                 attrs={
-                    'type': 'date',
-                    'class': 'form-control datepicker',
-                    'value': datetime.datetime.now().strftime("%d/%m/%Y"),
+                    # 'type': 'date',
+                    'class': 'form-control',
+                    'value': datetime.datetime.now().strftime("%m/%d/%Y"),
                 },
             ),
         }

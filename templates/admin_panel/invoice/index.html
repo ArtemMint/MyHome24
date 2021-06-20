@@ -84,7 +84,7 @@
             <thead>
                 <tr>
                     <th style="width: 40px; min-width: 40px">
-                        <input type="checkbox" class="select-on-check-all" name="selection_all" value="1">
+                        <input type="checkbox" id="main_checkbox">
                     </th>
                     <th style="width: 125px; min-width: 125px">№ квитанции</th>
                     <th style="width: 160px; min-width: 100px">Статус</th>
@@ -113,7 +113,7 @@
                 {% for field in invoice_list %}
                     <tr>
                         <td>
-                            <input type="checkbox" id="main_checkbox">
+                            <input type="checkbox" class="delete_checkbox">
                         </td>
                         <td onclick="location.href='{% url 'admin_panel:invoice_detail' field.pk %}'">
                             {{ field.number }}
@@ -195,7 +195,15 @@
 {% block scripts %}
 <script>
     $('#main_checkbox').on('change', function(){
-
+        if($(this).prop('checked')){
+            $('.delete_checkbox').each(function(){
+                $(this).prop('checked', true);
+            });
+        }else{
+            $('.delete_checkbox').each(function(){
+                $(this).prop('checked', false);
+            });
+        }
     })
 </script>
 {% endblock %}

@@ -45,8 +45,30 @@ class InvoiceCreate(generic.View):
             return redirect('admin_panel:invoice_list')
 
 
-class InvoiceUpdate(generic.UpdateView):
-    pass
+class InvoiceUpdate(generic.View):
+    model = models.Invoice
+    form_class = forms.InvoiceForm
+
+    def get(self, request, pk):
+        invoice = self.model.get_invoice_by_pk(pk)
+        form = self.form_class(
+                instance=invoice,
+        )
+        return render(
+            request,
+            'admin_panel/invoice/update.html',
+            {
+                'form': form,
+            }
+        )
+
+    def post(self, request):
+        form = self.form_class(
+            request.POST,
+        )
+        if form.is_valid():
+            form.save()
+            return redirect('admin_panel:invoice_list')
 
 
 class InvoiceDetail(generic.DetailView):
