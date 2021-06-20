@@ -86,5 +86,11 @@ class InvoiceDetail(generic.View):
         )
 
 
-class InvoiceDelete(generic.DeleteView):
-    pass
+class InvoiceDelete(generic.View):
+    model = models.Invoice
+    success_url = 'admin_panel:invoice_list'
+
+    def get(self, request, pk):
+        invoice = self.model.get_invoice_by_pk(pk)
+        invoice.delete()
+        return redirect(self.success_url)

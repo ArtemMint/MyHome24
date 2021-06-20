@@ -278,6 +278,11 @@ urlpatterns = [
         views.CounterDetailView.as_view(),
         name='counter_detail'
     ),
+    path(
+        'counter-data/delete/<int:pk>/',
+        views.CounterDeleteView.as_view(),
+        name='counter_delete'
+    ),
 
     # Services
     path(
