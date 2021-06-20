@@ -71,8 +71,19 @@ class InvoiceUpdate(generic.View):
             return redirect('admin_panel:invoice_list')
 
 
-class InvoiceDetail(generic.DetailView):
-    pass
+class InvoiceDetail(generic.View):
+    model = models.Invoice
+    form_class = forms.InvoiceForm
+
+    def get(self, request, pk):
+        invoice = self.model.get_invoice_by_pk(pk)
+        return render(
+            request,
+            'admin_panel/invoice/detail.html',
+            {
+                'invoice': invoice
+            }
+        )
 
 
 class InvoiceDelete(generic.DeleteView):
