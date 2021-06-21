@@ -39,7 +39,7 @@ urlpatterns = [
     # Cash register
     path(
         'account-transaction/index/',
-        views.account_transactions_list,
+        views.AccountTransactionsList.as_view(),
         name='account_transactions_list'
     ),
     path(
@@ -98,7 +98,7 @@ urlpatterns = [
     # Account
     path(
         'account/index/',
-        views.accounts_list_view,
+        views.AccountsListView.as_view(),
         name='accounts_list'
     ),
     path(
