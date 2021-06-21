@@ -51,7 +51,7 @@ class AccountTransactionForm(forms.ModelForm):
             ),
             'created_date': forms.DateInput(
                 format=(
-                    '%d-%m-%Y'
+                    '%m/%d/%Y'
                 ),
                 attrs={
                     # 'type': 'date',
