@@ -6,9 +6,10 @@ from admin_panel import models
 
 def get_short_statistic():
     accounts = models.Account.get_accounts_list().filter()
+
     for account in accounts:
         transaction_balance = reduce(
-            lambda x, y: x+y if account.balance() >= 0 else x - y,
+            lambda x, y: x + y if account.balance() >= 0 else x - y,
             [
                 account.balance()
                 for account in accounts
@@ -22,7 +23,7 @@ def get_short_statistic():
                 for account in accounts
             ]
         )
-        account_balance = 0
+    account_balance = models.AccountTransaction.get_balance()
 
     return {
         'transaction_balance': round(transaction_balance, 2),

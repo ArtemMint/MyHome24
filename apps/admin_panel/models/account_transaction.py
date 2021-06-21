@@ -93,3 +93,7 @@ class AccountTransaction(models.Model):
         for value in queryset:
             expenditure += value.total
         return abs(expenditure)
+
+    @classmethod
+    def get_balance(cls):
+        return cls.get_total_income() - cls.get_total_expenditure()
