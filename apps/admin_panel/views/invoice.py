@@ -3,18 +3,29 @@ from django.views import generic
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models
-from admin_panel import forms
-from admin_panel import utils
+from admin_panel import models, forms, utils
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class InvoiceList(generic.ListView):
+class InvoiceList(generic.View):
     model = models.Invoice
-    context_object_name = 'invoice_list'
     template_name = "admin_panel/invoice/index.html"
 
+    def get(self, request):
+        queryset = self.model.get_invoice_list()
+        statistic = utils.get_short_statistic()
+        context = {
+            'invoice_list': queryset,
+        }
+        context.update(statistic)
+        return render(
+            request,
+            self.template_name,
+            context,
+        )
 
+
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class InvoiceCreate(generic.View):
     model = models.Invoice
     form_class = forms.InvoiceForm
@@ -45,14 +56,18 @@ class InvoiceCreate(generic.View):
             return redirect('admin_panel:invoice_list')
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class InvoiceUpdate(generic.View):
     model = models.Invoice
     form_class = forms.InvoiceForm
 
+    def get_object(self, pk):
+        return self.model.get_invoice_by_pk(pk)
+
     def get(self, request, pk):
-        invoice = self.model.get_invoice_by_pk(pk)
+        invoice = self.get_object(pk)
         form = self.form_class(
-                instance=invoice,
+            instance=invoice,
         )
         return render(
             request,
@@ -62,15 +77,25 @@ class InvoiceUpdate(generic.View):
             }
         )
 
-    def post(self, request):
+    def post(self, request, pk):
+        invoice = self.get_object(pk)
         form = self.form_class(
             request.POST,
+            instance=invoice,
         )
         if form.is_valid():
             form.save()
             return redirect('admin_panel:invoice_list')
+        return render(
+            request,
+            'admin_panel/invoice/update.html',
+            {
+                'form': form,
+            }
+        )
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class InvoiceDetail(generic.View):
     model = models.Invoice
     form_class = forms.InvoiceForm
@@ -86,6 +111,7 @@ class InvoiceDetail(generic.View):
         )
 
 
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class InvoiceDelete(generic.View):
     model = models.Invoice
     success_url = 'admin_panel:invoice_list'
