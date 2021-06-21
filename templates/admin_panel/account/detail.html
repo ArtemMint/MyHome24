@@ -102,7 +102,19 @@
                         </tr>
                         <tr>
                             <td>Остаток</td>
-                            <td>{{ account_data.balance|truncatechars:40 }}</td>
+                            <td>
+                                {% if account_data.get_account_balance > 0 %}
+                                <span style="color: #00a65a">
+                                    {{ account_data.get_account_balance|truncatechars:50 }}
+                                </span>
+                            {% elif account_data.get_account_balance < 0 %}
+                                <span style="color: #dd4b39">
+                                    {{ account_data.get_account_balance|truncatechars:50 }}
+                                </span>
+                            {% else %}
+                                {{ account_data.get_account_balance|truncatechars:50 }}
+                            {% endif %}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
