@@ -4,36 +4,54 @@ View of account transitions of users
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.views import generic
+from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models
-from admin_panel import forms
+from admin_panel import models, forms, utils
 
 
-@login_required(login_url='/admin/site/login')
-def account_transactions_list(request):
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class AccountTransactionsList(generic.View):
     """
     AccountTransaction list of all users
     """
-    filter = forms.AccountTransactionFilter(
-        request.GET,
-        queryset=models.AccountTransaction.get_queryset_list().order_by('-pk')
-    )
-    return render(
-        request,
-        'admin_panel/account_transaction/index.html',
-        {
+    model = models.AccountTransaction
+    form_class = forms.AccountTransactionFilter
+    template_name = 'admin_panel/account_transaction/index.html'
+
+    def get(self, request):
+        filter = self.form_class(
+            request.GET,
+            queryset=models.AccountTransaction.get_queryset_list()
+        )
+        statistic = utils.get_short_statistic()
+        context = {
             'filter': filter,
             'account_transactions_list': models.AccountTransaction.get_queryset_list(),
             'total_income': models.AccountTransaction.get_total_income(),
             'total_expenditure': models.AccountTransaction.get_total_expenditure(),
         }
-    )
+        context.update(statistic)
+        return render(
+            request,
+            self.template_name,
+            context,
+        )
+
+
+# class AccountTransactionFiltered(generic.View):
+#     models
 
 
 @login_required(login_url='/admin/site/login')
 def account_transactions_create_in(request):
-    account_transaction_form = forms.AccountTransactionIncomeForm()
+    account_transaction_form = forms.AccountTransactionIncomeForm(
+        initial={
+            'number': utils.generate_number(models.AccountTransaction),
+            'created_date': utils.get_current_date(),
+        }
+    )
     if request.POST:
         account_transaction_form = forms.AccountTransactionIncomeForm(
             request.POST,
@@ -56,7 +74,12 @@ def account_transactions_create_in(request):
 
 
 def account_transactions_create_out(request):
-    account_transaction_form = forms.AccountTransactionExpenditureForm()
+    account_transaction_form = forms.AccountTransactionExpenditureForm(
+        initial={
+            'number': utils.generate_number(models.AccountTransaction),
+            'created_date': utils.get_current_date(),
+        }
+    )
     if request.POST:
         account_transaction_form = forms.AccountTransactionExpenditureForm(
             request.POST,

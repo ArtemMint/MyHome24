@@ -39,7 +39,7 @@ urlpatterns = [
     # Cash register
     path(
         'account-transaction/index/',
-        views.account_transactions_list,
+        views.AccountTransactionsList.as_view(),
         name='account_transactions_list'
     ),
     path(
@@ -74,11 +74,31 @@ urlpatterns = [
         views.InvoiceList.as_view(),
         name='invoice_list'
     ),
+    path(
+        'invoice/create/',
+        views.InvoiceCreate.as_view(),
+        name='invoice_create'
+    ),
+    path(
+        'invoice/update/<int:pk>',
+        views.InvoiceUpdate.as_view(),
+        name='invoice_update'
+    ),
+    path(
+        'invoice/detail/<int:pk>',
+        views.InvoiceDetail.as_view(),
+        name='invoice_detail'
+    ),
+    path(
+        'invoice/delete/<int:pk>',
+        views.InvoiceDelete.as_view(),
+        name='invoice_delete'
+    ),
 
     # Account
     path(
         'account/index/',
-        views.accounts_list_view,
+        views.AccountsListView.as_view(),
         name='accounts_list'
     ),
     path(
@@ -257,6 +277,11 @@ urlpatterns = [
         'counter-data/detail/<int:pk>/',
         views.CounterDetailView.as_view(),
         name='counter_detail'
+    ),
+    path(
+        'counter-data/delete/<int:pk>/',
+        views.CounterDeleteView.as_view(),
+        name='counter_delete'
     ),
 
     # Services

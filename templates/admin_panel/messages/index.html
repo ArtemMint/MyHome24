@@ -34,11 +34,11 @@
 
     {% if messages_list %}
         <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-            <table class="table table-bordered table-hover table-striped linkedRow">
+            <table class="table table-sm table-hover table-striped linkedRow">
                 <thead>
                     <div class="mailbox-controls">
                         <button type="button" class="btn btn-default btn-sm checkbox-toggle">
-                            <i class="far fa-square"></i>
+                            <input type="checkbox" id="main_checkbox">
                         </button>
                         <button type="button" class="btn btn-default btn-sm delete-many">
                             <i class="fas fa-trash-alt"></i>
@@ -55,17 +55,25 @@
                 <tbody>
                     {% for field in messages_list %}
                         <tr>
-                            <td><input type="checkbox"  name="checks" value="{{field.id}}">
-                            <td onclick="location.href='{% url 'admin_panel:message_detail' field.pk %}'">{{ field.recipient }}</td>
-                            <td onclick="location.href='{% url 'admin_panel:message_detail' field.pk %}'">{{ field.get_short_message|striptags|truncatechars:50 }}</td>
-                            <td onclick="location.href='{% url 'admin_panel:message_detail' field.pk %}'" style="min-width: 180px">{{ field.created_date|date:"d.m.Y - H:i" }}</td>
+                            <td>
+                                <input type="checkbox" class="delete_checkbox">
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:message_detail' field.pk %}'">
+                                {{ field.recipient }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:message_detail' field.pk %}'">
+                                {{ field.get_short_message|striptags|truncatechars:50 }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:message_detail' field.pk %}'" style="min-width: 180px">
+                                {{ field.created_date|date:"d.m.Y - H:i" }}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <div class="mailbox-controls">
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle">
-                    <i class="far fa-square"></i>
+                    <input type="checkbox" id="main_checkbox">
                 </button>
                 <button type="button" class="btn btn-default btn-sm delete-many">
                     <i class="fas fa-trash-alt"></i>
@@ -79,3 +87,19 @@
 
 
 {% endblock content %}
+
+{% block scripts %}
+<script>
+    $('#main_checkbox').on('change', function(){
+        if($(this).prop('checked')){
+            $('.delete_checkbox').each(function(){
+                $(this).prop('checked', true);
+            });
+        }else{
+            $('.delete_checkbox').each(function(){
+                $(this).prop('checked', false);
+            });
+        }
+    })
+</script>
+{% endblock %}

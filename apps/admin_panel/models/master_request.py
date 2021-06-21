@@ -31,7 +31,7 @@ class MasterRequest(models.Model):
         max_length=1500,
         verbose_name='Описание',
         blank=True,
-        default='',
+        null=True,
     )
     flat = models.ForeignKey(
         'admin_panel.Flat',

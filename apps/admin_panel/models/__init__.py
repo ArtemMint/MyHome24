@@ -41,3 +41,6 @@ from admin_panel.models.message import Message
 
 # CounterData
 from admin_panel.models.counter_data import CounterData
+
+# Invoice
+from admin_panel.models.invoice import *

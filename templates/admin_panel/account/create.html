@@ -54,13 +54,25 @@
                 <p>
                     <b>Владелец:</b>
                     <span id="user-fullname">
-                        <a href="/admin/user/1">get user by filter</a>
+                        {% if account_form.instance.flat.owner %}
+                            <a href="{% url 'admin_panel:user_detail' account_form.instance.flat.owner.pk %}">
+                                {{ account_form.instance.flat.owner.full_name }}
+                            </a>
+                        {% else %}
+                            (не задано)
+                        {% endif %}
                     </span>
                 </p>
                 <p>
                     <b>Телефон:</b>
                     <span id="user-fullname">
-                        <a href="/admin/user/1">get phone by filter</a>
+                        {% if account_form.instance.flat.owner %}
+                            <a href="tel:{{ account_form.instance.flat.owner.phone }}">
+                            {{ account_form.instance.flat.owner.phone }}
+                        </a>
+                        {% else %}
+                            (не задано)
+                        {% endif %}
                     </span>
                 </p>
                 <div class="col-xs-12 text-right">

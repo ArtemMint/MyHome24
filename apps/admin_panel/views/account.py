@@ -5,25 +5,37 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models
-from admin_panel import forms
+from admin_panel import models, forms, utils
 
 
-@login_required(login_url='/admin/site/login')
-def accounts_list_view(request):
-    return render(
-        request,
-        "admin_panel/account/index.html",
-        {
-            'accounts_list': models.Account.get_accounts_list(),
-            'accounts_count': models.Account.get_accounts_count(),
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class AccountsListView(generic.View):
+    model = models.Account
+    template_name = 'admin_panel/account/index.html'
+
+    def get(self, request):
+        accounts_list = self.model.get_accounts_list()
+        accounts_count = self.model.get_accounts_count()
+        statistic = utils.get_short_statistic()
+        context = {
+            'accounts_list': accounts_list,
+            'accounts_count': accounts_count,
         }
-    )
+        context.update(statistic)
+        return render(
+            request,
+            self.template_name,
+            context,
+        )
 
 
 @login_required(login_url='/admin/site/login')
 def account_create_view(request):
-    account_form = forms.AccountForm()
+    account_form = forms.AccountForm(
+        initial={
+            'number': utils.generate_number(models.AccountTransaction),
+        }
+    )
     if request.POST:
         account_form = forms.AccountForm(
             request.POST,

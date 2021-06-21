@@ -115,7 +115,9 @@
         </tr>
     </table>
     <div class="col">
-        <a href="#">Посмотреть показания счётчиков</a>
+        <a href="{% url 'admin_panel:counter_list' flat_data.pk %}">
+            Посмотреть показания счётчиков
+        </a>
     </div>
     <div class="col">
         <a href="#">Посмотреть приходы</a>

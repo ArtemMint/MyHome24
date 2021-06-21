@@ -43,3 +43,7 @@ from admin_panel.forms.message import *
 
 # Counter data
 from admin_panel.forms.counter_data import CounterDataForm
+
+# Invoice
+from admin_panel.forms.invoice import *
+

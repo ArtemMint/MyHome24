@@ -1,5 +1,209 @@
 {% extends 'admin_panel/base/base.html' %}
+{% load static %}
+{% block title %} <h1 class="m-0">Квитанции на оплату</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item active">Квитанции на оплату</li>
+    </ul>
+{% endblock %}
+
+{% block header %}
+    <div class="row" style="margin: 5px 0 0 10px">
+        <div class="col-xs-12 col-lg-9">
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3>{{ transaction_balance }} грн</h3>
+                            <p>Состояние кассы</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="small-box bg-blue overflow-hidden">
+                        <div class="inner">
+                            <h3>{{ account_balance }} грн</h3>
+                            <p>Баланс по счетам</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="small-box bg-red overflow-hidden">
+                        <div class="inner">
+                            <h3>{{ account_indebtedness }} грн</h3>
+                            <p>Задолженность по счетам</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-lg-3">
+            <div class="dropdown pull-right">
+                <div class="dropdown pull-right margin-bottom" style="float: right">
+                    <button class="dropdown-toggle btn btn-success" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Выберите действие</button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'admin_panel:invoice_create' %}">Создать общую квитанцию</a></li>
+                        <li><a href="">Удалить</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
-    <h1 class="text-center">Invoice</h1>
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+        <div class="box-tools">
+            <a href="{% url 'admin_panel:invoice_list' %}" class="btn btn-default btn-sm">
+                <span class="hidden-xs">Очистить</span>
+            </a>
+        </div>
+    </div>
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    {% if invoice_list %}
+        <table class="table table-sm table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 40px; min-width: 40px">
+                        <input type="checkbox" id="main_checkbox">
+                    </th>
+                    <th style="width: 125px; min-width: 125px">№ квитанции</th>
+                    <th style="width: 160px; min-width: 100px">Статус</th>
+                    <th style="width: 125px; min-width: 125px">Дата</th>
+                    <th style="width: 135px; min-width: 135px">Месяц</th>
+                    <th>Квартира</th>
+                    <th style="min-width: 200px">Владелец</th>
+                    <th style="width: 120px; min-width: 120px">Проведена</th>
+                    <th style="width: 100px; min-width: 100px">Сума (грн)</th>
+                    <th style="width: 114px; min-width: 114px">&nbsp;</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th><input class="form-control"></th>
+                    <th><select class="form-control"></select></th>
+                    <th><input class="form-control"></th>
+                    <th><input class="form-control"></th>
+                    <th><input class="form-control"></th>
+                    <th><select class="form-control"></select></th>
+                    <th><select class="form-control"></select></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for field in invoice_list %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="delete_checkbox">
+                        </td>
+                        <td onclick="location.href='{% url 'admin_panel:invoice_detail' field.pk %}'">
+                            {{ field.number }}
+                        </td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:invoice_detail' field.pk %}'">
+                            {% if field.status == 'Оплачена' %}
+                                <small class="label label-success">{{ field.status }}</small>
+                            {% elif field.status == 'Неоплачена' %}
+                                <small class="label label-danger">{{ field.status }}</small>
+                            {% else %}
+                                <small class="label label-default">{{ field.status }}</small>
+                            {% endif %}
+                        </td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:invoice_detail' field.pk %}'">
+                            {% if field.created_date %}
+                                    {{ field.created_date|date:'d.m.Y'|truncatechars:40 }}
+                            {% else %}
+                                (не задано)
+                            {% endif %}
+                        </td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:invoice_detail' field.pk %}'">
+                            {% if field.house %}
+                                    {{ field.created_date|date:'M Y'|truncatechars:40 }}
+                            {% else %}
+                                (не задано)
+                            {% endif %}
+                        </td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:invoice_detail' field.pk %}'">
+                            {% if field.flat %}
+                                <a href="{% url 'admin_panel:house_detail' field.house.id%}">
+                                    {{ field.flat|truncatechars:40 }}, {{ field.flat.house.name }}
+                                </a>
+                            {% else %}
+                                (не задано)
+                            {% endif %}
+                        </td>
+                        <td class="text-center" onclick="location.href='{% url 'admin_panel:invoice_detail' field.pk %}'">
+                            {% if field.flat.owner %}
+                                    <a href="{% url 'admin_panel:user_detail' field.flat.owner.pk%}">
+                                        {{ field.flat.owner.full_name|truncatechars:40 }}
+                                    </a>
+                                {% else %}
+                                    (не задано)
+                                {% endif %}
+                        </td>
+                        <td onclick="location.href='{% url 'admin_panel:invoice_detail' field.pk %}'">
+                            {% if field.confirm %}
+                                Проведенa
+                            {% else %}
+                                Не проведенa
+                            {% endif %}
+                        </td>
+                        <td>
+                            total
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:invoice_update' field.pk %}" title="Копировать">
+                                    <i class="far fa-copy"></i>
+                                </a>
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:invoice_update' field.pk %}" title="Редактировать">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:invoice_delete' field.pk %}" title="Удалить">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2 class="text-center">Список квитанций пуст!</h2>
+    {% endif %}
+    </form>
 {% endblock content %}
+
+{% block scripts %}
+<script>
+    $('#main_checkbox').on('change', function(){
+        if($(this).prop('checked')){
+            $('.delete_checkbox').each(function(){
+                $(this).prop('checked', true);
+            });
+        }else{
+            $('.delete_checkbox').each(function(){
+                $(this).prop('checked', false);
+            });
+        }
+    })
+</script>
+{% endblock %}

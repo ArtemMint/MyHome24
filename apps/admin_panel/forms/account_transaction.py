@@ -51,10 +51,10 @@ class AccountTransactionForm(forms.ModelForm):
             ),
             'created_date': forms.DateInput(
                 format=(
-                    '%d-%m-%Y'
+                    '%m/%d/%Y'
                 ),
                 attrs={
-                    'type': 'date',
+                    # 'type': 'date',
                     'class': 'form-control datepicker',
                     'value': datetime.datetime.now().strftime("%d/%m/%Y"),
                 },

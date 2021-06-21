@@ -19,11 +19,11 @@ class Account(models.Model):
         verbose_name='Статус',
         blank=False,
     )
-    balance = models.FloatField(
-        max_length=50,
-        verbose_name='Остаток',
-        default=0,
-    )
+    # balance = models.FloatField(
+    #     max_length=50,
+    #     verbose_name='Остаток',
+    #     default=0,
+    # )
     house = models.ForeignKey(
         'admin_panel.House',
         on_delete=models.CASCADE,
@@ -80,13 +80,15 @@ class Account(models.Model):
             status__exact='Активен',
         )
 
-    def get_account_balance(self):
+    def balance(self):
         if not self.account_transactions:
             return 0.00
         incomes = self.account_transactions.filter(
-            account__status='Активен'
+            account__status='Активен',
+            confirm=True,
         ).aggregate(models.Sum('total'))['total__sum'] or 0.00
         outcomes = self.account_transactions.filter(
-            account__status='Неактивен'
+            account__status='Неактивен',
+            confirm=True,
         ).aggregate(models.Sum('total'))['total__sum'] or 0.00
         return round((incomes - outcomes), 2)

@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import generic
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -74,6 +74,11 @@ class CounterDetailView(generic.DetailView):
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class CounterDeleteView(generic.DeleteView):
+class CounterDeleteView(generic.View):
     model = models.CounterData
-    success_url = ''
+    success_url = 'admin_panel:counters'
+
+    def get(self, request, pk):
+        counter = self.model.get_counter_data_by_pk(pk)
+        counter.delete()
+        return redirect(self.success_url)

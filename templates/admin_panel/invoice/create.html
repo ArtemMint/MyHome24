@@ -1,0 +1,123 @@
+{% extends 'admin_panel/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Новая квитанция</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:statistics' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_panel:invoice_list' %}">Квитанции</a></li>
+        <li class="breadcrumb-item active">Новая квитанция</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        {{ account_transaction_form.id }}
+        <div class="col-lg-6" style="padding-left: 0px;">
+            <div class="page-header-spec">
+                <div class="form-group field-account-uid required">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            №
+                        </div>
+                        {{ form.number }}
+                    </div>
+                </div>
+                <span class="label-mid">от</span>
+                <div class="form-group field-accounttransaction-uid_date required">
+                    <div id="accounttransaction-uid_date-kvdate" class="input-group date">
+                        <span class="input-group-addon kv-date-calendar" title="Выбрать дату">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                        {{ form.created_date }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                {{ form.house.label_tag }}
+                <p>{{ form.house }}</p>
+                {{ form.section.label_tag }}
+                <p>{{ form.section }}</p>
+                {{ form.flat.label_tag }}
+                <p>{{ form.flat }}</p>
+            </div>
+            <div class="col-lg-6">
+                {{ form.confirm }}
+                {{ form.confirm.label_tag }}
+                {{ form.statu.label_tag }}
+                <p>{{ form.status }}</p>
+                {{ form.tariff.label_tag }}
+                <p>{{ form.tariff }}</p>
+                <br>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div id="accounttransaction-uid_date-kvdate" class="input-group date">
+                            <span class="input-group-addon kv-date-calendar" title="Выбрать дату">
+                                <i class="fas fa-calendar-alt"></i>
+                            </span>
+                            {{ form.start_date }}
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="accounttransaction-uid_date-kvdate" class="input-group date">
+                            <span class="input-group-addon kv-date-calendar" title="Выбрать дату">
+                                <i class="fas fa-calendar-alt"></i>
+                            </span>
+                            {{ form.end_date }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                {{ form.account.label_tag }}
+                <p>{{ form.account }}</p>
+            </div>
+
+        </div>
+        <p>
+            <b>Владелец:</b>
+            <span id="user-fullname">
+                {% if account_form.instance.flat.owner %}
+                    <a href="{% url 'admin_panel:user_detail' account_form.instance.flat.owner.pk %}">
+                        {{ account_form.instance.flat.owner.full_name }}
+                    </a>
+                {% else %}
+                    (не задано)
+                {% endif %}
+            </span>
+        </p>
+        <p>
+            <b>Телефон:</b>
+            <span id="user-fullname">
+                {% if account_form.instance.flat.owner %}
+                    <a href="tel:{{ account_form.instance.flat.owner.phone }}">
+                    {{ account_form.instance.flat.owner.phone }}
+                </a>
+                {% else %}
+                    (не задано)
+                {% endif %}
+            </span>
+        </p>
+        <div class="col-lg-12 text-right">
+                    <div class="form-group">
+                        <a href="{% url 'admin_panel:accounts_list' %}" class="btn btn-default">Отменить</a>
+                        <button type="submit" class="btn btn-success">Сохранить</button>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    {{ account_transaction_form.comment.label_tag }}
+                    <p>{{ account_transaction_form.comment }}</p>
+                </div>
+    </form>
+{% endblock content %}
