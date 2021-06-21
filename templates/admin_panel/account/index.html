@@ -16,7 +16,7 @@
                 <div class="col-xs-12 col-md-4">
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3>number грн</h3>
+                            <h3>{{ transaction_balance }} грн</h3>
                             <p>Состояние кассы</p>
                         </div>
                         <div class="icon">
@@ -27,7 +27,7 @@
                 <div class="col-xs-12 col-md-4">
                     <div class="small-box bg-blue overflow-hidden">
                         <div class="inner">
-                            <h3>number грн</h3>
+                            <h3>{{ account_balance }} грн</h3>
                             <p>Баланс по счетам</p>
                         </div>
                         <div class="icon">
@@ -38,7 +38,7 @@
                 <div class="col-xs-12 col-md-4">
                     <div class="small-box bg-red overflow-hidden">
                         <div class="inner">
-                            <h3>number грн</h3>
+                            <h3>{{ account_indebtedness }} грн</h3>
                             <p>Задолженность по счетам</p>
                         </div>
                         <div class="icon">
@@ -144,16 +144,16 @@
                                 {% endif %}
                         </td>
                         <td class="text-center" onclick="location.href='{% url 'admin_panel:account_detail' field.pk %}'">
-                            {% if field.get_account_balance > 0 %}
+                            {% if field.balance > 0 %}
                                 <span style="color: #00a65a">
-                                    {{ field.get_account_balance|truncatechars:50 }}
+                                    {{ field.balance|truncatechars:50 }}
                                 </span>
-                            {% elif field.get_account_balance < 0 %}
+                            {% elif field.balance < 0 %}
                                 <span style="color: #dd4b39">
-                                    {{ field.get_account_balance|truncatechars:50 }}
+                                    {{ field.balance|truncatechars:50 }}
                                 </span>
                             {% else %}
-                                {{ field.get_account_balance|truncatechars:50 }}
+                                {{ field.balance|truncatechars:50 }}
                             {% endif %}
 
                         </td>
