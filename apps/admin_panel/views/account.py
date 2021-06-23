@@ -11,14 +11,19 @@ from admin_panel import models, forms, utils
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class AccountsListView(generic.View):
     model = models.Account
+    form_class = forms.AccountFilter
     template_name = 'admin_panel/account/index.html'
 
     def get(self, request):
         accounts_list = self.model.get_accounts_list()
         accounts_count = self.model.get_accounts_count()
+        f = self.form_class(
+            request.GET,
+            queryset=accounts_list,
+        )
         statistic = utils.get_short_statistic()
         context = {
-            'accounts_list': accounts_list,
+            'filter': f,
             'accounts_count': accounts_count,
         }
         context.update(statistic)

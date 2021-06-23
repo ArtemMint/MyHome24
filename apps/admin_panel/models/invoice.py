@@ -44,6 +44,7 @@ class Invoice(models.Model):
     )
     status = models.CharField(
         max_length=50,
+        verbose_name='Статус',
         choices=STATUS,
         default=STATUS[0][0],
     )
