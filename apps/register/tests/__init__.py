@@ -1,0 +1,1 @@
+from register.tests.test_model_user import *

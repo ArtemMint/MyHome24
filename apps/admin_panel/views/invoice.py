@@ -54,6 +54,13 @@ class InvoiceCreate(generic.View):
         if form.is_valid():
             form.save()
             return redirect('admin_panel:invoice_list')
+        return render(
+            request,
+            'admin_panel/invoice/create.html',
+            {
+                'form': form,
+            }
+        )
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')

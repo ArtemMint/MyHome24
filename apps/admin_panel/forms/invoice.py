@@ -65,7 +65,7 @@ class InvoiceForm(forms.ModelForm):
                     'class': 'form-control',
                 }
             ),
-            'account': forms.TextInput(
+            'account': forms.Select(
                 attrs={
                     'class': 'form-control',
                 }
