@@ -21,14 +21,13 @@ class AccountTransactionsList(generic.View):
     template_name = 'admin_panel/account_transaction/index.html'
 
     def get(self, request):
-        filter = self.form_class(
+        f = self.form_class(
             request.GET,
-            queryset=models.AccountTransaction.get_queryset_list()
+            queryset=self.model.get_queryset_list()
         )
         statistic = utils.get_short_statistic()
         context = {
-            'filter': filter,
-            'account_transactions_list': models.AccountTransaction.get_queryset_list(),
+            'filter': f,
             'total_income': models.AccountTransaction.get_total_income(),
             'total_expenditure': models.AccountTransaction.get_total_expenditure(),
         }
