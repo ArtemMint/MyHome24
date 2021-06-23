@@ -1,6 +1,5 @@
 from django import forms
 import django_filters
-from django_filters import DateFilter, ModelChoiceFilter
 
 from admin_panel import models
 from register import models as register_models
@@ -54,26 +53,72 @@ class AccountForm(forms.ModelForm):
         }
 
 
-# class AccountFilter(django_filters.FilterSet):
-#     owner = ModelChoiceFilter(
-#         queryset=register_models.User.get_active_users()
-#     )
-#     created_date = DateFilter(
-#         widget=forms.DateInput(
-#             attrs={
-#                 'type': 'date',
-#                 'class': 'datepicker',
-#             }
-#         )
-#     )
-#
-#     class Meta:
-#         model = models.AccountTransaction
-#         fields = (
-#             'number',
-#             'status',
-#             'house',
-#             'section',
-#             'flat',
-#             'created_date',
-#         )
+class AccountFilter(django_filters.FilterSet):
+    STATUS = [
+        ('Активен', 'Активен'),
+        ('Неактивен', 'Неактивен')
+    ]
+
+    number = django_filters.Filter(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    status = django_filters.ChoiceFilter(
+        choices=STATUS,
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    flat = django_filters.ModelChoiceFilter(
+        queryset=models.Flat.get_flats_list(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    house = django_filters.ModelChoiceFilter(
+        queryset=models.House.get_houses_list(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    section = django_filters.ModelChoiceFilter(
+        queryset=models.HouseSection.get_sections_list(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    # owner = django_filters.ModelChoiceFilter(
+    #     queryset=register_models.User.get_active_users(),
+    #     widget=forms.Select(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'onchange': 'form.submit();',
+    #         }
+    #     )
+    # )
+
+    class Meta:
+        model = models.Account
+        fields = (
+            'number',
+            'status',
+            'house',
+            'section',
+            'flat',
+        )
