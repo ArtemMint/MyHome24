@@ -79,8 +79,7 @@
             </a>
         </div>
     </div>
-    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    {% if account_transactions_list %}
+    {% if filter %}
         <table class="table table-sm table-striped table-hover table-bordered linkedRow">
             <thead>
                 <tr>
@@ -91,22 +90,22 @@
                         </a>
                     </th>
                     <th style="width: 150px; min-width: 150px">Статус</th>
-                    <th style="min-width: 200px">Тип платежа</th>
-                    <th style="width: 160px; min-width: 65px">Владелец</th>
-                    <th style="min-width: 200px">Лицевой счет</th>
+                    <th style="width: 170px; min-width: 170px">Тип платежа</th>
+                    <th style="width: 200px; min-width: 200px">Владелец</th>
+                    <th style="width: 180px; min-width: 180px">Лицевой счет</th>
                     <th style="width: 150px; min-width: 150px">Приход/расход</th>
                     <th style="width: 120px; min-width: 120px">Сумма(грн)</th>
                     <th style="width: 80px; min-width: 80px">&nbsp;</th>
                 </tr>
-                <tr class="filters">
-                    <form method="GET">
+                <tr>
+                    <form method="get">
                         <th>{{ filter.form.number }}</th>
                         <th>{{ filter.form.created_date }}</th>
                         <th>{{ filter.form.confirm }}</th>
                         <th>{{ filter.form.transaction }}</th>
                         <th>{{ filter.form.owner }}</th>
                         <th>{{ filter.form.account }}</th>
-                        <th></th>
+                        <th>{{ filter.form.type }}</th>
                         <th></th>
                         <th></th>
                     </form>
@@ -114,56 +113,62 @@
             </thead>
             <tbody>
                 {% if filter.qs %}
-                {% for field in filter.qs %}
+                    {% for field in filter.qs %}
+                        <tr>
+                            <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
+                                {{ field.number }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
+                                {{ field.created_date|date:'m/d/Y' }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
+                                {% if field.confirm %}
+                                    Проведен
+                                {% else %}
+                                    Не проведен
+                                {% endif %}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
+                                {{ field.transaction|truncatechars:50 }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
+                                {{ field.owner.full_name|truncatechars:50 }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
+                                {{ field.account|truncatechars:50 }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
+                                {% if field.type == 'Приход' %}
+                                    <span style="color: #00a65a">{{ field.type|truncatechars:50 }}</span>
+                                {% else %}
+                                    <span style="color: #dd4b39">{{ field.type|truncatechars:50 }}</span>
+                                {% endif %}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
+                                {% if field.type == 'Приход' %}
+                                    <span style="color: #00a65a">{{ field.total|truncatechars:50 }}</span>
+                                {% else %}
+                                    <span style="color: #dd4b39">{{ field.total|truncatechars:50 }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_panel:account_transaction_update' field.pk %}" title="Редактировать">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_panel:account_transaction_delete' field.pk %}" title="Удалить">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
                     <tr>
-                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
-                            {{ field.number }}
-                        </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
-                            {{ field.created_date.date }}
-                        </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
-                            {% if field.confirm %}
-                                Проведен
-                            {% else %}
-                                Не проведен
-                            {% endif %}
-                        </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
-                            {{ field.transaction|truncatechars:50 }}
-                        </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
-                            {{ field.owner.full_name|truncatechars:50 }}
-                        </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
-                            {{ field.account|truncatechars:50 }}
-                        </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
-                            {% if field.type == 'Приход' %}
-                                <span style="color: #00a65a">{{ field.type|truncatechars:50 }}</span>
-                            {% else %}
-                                <span style="color: #dd4b39">{{ field.type|truncatechars:50 }}</span>
-                            {% endif %}
-                        </td>
-                        <td onclick="location.href='{% url 'admin_panel:account_transaction_detail' field.pk %}'">
-                            {% if field.type == 'Приход' %}
-                                <span style="color: #00a65a">{{ field.total|truncatechars:50 }}</span>
-                            {% else %}
-                                <span style="color: #dd4b39">{{ field.total|truncatechars:50 }}</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <div class="btn-group ">
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:account_transaction_update' field.pk %}" title="Редактировать">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:account_transaction_delete' field.pk %}" title="Удалить">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </div>
+                        <td colspan="9">
+                            <h2 class="text-center">Ничего не найдено.</h2>
                         </td>
                     </tr>
-                {% endfor %}
                 {% endif %}
             </tbody>
         </table>
@@ -174,5 +179,4 @@
     {% else %}
         <h2 class="text-center">Список ведомостей пуст!</h2>
     {% endif %}
-    </form>
 {% endblock content %}
