@@ -1,13 +1,14 @@
 from django import forms
+import django_filters
 
 from admin_panel import models
-from register import models as reg_models
+from register import models as register_models
 
 
 class FlatForm(forms.ModelForm):
     prefix = 'house_flat'
     owner = forms.ModelChoiceField(
-        queryset=reg_models.User.users.get_queryset(),
+        queryset=register_models.User.users.get_queryset(),
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
@@ -89,3 +90,60 @@ class FlatUpdateForm(FlatForm):
         label='Лицевой счет',
         required=False,
     )
+
+
+class FlatFilter(django_filters.FilterSet):
+    number = django_filters.Filter(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    house = django_filters.ModelChoiceFilter(
+        queryset=models.House.get_houses_list(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    section = django_filters.ModelChoiceFilter(
+        queryset=models.HouseSection.get_sections_list(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    floor = django_filters.ModelChoiceFilter(
+        queryset=models.HouseFloor.get_floor_list(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    owner = django_filters.ModelChoiceFilter(
+        queryset=register_models.User.get_active_users(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+
+    class Meta:
+        model = models.Flat
+        fields = (
+            'number',
+            'house',
+            'section',
+            'floor',
+            'owner',
+        )

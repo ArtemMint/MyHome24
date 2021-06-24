@@ -5,20 +5,30 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models
-from admin_panel import forms
+from admin_panel import models, forms
 
 
-@login_required(login_url='/admin/site/login')
-def houses_list_view(request):
-    return render(
-        request,
-        'admin_panel/houses/index.html',
-        {
-            'houses_list': models.House.get_houses_list(),
-            'houses_count': models.House.get_houses_count(),
-        }
-    )
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class HouseListView(generic.View):
+    model = models.House
+    form_class = forms.HouseFilter
+    template_name = 'admin_panel/houses/index.html'
+
+    def get(self, request):
+        house_list = self.model.get_houses_list()
+        house_number = self.model.get_houses_count()
+        f = self.form_class(
+            request.GET,
+            queryset=house_list,
+        )
+        return render(
+            request,
+            self.template_name,
+            {
+                'filter': f,
+                'houses_count': house_number,
+            }
+        )
 
 
 @login_required(login_url='/admin/site/login')

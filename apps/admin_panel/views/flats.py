@@ -9,16 +9,27 @@ from admin_panel import models
 from admin_panel import forms
 
 
-@login_required(login_url='/admin/site/login')
-def flats_list_view(request):
-    return render(
-        request,
-        'admin_panel/flats/index.html',
-        {
-            'flats_list': models.Flat.get_flats_list(),
-            'flats_count': models.Flat.get_flats_count(),
-        }
-    )
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class FlatsListView(generic.View):
+    model = models.Flat
+    form_class = forms.FlatFilter
+    template_name = 'admin_panel/flats/index.html'
+
+    def get(self, request):
+        flat_list = self.model.get_flats_list()
+        flat_number = self.model.get_flats_count()
+        f = self.form_class(
+            request.GET,
+            queryset=flat_list,
+        )
+        return render(
+            request,
+            self.template_name,
+            {
+                'filter': f,
+                'flats_count': flat_number,
+            }
+        )
 
 
 @login_required(login_url='/admin/site/login')

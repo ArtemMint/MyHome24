@@ -125,7 +125,7 @@ urlpatterns = [
     # Flats
     path(
         'flat/index/',
-        views.flats_list_view,
+        views.FlatsListView.as_view(),
         name='flats_list'
     ),
     path(
@@ -179,7 +179,7 @@ urlpatterns = [
     # Houses
     path(
         'house/index/',
-        views.houses_list_view,
+        views.HouseListView.as_view(),
         name='houses_list'
     ),
     path(

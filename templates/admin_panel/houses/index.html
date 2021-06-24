@@ -33,8 +33,8 @@
             </a>
         </div>
     </div>
-    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    {% if houses_list %}
+
+    {% if filter %}
         <table class="table table-sm table-striped table-hover table-bordered">
             <thead>
                 <tr>
@@ -43,31 +43,47 @@
                     <th scope="col">Адрес</th>
                     <th style="width: 80px; min-width: 80px">&nbsp;</th>
                 </tr>
-            <tr>
-                <th></th>
-                <th><input class="form-control"></th>
-                <th><input class="form-control"></th>
-                <th>&nbsp;</th>
-            </tr>
+                <tr>
+                    <form method="get">
+                        <th></th>
+                        <th>{{ filter.form.name }}</th>
+                        <th>{{ filter.form.address }}</th>
+                        <th>&nbsp;</th>
+                    </form>
+                </tr>
             </thead>
             <tbody>
-                {% for field in houses_list %}
+                {% if filter.qs %}
+                    {% for field in filter.qs %}
+                        <tr>
+                            <td onclick="location.href='{% url 'admin_panel:house_detail' field.id %}'">
+                                {{ forloop.counter }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">
+                                {{ field.name }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">
+                                {{ field.address }}
+                            </td>
+                            <td>
+                                <div class="btn-group ">
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_panel:house_update' field.pk %}" title="Редактировать">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_panel:house_delete' field.pk %}" title="Удалить">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
                     <tr>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.id %}'">{{ forloop.counter }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.name|truncatechars:50 }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:house_detail' field.pk %}'">{{ field.address|truncatechars:50 }}</td>
-                        <td>
-                            <div class="btn-group ">
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:house_update' field.pk %}" title="Редактировать">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:house_delete' field.pk %}" title="Удалить">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </div>
+                        <td colspan="9">
+                            <h2 class="text-center">Ничего не найдено.</h2>
                         </td>
                     </tr>
-                {% endfor %}
+                {% endif %}
             </tbody>
         </table>
         <div class="box-footer">
@@ -76,6 +92,5 @@
     {% else %}
         <h2 class="text-center">Список домов пуст!</h2>
     {% endif %}
-    </form>
 
 {% endblock content %}
