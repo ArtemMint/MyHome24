@@ -18,109 +18,125 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" style="top: -8px">
                 <li class="nav-item">
-                    
                     <!--Link to current page-->
-                    <a href="{% url 'admin_panel:statistics' %}" class="nav-link">
-                        
+                    <a href="{% url 'admin_panel:statistics' %}" class="nav-link {% if request.path == '/admin/' %}active{% endif %}">
                         <!--Icon of page-->
                         <i class="fas fa-chart-line"></i>
-                        
                         <!--Name of page-->
                         <p>Статистика</p>
-
                     </a>
-
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'admin_panel:account_transactions_list' %}" class="nav-link">
+                    <a href="{% url 'admin_panel:account_transactions_list' %}" class="nav-link {% if '/admin/account-transaction/' in request.path %}active{% endif %}">
                         <i class="fas fa-dollar-sign"></i>
                         <p>Каса</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'admin_panel:invoice_list' %}" class="nav-link">
+                    <a href="{% url 'admin_panel:invoice_list' %}" class="nav-link {% if '/admin/invoice/' in request.path %}active{% endif %}">
                         <i class="far fa-copy"></i>
                         <p>Квитанции</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'admin_panel:accounts_list' %}" class="nav-link">
+                    <a href="{% url 'admin_panel:accounts_list' %}" class="nav-link {% if '/admin/account/' in request.path %}active{% endif %}">
                         <i class="far fa-credit-card"></i>
                         <p>Лицевые счета</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'admin_panel:flats_list' %}" class="nav-link">
+                    <a href="{% url 'admin_panel:flats_list' %}" class="nav-link {% if '/admin/flat/' in request.path %}active{% endif %}">
                         <i class="fas fa-key"></i>
                         <p>Квартиры</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'admin_panel:users_list' %}" class="nav-link">
+                    <a href="{% url 'admin_panel:users_list' %}" class="nav-link {% if '/admin/user/' in request.path %}active{% endif %}">
                         <i class="fas fa-users"></i>
                         <p>Владельцы квартир</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'admin_panel:houses_list' %}" class="nav-link">
+                    <a href="{% url 'admin_panel:houses_list' %}" class="nav-link {% if '/admin/house/' in request.path %}active{% endif %}">
                         <i class="fas fa-building"></i>
                         <p>Дома</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'admin_panel:message_list' %}" class="nav-link">
+                    <a href="{% url 'admin_panel:message_list' %}" class="nav-link {% if '/admin/message/' in request.path %}active{% endif %}">
                         <i class="far fa-envelope"></i>
                         <p>Сообщения</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'admin_panel:master_requests_list' %}" class="nav-link">
+                    <a href="{% url 'admin_panel:master_requests_list' %}" class="nav-link {% if '/admin/master-request/' in request.path %}active{% endif %}">
                         <i class="fas fa-wrench"></i>
                         <p>Заявки вызова мастера</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'admin_panel:counters' %}" class="nav-link">
+                    <a href="{% url 'admin_panel:counters' %}" class="nav-link {% if '/admin/counter-data/' in request.path %}active{% endif %}">
                         <i class="fas fa-tachometer-alt"></i>
                         <p>Показания счетчиков</p>
                     </a>
                 </li>
-                <li class="nav-item menu">
+                <li class="nav-item
+                {% if '/admin/main_page/index/' in request.path %}menu-is-opening menu-open
+                {% elif '/admin/about/index/' in request.path %}menu-is-opening menu-open
+                {% elif '/admin/services/index/' in request.path %}menu-is-opening menu-open
+                {% elif '/admin/tariffs/index/' in request.path %}menu-is-opening menu-open
+                {% elif '/admin/contacts/index/' in request.path %}menu-is-opening menu-open
+                {% endif %}">
                     <a href="" class="nav-link">
                         <i class="fas fa-desktop"></i>
                         <p>Управление сайтом<i class="right fas fa-angle-left"></i></p>
                     </a>
-                    <ul class="nav nav-treeview">
-
+                    <ul class="nav nav-treeview" style="
+                    {% if '/admin/website/home/' in request.path %}display:block;
+                    {% elif '/admin/website/about/' in request.path %}display:block;
+                    {% elif '/admin/website/services/' in request.path %}display:block;
+                    {% elif '/admin/website/contacts/' in request.path %}display:block;
+                    {% endif %}">
                         <!--BURGER of website pages-->
                         <li class="nav-item">
-                            <a href="{% url 'admin_panel:index' %}" class="nav-link">
+                            <a href="{% url 'admin_panel:index' %}" class="nav-link
+                            {% if request.path == '/admin/website/home/' %}active{% endif %}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Главная</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'admin_panel:about' %}" class="nav-link">
+                            <a href="{% url 'admin_panel:about' %}" class="nav-link
+                            {% if request.path == '/admin/website/about/' %}active{% endif %}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>О нас</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'admin_panel:services_metrics' %}" class="nav-link">
-                        <!--BURGER of system settings-->        <i class="far fa-circle nav-icon"></i>
+                            <a href="{% url 'admin_panel:services' %}" class="nav-link
+                            {% if request.path == '/admin/website/services/' %}active{% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
                                 <p>Услуги</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'admin_panel:contacts' %}" class="nav-link">
+                            <a href="{% url 'admin_panel:contacts' %}" class="nav-link
+                            {% if request.path == '/admin/website/contacts/' %}active{% endif %}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Контакты</p>
                             </a>
                         </li>
-
                     </ul>
                 </li>
-                <li class="nav-item menu">
+                <li class="nav-item
+                {% if '/admin/service/' in request.path %}menu-is-opening menu-open
+                {% elif '/admin/metrics/' in request.path %}menu-is-opening menu-open
+                {% elif '/admin/tariff/' in request.path %}menu-is-opening menu-open
+                {% elif '/admin/role/' in request.path %}menu-is-opening menu-open
+                {% elif '/admin/user-admin/' in request.path %}menu-is-opening menu-open
+                {% elif '/admin/pay-company/' in request.path %}menu-is-opening menu-open
+                {% elif '/admin/transaction-purpose/' in request.path %}menu-is-opening menu-open
+                {% endif %}">
                     <a href="" class="nav-link">
                         <i class="fas fa-cogs"></i>
                         <p>Настройки системы<i class="right fas fa-angle-left"></i></p>
@@ -129,37 +145,45 @@
                     <!--BURGER of system settings-->
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{% url 'admin_panel:services_list' %}" class="nav-link">
+                            <a href="{% url 'admin_panel:services_list' %}" class="nav-link
+                            {% if request.path == '/admin/service/index/' %}active
+                            {% elif request.path == '/admin/metrics/index/' %}active
+                            {% endif %}">
                                 <i class="fas fa-briefcase"></i>
                                 <p>Услуги</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'admin_panel:tariff_list' %}" class="nav-link">
+                            <a href="{% url 'admin_panel:tariff_list' %}" class="nav-link
+                            {% if '/admin/tariff' in request.path %}active{% endif %}">
                                 <i class="far fa-money-bill-alt"></i>
                                 <p>Тарифы</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'admin_panel:role_list' %}" class="nav-link">
+                            <a href="{% url 'admin_panel:role_list' %}" class="nav-link
+                            {% if request.path == '/admin/role/' %}active{% endif %}">
                                 <i class="fas fa-user"></i>
                                 <p>Роли</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'admin_panel:users_admin_list' %}" class="nav-link">
+                            <a href="{% url 'admin_panel:users_admin_list' %}" class="nav-link
+                            {% if '/admin/user-admin/' in request.path %}active{% endif %}">
                                 <i class="fas fa-user-plus"></i>
                                 <p>Пользователи</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'admin_panel:pay_company' %}" class="nav-link">
+                            <a href="{% url 'admin_panel:pay-company' %}" class="nav-link
+                            {% if request.path == '/admin/pay-company/index/' %}active{% endif %}">
                                 <i class="far fa-credit-card"></i>
                                 <p>Плетежные реквизиты</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'admin_panel:transaction_purpose_list' %}" class="nav-link">
+                            <a href="{% url 'admin_panel:transaction_purpose_list' %}" class="nav-link
+                            {% if request.path == '/admin/transaction-purpose/index/' %}active{% endif %}">
                                 <i class="fas fa-list-ol"></i>
                                 <p>Статьи платежей</p>
                             </a>
