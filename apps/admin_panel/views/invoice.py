@@ -9,7 +9,7 @@ from admin_panel import models, forms, utils
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class InvoiceList(generic.View):
     model = models.Invoice
-    form_class = forms.InvoiceFilter
+    form_class = forms.InvoiceFilterForm
     template_name = "admin_panel/invoice/index.html"
 
     def get(self, request):

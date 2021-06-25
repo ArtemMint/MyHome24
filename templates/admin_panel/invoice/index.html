@@ -101,10 +101,10 @@
                         <th></th>
                         <th>{{ filter.form.number }}</th>
                         <th>{{ filter.form.status }}</th>
-                        <th>{{ filter.form.created_datew }}</th>
-                        <th><input class="form-control"></th>
+                        <th>{{ filter.form.created_date }}</th>
+                        <th>{{ filter.form.created_date }}</th>
                         <th>{{ filter.form.flat }}</th>
-                        <th><select class="form-control"></select></th>
+                        <th>{{ filter.form.owner }}</th>
                         <th>{{ filter.form.confirm }}</th>
                         <th></th>
                         <th></th>
@@ -154,13 +154,13 @@
                                 {% endif %}
                             </td>
                             <td class="text-center" onclick="location.href='{% url 'admin_panel:invoice_detail' field.pk %}'">
-                                {% if field.flat.owner %}
-                                        <a href="{% url 'admin_panel:user_detail' field.flat.owner.pk%}">
-                                            {{ field.flat.owner.full_name|truncatechars:40 }}
-                                        </a>
-                                    {% else %}
-                                        (не задано)
-                                    {% endif %}
+                                {% if field.owner %}
+                                    <a href="{% url 'admin_panel:user_detail' field.owner.pk%}">
+                                        {{ field.owner.full_name|truncatechars:40 }}
+                                    </a>
+                                {% else %}
+                                    (не задано)
+                                {% endif %}
                             </td>
                             <td onclick="location.href='{% url 'admin_panel:invoice_detail' field.pk %}'">
                                 {% if field.confirm %}
@@ -203,17 +203,20 @@
 {% endblock content %}
 
 {% block scripts %}
-<script>
-    $('#main_checkbox').on('change', function(){
-        if($(this).prop('checked')){
-            $('.delete_checkbox').each(function(){
-                $(this).prop('checked', true);
-            });
-        }else{
-            $('.delete_checkbox').each(function(){
-                $(this).prop('checked', false);
-            });
-        }
-    })
-</script>
+    <script>
+
+    </script>
+    <script>
+        $('#main_checkbox').on('change', function(){
+            if($(this).prop('checked')){
+                $('.delete_checkbox').each(function(){
+                    $(this).prop('checked', true);
+                });
+            }else{
+                $('.delete_checkbox').each(function(){
+                    $(this).prop('checked', false);
+                });
+            }
+        })
+    </script>
 {% endblock %}

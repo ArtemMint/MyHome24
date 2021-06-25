@@ -3,6 +3,7 @@ from django import forms
 import datetime
 
 from admin_panel import models
+from register import models as register_models
 
 
 class InvoiceForm(forms.ModelForm):
@@ -93,8 +94,17 @@ class InvoiceForm(forms.ModelForm):
             ),
         }
 
+    def save(self, commit=True):
+        instance = super(InvoiceForm, self).save(commit=False)
+        instance.owner = models.Flat.objects.get(
+            number=self.cleaned_data['flat'],
+            house=self.cleaned_data['house'],
+        ).owner
+        instance.save()
+        return instance
 
-class InvoiceFilter(django_filters.FilterSet):
+
+class InvoiceFilterForm(django_filters.FilterSet):
     STATUS = [
         ('Оплачена', 'Оплачена'),
         ('Частично оплачена', 'Частично оплачена'),
@@ -139,6 +149,15 @@ class InvoiceFilter(django_filters.FilterSet):
                 'onchange': 'form.submit();',
             }
         )
+    )
+    owner = django_filters.ModelChoiceFilter(
+        queryset=register_models.User.get_users_list(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        ),
     )
     confirm = django_filters.ChoiceFilter(
         choices=CONFIRM,
