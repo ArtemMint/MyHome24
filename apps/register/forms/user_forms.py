@@ -1,4 +1,5 @@
 from django import forms
+import django_filters
 
 from register.models import User
 
@@ -149,3 +150,74 @@ class UpdateUserForm(UserForm):
         if commit:
             user.save()
         return user
+
+
+class UserFilterForm(django_filters.FilterSet):
+    STATUS = [
+        ('Активен', 'Активен'),
+        ('Новый', 'Новый'),
+        ('Отключен', 'Отключен'),
+    ]
+
+    id = django_filters.Filter(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    full_name = django_filters.Filter(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    phone = django_filters.Filter(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    email = django_filters.Filter(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    date_joined = django_filters.DateFilter(
+        widget=forms.DateInput(
+            attrs={
+                'type': 'date',
+                'class': ' form-control datepicker',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    status = django_filters.ChoiceFilter(
+        choices=STATUS,
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        ),
+    )
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'full_name',
+            'phone',
+            'email',
+            'date_joined',
+            'status',
+        )
+

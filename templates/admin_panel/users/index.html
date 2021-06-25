@@ -38,8 +38,8 @@
             </a>
         </div>
     </div>
-    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    {% if users_list %}
+
+    {% if filter %}
         <table class="table table-sm table-striped table-hover table-bordered">
             <thead>
                 <tr>
@@ -55,71 +55,81 @@
                     <th style="width: 80px; min-width: 80px">&nbsp;</th>
                 </tr>
                 <tr>
-                    <th><input class="form-control"></th>
-                    <th><input class="form-control"></th>
-                    <th><input class="form-control"></th>
-                    <th><input class="form-control"></th>
-                    <th><select class="form-control"></select></th>
-                    <th><input class="form-control"></th>
-                    <th><input class="form-control"></th>
-                    <th><select class="form-control"></select></th>
-                    <th><select class="form-control"></select></th>
-                    <th>&nbsp;</th>
+                    <form method="get">
+                        <th>{{ filter.form.id }}</th>
+                        <th>{{ filter.form.full_name }}</th>
+                        <th>{{ filter.form.phone }}</th>
+                        <th>{{ filter.form.email }}</th>
+                        <th><select class="form-control"></select></th>
+                        <th><input class="form-control"></th>
+                        <th>{{ filter.form.date_joined }}</th>
+                        <th>{{ filter.form.status }}</th>
+                        <th><select class="form-control"></select></th>
+                        <th>&nbsp;</th>
+                    </form>
                 </tr>
             </thead>
             <tbody>
-                {% for field in users_list %}
-                    <tr>
-                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.id }}</td>
-                        <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.full_name|truncatechars:50 }}</td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.phone|truncatechars:50 }}</td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.email|truncatechars:50 }}</td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
-                            {% for flat in field.flats.all %}
-                                <a href="{% url 'admin_panel:house_detail' flat.house.pk %}">{{ flat.house.name|truncatechars:50 }}</a><br>
-                            {% endfor %}
-                        </td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
-                            {% for flat in field.flats.all %}
-                                <a href="{% url 'admin_panel:flat_detail' flat.pk %}">№{{ flat|truncatechars:50 }}, {{ flat.house.name|truncatechars:50 }}</a><br>
-                            {% endfor %}
-                        </td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.date_joined|truncatechars:50 }}</td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
-                            {% if field.status == 'Активен' %}
-                                <small class="label label-success">{{ field.status }}</small>
-                            {% elif field.status == 'Новый' %}
-                                <small class="label label-warning">{{ field.status }}</small>
-                            {% elif field.status == 'Отключен' %}
-                                <small class="label label-danger">{{ field.status }}</small>
-                            {% else %}
-
-                            {% endif %}
-                        </td>
-                        <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
-                            {% for flat in field.flats.all %}
-                                {% if flat.get_account_balance < 0 %}
-                                    ДА<br>
+                {% if filter.qs %}
+                    {% for field in filter.qs %}
+                        <tr>
+                            <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.id }}</td>
+                            <td onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.full_name|truncatechars:50 }}</td>
+                            <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.phone|truncatechars:50 }}</td>
+                            <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.email|truncatechars:50 }}</td>
+                            <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
+                                {% for flat in field.flats.all %}
+                                    <a href="{% url 'admin_panel:house_detail' flat.house.pk %}">{{ flat.house.name|truncatechars:50 }}</a><br>
+                                {% endfor %}
+                            </td>
+                            <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
+                                {% for flat in field.flats.all %}
+                                    <a href="{% url 'admin_panel:flat_detail' flat.pk %}">№{{ flat|truncatechars:50 }}, {{ flat.house.name|truncatechars:50 }}</a><br>
+                                {% endfor %}
+                            </td>
+                            <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">{{ field.date_joined|truncatechars:50 }}</td>
+                            <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
+                                {% if field.status == 'Активен' %}
+                                    <small class="label label-success">{{ field.status }}</small>
+                                {% elif field.status == 'Новый' %}
+                                    <small class="label label-warning">{{ field.status }}</small>
+                                {% elif field.status == 'Отключен' %}
+                                    <small class="label label-danger">{{ field.status }}</small>
                                 {% else %}
-                                    <br>
+
                                 {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            <div class="btn-group ">
-                                <a class="btn btn-default btn-sm" href="" title="Отправить сообщение" data-toggle="tooltip">
-                                    <i class="fa fa-envelope"></i>
-                                </a>
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_update' field.pk %}" title="Редактировать">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_delete' field.pk %}" title="Удалить">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </div>
+                            </td>
+                            <td class="text-center" onclick="location.href='{% url 'admin_panel:user_detail' field.pk %}'">
+                                {% for flat in field.flats.all %}
+                                    {% if flat.get_account_balance < 0 %}
+                                        ДА<br>
+                                    {% else %}
+                                        <br>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <div class="btn-group ">
+                                    <a class="btn btn-default btn-sm" href="" title="Отправить сообщение" data-toggle="tooltip">
+                                        <i class="fa fa-envelope"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_update' field.pk %}" title="Редактировать">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_panel:user_delete' field.pk %}" title="Удалить">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="9">
+                            <h2 class="text-center">Ничего не найдено.</h2>
                         </td>
                     </tr>
-                {% endfor %}
+                {% endif %}
             </tbody>
         </table>
         <div class="box-footer">
@@ -128,6 +138,5 @@
     {% else %}
         <h2 class="text-center">Список пользователей пуст!</h2>
     {% endif %}
-    </form>
 
 {% endblock content %}

@@ -9,16 +9,27 @@ from register import models
 from register import forms
 
 
-@login_required(login_url='/admin/site/login')
-def users_list_view(request):
-    return render(
-        request,
-        "admin_panel/users/index.html",
-        {
-            'users_list': models.User.users.get_queryset(),
-            'users_count': models.User.get_users_count(),
-        }
-    )
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class UsersListView(generic.View):
+    model = models.User
+    form_class = forms.UserFilterForm
+    template_name = 'admin_panel/users/index.html'
+
+    def get(self, request):
+        user_list = self.model.get_users_list()
+        user_number = self.model.get_users_count()
+        f = self.form_class(
+            request.GET,
+            queryset=user_list,
+        )
+        return render(
+            request,
+            self.template_name,
+            {
+                'filter': f,
+                'users_count': user_number,
+            }
+        )
 
 
 @login_required(login_url='/admin/site/login')
