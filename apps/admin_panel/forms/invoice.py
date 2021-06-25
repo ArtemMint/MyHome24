@@ -1,3 +1,4 @@
+import django_filters
 from django import forms
 import datetime
 
@@ -91,3 +92,65 @@ class InvoiceForm(forms.ModelForm):
                 },
             ),
         }
+
+
+class InvoiceFilter(django_filters.FilterSet):
+    STATUS = [
+        ('Оплачена', 'Оплачена'),
+        ('Частично оплачена', 'Частично оплачена'),
+        ('Неоплачена', 'Неоплачена'),
+    ]
+    CONFIRM = [
+        ('1', 'Проведена'),
+        ('0', 'Непроведена'),
+    ]
+
+    number = django_filters.Filter(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    status = django_filters.ChoiceFilter(
+        choices=STATUS,
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        ),
+    )
+    created_date = django_filters.DateFilter(
+        widget=forms.DateInput(
+            attrs={
+                'type': 'date',
+                'class': ' form-control datepicker',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    flat = django_filters.ModelChoiceFilter(
+        queryset=models.Flat.get_flats_list(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    confirm = django_filters.ChoiceFilter(
+        choices=CONFIRM,
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        ),
+    )
+
+    class Meta:
+        model = models.Invoice
+        fields = '__all__'
+        exclude = ['editing_date']

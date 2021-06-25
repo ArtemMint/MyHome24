@@ -9,13 +9,18 @@ from admin_panel import models, forms, utils
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class InvoiceList(generic.View):
     model = models.Invoice
+    form_class = forms.InvoiceFilter
     template_name = "admin_panel/invoice/index.html"
 
     def get(self, request):
         queryset = self.model.get_invoice_list()
+        f = self.form_class(
+            request.GET,
+            queryset=queryset,
+        )
         statistic = utils.get_short_statistic()
         context = {
-            'invoice_list': queryset,
+            'filter': f,
         }
         context.update(statistic)
         return render(
@@ -29,6 +34,7 @@ class InvoiceList(generic.View):
 class InvoiceCreate(generic.View):
     model = models.Invoice
     form_class = forms.InvoiceForm
+    template_name = 'admin_panel/invoice/create.html'
 
     def get(self, request):
         form = self.form_class(
@@ -41,7 +47,7 @@ class InvoiceCreate(generic.View):
         )
         return render(
             request,
-            'admin_panel/invoice/create.html',
+            self.template_name,
             {
                 'form': form,
             }
