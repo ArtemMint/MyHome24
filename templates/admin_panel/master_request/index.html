@@ -56,7 +56,7 @@
                         <th>{{ filter.form.master_type }}</th>
                         <th>{{ filter.form.description }}</th>
                         <th>{{ filter.form.flat }}</th>
-                        <th>{{ filter.form.owner }}</th>
+                        <th></th>
                         <th><input class="form-control"></th>
                         <th>{{ filter.form.master }}</th>
                         <th>{{ filter.form.status }}</th>
@@ -86,7 +86,9 @@
                                 </a>
                             </td>
                             <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                                 <a href="{% url 'admin_panel:user_detail' field.owner.id %}">{{ field.owner }}</a>
+                                 <a href="{% url 'admin_panel:user_detail' field.owner.id %}">
+                                     {{ field.owner }}
+                                 </a>
                             </td>
                             <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
                                 {{ field.owner.phone }}
