@@ -152,7 +152,7 @@ urlpatterns = [
     # Users
     path(
         'user/index/',
-        views.users_list_view,
+        views.UsersListView.as_view(),
         name='users_list'
     ),
     path(
@@ -228,7 +228,7 @@ urlpatterns = [
     # Master requests
     path(
         'master-request/index/',
-        views.master_requests_list,
+        views.MasterRequestList.as_view(),
         name='master_requests_list'
     ),
     path(
