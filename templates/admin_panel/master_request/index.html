@@ -33,8 +33,8 @@
             </a>
         </div>
     </div>
-    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    {% if master_requests_list %}
+
+    {% if filter %}
         <table class="table table-sm table-striped table-hover table-bordered">
             <thead>
                 <tr>
@@ -50,74 +50,86 @@
                     <th style="width: 80px; min-width: 80px">&nbsp;</th>
                 </tr>
                 <tr>
-                    <th><input class="form-control"></th>
-                    <th><input class="form-control"></th>
-                    <th><select class="form-control"></select></th>
-                    <th><input class="form-control"></th>
-                    <th><input class="form-control"></th>
-                    <th><select class="form-control"></select></th>
-                    <th><input class="form-control"></th>
-                    <th><select class="form-control"></select></th>
-                    <th><select class="form-control"></select></th>
-                    <th>&nbsp;</th>
+                    <form method="get">
+                        <th>{{ filter.form.id }}</th>
+                        <th>{{ filter.form.created_date }}</th>
+                        <th>{{ filter.form.master_type }}</th>
+                        <th>{{ filter.form.description }}</th>
+                        <th>{{ filter.form.flat }}</th>
+                        <th></th>
+                        <th><input class="form-control"></th>
+                        <th>{{ filter.form.master }}</th>
+                        <th>{{ filter.form.status }}</th>
+                        <th>&nbsp;</th>
+                    </form>
                 </tr>
             </thead>
             <tbody>
-            {% for field in master_requests_list %}
-                <tr>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                        {{ field.id }}
-                    </td>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                        {{ field.created_date.date }} - {{ field.time }}
-                    </td>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                        {{ field.master_type }}
-                    </td>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                        {{ field.description|truncatechars:15 }}
-                    </td>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                        <a href="{% url 'admin_panel:flat_detail' field.flat.id %}">
-                            {{ field.flat }}, {{ field.flat.house.name }}
-                        </a>
-                    </td>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                         <a href="{% url 'admin_panel:user_detail' field.owner.id %}">{{ field.owner }}</a>
-                    </td>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                        {{ field.owner.phone }}
-                    </td>
-                    <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                        {% if field.master %}
-                            <a href="{% url 'admin_panel:user_admin_detail' field.master.id %}">
-                                {{ field.master.full_name }}
-                            </a>
-                        {% else %}
-                            (не задано)
-                        {% endif %}
-                    </td>
-                    <td class="text-center" onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
-                        {% if field.status == 'Новое' %}
-                            <small class="label label-primary">{{ field.status|truncatechars:50 }}</small>
-                        {% elif field.status == 'В работе' %}
-                            <small class="label label-mid">{{ field.status|truncatechars:50 }}</small>
-                        {% else %}
-                            <small class="label label-success">{{ field.status|truncatechars:50 }}</small>
-                        {% endif %}
-                    </td>
-                    <td>
-                        <div class="btn-group ">
-                            <a class="btn btn-default btn-sm" href="{% url 'admin_panel:master_request_update' field.pk %}" title="Редактировать">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>
-                            <a class="btn btn-default btn-sm" href="{% url 'admin_panel:master_request_delete' field.pk %}" title="Удалить">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-            {% endfor %}
+                {% if filter.qs %}
+                    {% for field in filter.qs %}
+                        <tr>
+                            <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                                {{ field.id }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                                {{ field.created_date.date }} - {{ field.time }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                                {{ field.master_type }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                                {{ field.description|truncatechars:15 }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                                <a href="{% url 'admin_panel:flat_detail' field.flat.id %}">
+                                    {{ field.flat }}, {{ field.flat.house.name }}
+                                </a>
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                                 <a href="{% url 'admin_panel:user_detail' field.owner.id %}">
+                                     {{ field.owner }}
+                                 </a>
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                                {{ field.owner.phone }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                                {% if field.master %}
+                                    <a href="{% url 'admin_panel:user_admin_detail' field.master.id %}">
+                                        {{ field.master.full_name }}
+                                    </a>
+                                {% else %}
+                                    (не задано)
+                                {% endif %}
+                            </td>
+                            <td class="text-center" onclick="location.href='{% url 'admin_panel:master_request_detail' field.pk %}'">
+                                {% if field.status == 'Новое' %}
+                                    <small class="label label-primary">{{ field.status|truncatechars:50 }}</small>
+                                {% elif field.status == 'В работе' %}
+                                    <small class="label label-mid">{{ field.status|truncatechars:50 }}</small>
+                                {% else %}
+                                    <small class="label label-success">{{ field.status|truncatechars:50 }}</small>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="btn-group ">
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_panel:master_request_update' field.pk %}" title="Редактировать">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_panel:master_request_delete' field.pk %}" title="Удалить">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="9">
+                            <h2 class="text-center">Ничего не найдено.</h2>
+                        </td>
+                    </tr>
+                {% endif %}
             </tbody>
         </table>
         <div class="box-footer">
@@ -126,6 +138,5 @@
     {% else %}
         <h2 class="text-center">Список заявок пуст!</h2>
     {% endif %}
-    </form>
 
 {% endblock content %}

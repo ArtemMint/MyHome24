@@ -42,7 +42,7 @@ from admin_panel.forms.master_request import *
 from admin_panel.forms.message import *
 
 # Counter data
-from admin_panel.forms.counter_data import CounterDataForm
+from admin_panel.forms.counter_data import *
 
 # Invoice
 from admin_panel.forms.invoice import *

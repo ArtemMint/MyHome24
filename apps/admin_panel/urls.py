@@ -125,7 +125,7 @@ urlpatterns = [
     # Flats
     path(
         'flat/index/',
-        views.flats_list_view,
+        views.FlatsListView.as_view(),
         name='flats_list'
     ),
     path(
@@ -152,7 +152,7 @@ urlpatterns = [
     # Users
     path(
         'user/index/',
-        views.users_list_view,
+        views.UsersListView.as_view(),
         name='users_list'
     ),
     path(
@@ -179,7 +179,7 @@ urlpatterns = [
     # Houses
     path(
         'house/index/',
-        views.houses_list_view,
+        views.HouseListView.as_view(),
         name='houses_list'
     ),
     path(
@@ -228,7 +228,7 @@ urlpatterns = [
     # Master requests
     path(
         'master-request/index/',
-        views.master_requests_list,
+        views.MasterRequestList.as_view(),
         name='master_requests_list'
     ),
     path(
@@ -260,7 +260,7 @@ urlpatterns = [
     ),
     path(
         'counter-data/counter_list/flat_pk=<int:flat_pk>',
-        views.CountersListView.as_view(),
+        views.CounterListView.as_view(),
         name='counter_list'
     ),
     path(
@@ -332,7 +332,7 @@ urlpatterns = [
 
     # Roles
     path(
-        'user-admin/role/',
+        'role/',
         views.RolesList.as_view(),
         name='role_list'
     ),
@@ -366,9 +366,9 @@ urlpatterns = [
 
     # Pay company
     path(
-        'pay_company/index/',
+        'pay-company/index/',
         views.PayCompany.as_view(),
-        name='pay_company'
+        name='pay-company'
     ),
 
     # Transaction-purpose
@@ -405,9 +405,9 @@ urlpatterns = [
         name='about'
     ),
     path(
-        'website/services_metrics/',
+        'website/services/',
         views.ServicesSettings.as_view(),
-        name='services_metrics'
+        name='services'
     ),
     path(
         'website/contacts/',

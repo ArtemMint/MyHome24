@@ -1,20 +1,33 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.views import generic
 from django.contrib.auth.decorators import login_required
 
 from admin_panel import models, forms, utils
 
 
-@login_required(login_url='/admin/site/login')
-def master_requests_list(request):
-    return render(
-        request,
-        "admin_panel/master_request/index.html",
-        {
-            'master_requests_list': models.MasterRequest.get_all_queryset_list(),
-            'master_request_number': models.MasterRequest.get_all_queryset_count(),
-        }
-    )
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class MasterRequestList(generic.View):
+    model = models.MasterRequest
+    form_class = forms.MasterRequestFilterForm
+    template_name = 'admin_panel/master_request/index.html'
+
+    def get(self, request):
+        queryset = self.model.objects.all()
+        master_request_number = self.model.get_all_queryset_count()
+        f = self.form_class(
+            request.GET,
+            queryset=queryset,
+        )
+        return render(
+            request,
+            self.template_name,
+            {
+                'filter': f,
+                'master_request_number': master_request_number,
+            }
+        )
 
 
 @login_required(login_url='/admin/site/login')

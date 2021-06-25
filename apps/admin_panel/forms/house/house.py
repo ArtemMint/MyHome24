@@ -1,3 +1,4 @@
+import django_filters
 from django import forms
 from django.forms import inlineformset_factory
 
@@ -51,3 +52,29 @@ HousePreviewFormset = inlineformset_factory(
     extra=5,
     max_num=5,
 )
+
+
+class HouseFilter(django_filters.FilterSet):
+    name = django_filters.Filter(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+    address = django_filters.Filter(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'onchange': 'form.submit();',
+            }
+        )
+    )
+
+    class Meta:
+        model = models.House
+        fields = (
+            'name',
+            'address',
+        )

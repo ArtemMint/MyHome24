@@ -28,8 +28,16 @@
          {% endfor %}
     {% endif %}
 
-    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    {% if counter_data_list %}
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+        <div class="box-tools">
+            <a href="{% url 'admin_panel:counters' %}" class="btn btn-default btn-sm">
+                <span class="hidden-xs">Очистить</span>
+            </a>
+        </div>
+    </div>
+
+    {% if filter %}
         <table class="table table-sm table-striped table-hover table-bordered">
             <thead>
                 <tr>
@@ -41,59 +49,68 @@
                     <th style="width: 90px; min-width: 90px">Ед. изм.</th>
                     <th style="width: 85px; min-width: 85px">&nbsp;</th>
                 </tr>
-                <tr id="w0-filters" class="filters">
-                    <th><select class="form-control"></select></th>
-                    <th><select class="form-control"></select></th>
-                    <th><input class="form-control"></th>
-                    <th><select class="form-control"></select></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                <tr>
+                    <form method="get">
+                        <th>{{ filter.form.house }}</th>
+                        <th>{{ filter.form.section }}</th>
+                        <th>{{ filter.form.flat }}</th>
+                        <th>{{ filter.form.counter }}</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </form>
                 </tr>
             </thead>
             <tbody>
-                {% for field in counter_data_list  %}
+                {% if filter.qs %}
+                    {% for field in filter.qs %}
+                        <tr>
+                            <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'">
+                                <a href="{% url 'admin_panel:house_detail' field.house.pk %}">
+                                    {{ field.house.name }}
+                                </a>
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'">
+                                {{ field.section }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'">
+                                <a href="{% url 'admin_panel:flat_detail' field.flat.pk %}">
+                                    {{ field.flat.number }}
+                                </a>
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'">
+                                {{ field.counter.name }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'"
+                                style="background-color: #DFD5">
+                                {{ field.value }}
+                            </td>
+                            <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'"
+                                style="background-color: #DFD5">
+                                {{ field.counter.metric.name }}
+                            </td>
+                            <td>
+                                <div class="btn-group ">
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_panel:counter_list' field.pk %}" title="Редактировать">
+                                        <i class="fas fa-tachometer-alt"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_panel:counter_list' field.flat.pk %}" title="Открыть историю показаний для счетчика">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
                     <tr>
-                        <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'">
-                            <a href="{% url 'admin_panel:house_detail' field.house.pk %}">
-                                {{ field.house.name }}
-                            </a>
-                        </td>
-                        <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'">
-                            {{ field.section }}
-                        </td>
-                        <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'">
-                            <a href="{% url 'admin_panel:flat_detail' field.flat.pk %}">
-                                {{ field.flat.number }}
-                            </a>
-                        </td>
-                        <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'">
-                            {{ field.counter.name }}
-                        </td>
-                        <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'"
-                            style="background-color: #DFD5">
-                            {{ field.value }}
-                        </td>
-                        <td onclick="location.href='{% url 'admin_panel:counter_list' flat_pk=field.flat.pk %}'"
-                            style="background-color: #DFD5">
-                            {{ field.counter.metric.name }}
-                        </td>
-                        <td>
-                            <div class="btn-group ">
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:counter_list' field.pk %}" title="Редактировать">
-                                    <i class="fas fa-tachometer-alt"></i>
-                                </a>
-                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:counter_list' field.flat.pk %}" title="Открыть историю показаний для счетчика">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </div>
+                        <td colspan="9">
+                            <h2 class="text-center">Ничего не найдено.</h2>
                         </td>
                     </tr>
-                {% endfor %}
+                {% endif %}
             </tbody>
         </table>
     {% else %}
         <h2 class="text-center">Показания счетчиков пуст!</h2>
     {% endif %}
-    </form>
 {% endblock content %}

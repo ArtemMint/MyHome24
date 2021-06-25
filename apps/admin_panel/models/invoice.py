@@ -38,6 +38,13 @@ class Invoice(models.Model):
         null=True,
         blank=True,
     )
+    owner = models.ForeignKey(
+        'register.User',
+        on_delete=models.SET_NULL,
+        related_name='invoices',
+        null=True,
+        blank=True,
+    )
     confirm = models.BooleanField(
         verbose_name='Проведен',
         default=True,
