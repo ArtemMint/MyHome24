@@ -260,7 +260,7 @@ urlpatterns = [
     ),
     path(
         'counter-data/counter_list/flat_pk=<int:flat_pk>',
-        views.CountersListView.as_view(),
+        views.CounterListView.as_view(),
         name='counter_list'
     ),
     path(
@@ -332,7 +332,7 @@ urlpatterns = [
 
     # Roles
     path(
-        'user-admin/role/',
+        'role/',
         views.RolesList.as_view(),
         name='role_list'
     ),
@@ -366,9 +366,9 @@ urlpatterns = [
 
     # Pay company
     path(
-        'pay_company/index/',
+        'pay-company/index/',
         views.PayCompany.as_view(),
-        name='pay_company'
+        name='pay-company'
     ),
 
     # Transaction-purpose
@@ -405,9 +405,9 @@ urlpatterns = [
         name='about'
     ),
     path(
-        'website/services_metrics/',
+        'website/services/',
         views.ServicesSettings.as_view(),
-        name='services_metrics'
+        name='services'
     ),
     path(
         'website/contacts/',
