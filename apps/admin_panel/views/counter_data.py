@@ -10,30 +10,45 @@ from admin_panel import utils
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class CountersView(generic.ListView):
+class CountersView(generic.View):
     model = models.CounterData
-    context_object_name = 'counter_data_list'
+    search_class = forms.CountersSearchForm
     template_name = "admin_panel/counter_data/counters.html"
 
-    def get_queryset(self):
-        return self.model.get_counter_data_list().order_by(
-            'flat__number', 'counter__name'
-        ).distinct('flat__number', 'counter__name')
+    def get(self, request):
+        queryset = self.model.get_counter_data_list()
+        f = self.search_class(
+            request.GET,
+            queryset=queryset
+        )
+        return render(
+            request,
+            self.template_name,
+            {
+                'filter': f,
+            }
+        )
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class CountersListView(generic.View):
+class CounterListView(generic.View):
     model = models.CounterData
+    search_class = forms.CounterListSearchForm
     template_name = 'admin_panel/counter_data/counters_list.html'
 
     def get(self, request, flat_pk):
         queryset = self.model.get_counter_data_list(
         ).filter(flat=flat_pk)
+        f = self.search_class(
+            request.GET,
+            queryset=queryset,
+        )
         return render(
             request,
             self.template_name,
             {
-                'counters_by_flat': queryset,
+                'filter': f,
+                'flat_pk': flat_pk,
             }
         )
 
