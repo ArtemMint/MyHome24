@@ -98,5 +98,147 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-8 col-md-7 col-xs-12">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">График погашения квитанций, грн</h3>
+            </div>
+            <div class="box-body">
+                <div class="chart">
+                    <canvas id="invoiceChart" style="height: 113px; width: 604px;" width="604" height="113"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="far fa-money-bill-alt"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Задолженность по счетам, грн</span>
+                <span class="info-box-number" id="account_indebtedness"></span>
+            </div>
+        </div>
+        <div class="info-box">
+            <span class="info-box-icon bg-blue"><i class="far fa-money-bill-alt"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Баланс по счетам, грн</span>
+                <span class="info-box-number" id="account_balance"></span>
+            </div>
+        </div>
+        <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="far fa-money-bill-alt"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Состояние кассы, грн</span>
+                <span class="info-box-number" id="transaction_balance"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-12 col-lg-12">
+        <div class="card card-secondary card-outline" style="border-top: 3px solid #d2d6de">
+            <div class="box-header with-border">
+                <h3 class="box-title" style="padding-left: 5px">График приходов и расходов по кассе, грн</h3>
+                <canvas id="transactionChart" style="max-height: 360px"></canvas>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{#    <label for="house" >Choose your house</label><br>#}
+{#    <select class="form-control" id="house">#}
+{#    </select>#}
+{#    </div>#}
+
 
 {% endblock content %}
+
+{% block scripts %}
+    {#  Invoice CHART  #}
+    <script type="text/javascript">
+        let URL = "{% url 'rest_api:api_chart_statistic' %}"
+        $.get(URL, function (data){
+            let labels = data.labels;
+            let invoice_in_total = data.invoice_in_total;
+            let invoice_out_total = data.invoice_out_total;
+
+            let invoiceChart = new Chart(
+                $('#invoiceChart'),
+                {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Задолженность',
+                            borderColor: 'rgba(221, 75, 57, 1)',
+                            backgroundColor: 'rgba(221, 75, 57, 1)',
+                            data: invoice_out_total,
+                        },
+                        {
+                            label: 'Погашение задолженности',
+                            borderColor: 'rgba(0, 166, 90, 1)',
+                            backgroundColor: 'rgba(0, 166, 90, 1)',
+                            data: invoice_in_total,
+                        }
+                        ]
+                    }
+                }
+            );
+        })
+    </script>
+
+    {#  Transactions CHART  #}
+    <script type="text/javascript">
+        $.get(URL, function (data){
+            let labels = data.labels;
+            let transaction_in_total = data.transaction_in_total;
+            let transaction_indebtedness_total = data.transaction_indebtedness_total;
+
+            let transactionChart = new Chart(
+                $('#transactionChart'),
+                {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Расход',
+                            borderColor: 'rgba(221, 75, 57, 1)',
+                            backgroundColor: 'rgba(221, 75, 57, 1)',
+                            data: transaction_indebtedness_total,
+                        },
+                        {
+                            label: 'Приход',
+                            borderColor: 'rgba(0, 166, 90, 1)',
+                            backgroundColor: 'rgba(0, 166, 90, 1)',
+                            data: transaction_in_total,
+                        }
+                        ]
+                    }
+                }
+            );
+        })
+    </script>
+
+    <script type="text/javascript">
+        let miniStatURL = "{% url 'rest_api:api_statistic' %}";
+        let accountIndebtedness = $('#account_indebtedness');
+        let accountBalance = $('#account_balance');
+        let transactionBalance = $('#transaction_balance');
+
+        $.get(miniStatURL, function (data) {
+            accountIndebtedness.text(data['account_indebtedness']);
+            accountBalance.text(data['account_balance']);
+            transactionBalance.text(data['transaction_balance']);
+        });
+    </script>
+
+    <script type="text/javascript">
+        let URL = "{% url 'rest_api:house_list' %}";
+        let houseSelect = $('#house').append(new Option('Выберите...', ''));
+        let house_list = $.get(URL, function( data ) {
+            for (let i = 0; i < data.length; i++) {
+                houseSelect.append(new Option(data[i]['name'], data[i]['id']));
+            }
+        }, "json");
+    </script>
+
+{% endblock %}

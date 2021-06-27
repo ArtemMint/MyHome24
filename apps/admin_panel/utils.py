@@ -36,6 +36,10 @@ def get_current_date():
     return datetime.datetime.now().strftime('%m/%d/%y')
 
 
+def get_current_year():
+    return datetime.datetime.now().year
+
+
 def generate_number(model):
     date = datetime.datetime.now().strftime('%d%m%y')
     if model.objects.count() > 0:

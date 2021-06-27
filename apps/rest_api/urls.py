@@ -13,6 +13,12 @@ urlpatterns = [
     path('overview/',
          views.ApiOverview.as_view(),
          name='api_overview'),
+    path('statistic/',
+         views.StatisticView.as_view(),
+         name='api_statistic'),
+    path('statistic/charts/',
+         views.StatisticChartView.as_view(),
+         name='api_chart_statistic'),
 
     # House URLS.
     path('house/list/',

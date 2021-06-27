@@ -29,7 +29,7 @@ class InvoiceList(generic.View):
             context,
         )
 
-
+#TODO add invoice services to each views
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class InvoiceCreate(generic.View):
     model = models.Invoice

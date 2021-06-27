@@ -4,11 +4,11 @@
 
         <!-- Logo -->
         <a href="{% url 'admin_panel:statistics' %}" class="logo">
-{#            <span class="logo-mini">#}
-{#                <img src="/logo-mini.svg" class="img-responsive" alt="">#}
-{#            </span>#}
+            <span class="logo-mini">
+                <img src="{% static 'logo/logo-mini.svg' %}" class="img-responsive" alt="" id="logo-mini" style="display: none">
+            </span>
             <span class="logo-lg">
-                <img src="{% static 'logo/logo.svg' %}" class="img-responsive" alt="">
+                <img src="{% static 'logo/logo.svg' %}" class="img-responsive" alt="" id="logo-lg">
             </span>
         </a>
         <!-- Logo -->
