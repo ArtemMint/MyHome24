@@ -20,8 +20,7 @@ class StatisticChartView(views.APIView):
 
     def get(self, request):
         months = [
-            i
-            for i in range(1, 13)
+            i for i in range(1, 13)
         ]
         #TODO add invoice statistic
         invoice_in_total = [
