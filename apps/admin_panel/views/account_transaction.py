@@ -39,10 +39,6 @@ class AccountTransactionsList(generic.View):
         )
 
 
-# class AccountTransactionFiltered(generic.View):
-#     models
-
-
 @login_required(login_url='/admin/site/login')
 def account_transactions_create_in(request):
     account_transaction_form = forms.AccountTransactionIncomeForm(
