@@ -19,11 +19,6 @@ class Account(models.Model):
         verbose_name='Статус',
         blank=False,
     )
-    # balance = models.FloatField(
-    #     max_length=50,
-    #     verbose_name='Остаток',
-    #     default=0,
-    # )
     house = models.ForeignKey(
         'admin_panel.House',
         on_delete=models.CASCADE,

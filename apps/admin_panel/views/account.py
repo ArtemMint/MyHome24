@@ -27,8 +27,11 @@ class AccountsListView(generic.View):
             'accounts_count': accounts_count,
         }
         context.update(statistic)
+        return self.success_url(context)
+
+    def success_url(self, context):
         return render(
-            request,
+            self.request,
             self.template_name,
             context,
         )
@@ -41,32 +44,29 @@ class AccountCreateView(generic.View):
     template_name = 'admin_panel/account/create.html'
 
     def get(self, request):
-        account_form = self.form_class(
+        form = self.form_class(
             initial={
-                'number': utils.generate_number(models.AccountTransaction),
+                'number': utils.generate_number(self.model),
             }
         )
-        return render(
-            request,
-            self.template_name,
-            {
-                'account_form': account_form,
-            }
-        )
+        return self.success_url(form)
 
     def post(self, request):
-        account_form = self.form_class(
+        form = self.form_class(
             request.POST,
         )
-        if account_form.is_valid():
-            account_form.save()
+        if form.is_valid():
+            form.save()
             messages.success(request, 'Новый лицевой счет создан!')
             return redirect('admin_panel:accounts_list')
+        return self.success_url(form)
+
+    def success_url(self, form):
         return render(
-            request,
+            self.request,
             self.template_name,
             {
-                'account_form': account_form,
+                'account_form': form,
             }
         )
 
@@ -78,31 +78,28 @@ class AccountUpdateView(generic.View):
     template_name = "admin_panel/account/update.html"
 
     def get(self, request, pk):
-        account_form = self.form_class(
+        form = self.form_class(
             instance=self.model.get_account_by_pk(pk=pk),
         )
-        return render(
-            request,
-            self.template_name,
-            {
-                'account_form': account_form,
-            }
-        )
+        return self.success_url(form)
 
     def post(self, request, pk):
-        account_form = self.form_class(
+        form = self.form_class(
             request.POST,
             instance=self.model.get_account_by_pk(pk=pk),
         )
-        if account_form.is_valid():
-            account_form.save()
+        if form.is_valid():
+            form.save()
             messages.success(request, 'Лицевой счет обновлен!')
             return redirect('admin_panel:accounts_list')
+        return self.success_url(form)
+
+    def success_url(self, form):
         return render(
-            request,
+            self.request,
             self.template_name,
             {
-                'account_form': account_form,
+                'account_form': form,
             }
         )
 
