@@ -103,17 +103,17 @@ urlpatterns = [
     ),
     path(
       'account/create/',
-      views.account_create_view,
+      views.AccountCreateView.as_view(),
       name='account_create'
     ),
     path(
       'account/update/<int:pk>',
-      views.account_update_view,
+      views.AccountUpdateView.as_view(),
       name='account_update'
     ),
     path(
       'account/detail/<int:pk>',
-      views.account_detail_view,
+      views.AccountDetailView.as_view(),
       name='account_detail'
     ),
     path(

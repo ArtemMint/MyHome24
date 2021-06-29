@@ -138,13 +138,13 @@
                             {% for form in house_user_admin_formset %}
                                 {{ form.id }}
                                 <div class="form-user-admin">
-                                    {{ form.user_admin.label_tag }}
+                                    {{ form.name.label_tag }}
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            {{ form.user_admin }}
+                                            {{ form.name }}
                                         </div>
                                         <div class="input-group col-lg-5">
-                                            <input class="form-control" readonly>
+                                            {{ form.role }}
                                             <div class="input-group-addon btn btn-default delete-form">
                                                 <i class="fa fa-trash"></i>
                                                 <span class="check_delete" hidden>
@@ -178,6 +178,44 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'admin_panel/js/add_delete_forms.js' %}"></script>
     <script>
+        function setEvent(element, selector){
+            let select = $(element).closest(selector).find('.select-user');
+            let selected_role = $(element).closest(selector).find('.user-role');
+
+            $(select).on('change', function(){
+                let selected = $(this).find(':selected').attr('value');
+                $.ajax({
+                    url: '{% url "rest_api:user_role" %}',
+                    type: 'GET',
+                    data: {
+                        'pk': selected,
+                    },
+                })
+                .done(function(response) {
+                    console.log(response)
+                    $(selected_role).val(response['role']);
+                })
+            })
+        }
+    </script>
+    <script>
+        $('.select-user').each(function() {
+        let selected_role = $(this).closest('.form-user-admin').find('.user-role');
+        let selected = $(this).find(':selected').attr('value');
+        $.ajax({
+            url: '{% url "rest_api:user_role" %}',
+            type: 'GET',
+            data: {
+                'pk': selected,
+            },
+        })
+        .done(function(response) {
+            $(selected_role).val(response['role']);
+         })
+        setEvent(this, '.form-user-admin');
+    })
+    </script>
+    <script>
         const prefix1 = "house_sections";
         const form_class1 = ".form-house-section";
         const prefix2 = "house_floor";
@@ -189,13 +227,13 @@
         const default_image = undefined;
 
         // after rendering page set hidden form
-        $("document").ready(function () {
-            addHiddenForm(prefix1, form_class1, image, default_image);
+        $('document').ready(function () {
+            addHiddenForm(prefix1, form_class1);
         });
-        $("document").ready(function () {
+        $('document').ready(function () {
             addHiddenForm(prefix2, form_class2, image, default_image);
         });
-        $("document").ready(function () {
+        $('document').ready(function () {
             addHiddenForm(prefix3, form_class3, image, default_image);
         });
 
@@ -212,7 +250,6 @@
         $(".delete-form").click(function (e) {
             deleteForm(e, prefix3, form_class3, image, index_class);
         });
-
 
 
         //if clicked add new form form button than add new form

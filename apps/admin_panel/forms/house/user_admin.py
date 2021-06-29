@@ -8,10 +8,10 @@ from register import models as register_models
 class HouseUserAdminForm(forms.ModelForm):
     prefix = 'house_user_admin'
 
-    user_admin = forms.ModelChoiceField(
+    name = forms.ModelChoiceField(
         widget=forms.Select(
             attrs={
-                'class': 'form-control',
+                'class': 'form-control select-user',
             }
         ),
         queryset=register_models.User.users_admin.get_queryset(),
@@ -21,8 +21,17 @@ class HouseUserAdminForm(forms.ModelForm):
     class Meta:
         model = models.HouseUserAdmin
         fields = (
-            'user_admin',
+            'name',
+            'role'
         )
+        widgets = {
+            'role': forms.TextInput(
+                attrs={
+                    'class': 'form-control user-role',
+                    'readonly': 'True',
+                }
+            )
+        }
 
 
 HouseUserAdminFormset = inlineformset_factory(

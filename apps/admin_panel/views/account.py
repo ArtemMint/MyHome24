@@ -27,69 +27,88 @@ class AccountsListView(generic.View):
             'accounts_count': accounts_count,
         }
         context.update(statistic)
+        return self.success_url(context)
+
+    def success_url(self, context):
         return render(
-            request,
+            self.request,
             self.template_name,
             context,
         )
 
 
-@login_required(login_url='/admin/site/login')
-def account_create_view(request):
-    account_form = forms.AccountForm(
-        initial={
-            'number': utils.generate_number(models.AccountTransaction),
-        }
-    )
-    if request.POST:
-        account_form = forms.AccountForm(
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class AccountCreateView(generic.View):
+    model = models.Account
+    form_class = forms.AccountForm
+    template_name = 'admin_panel/account/create.html'
+
+    def get(self, request):
+        form = self.form_class(
+            initial={
+                'number': utils.generate_number(self.model),
+            }
+        )
+        return self.success_url(form)
+
+    def post(self, request):
+        form = self.form_class(
             request.POST,
         )
-        if account_form.is_valid():
-            account_form.save()
+        if form.is_valid():
+            form.save()
             messages.success(request, 'Новый лицевой счет создан!')
             return redirect('admin_panel:accounts_list')
-    return render(
-        request,
-        "admin_panel/account/create.html",
-        {
-            'account_form': account_form,
-        }
-    )
+        return self.success_url(form)
 
-
-@login_required(login_url='/admin/site/login')
-def account_update_view(request, pk):
-    account_form = forms.AccountForm(
-        instance=models.Account.get_account_by_pk(pk=pk),
-    )
-    if request.POST:
-        account_form = forms.AccountForm(
-            request.POST,
-            instance=models.Account.get_account_by_pk(pk=pk),
+    def success_url(self, form):
+        return render(
+            self.request,
+            self.template_name,
+            {
+                'account_form': form,
+            }
         )
-        if account_form.is_valid():
-            account_form.save()
+
+
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class AccountUpdateView(generic.View):
+    model = models.Account
+    form_class = forms.AccountForm
+    template_name = "admin_panel/account/update.html"
+
+    def get(self, request, pk):
+        form = self.form_class(
+            instance=self.model.get_account_by_pk(pk=pk),
+        )
+        return self.success_url(form)
+
+    def post(self, request, pk):
+        form = self.form_class(
+            request.POST,
+            instance=self.model.get_account_by_pk(pk=pk),
+        )
+        if form.is_valid():
+            form.save()
             messages.success(request, 'Лицевой счет обновлен!')
             return redirect('admin_panel:accounts_list')
-    return render(
-        request,
-        "admin_panel/account/update.html",
-        {
-            'account_form': account_form,
-        }
-    )
+        return self.success_url(form)
+
+    def success_url(self, form):
+        return render(
+            self.request,
+            self.template_name,
+            {
+                'account_form': form,
+            }
+        )
 
 
-@login_required(login_url='/admin/site/login')
-def account_detail_view(request, pk):
-    return render(
-        request,
-        "admin_panel/account/detail.html",
-        {
-            'account_data': models.Account.get_account_by_pk(pk=pk),
-        }
-    )
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class AccountDetailView(generic.DetailView):
+    model = models.Account
+    context_object_name = 'account_data'
+    template_name = "admin_panel/account/detail.html"
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')

@@ -96,10 +96,13 @@ class InvoiceForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super(InvoiceForm, self).save(commit=False)
-        instance.owner = models.Flat.objects.get(
-            number=self.cleaned_data['flat'],
-            house=self.cleaned_data['house'],
-        ).owner
+        try:
+            instance.owner = models.Flat.objects.get(
+                number=self.cleaned_data['flat'],
+                house=self.cleaned_data['house'],
+            ).owner
+        except ValueError:
+            return None
         instance.save()
         return instance
 
