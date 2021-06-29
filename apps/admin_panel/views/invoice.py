@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import generic
+from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
@@ -31,7 +32,7 @@ class InvoiceList(generic.View):
 
 #TODO add invoice services to each views
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class InvoiceCreate(generic.View):
+class InvoiceCreate(generic.View, ):
     model = models.Invoice
     form_class = forms.InvoiceForm
     template_name = 'admin_panel/invoice/create.html'
@@ -45,13 +46,7 @@ class InvoiceCreate(generic.View):
                 'number': utils.generate_number(self.model),
             }
         )
-        return render(
-            request,
-            self.template_name,
-            {
-                'form': form,
-            }
-        )
+        return self.success_url(form)
 
     def post(self, request):
         form = self.form_class(
@@ -59,10 +54,14 @@ class InvoiceCreate(generic.View):
         )
         if form.is_valid():
             form.save()
+            messages.success(request, 'Квитанция сохранена!')
             return redirect('admin_panel:invoice_list')
+        return self.success_url(form)
+
+    def success_url(self, form):
         return render(
-            request,
-            'admin_panel/invoice/create.html',
+            self.request,
+            self.template_name,
             {
                 'form': form,
             }
@@ -82,13 +81,7 @@ class InvoiceUpdate(generic.View):
         form = self.form_class(
             instance=invoice,
         )
-        return render(
-            request,
-            'admin_panel/invoice/update.html',
-            {
-                'form': form,
-            }
-        )
+        return self.success_url(form)
 
     def post(self, request, pk):
         invoice = self.get_object(pk)
@@ -98,9 +91,13 @@ class InvoiceUpdate(generic.View):
         )
         if form.is_valid():
             form.save()
+            messages.success(request, 'Квитанция обновлена!')
             return redirect('admin_panel:invoice_list')
+        return self.success_url(form)
+
+    def success_url(self, form):
         return render(
-            request,
+            self.request,
             'admin_panel/invoice/update.html',
             {
                 'form': form,
