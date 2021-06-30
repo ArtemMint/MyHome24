@@ -20,13 +20,13 @@ docker-stop:
 docker-prune:
 	docker image prune -f
 docker-migrations:
-	docker-compose exec django ./manage.py makemigrations
+	docker-compose exec django ./manage.py makemigrations --no-input
 docker-migrate:
-	docker-compose exec django ./manage.py migrate
+	docker-compose exec django ./manage.py migrate --no-input
 docker-shell:
 	docker-compose exec django ./manage.py shell
 docker-collectstatic:
-	docker-compose exec django ./manage.py collectstatic
+	docker-compose exec django ./manage.py collectstatic --no-input
 docker-test-register:
 	docker-compose exec django ./manage.py test register
 docker-test-admin-panel:
