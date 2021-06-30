@@ -60,7 +60,7 @@
                             <td>
                                 <p>
                                 {% for user in house_user_admin_list %}
-                                    <a href="{% url 'admin_panel:user_admin_detail' user.user_admin.pk %}">{{ user }}</a>
+                                    <a href="{% url 'admin_panel:user_admin_detail' user.name.pk %}">{{ user }}</a>
                                 </p>
                                 {% endfor %}
                             </td>

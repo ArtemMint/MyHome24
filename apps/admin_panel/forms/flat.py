@@ -46,16 +46,19 @@ class FlatForm(forms.ModelForm):
             'house': forms.Select(
                 attrs={
                     'class': 'form-control',
+                    'id': 'house',
                 }
             ),
             'section': forms.Select(
                 attrs={
                     'class': 'form-control',
+                    'id': 'section',
                 }
             ),
             'floor': forms.Select(
                 attrs={
                     'class': 'form-control',
+                    'id': 'floor',
                 }
             ),
             'tariff': forms.Select(
@@ -106,7 +109,8 @@ class FlatFilter(django_filters.FilterSet):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
-                'onchange': 'form.submit();',
+                'id': 'house',
+                'onkeypress': 'form.submit();',
             }
         )
     )
@@ -115,7 +119,8 @@ class FlatFilter(django_filters.FilterSet):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
-                'onchange': 'form.submit();',
+                'id': 'section',
+                'onkeypress': 'form.submit();',
             }
         )
     )
@@ -124,6 +129,7 @@ class FlatFilter(django_filters.FilterSet):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
+                'id': 'floor',
                 'onchange': 'form.submit();',
             }
         )

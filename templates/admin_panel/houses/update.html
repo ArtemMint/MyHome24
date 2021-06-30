@@ -144,10 +144,10 @@
                             {% for form in house_user_admin_formset %}
                                 {{ form.id }}
                                 <div class="form-user-admin">
-                                    {{ form.user_admin.label_tag }}
+                                    {{ form.name.label_tag }}
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            {{ form.user_admin }}
+                                            {{ form.name }}
                                         </div>
                                         <div class="input-group col-lg-5">
                                             <input class="form-control" readonly>

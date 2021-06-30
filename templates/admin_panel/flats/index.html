@@ -129,3 +129,45 @@
     {% endif %}
 
 {% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'admin_panel/js/queryFiltering.js' %}"></script>
+
+    <script type="text/javascript">
+        let URLSection = '/api/section/?house='
+        let URLFloor = "/api/floor/?house="
+
+        $('document').ready(function () {
+            $('#section').each(function() {
+                emptySelect(this);
+            })
+            $('#floor').each(function() {
+                emptySelect(this);
+            })
+            }
+        )
+
+        $('#house').each(function() {
+            $(this).on("change", function() {
+                let item = $(this);
+                let itemID = item.prop('value');
+                if (itemID) {
+                    $('#section').each(function() {
+                        selectQuerySet(this, itemID, URLSection);
+                    });
+                    $('#floor').each(function() {
+                        selectQuerySet(this, itemID, URLFloor);
+                    });
+
+                } else {
+                    $('#section').each(function() {
+                        emptySelect(this);
+                    });
+                    $('#floor').each(function() {
+                        emptySelect(this);
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

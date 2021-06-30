@@ -77,4 +77,19 @@ urlpatterns = [
         name='flat_delete',
     ),
 
+    # Section
+    path(
+        'section/',
+        views.SectionList.as_view(),
+        name='section_list',
+    ),
+
+    # Floor
+    path(
+        'floor/',
+        views.FloorList.as_view(),
+        name='floor_list',
+    ),
+
+
 ]

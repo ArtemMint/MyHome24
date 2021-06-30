@@ -86,9 +86,25 @@ class SectionList(generics.ListAPIView):
     serializer_class = serializers.HouseSectionSerializer
 
     def get_queryset(self):
-        house = self.request.query_params.get('pk')
+        house = self.request.query_params.get('house')
         if house:
-            queryset = self.model.objects.filter(house__pk=house)
+            queryset = self.model.objects.filter(house=house)
+        else:
+            queryset = []
+        return queryset
+
+
+class FloorList(generics.ListAPIView):
+    """
+    Filter sections by House.
+    """
+    model = models.HouseFloor
+    serializer_class = serializers.HouseFloorSerializer
+
+    def get_queryset(self):
+        house = self.request.query_params.get('house')
+        if house:
+            queryset = self.model.objects.filter(house=house)
         else:
             queryset = []
         return queryset
