@@ -39,32 +39,32 @@ urlpatterns = [
     # Cash register
     path(
         'account-transaction/index/',
-        views.AccountTransactionsList.as_view(),
+        views.AccountTransactionsListView.as_view(),
         name='account_transactions_list'
     ),
     path(
         'account-transaction/create-in',
-        views.account_transactions_create_in,
+        views.AccountTransactionsCreateInView.as_view(),
         name='account_transaction_create_in'
     ),
     path(
         'account-transaction/create-out',
-        views.account_transactions_create_out,
+        views.AccountTransactionsCreateOutView.as_view(),
         name='account_transaction_create_out'
     ),
     path(
         'account-transaction/update/<int:pk>',
-        views.account_transactions_update,
+        views.AccountTransactionsUpdateView.as_view(),
         name='account_transaction_update'
     ),
     path(
         'account-transaction/detail/<int:pk>',
-        views.account_transactions_detail,
+        views.AccountTransactionsDetailView.as_view(),
         name='account_transaction_detail'
     ),
     path(
         'account-transaction/delete/<int:pk>',
-        views.account_transactions_delete,
+        views.AccountTransactionsDeleteView.as_view(),
         name='account_transaction_delete'
     ),
 

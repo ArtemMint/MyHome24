@@ -12,7 +12,7 @@ from admin_panel import models, forms, utils, custom_views
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class AccountTransactionsList(custom_views.ListFilteringView):
+class AccountTransactionsListView(custom_views.ListFilteringView):
     """
     AccountTransaction list of all users
     """
@@ -22,7 +22,7 @@ class AccountTransactionsList(custom_views.ListFilteringView):
 
     def get_context_data(self):
         statistic = utils.get_short_statistic()
-        context = super(AccountTransactionsList, self).get_context_data()
+        context = super(AccountTransactionsListView, self).get_context_data()
         context.update({
             'total_income': models.AccountTransaction.get_total_income(),
             'total_expenditure': models.AccountTransaction.get_total_expenditure(),
@@ -31,122 +31,151 @@ class AccountTransactionsList(custom_views.ListFilteringView):
         return context
 
 
-@login_required(login_url='/admin/site/login')
-def account_transactions_create_in(request):
-    account_transaction_form = forms.AccountTransactionIncomeForm(
-        initial={
-            'number': utils.generate_number(models.AccountTransaction),
-            'created_date': utils.get_current_date(),
-        }
-    )
-    if request.POST:
-        account_transaction_form = forms.AccountTransactionIncomeForm(
-            request.POST,
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class AccountTransactionsCreateInView(generic.View):
+    model = models.AccountTransaction
+    form_class = forms.AccountTransactionIncomeForm
+    template_name = 'admin_panel/account_transaction/create_in.html'
+
+    def get(self, request):
+        form = self.form_class(
+            initial={
+                'number': utils.generate_number(models.AccountTransaction),
+                'created_date': utils.get_current_date(),
+            }
         )
-        if account_transaction_form.is_valid():
-            a_t = account_transaction_form.save(commit=False)
+        return self.render_to_response(form)
+
+    def post(self, request):
+        form = self.form_class(
+            self.request.POST,
+        )
+        if form.is_valid():
+            a_t = form.save(commit=False)
             a_t.type = 'Приход'
             a_t.save()
-            messages.success(request, 'Приходная ведомость создан!')
+            messages.success(self.request, 'Приходная ведомость создан!')
             return redirect('admin_panel:account_transactions_list')
         else:
-            messages.warning(request, 'Ошибка создания ведомости!')
-    return render(
-        request,
-        'admin_panel/account_transaction/create_in.html',
-        {
-            'account_transaction_form': account_transaction_form,
-        }
-    )
+            messages.warning(self.request, 'Ошибка создания ведомости!')
+        return self.render_to_response(form)
 
-
-def account_transactions_create_out(request):
-    account_transaction_form = forms.AccountTransactionExpenditureForm(
-        initial={
-            'number': utils.generate_number(models.AccountTransaction),
-            'created_date': utils.get_current_date(),
-        }
-    )
-    if request.POST:
-        account_transaction_form = forms.AccountTransactionExpenditureForm(
-            request.POST,
+    def render_to_response(self, form):
+        return render(
+            self.request,
+            self.template_name,
+            {
+                'account_transaction_form': form,
+            }
         )
-        if account_transaction_form.is_valid():
-            a_t = account_transaction_form.save(commit=False)
+
+
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class AccountTransactionsCreateOutView(generic.View):
+    model = models.AccountTransaction
+    form_class = forms.AccountTransactionExpenditureForm
+    template_name = 'admin_panel/account_transaction/create_out.html'
+
+    def get(self, request):
+        form = self.form_class(
+            initial={
+                'number': utils.generate_number(models.AccountTransaction),
+                'created_date': utils.get_current_date(),
+            }
+        )
+        return self.render_to_response(form)
+
+    def post(self, request):
+        form = forms.AccountTransactionExpenditureForm(
+            self.request.POST,
+        )
+        if form.is_valid():
+            a_t = form.save(commit=False)
             a_t.total = -a_t.total
             a_t.type = 'Расход'
             a_t.save()
-            messages.success(request, 'Расходная ведомость создан!')
+            messages.success(self.request, 'Расходная ведомость создан!')
             return redirect('admin_panel:account_transactions_list')
         else:
-            messages.warning(request, 'Ошибка создания ведомости!')
-    return render(
-        request,
-        'admin_panel/account_transaction/create_out.html',
-        {
-            'account_transaction_form': account_transaction_form,
-        }
-    )
+            messages.warning(self.request, 'Ошибка создания ведомости!')
+        return self.render_to_response(form)
+
+    def render_to_response(self, form):
+        return render(
+            self.request,
+            self.template_name,
+            {
+                'account_transaction_form': form,
+            }
+        )
 
 
-@login_required(login_url='/admin/site/login')
-def account_transactions_update(request, pk):
-    account_transaction = models.AccountTransaction.get_account_transaction_by_pk(pk=pk)
-    if account_transaction.transaction.type == 'Приход':
-        account_transaction_form = forms.AccountTransactionIncomeForm(
-            instance=account_transaction,
-        )
-    else:
-        account_transaction_form = forms.AccountTransactionExpenditureForm(
-            instance=account_transaction,
-        )
-    if request.POST:
-        if account_transaction.transaction.type == 'Приход':
-            account_transaction_form = forms.AccountTransactionIncomeForm(
-                request.POST,
-                instance=account_transaction,
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class AccountTransactionsUpdateView(generic.View):
+    model = models.AccountTransaction
+    form_in = forms.AccountTransactionIncomeForm
+    form_out = forms.AccountTransactionExpenditureForm
+    template_name = 'admin_panel/account_transaction/update.html'
+
+    def get_object(self, pk):
+        try:
+            obj = self.model.get_account_transaction_by_pk(pk=pk)
+        except self.model.DoesNotExist:
+            obj = None
+        return obj
+
+    def get(self, request, pk: int):
+        obj = self.get_object(pk)
+        if obj.transaction.type == 'Приход':
+            form = self.form_in(
+                instance=obj,
             )
         else:
-            account_transaction_form = forms.AccountTransactionExpenditureForm(
-                request.POST,
-                instance=account_transaction,
+            form = self.form_out(
+                instance=obj,
             )
-        if account_transaction_form.is_valid():
-            account_transaction_form.save()
-            messages.success(request, 'Ведомость обновлена!')
+        return self.render_to_response(form)
+
+    def post(self, request, pk: int):
+        obj = self.get_object(pk=pk)
+        if obj.transaction.type == 'Приход':
+            form = forms.AccountTransactionIncomeForm(
+                self.request.POST,
+                instance=obj,
+            )
+        else:
+            form = forms.AccountTransactionExpenditureForm(
+                self.request.POST,
+                instance=obj,
+            )
+        if form.is_valid():
+            form.save()
+            messages.success(self.request, 'Ведомость обновлена!')
             return redirect('admin_panel:account_transactions_list')
         else:
-            messages.warning(request, 'Ошибка обновления ведомости!')
-    return render(
-        request,
-        'admin_panel/account_transaction/update.html',
-        {
-            'account_transaction_form': account_transaction_form,
-        }
-    )
+            messages.warning(self.request, 'Ошибка обновления ведомости!')
+        return self.render_to_response(form)
+
+    def render_to_response(self, form):
+        return render(
+            self.request,
+            self.template_name,
+            {
+                'account_transaction_form': form,
+            }
+        )
 
 
-@login_required(login_url='/admin/site/login')
-def account_transactions_detail(request, pk):
-    return render(
-        request,
-        'admin_panel/account_transaction/detail.html',
-        {
-            'account_transaction_data': models.AccountTransaction.get_account_transaction_by_pk(pk=pk),
-        }
-    )
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class AccountTransactionsDetailView(generic.DetailView):
+    model = models.AccountTransaction
+    context_object_name = 'account_transaction_data'
+    template_name = 'admin_panel/account_transaction/detail.html'
 
 
-@login_required(login_url='/admin/site/login')
-def account_transactions_delete(request, pk):
-    account_transaction = models.AccountTransaction.get_account_transaction_by_pk(pk=pk)
-    if request.POST:
-        account_transaction.delete()
-        return redirect('admin_panel:account_transactions_list')
-    return render(
-        request,
-        'admin_panel/account_transaction/delete.html',
-        {
-            'account_transaction_data': account_transaction,
-        }
-    )
+@method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
+class AccountTransactionsDeleteView(generic.DeleteView):
+    model = models.AccountTransaction
+    context_object_name = 'account_transaction_data'
+    template_name = 'admin_panel/account_transaction/delete.html'
+    success_url = 'admin_panel:account_transactions_list'

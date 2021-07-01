@@ -1,3 +1,10 @@
+"""
+Account CRUD views
+"""
+
+__version__ = '1.0'
+__author__ = 'Artem Yurchak'
+
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -10,6 +17,9 @@ from admin_panel import models, forms, utils, custom_views
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class AccountsListView(custom_views.ListFilteringView):
+    """
+    List of accounts with filtering using AccountFilter form
+    """
     model = models.Account
     search_form = forms.AccountFilter
     template_name = 'admin_panel/account/index.html'
@@ -23,6 +33,9 @@ class AccountsListView(custom_views.ListFilteringView):
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class AccountCreateView(generic.View):
+    """
+    View that create new account object using account form
+    """
     model = models.Account
     form_class = forms.AccountForm
     template_name = 'admin_panel/account/create.html'
@@ -57,6 +70,9 @@ class AccountCreateView(generic.View):
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class AccountUpdateView(generic.View):
+    """
+    View that update current account object using account form
+    """
     model = models.Account
     form_class = forms.AccountForm
     template_name = "admin_panel/account/update.html"
@@ -90,6 +106,9 @@ class AccountUpdateView(generic.View):
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class AccountDetailView(generic.DetailView):
+    """
+    View that render template with data about selected account object
+    """
     model = models.Account
     context_object_name = 'account_data'
     template_name = "admin_panel/account/detail.html"
@@ -97,6 +116,9 @@ class AccountDetailView(generic.DetailView):
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
 class AccountDeleteView(generic.DeleteView):
+    """
+    View that render can delete selected account object
+    """
     model = models.Account
     success_url = reverse_lazy('admin_panel:accounts_list')
     template_name = 'admin_panel/account/delete.html'
