@@ -5,8 +5,7 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from register import models
-from register import forms
+from register import models, forms
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')

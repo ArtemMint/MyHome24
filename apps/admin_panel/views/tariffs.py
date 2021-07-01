@@ -3,36 +3,26 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.views.generic import (
-    ListView,
-    CreateView,
-    DeleteView,
-    DetailView,
-)
+from django.views import generic
 
-from admin_panel.models import Tariff
-from admin_panel.forms import (
-    TariffForm,
-    TariffServiceFormset,
-    TariffServiceDisplayFormset,
-)
+from admin_panel import models, forms
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class TariffList(ListView):
-    queryset = Tariff.objects.all()
+class TariffList(generic.ListView):
+    model = models.Tariff
     template_name = "admin_panel/tariffs/index.html"
 
 
 @login_required(login_url='/admin/site/login')
 def tariff_update_view(request, pk):
-    tariff_form = TariffForm(
+    tariff_form = forms.TariffForm(
         request.POST or None,
-        instance=Tariff.objects.get(id=pk),
+        instance=models.Tariff.objects.get(id=pk),
     )
-    tariff_service_formset = TariffServiceFormset(
+    tariff_service_formset = forms.TariffServiceFormset(
         request.POST or None,
-        instance=Tariff.objects.get(id=pk),
+        instance=models.Tariff.objects.get(id=pk),
     )
     if request.POST:
         if tariff_form.is_valid() and \
@@ -42,11 +32,11 @@ def tariff_update_view(request, pk):
             messages.success(request, 'Все данные обновлены!')
             return redirect('admin_panel:tariff_update', pk)
     else:
-        tariff_form = TariffForm(
-            instance=Tariff.objects.get(id=pk),
+        tariff_form = forms.TariffForm(
+            instance=models.Tariff.objects.get(id=pk),
         )
-        tariff_service_formset = TariffServiceFormset(
-            instance=Tariff.objects.get(id=pk),
+        tariff_service_formset = forms.TariffServiceFormset(
+            instance=models.Tariff.objects.get(id=pk),
         )
 
     return render(
@@ -64,13 +54,13 @@ def tariff_copy_view(request, pk):
     """
     Copy current item and save as new
     """
-    tariff_form = TariffForm(
+    tariff_form = forms.TariffForm(
         request.POST or None,
-        instance=Tariff.get_tariff_for_copy(pk=pk),
+        instance=models.Tariff.get_tariff_for_copy(pk=pk),
     )
-    tariff_service_formset = TariffServiceDisplayFormset(
+    tariff_service_formset = forms.TariffServiceDisplayFormset(
         request.POST or None,
-        instance=Tariff.objects.get(id=pk),
+        instance=models.Tariff.objects.get(id=pk),
     )
 
     if request.POST:
@@ -92,15 +82,15 @@ def tariff_copy_view(request, pk):
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class TariffCreate(CreateView):
-    model = Tariff
-    form_class = TariffForm
-    tariff_service_formset = TariffServiceFormset
+class TariffCreate(generic.CreateView):
+    model = models.Tariff
+    form_class = forms.TariffForm
+    tariff_service_formset = forms.TariffServiceFormset
     template_name = 'admin_panel/tariffs/create.html'
     success_url = reverse_lazy('admin_panel:tariff_list')
 
     def get_object(self, queryset=None):
-        return Tariff.objects.create()
+        return models.Tariff.objects.create()
 
     def get_context_data(self, **kwargs):
         context = super(TariffCreate, self).get_context_data(**kwargs)
@@ -139,22 +129,23 @@ class TariffCreate(CreateView):
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class TariffDelete(DeleteView):
-    model = Tariff
+class TariffDelete(generic.DeleteView):
+    model = models.Tariff
     template_name = 'admin_panel/tariffs/delete.html'
     success_url = reverse_lazy('admin_panel:tariff_list')
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class TariffDetail(DetailView):
+class TariffDetail(generic.DetailView):
     template_name = 'admin_panel/tariffs/detail.html'
     success_url = reverse_lazy('admin_panel:tariff_list')
     context_object_name = 'tariff_form'
-    tariff_service_formset = TariffServiceDisplayFormset
+    tariff_service_formset = forms.TariffServiceDisplayFormset
 
     def get_object(self, queryset=None):
         pk = self.kwargs.get('pk')
-        return Tariff.objects.get(id=pk)
+        obj = models.Tariff.objects.get(id=pk)
+        return obj
 
     def get_context_data(self, **kwargs):
         context = super(TariffDetail, self).get_context_data(**kwargs)
@@ -167,8 +158,7 @@ class TariffDetail(DetailView):
         super(TariffDetail, self).get(request, *args, **kwargs)
         return self.render_to_response(
             self.get_context_data(
-                object=self.object,  # instance is Tariff
-                # All forms to render in page
+                object=self.object,
                 tariff_service_list=self.tariff_service_formset,
             )
         )

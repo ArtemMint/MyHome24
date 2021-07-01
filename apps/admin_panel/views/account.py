@@ -5,36 +5,20 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models, forms, utils
+from admin_panel import models, forms, utils, custom_views
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class AccountsListView(generic.View):
+class AccountsListView(custom_views.ListFilteringView):
     model = models.Account
-    form_class = forms.AccountFilter
+    search_form = forms.AccountFilter
     template_name = 'admin_panel/account/index.html'
 
-    def get(self, request):
-        accounts_list = self.model.get_accounts_list()
-        accounts_count = self.model.get_accounts_count()
-        f = self.form_class(
-            request.GET,
-            queryset=accounts_list,
-        )
+    def get_context_data(self):
+        context = super(AccountsListView, self).get_context_data()
         statistic = utils.get_short_statistic()
-        context = {
-            'filter': f,
-            'accounts_count': accounts_count,
-        }
         context.update(statistic)
-        return self.success_url(context)
-
-    def success_url(self, context):
-        return render(
-            self.request,
-            self.template_name,
-            context,
-        )
+        return context
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')

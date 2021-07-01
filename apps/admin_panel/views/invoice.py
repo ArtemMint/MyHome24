@@ -4,31 +4,21 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models, forms, utils
+from admin_panel import models, forms, utils, custom_views
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class InvoiceList(generic.View):
+class InvoiceList(custom_views.ListFilteringView):
     model = models.Invoice
-    form_class = forms.InvoiceFilterForm
+    search_form = forms.InvoiceFilterForm
     template_name = "admin_panel/invoice/index.html"
 
-    def get(self, request):
-        queryset = self.model.get_invoice_list()
-        f = self.form_class(
-            request.GET,
-            queryset=queryset,
-        )
+    def get_context_data(self):
+        context = super(InvoiceList, self).get_context_data()
         statistic = utils.get_short_statistic()
-        context = {
-            'filter': f,
-        }
         context.update(statistic)
-        return render(
-            request,
-            self.template_name,
-            context,
-        )
+        return context
+
 
 #TODO add invoice services to each views
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')

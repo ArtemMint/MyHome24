@@ -63,6 +63,16 @@
         let URLSection = '/api/section/?house='
         let URLFloor = "/api/floor/?house="
 
+        $('document').ready(function () {
+            $('#section').each(function() {
+                emptySelect(this);
+            })
+            $('#floor').each(function() {
+                emptySelect(this);
+            })
+            }
+        )
+
         $('#house').each(function() {
             $(this).on("change", function() {
                 let item = $(this);

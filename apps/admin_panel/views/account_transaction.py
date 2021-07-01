@@ -8,35 +8,27 @@ from django.views import generic
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models, forms, utils
+from admin_panel import models, forms, utils, custom_views
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class AccountTransactionsList(generic.View):
+class AccountTransactionsList(custom_views.ListFilteringView):
     """
     AccountTransaction list of all users
     """
     model = models.AccountTransaction
-    form_class = forms.AccountTransactionFilter
+    search_form = forms.AccountTransactionFilter
     template_name = 'admin_panel/account_transaction/index.html'
 
-    def get(self, request):
-        f = self.form_class(
-            request.GET,
-            queryset=self.model.get_queryset_list()
-        )
+    def get_context_data(self):
         statistic = utils.get_short_statistic()
-        context = {
-            'filter': f,
+        context = super(AccountTransactionsList, self).get_context_data()
+        context.update({
             'total_income': models.AccountTransaction.get_total_income(),
             'total_expenditure': models.AccountTransaction.get_total_expenditure(),
-        }
+        })
         context.update(statistic)
-        return render(
-            request,
-            self.template_name,
-            context,
-        )
+        return context
 
 
 @login_required(login_url='/admin/site/login')

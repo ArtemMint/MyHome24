@@ -206,7 +206,7 @@ urlpatterns = [
     # Messages
     path(
         'message/index/',
-        views.message_list_view,
+        views.MessageListView.as_view(),
         name='message_list'
     ),
     path(
@@ -216,14 +216,14 @@ urlpatterns = [
     ),
     path(
         'message/detail/<int:pk>/',
-        views.message_detail_view,
+        views.MessageDetailView.as_view(),
         name='message_detail'
     ),
-    path(
-        'message/delete/<int:pk>/',
-        views.message_delete_view,
-        name='message_delete'
-    ),
+    # path(
+    #     'message/delete/<int:pk>/',
+    #     views.MessageDeleteView.as_view(),
+    #     name='message_delete'
+    # ),
 
     # Master requests
     path(
