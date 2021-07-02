@@ -4,6 +4,14 @@ from functools import reduce
 from admin_panel import models
 
 
+# decorator function
+def get_round_result(func):
+    def rounded(*args, **kwargs):
+        result = func
+        return round(result, 2)
+    return rounded
+
+
 def get_short_statistic():
     accounts = models.Account.get_accounts_list().filter()
 
