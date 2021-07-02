@@ -8,25 +8,21 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from admin_panel.forms import (
-    MetricsFormset,
-    ServicesFormset,
-)
+from admin_panel import forms
 
 
 @login_required(login_url='/admin/site/login')
 def service_update_view(request):
     if request.POST:
-        service_formset = ServicesFormset(
+        service_formset = forms.ServicesFormset(
             request.POST,
         )
         if service_formset.is_valid():
             service_formset.save()
             messages.success(request, 'Все услуги обновлены!')
             return redirect('admin_panel:services_list')
-
     else:
-        service_formset = ServicesFormset()
+        service_formset = forms.ServicesFormset()
     return render(
         request,
         'admin_panel/services_metrics/services.html',
@@ -39,7 +35,7 @@ def service_update_view(request):
 @login_required(login_url='/admin/site/login')
 def metrics_update_view(request):
     if request.POST:
-        metrics_formset = MetricsFormset(
+        metrics_formset = forms.MetricsFormset(
             request.POST,
         )
         if metrics_formset.is_valid():
@@ -48,7 +44,7 @@ def metrics_update_view(request):
             return redirect('admin_panel:metrics_list')
 
     else:
-        metrics_formset = MetricsFormset()
+        metrics_formset = forms.MetricsFormset()
     return render(
         request,
         'admin_panel/services_metrics/metrics.html',
