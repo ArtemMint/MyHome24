@@ -22,10 +22,12 @@ class AccountTransactionsListView(custom_views.ListFilteringView):
 
     def get_context_data(self):
         statistic = utils.get_short_statistic()
+        total_income = utils.get_round_result(self.model.get_total_income())
+        total_expenditure = utils.get_round_result(self.model.get_total_expenditure())
         context = super(AccountTransactionsListView, self).get_context_data()
         context.update({
-            'total_income': models.AccountTransaction.get_total_income(),
-            'total_expenditure': models.AccountTransaction.get_total_expenditure(),
+            'total_income': total_income,
+            'total_expenditure': total_expenditure,
         })
         context.update(statistic)
         return context
@@ -137,7 +139,7 @@ class AccountTransactionsUpdateView(generic.View):
         return self.render_to_response(form)
 
     def post(self, request, pk: int):
-        obj = self.get_object(pk=pk)
+        obj = self.get_object(pk)
         if obj.transaction.type == 'Приход':
             form = forms.AccountTransactionIncomeForm(
                 self.request.POST,
