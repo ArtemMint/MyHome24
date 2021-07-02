@@ -1,1 +1,1 @@
-from register.tests.test_model_user import *
+from register.tests.test_models import *
