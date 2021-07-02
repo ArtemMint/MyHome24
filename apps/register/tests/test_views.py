@@ -60,13 +60,19 @@ class UserAdminLoginTest(TestCase):
     def tearDown(self) -> None:
         self.user.delete()
 
-    def test_login_view(self):
+    def test_login_and_logout_view(self):
         response = self.client.post(
             reverse_lazy('admin_panel:admin_login'),
             self.user_data,
             follow=True,
         )
         self.assertTrue(response.context['user'].is_active)
+        response = self.client.post(
+            reverse_lazy('admin_panel:admin_logout'),
+            self.user_data,
+            follow=True,
+        )
+        self.assertFalse(response.context['user'].is_active)
 
     def test_login_view_wrong_password(self):
         user_data = {
