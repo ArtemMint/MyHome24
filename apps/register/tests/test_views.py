@@ -49,6 +49,7 @@ class UserLoginTest(TestCase):
 
 
 class UserAdminLoginTest(TestCase):
+
     def setUp(self) -> None:
         self.user_data = {
             'email': 'admin@gmail.com',
