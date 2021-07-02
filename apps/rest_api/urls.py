@@ -91,5 +91,12 @@ urlpatterns = [
         name='floor_list',
     ),
 
+    # Flat
+    path(
+        'flat/',
+        views.FlatQueryList.as_view(),
+        name='flat_query_list',
+    ),
+
 
 ]
