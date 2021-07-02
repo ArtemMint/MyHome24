@@ -98,5 +98,4 @@ urlpatterns = [
         name='flat_query_list',
     ),
 
-
 ]

@@ -8,11 +8,13 @@ from rest_api import serializers as user_serializers
 class FlatSerializer(serializers.ModelSerializer):
     owner = user_serializers.UserSerializer()
     house = house_serializers.HouseSerializer()
+    name = serializers.CharField(source='number')
 
     class Meta:
         model = models.Flat
         fields = (
             'id',
+            'name',
             'number',
             'area',
             'tariff',

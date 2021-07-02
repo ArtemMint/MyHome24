@@ -40,9 +40,9 @@ class FlatQueryList(generics.ListAPIView):
     serializer_class = serializers.FlatSerializer
 
     def get_queryset(self):
-        house = self.request.query_params.get('house')
-        if house:
-            queryset = self.model.objects.filter(house=house)
+        section = self.request.query_params.get('section')
+        if section:
+            queryset = self.model.objects.filter(section=section)
         else:
             queryset = []
         return queryset
