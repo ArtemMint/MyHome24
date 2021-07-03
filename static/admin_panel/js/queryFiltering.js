@@ -3,7 +3,6 @@ function selectQuerySet(e, itemID, URL) {
     select.find('option').remove().end();
 
     $.get(URL + itemID, function(queryset) {
-        console.log(queryset.length)
         if ( queryset.length === 0 ){
             select.append(new Option("----------", ""));
         } else {
