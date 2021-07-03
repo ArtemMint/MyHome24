@@ -3,18 +3,19 @@ Module with test models
 """
 
 from django.test import TestCase
-from django.urls import reverse_lazy
 
 from register import models
 
 
 class UserAdminTest(TestCase):
-
     def setUp(self) -> None:
         self.admin = models.User.objects.create_superuser(
             email='admin@gmail.com',
             password='admin',
         )
+
+    def tearDown(self) -> None:
+        self.admin.delete()
 
     def test_create_admin(self):
         admin = self.admin
@@ -32,54 +33,46 @@ class UserAdminTest(TestCase):
         admin = self.admin
         self.assertTrue(admin.is_superuser, 'Created user isn\'t admin.')
 
-    def tearDown(self) -> None:
-        self.admin.delete()
-
 
 class UserTest(TestCase):
-
-    def setUp(self) -> None:
-        self.user_data = {
+    @classmethod
+    def setUpClass(cls) -> None:
+        user_data = {
             'email': 'user@gmail.com',
             'password': 'secret',
         }
-        self.user = models.User.objects.create_user(**self.user_data)
+        user_data2 = {
+            'email': '123',
+            'password': 'secret',
+        }
+        models.User.objects.create_user(**user_data)
+        models.User.objects.create_user(**user_data2)
 
-    def test_create_user(self):
-        user = self.user
+    @classmethod
+    def tearDownClass(cls) -> None:
+        user1 = models.User.objects.get(pk=1)
+        user2 = models.User.objects.get(pk=2)
+        user1.delete()
+        user2.delete()
+
+    def test_user_created(self):
+        user = models.User.objects.get(pk=1)
+        self.assertTrue(isinstance(user, models.User))
+        self.assertTrue(user.check_password('secret'))
         self.assertEqual(user.email, 'user@gmail.com')
 
     def test_is_admin(self):
-        user = self.user
+        user = models.User.objects.get(pk=1)
         self.assertFalse(user.is_admin, 'Created user is admin.')
 
     def test_is_staff(self):
-        user = self.user
+        user = models.User.objects.get(pk=1)
         self.assertFalse(user.is_staff, 'Created user is admin.')
 
     def test_is_superuser(self):
-        user = self.user
+        user = models.User.objects.get(pk=1)
         self.assertFalse(user.is_superuser, 'Created user is admin.')
 
-    def tearDown(self) -> None:
-        self.user.delete()
-
-
-class UserLoginTest(TestCase):
-    def setUp(self) -> None:
-        self.user_data = {
-            'email': 'user@gmail.com',
-            'password': 'secret',
-        }
-        self.user = models.User.objects.create_user(**self.user_data)
-
-    def test_login(self):
-        response = self.client.post(
-            reverse_lazy('personal_cabinet:user_login'),
-            self.user_data,
-            follow=True,
-        )
-        self.assertTrue(response.context['user'].is_active)
-
-    def tearDown(self) -> None:
-        self.user.delete()
+    def test_all_users_created(self):
+        number = models.User.objects.all().count()
+        self.assertEqual(number, 2)

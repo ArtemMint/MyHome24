@@ -5,31 +5,14 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models
-from admin_panel import forms
+from admin_panel import models, forms, custom_views
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class FlatsListView(generic.View):
+class FlatsListView(custom_views.ListFilteringView):
     model = models.Flat
-    form_class = forms.FlatFilter
+    search_form = forms.FlatFilter
     template_name = 'admin_panel/flats/index.html'
-
-    def get(self, request):
-        flat_list = self.model.get_flats_list()
-        flat_number = self.model.get_flats_count()
-        f = self.form_class(
-            request.GET,
-            queryset=flat_list,
-        )
-        return render(
-            request,
-            self.template_name,
-            {
-                'filter': f,
-                'flats_count': flat_number,
-            }
-        )
 
 
 @login_required(login_url='/admin/site/login')

@@ -12,6 +12,7 @@ class InvoiceForm(forms.ModelForm):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
+                'id': 'house',
             }
         ),
         queryset=models.House.get_houses_list(),
@@ -21,6 +22,7 @@ class InvoiceForm(forms.ModelForm):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
+                'id': 'section',
             }
         ),
         queryset=models.HouseSection.get_sections_list(),
@@ -30,6 +32,7 @@ class InvoiceForm(forms.ModelForm):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
+                'id': 'flat',
             }
         ),
         queryset=models.Flat.get_flats_with_owner(),

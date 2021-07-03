@@ -149,9 +149,13 @@
                     <tr>
                         <td>Тариф</td>
                         <td>
-                            <a href="{% url 'admin_panel:tariff_detail' invoice.tariff.pk %}">
-                                {{ invoice.tariff.name }}
-                            </a>
+                            {% if invoice.tariff %}
+                                <a href="{% url 'admin_panel:tariff_detail' invoice.tariff.pk %}">
+                                    {{ invoice.tariff.name }}
+                                </a>
+                            {% else %}
+                                (не задано)
+                            {% endif %}
                         </td>
                     </tr>
                 </table>

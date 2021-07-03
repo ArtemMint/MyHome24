@@ -409,7 +409,7 @@ class ServicesSettings(SuccessMessageMixin, UpdateView):
     formset_class = forms.ServicesSiteFormset
     second_form_class = forms.SEOForm
     # Success URL
-    success_url = reverse_lazy('admin_panel:services_metrics')
+    success_url = reverse_lazy('admin_panel:services')
     # Success message
     success_message = 'Все данные успешно сохранены!'
     # Template to render

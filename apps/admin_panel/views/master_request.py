@@ -4,30 +4,14 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models, forms, utils
+from admin_panel import models, forms, utils, custom_views
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class MasterRequestList(generic.View):
+class MasterRequestList(custom_views.ListFilteringView):
     model = models.MasterRequest
-    form_class = forms.MasterRequestFilterForm
+    search_form = forms.MasterRequestFilterForm
     template_name = 'admin_panel/master_request/index.html'
-
-    def get(self, request):
-        queryset = self.model.objects.all()
-        master_request_number = self.model.get_all_queryset_count()
-        f = self.form_class(
-            request.GET,
-            queryset=queryset,
-        )
-        return render(
-            request,
-            self.template_name,
-            {
-                'filter': f,
-                'master_request_number': master_request_number,
-            }
-        )
 
 
 @login_required(login_url='/admin/site/login')

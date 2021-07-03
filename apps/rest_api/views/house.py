@@ -96,7 +96,7 @@ class SectionList(generics.ListAPIView):
 
 class FloorList(generics.ListAPIView):
     """
-    Filter sections by House.
+    Filter floor by House.
     """
     model = models.HouseFloor
     serializer_class = serializers.HouseFloorSerializer

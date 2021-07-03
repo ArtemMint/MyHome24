@@ -4,30 +4,14 @@ from django.views import generic
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models
-from admin_panel import forms
-from admin_panel import utils
+from admin_panel import models, forms, utils, custom_views
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class CountersView(generic.View):
+class CountersView(custom_views.ListFilteringView):
     model = models.CounterData
-    search_class = forms.CountersSearchForm
+    search_form = forms.CountersSearchForm
     template_name = "admin_panel/counter_data/counters.html"
-
-    def get(self, request):
-        queryset = self.model.get_counter_data_list()
-        f = self.search_class(
-            request.GET,
-            queryset=queryset
-        )
-        return render(
-            request,
-            self.template_name,
-            {
-                'filter': f,
-            }
-        )
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')

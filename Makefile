@@ -30,4 +30,4 @@ docker-collectstatic:
 docker-test-register:
 	docker-compose exec django ./manage.py test register
 docker-test-admin-panel:
-	docker-compose exec django ./manage.py test register
+	docker-compose exec django ./manage.py test admin_panel

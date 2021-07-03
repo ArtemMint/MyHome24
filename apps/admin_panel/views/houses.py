@@ -5,30 +5,14 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from admin_panel import models, forms
+from admin_panel import models, forms, custom_views
 
 
 @method_decorator(login_required(login_url='/admin/site/login'), name='dispatch')
-class HouseListView(generic.View):
+class HouseListView(custom_views.ListFilteringView):
     model = models.House
-    form_class = forms.HouseFilter
+    search_form = forms.HouseFilter
     template_name = 'admin_panel/houses/index.html'
-
-    def get(self, request):
-        house_list = self.model.get_houses_list()
-        house_number = self.model.get_houses_count()
-        f = self.form_class(
-            request.GET,
-            queryset=house_list,
-        )
-        return render(
-            request,
-            self.template_name,
-            {
-                'filter': f,
-                'houses_count': house_number,
-            }
-        )
 
 
 @login_required(login_url='/admin/site/login')

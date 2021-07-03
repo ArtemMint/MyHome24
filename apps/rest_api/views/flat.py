@@ -30,3 +30,19 @@ class FlatDelete(generics.DestroyAPIView):
         flat = self.get_object()
         flatserializer = self.serializer_class(flat)
         return Response(flatserializer.data)
+
+
+class FlatQueryList(generics.ListAPIView):
+    """
+    Filter flat by House.
+    """
+    model = models.Flat
+    serializer_class = serializers.FlatSerializer
+
+    def get_queryset(self):
+        section = self.request.query_params.get('section')
+        if section:
+            queryset = self.model.objects.filter(section=section)
+        else:
+            queryset = []
+        return queryset

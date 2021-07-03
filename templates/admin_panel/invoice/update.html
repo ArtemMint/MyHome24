@@ -91,7 +91,7 @@
                     <span id="user-fullname">
                         {% if form.instance.flat.owner %}
                             <a href="{% url 'admin_panel:user_detail' form.instance.flat.owner.pk %}">
-                                {{ form.instance.flat.owner.full_name }}
+                                {{ form.instance.flat.owner.first_name }} {{ form.instance.flat.owner.last_name }}
                             </a>
                         {% else %}
                             (не задано)
@@ -100,7 +100,7 @@
                 </p>
                 <p>
                     <b>Телефон:</b>
-                    <span id="user-fullname">
+                    <span id="user-phone">
                         {% if form.instance.flat.owner %}
                             <a href="tel:{{ form.instance.flat.owner.phone }}">
                             {{ form.instance.flat.owner.phone }}
@@ -223,3 +223,84 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'admin_panel/js/queryFiltering.js' %}"></script>
+
+    <script type="text/javascript">
+        let URLSection = '/api/section/?house='
+        let URLFlat = "/api/flat/?section="
+        let URLUser = "/api/user/?flat="
+
+        $('#house').each(function() {
+            $(this).on("change", function() {
+                let item = $(this);
+                let itemID = item.prop('value');
+                if (itemID) {
+                    $('#section').each(function() {
+                        selectQuerySet(this, itemID, URLSection);
+                    });
+                } else {
+                    $('#section').each(function() {
+                        emptySelect(this);
+                    });
+                }
+            });
+        });
+
+        $('#section').each(function() {
+            $(this).on("change", function() {
+                let item = $(this);
+                let itemID = item.prop('value');
+                if (itemID) {
+                    $('#flat').each(function() {
+                        selectQuerySet(this, itemID, URLFlat);
+                    });
+                } else {
+                    $('#flat').each(function() {
+                        emptySelect(this);
+                    });
+                }
+            });
+        });
+
+        $('#flat').each(function () {
+            $(this).on('change', function () {
+                let item = $(this);
+                let itemID = item.prop('value');
+                if (itemID) {
+                    $('#user-fullname').each(function() {
+                        let select = $(this).find('a');
+
+                        $.get(URLUser + itemID, function(queryset) {
+                            let userId = queryset[0]['id'];
+                            let full_name = queryset[0]['first_name'] + ' '+ queryset[0]['last_name'];
+
+                            if ( queryset.length === 0 ) {
+                                select.text('(не задано)');
+                            } else {
+                                select.text(full_name);
+                                select.attr('href', '/admin/user/detail/' + userId);
+                            }
+                        });
+                    });
+                    $('#user-phone').each(function() {
+                        let select = $(this).find('a');
+
+                        $.get(URLUser + itemID, function(queryset) {
+                            let phone = queryset[0]['phone'];
+
+                            if ( queryset.length === 0 ) {
+                                select.text('(не задано)');
+
+                            } else {
+                                select.attr('href', 'tel:' + phone);
+                                select.text(phone);
+                            }
+                        });
+                    });
+                }
+            })
+        })
+    </script>
+{% endblock %}
