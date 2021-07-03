@@ -98,4 +98,11 @@ urlpatterns = [
         name='flat_query_list',
     ),
 
+    # Flat
+    path(
+        'user/',
+        views.UserDataView.as_view(),
+        name='user_query_list',
+    ),
+
 ]
