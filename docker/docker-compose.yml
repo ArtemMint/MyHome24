@@ -1,5 +1,6 @@
 version: "3.3"
 services:
+
   django:
     build: .
     container_name: myhome24
@@ -13,6 +14,7 @@ services:
       - ../.env
     depends_on:
       - pgdb
+
   pgdb:
     image: postgres:13-alpine
     container_name: postgresdb
@@ -20,6 +22,7 @@ services:
       - ../.env
     volumes:
       - pgdata:/var/lib/postgresql/data/
+
   nginx:
     build: ../nginx
     depends_on:
@@ -29,5 +32,21 @@ services:
     - "80:80"
     volumes:
     - ../staticfiles/:/home/myhome24/static/
+
+  celery:
+    build: ./
+    container_name: celery
+    command: celery --app myhome24 worker --loglevel=info
+    volumes:
+      - ../:/usr/src/myhome24
+    env_file:
+      - ../.env
+    depends_on:
+      - django
+      - redis
+
+  redis:
+    image: redis:5-alpine
+
 volumes:
   pgdata:
