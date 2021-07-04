@@ -154,3 +154,7 @@ MEDIA_URL = '/media/'
 # LOGIN_USER_URL = 'website:index'
 LOGIN_REDIRECT_URL = 'personal_cabinet:summary'
 # LOGOUT_REDIRECT_URL = 'website:index'
+
+# CELERY SETTINGS
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
