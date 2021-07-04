@@ -66,14 +66,19 @@ def user_admin_update_view(request, pk):
             user = user_admin_form.save(commit=False)
             raw_password1 = user_admin_form.cleaned_data['password1']
             raw_password2 = user_admin_form.cleaned_data['password2']
-            if raw_password1 == raw_password2:
-                user.set_password(raw_password1)
-                user.is_staff = True
-                user.save()
-                messages.success(request, 'Пользователь создан!')
-                return redirect('admin_panel:users_admin_list')
+            if raw_password1:
+                if raw_password1 == raw_password2:
+                    user.set_password(raw_password1)
+                    user.is_staff = True
+                    user.save()
+                    messages.success(request, 'Пользователь обновлен!')
+                    return redirect('admin_panel:users_admin_list')
+                else:
+                    messages.success(request, 'Пароли не совпадают!')
             else:
-                messages.success(request, 'Пароли не совпадают!')
+                user.save()
+                messages.success(request, 'Пользователь обновлен!')
+                return redirect('admin_panel:users_admin_list')
         else:
             messages.success(request, 'Ошибка создания пользователя!')
     return render(
