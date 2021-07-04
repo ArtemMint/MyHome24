@@ -13,26 +13,35 @@ def get_round_result(func):
 
 
 def get_short_statistic():
-    accounts = models.Account.get_accounts_list().filter()
+    try:
+        accounts = models.Account.get_accounts_list().filter()
+    except models.Account.DoesNotExist:
+        accounts = []
 
-    for account in accounts:
-        transaction_balance = reduce(
-            lambda x, y: x + y if account.balance() >= 0 else x - y,
-            [
-                account.balance()
-                for account in accounts
-            ]
-        )
-        account_indebtedness = reduce(
-            lambda x, y: x + y,
-            [
-                account.balance()
-                if account.balance() < 0 else 0
-                for account in accounts
-            ]
-        )
-    account_balance = models.AccountTransaction.get_balance()
+    try:
+        account_balance = models.AccountTransaction.get_balance()
+    except models.AccountTransaction.DoesNotExist:
+        account_balance = []
 
+    if accounts:
+        for account in accounts:
+            transaction_balance = reduce(
+                lambda x, y: x + y if account.balance() >= 0 else x - y,
+                [
+                    account.balance()
+                    for account in accounts
+                ]
+            )
+            account_indebtedness = reduce(
+                lambda x, y: x + y,
+                [
+                    account.balance()
+                    if account.balance() < 0 else 0
+                    for account in accounts
+                ]
+            )
+    else:
+        transaction_balance, account_indebtedness = 0, 0
     return {
         'transaction_balance': round(transaction_balance, 2),
         'account_balance': round(account_balance, 2),
