@@ -10,24 +10,24 @@ tests: docker-test-admin-panel docker-test-register
 
 # Simple commands
 docker-build:
-	docker-compose build
+	cd docker && docker-compose build
 docker-up:
-	docker-compose up -d
+	cd docker && docker-compose up -d
 docker-down:
-	docker-compose down
+	cd docker && docker-compose down
 docker-stop:
-	docker-compose stop
+	cd docker && docker-compose stop
 docker-prune:
-	docker image prune -f
+	cd docker && docker image prune -f
 docker-migrations:
-	docker-compose exec django ./manage.py makemigrations --no-input
+	cd docker && docker-compose exec django ./manage.py makemigrations --no-input
 docker-migrate:
-	docker-compose exec django ./manage.py migrate --no-input
+	cd docker && docker-compose exec django ./manage.py migrate --no-input
 docker-shell:
-	docker-compose exec django ./manage.py shell
+	cd docker && docker-compose exec django ./manage.py shell
 docker-collectstatic:
-	docker-compose exec django ./manage.py collectstatic --no-input
+	cd docker && docker-compose exec django ./manage.py collectstatic --no-input
 docker-test-register:
-	docker-compose exec django ./manage.py test register
+	cd docker && docker-compose exec django ./manage.py test register
 docker-test-admin-panel:
-	docker-compose exec django ./manage.py test admin_panel
+	cd docker && docker-compose exec django ./manage.py test admin_panel

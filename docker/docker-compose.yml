@@ -1,33 +1,33 @@
 version: "3.3"
 services:
   django:
-    build: ./
+    build: .
     container_name: myhome24
     command: gunicorn myhome24.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - ./:/usr/src/myhome24
-      - ./staticfiles/:/home/myhome24/static/
+      - ../:/usr/src/myhome24
+      - ../staticfiles/:/home/myhome24/static/
     ports:
     - "8000:8000"
     env_file:
-      - .env
+      - ../.env
     depends_on:
       - pgdb
   pgdb:
     image: postgres:13-alpine
     container_name: postgresdb
     env_file:
-      - .env
+      - ../.env
     volumes:
       - pgdata:/var/lib/postgresql/data/
   nginx:
-    build: ./nginx
+    build: ../nginx
     depends_on:
       - django
       - pgdb
     ports:
     - "80:80"
     volumes:
-    - ./staticfiles/:/home/myhome24/static/
+    - ../staticfiles/:/home/myhome24/static/
 volumes:
   pgdata:
