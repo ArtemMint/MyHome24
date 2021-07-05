@@ -13,6 +13,7 @@ def get_round_result(func):
 
 
 def get_short_statistic():
+    transaction_balance, account_indebtedness = 0.00, 0.00
     try:
         accounts = models.Account.get_accounts_list().filter()
     except models.Account.DoesNotExist:
@@ -40,12 +41,11 @@ def get_short_statistic():
                     for account in accounts
                 ]
             )
-    else:
-        transaction_balance, account_indebtedness = 0, 0
+
     return {
-        'transaction_balance': round(transaction_balance, 2),
-        'account_balance': round(account_balance, 2),
-        'account_indebtedness': round(account_indebtedness, 2)
+        'transaction_balance': transaction_balance,
+        'account_balance': account_balance,
+        'account_indebtedness': account_indebtedness,
     }
 
 

@@ -12,6 +12,7 @@ class AccountForm(forms.ModelForm):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
+                'id': 'flat',
             }
         ),
         queryset=models.Flat.get_free_flats(),
@@ -43,11 +44,13 @@ class AccountForm(forms.ModelForm):
             'house': forms.Select(
                 attrs={
                     'class': 'form-control',
+                    'id': 'house',
                 }
             ),
             'section': forms.Select(
                 attrs={
                     'class': 'form-control',
+                    'id': 'section',
                 }
             ),
         }
@@ -90,7 +93,8 @@ class AccountFilter(django_filters.FilterSet):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
-                'onchange': 'form.submit();',
+                'id': 'house',
+                'onkeypress': 'form.submit();',
             }
         )
     )
@@ -99,7 +103,8 @@ class AccountFilter(django_filters.FilterSet):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
-                'onchange': 'form.submit();',
+                'id': 'section',
+                'onkeypress': 'form.submit();',
             }
         )
     )
