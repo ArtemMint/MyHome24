@@ -65,10 +65,15 @@ urlpatterns = [
         name='master_request_list'
     ),
 
-    # Master request
+    # User profile
     path(
         'user/view/',
         views.UserProfileView.as_view(),
         name='user_profile'
+    ),
+    path(
+        'user/update/',
+        views.UpdateUserProfileView.as_view(),
+        name='user_update'
     ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
