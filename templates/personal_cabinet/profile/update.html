@@ -1,0 +1,90 @@
+{% extends 'personal_cabinet/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Профиль</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'personal_cabinet:summary' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item active"><a href="{% url 'personal_cabinet:user_profile' %}"> Профиль </a></li>
+        <li class="breadcrumb-item active"> Редактирование </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="userAvatar col-sm-4">
+                    <img class="img-circle pull-left img-responsive"
+                         {% if user_form.image.value %}
+                            src="/media/{{ user_form.image.value }}"
+                         {% else %}
+                            src="{% static 'default_profile_image.png' %}"
+                        {% endif %}>
+                    <div>
+                        {{ user_form.image.label_tag }}<br>
+                        {{ user_form.image }}
+                    </div>
+                </div>
+                {% if user_form.errors %}
+                    <p>NOT VALID</p>
+                    {% for error in user_form.errors %}
+                        {{ error  }}<br>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <label>Статус</label>
+                {{ user_form.status }}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <label>Фамилия</label>
+                {{ user_form.first_name }}
+                <label>Имя</label>
+                {{ user_form.last_name }}
+                <label>Отчество</label>
+                {{ user_form.middle_name }}
+                <label>Дата рождения</label>
+                {{ user_form.birth_date }}
+            </div>
+            <div class="col-xs-6 col-sm-6">
+                <label>О владельце (заметки)</label>
+                {{ user_form.notes }}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <h2 class="page-header">Контактные данные</h2>
+                <label>Телефон</label>
+                {{ user_form.phone }}
+                <label>Viber</label>
+                {{ user_form.viber }}
+                <label>Telegram</label>
+                {{ user_form.telegram }}
+                <label>Email</label>
+                {{ user_form.email }}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <h2 class="page-header">Изменить пароль</h2>
+                <label>Пароль</label>
+                {{ user_form.password1 }}
+                <label>Повтор пароля</label>
+                {{ user_form.password2 }}
+            </div>
+        </div>
+        <div class="col-xs-12 text-center" style="padding: 10px 0 0 0">
+            <div class="form-group">
+                <a href="{% url 'personal_cabinet:user_profile' %}" class="btn btn-default">Отменить</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </div>
+        </div>
+    </form>
+{% endblock content %}
