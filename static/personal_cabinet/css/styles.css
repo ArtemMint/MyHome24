@@ -139,20 +139,52 @@ a.dropdown-toggle {
 }
 
 img.img-responsive_logo {
-    height: 49px;
-    /* */
+
     width: 100%;
-    /* */
+    height: 49px;
+
     border-bottom: #dee2e6 solid 1px;
     /* border-bottom 1px, line, white */
 }
 
-img.img-responsive {
+.userAvatar img {
+    margin: 0 15px 15px 0;
+    height: 160px;
+    width: 160px;
+}
+
+.user-header i.img-circle {
+    font-size: 78px;
     /* */
-    width: 100%;
+    border: 2px #dee2e6 solid;
+    /* border 2px, line, white */
+}
+
+img.img-responsive {
     /* */
     border-bottom: #dee2e6 solid 1px;
     /* border-bottom 1px, line, white */
+    display: block;
+}
+
+.profile-user-img {
+    margin: 0 auto;
+    width: 100px;
+    padding: 3px;
+    border: 3px solid #d2d6de;
+}
+
+.carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 nav {
