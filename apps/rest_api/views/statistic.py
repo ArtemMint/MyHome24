@@ -23,14 +23,8 @@ class StatisticChartView(views.APIView):
             i for i in range(1, 13)
         ]
         #TODO add invoice statistic
-        invoice_in_total = [
-            random.randrange(100, 15000)
-            for _ in range(0, 12)
-        ]
-        invoice_out_total = [
-            random.randrange(100, 15000)
-            for _ in range(0, 12)
-        ]
+        invoice_in_total = []
+        invoice_out_total = []
         transaction_in_total = []
         transaction_indebtedness_total = []
 

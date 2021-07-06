@@ -12,6 +12,7 @@ class CounterDataForm(forms.ModelForm):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
+                'id': 'house',
             }
         ),
         queryset=models.House.get_houses_list(),
@@ -22,6 +23,7 @@ class CounterDataForm(forms.ModelForm):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
+                'id': 'section',
             }
         ),
         queryset=models.HouseSection.get_sections_list(),
@@ -32,6 +34,7 @@ class CounterDataForm(forms.ModelForm):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
+                'id': 'flat',
             }
         ),
         queryset=models.Flat.get_flats_with_owner(),
@@ -101,7 +104,8 @@ class CountersSearchForm(django_filters.FilterSet):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
-                'onchange': 'form.submit();',
+                'id': 'house',
+                'onkeypress': 'form.submit();',
             }
         )
     )
@@ -110,7 +114,8 @@ class CountersSearchForm(django_filters.FilterSet):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
-                'onchange': 'form.submit();',
+                'id': 'section',
+                'onkeypress': 'form.submit();',
             }
         )
     )
@@ -119,6 +124,7 @@ class CountersSearchForm(django_filters.FilterSet):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
+                'id': 'flat',
                 'onchange': 'form.submit();',
             }
         )
@@ -159,7 +165,6 @@ class CounterListSearchForm(django_filters.FilterSet):
         ('Учтено', 'Учтено'),
         ('Нулевое', 'Нулевое'),
     )
-
     number = django_filters.Filter(
         widget=forms.TextInput(
             attrs={
@@ -191,7 +196,8 @@ class CounterListSearchForm(django_filters.FilterSet):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
-                'onchange': 'form.submit();',
+                'id': 'house',
+                'onkeypress': 'form.submit();',
             }
         )
     )
@@ -200,7 +206,8 @@ class CounterListSearchForm(django_filters.FilterSet):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
-                'onchange': 'form.submit();',
+                'id': 'section',
+                'onkeypress': 'form.submit();',
             }
         )
     )
@@ -209,6 +216,7 @@ class CounterListSearchForm(django_filters.FilterSet):
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
+                'id': 'flat',
                 'onchange': 'form.submit();',
             }
         )

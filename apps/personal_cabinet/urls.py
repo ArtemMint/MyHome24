@@ -10,21 +10,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
 
-from personal_cabinet.views.summary import *
-from personal_cabinet.views.invoice import *
-from personal_cabinet.views.master_request import *
-from personal_cabinet.views.message import *
-from personal_cabinet.views.tariff import *
-from register import views
+from personal_cabinet import views
+from register import views as reg_views
 
 
 app_name = 'personal_cabinet'
 urlpatterns = [
-
     # User login
     path(
         'site/login',
-        views.UserLoginView.as_view(),
+        reg_views.UserLoginView.as_view(),
         name='user_login'
     ),
 
@@ -38,36 +33,47 @@ urlpatterns = [
     # Summary
     path(
         '',
-        SummaryById.as_view(),
+        views.SummaryById.as_view(),
         name='summary'
     ),
     
     # Invoice
     path(
         'invoice/index/',
-        InvoiceList.as_view(),
+        views.InvoiceList.as_view(),
         name='invoice_list'
     ),
 
     # Messages
     path(
         'message/index/',
-        MessagesList.as_view(),
+        views.MessagesList.as_view(),
         name='message_list'
     ),
 
     # Tariff
     path(
         'tariff/index/',
-        TariffList.as_view(),
+        views.TariffList.as_view(),
         name='tariff_list'
     ),
 
     # Master request
     path(
         'master-request/index/',
-        MasterRequestList.as_view(),
+        views.MasterRequestList.as_view(),
         name='master_request_list'
     ),
 
+    # User profile
+    path(
+        'user/view/',
+        views.UserProfileView.as_view(),
+        name='user_profile'
+    ),
+    path(
+        'user/update/',
+        views.UpdateUserProfileView.as_view(),
+        name='user_update'
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

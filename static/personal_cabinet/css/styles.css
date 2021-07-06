@@ -108,13 +108,83 @@ a.dropdown-toggle {
     /* padding all 10px */
 }
 
-img.img-responsive {
-    height: 49px;
-    /* */
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.box {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
     width: 100%;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+}
+
+.box-body {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 10px;
+}
+
+.page-header {
+    margin: 10px 0 20px 0;
+    font-size: 22px;
+}
+
+img.img-responsive_logo {
+
+    width: 100%;
+    height: 49px;
+
+    border-bottom: #dee2e6 solid 1px;
+    /* border-bottom 1px, line, white */
+}
+
+.userAvatar img {
+    margin: 0 15px 15px 0;
+    height: 160px;
+    width: 160px;
+}
+
+.user-header i.img-circle {
+    font-size: 78px;
+    /* */
+    border: 2px #dee2e6 solid;
+    /* border 2px, line, white */
+}
+
+img.img-responsive {
     /* */
     border-bottom: #dee2e6 solid 1px;
     /* border-bottom 1px, line, white */
+    display: block;
+}
+
+.profile-user-img {
+    margin: 0 auto;
+    width: 100px;
+    padding: 3px;
+    border: 3px solid #d2d6de;
+}
+
+.carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 nav {
@@ -499,4 +569,11 @@ h4.box-title {
 
 .form-control {
     height: 2.875em;
+}
+
+.profile-user-img {
+    margin: 0 auto;
+    width: 100px;
+    padding: 3px;
+    border: 3px solid #d2d6de;
 }

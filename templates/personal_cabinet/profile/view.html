@@ -1,0 +1,207 @@
+{% extends 'personal_cabinet/base/base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'personal_cabinet:summary' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item active"> Профиль </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="row">
+                <div class="col-md-6 col-lg-12">
+                    <div class="">
+                        <div class="box-body box-profile">
+                            <div class="userAvatar center">
+                                <img class="profile-user-img img-responsive img-circle"
+                                     {% if user.image %}
+                                        src="{{ user.image.url }}"
+                                     {% else %}
+                                        src="{% static 'default_profile_image.png' %}"
+                                    {% endif %}>
+                            </div>
+
+                            <h3 class="profile-username text-center">
+                                {{ user.first_name}} {{ user.last_name }}
+                                {% if user.middle_name %}
+                                    {{ user.middle_name }}
+                                {% else %}
+                                {% endif %}
+                            </h3>
+
+                            <p class="text-muted text-center">
+                                {{ user.role }}
+                            </p>
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <span>Телефон</span>
+                                    <span class="pull-right">
+                                        {% if user.phone %}
+                                            {{ user.phone }}
+                                        {% else %}
+                                            (не указано)
+                                        {% endif %}
+                                    </span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span>Viber</span>
+                                    <span class="pull-right">
+                                        {% if user.viber %}
+                                            {{ user.viber }}
+                                        {% else %}
+                                            (не указано)
+                                        {% endif %}
+                                    </span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span>Telegram</span>
+                                    <span class="pull-right">
+                                        {% if user.telegram %}
+                                            {{ user.telegram }}
+                                        {% else %}
+                                            (не указано)
+                                        {% endif %}
+                                    </span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span>Email</span>
+                                    <span class="pull-right">
+                                        {% if user.email %}
+                                            {{ user.email }}
+                                        {% else %}
+                                            (не указано)
+                                        {% endif %}
+                                    </span>
+                                </li>
+                            </ul>
+                            <a href="{% url 'personal_cabinet:user_update' %}" class="btn btn-primary btn-block">Изменить</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-12">
+                    <h3 class="page-header">Обо мне (заметки)</h3>
+                    <div class="box">
+                        <div class="box-body box-profile">
+                            {% if user.notes %}
+                                {{ user.notes }}
+                            {% else %}
+                                (заметок нет)
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <h2 class="page-header">Мои квартиры</h2>
+            {% for flat in flat_list %}
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Описание квартиры</h3>
+                    </div>
+                    <hr>
+                    <div class="box-body">
+                        <p>{{ flat.house.name }}. {{ flat.house.address }}, кв. {{ flat.number }}</p>
+                        <div class="row">
+                            {% for image in flat_list %}
+                                {% if forloop.first %}
+                                <div class="col-xs-12 col-md-6">
+                                    <img class="largeImg margin-bottom-30"
+                                        {% if house_preview_form.image.value %}
+                                            src="/media/{{ house_preview_form.image.value }}"
+                                            alt="{{ house_preview_form.image.url }}"
+                                        {% else %}
+                                             src="{% static 'admin_panel/img/default_image.jpeg' %}"
+                                             alt="default_image"
+                                        {% endif %}>
+                                </div>
+                                {% else %}
+                                    {% if forloop.counter|divisibleby:2 %}
+                                    <div class="col-xs-6 col-md-3">
+                                        <img class="smallImg margin-bottom-30"
+                                            {% if house_preview_form.image.value %}
+                                                src="/media/{{ house_preview_form.image.value }}"
+                                                alt="{{ house_preview_form.image.url }}"
+                                            {% else %}
+                                                 src="{% static 'admin_panel/img/default_image.jpeg' %}"
+                                                 alt="default_image"
+                                            {% endif %}>
+                                    {% else %}
+                                        <img class="smallImg margin-bottom-30"
+                                            {% if house_preview_form.image.value %}
+                                                src="/media/{{ house_preview_form.image.value }}"
+                                                alt="{{ house_preview_form.image.url }}"
+                                            {% else %}
+                                                 src="{% static 'admin_panel/img/default_image.jpeg' %}"
+                                                 alt="default_image"
+                                            {% endif %}>
+                                    </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="table-responsive">
+                        <br>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th style="min-width: 200px; font-weight:normal;">Название дома</th>
+                                        <th style="font-weight:normal;">{{ flat.house.name }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Адрес</td>
+                                        <td>{{ flat.house.address }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>№ квартиры</td>
+                                        <td>{{ flat.number }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Площадь</td>
+                                        <td>
+                                            {{ flat.area }}м<sup>2</sup>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Этаж</td>
+                                        <td>{{ flat.floor }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Секция</td>
+                                        <td>{{ flat.section }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Лицевой счет</td>
+                                        <td>
+                                            {% if flat.account %}
+                                                {{ flat.account }}
+                                            {% else %}
+                                                (не указано)
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
