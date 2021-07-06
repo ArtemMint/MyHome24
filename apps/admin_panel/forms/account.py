@@ -15,7 +15,7 @@ class AccountForm(forms.ModelForm):
                 'id': 'flat',
             }
         ),
-        queryset=models.Flat.get_free_flats(),
+        queryset=models.Flat.get_flats_list(),
         label='Квартира',
         required=False,
     )
