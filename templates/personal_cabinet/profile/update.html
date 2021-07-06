@@ -31,10 +31,10 @@
                          {% else %}
                             src="{% static 'default_profile_image.png' %}"
                         {% endif %}>
-                    <div>
-                        {{ user_form.image.label_tag }}<br>
-                        {{ user_form.image }}
-                    </div>
+                </div>
+                <div>
+                    {{ user_form.image.label_tag }}<br>
+                    {{ user_form.image }}
                 </div>
                 {% if user_form.errors %}
                     <p>NOT VALID</p>
@@ -44,8 +44,10 @@
                 {% endif %}
             </div>
             <div class="col-xs-12 col-sm-6">
-                <label>Статус</label>
-                {{ user_form.status }}
+                <label>ID</label>
+                <p>
+                    <input class="form-control" type="text" value="{{ user_form.instance.id }}" disabled>
+                </p>
             </div>
             <div class="col-xs-12 col-sm-6">
                 <label>Фамилия</label>
