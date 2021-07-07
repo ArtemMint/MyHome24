@@ -17,6 +17,7 @@ class MasterRequestForm(forms.ModelForm):
             }
         ),
         label='Мастер',
+        required=False,
     )
     owner = forms.ModelChoiceField(
         queryset=register_models.User.users.get_queryset(),
@@ -45,7 +46,7 @@ class MasterRequestForm(forms.ModelForm):
         widgets = {
             'created_date': forms.DateInput(
                 format=(
-                    '%d-%m-%Y'
+                    '%d/%m/%Y'
                 ),
                 attrs={
                     # 'type': 'date',

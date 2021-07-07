@@ -58,6 +58,7 @@ class MasterRequest(models.Model):
         verbose_name='Мастер',
         related_name='master_request_managers',
         blank=True,
+        null=True,
     )
     comment = models.CharField(
         max_length=500,
