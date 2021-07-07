@@ -1,6 +1,17 @@
-from django.shortcuts import render
-from django.views.generic.base import TemplateView
+from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
+from django.views import generic
+
+from admin_panel import models, views
 
 
-class MasterRequestList(TemplateView):
+class MasterRequestListView(generic.ListView):
+    model = models.MasterRequest
+    context_object_name = 'master_request_list'
     template_name = "personal_cabinet/master_request/index.html"
+
+    def get_queryset(self):
+        user = self.request.user.id
+        user_requests = self.model.objects.filter(owner=user)
+        return user_requests
+
