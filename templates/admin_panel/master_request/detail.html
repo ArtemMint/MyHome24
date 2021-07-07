@@ -48,7 +48,11 @@
             </tr>
             <tr>
                 <td>Телефон</td>
-                <td>{{ master_request_data.owner.phone }}</td>
+                <td>
+                    <a href="tel:{{ master_request_data.owner.phone }}">
+                        {{ master_request_data.owner.phone }}
+                    </a>
+                </td>
             </tr>
             <tr>
                 <td>Квартира</td>
@@ -61,9 +65,13 @@
             <tr>
                 <td>Мастер</td>
                 <td>
+                    {% if master_request_data.master %}
                     <a href="{% url 'admin_panel:user_admin_detail' master_request_data.master.id %}">
                         {{ master_request_data.master }}
                     </a>
+                    {% else %}
+                        (не задано)
+                    {% endif %}
                 </td>
             </tr>
             <tr>
