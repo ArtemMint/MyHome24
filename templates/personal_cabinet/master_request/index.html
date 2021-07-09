@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="pull-right margin-bottom" style="float: right">
-                <a class="btn btn-success" href="{% url 'admin_panel:master_request_create' %}">Добавить заявку</a>
+                <a class="btn btn-success" href="{% url 'personal_cabinet:master_request_create' %}">Добавить заявку</a>
             </div>
         </div>
     </div>
@@ -49,9 +49,9 @@
                         </td>
                         <td class="text-center">
                             {% if field.status == 'Новое' %}
-                                <small class="label label-primary">{{ field.status|truncatechars:50 }}</small>
+                                <small class="label label-info">{{ field.status|truncatechars:50 }}</small>
                             {% elif field.status == 'В работе' %}
-                                <small class="label label-mid">{{ field.status|truncatechars:50 }}</small>
+                                <small class="label label-primary">{{ field.status|truncatechars:50 }}</small>
                             {% else %}
                                 <small class="label label-success">{{ field.status|truncatechars:50 }}</small>
                             {% endif %}
