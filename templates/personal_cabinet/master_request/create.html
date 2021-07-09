@@ -1,0 +1,63 @@
+{% extends 'personal_cabinet/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Новая заявка</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'personal_cabinet:summary' %}"><i class="fa fa-home"></i>Главная</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'personal_cabinet:master_request_list' %}">Вызов мастера</a></li>
+        <li class="breadcrumb-item active">Новая заявка</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <!-- Message if all saved -->
+    {% if messages %}
+         {% for message in messages %}
+             <ul class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </ul>
+         {% endfor %}
+    {% endif %}
+
+    {% if form.errors %}
+        <p>NOT VALID</p>
+        {% for error in form.errors %}
+            {{ error  }}<br>
+        {% endfor %}
+    {% endif %}
+
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                {{ form.master_type.label_tag }}
+                <p>{{ form.master_type }}</p>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                {{ form.flat.label_tag }}
+                <p>{{ form.flat }}</p>
+            </div>
+            <div class="col-lg-12 row">
+                <div class="col-lg-6">
+                    <strong>Дата работы</strong>
+                    <p>{{ form.created_date }}</p>
+                </div>
+                <div class="col-lg-6">
+                    <strong>Время</strong>
+                    <p>{{ form.time }}</p>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                {{ form.description.label_tag }}
+                {{ form.description }}
+            </div>
+        </div>
+        <div class="col-lg-12 text-right">
+            <div class="form-group">
+                <a href="{% url 'personal_cabinet:master_request_list' %}" class="btn btn-default">Отменить</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </div>
+        </div>
+    </form>
+{% endblock content %}

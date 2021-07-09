@@ -1,0 +1,24 @@
+{% extends 'personal_cabinet/base/base.html' %}
+{% load static %}
+
+{% block title %} <h1 class="m-0">Удалить заявку</h1> {% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'personal_cabinet:summary' %}"><i class="fa fa-home"></i> Главная </a></li>
+        <li class="breadcrumb-item"><a href="{% url 'personal_cabinet:master_request_list' %}">Вызов мастера</a></li>
+        <li class="breadcrumb-item active">Удалить заявку</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <form class="form-group" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="col-xs-12 text-center">
+            <div class="form-group">
+                <h1>Удалить заявку №{{ object }}?</h1>
+                <input class="btn btn-danger" type="submit" value="Удалить!">
+                <a class="btn btn-default" href="{% url 'personal_cabinet:master_request_list' %}">Отменить</a>
+            </div>
+        </div>
+    </form>
+{% endblock content %}

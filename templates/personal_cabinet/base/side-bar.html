@@ -53,9 +53,6 @@
                     </li>
                 </ul>
             </li>
-
-
-
             <li class="nav-item menu">
                 <a href="" class="nav-link">
                     <i class="fas fa-money-bill-alt"></i>
@@ -63,30 +60,27 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{% url 'personal_cabinet:tariff_list' %}" class="nav-link {% if request.path == '/admin/services_metrics' %} active {% endif %}">
+                        <a href="{% url 'personal_cabinet:tariff_list' %}" class="nav-link {% if '/cabinet/tariff' in request.path %} active {% endif %}">
                             <i class="fa fa-file-alt"></i>
                             <p>house</p>
                         </a>
                     </li>
                 </ul>
-
-
-
             </li>
             <li class="nav-item">
-                <a href="{% url 'personal_cabinet:message_list' %}" class="nav-link {% if request.path == '/admin/' %} active {% endif %}">
+                <a href="{% url 'personal_cabinet:message_list' %}" class="nav-link {% if '/cabinet/message' in request.path %} active {% endif %}">
                     <i class="far fa-envelope"></i>
                     <p>Сообщения</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'personal_cabinet:master_request_list' %}" class="nav-link {% if request.path == '/admin/account-transaction/index/' %} active {% endif %}">
+                <a href="{% url 'personal_cabinet:master_request_list' %}" class="nav-link {% if '/cabinet/master-request' in request.path %} active {% endif %}">
                     <i class="fas fa-wrench"></i>
                     <p>Вызов мастера</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'personal_cabinet:user_profile' %}" class="nav-link {% if request.path == '/admin/invoice/index/' %} active {% endif %}">
+                <a href="{% url 'personal_cabinet:user_profile' %}" class="nav-link {% if '/cabinet/user' in request.path %} active {% endif %}">
                     <i class="fa fa-user-circle"></i>
                     <p>Профиль</p>
                 </a>

@@ -61,8 +61,18 @@ urlpatterns = [
     # Master request
     path(
         'master-request/index/',
-        views.MasterRequestList.as_view(),
+        views.MasterRequestListView.as_view(),
         name='master_request_list'
+    ),
+    path(
+        'master-request/create/',
+        views.MasterRequestCreateView.as_view(),
+        name='master_request_create'
+    ),
+    path(
+        'master-request/delete/<int:pk>',
+        views.MasterRequestDeleteView.as_view(),
+        name='master_request_delete'
     ),
 
     # User profile
