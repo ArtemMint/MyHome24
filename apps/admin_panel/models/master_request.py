@@ -51,6 +51,7 @@ class MasterRequest(models.Model):
         verbose_name='Статус',
         choices=STATUS,
         default=STATUS[0][0],
+        blank=True,
     )
     master = models.ForeignKey(
         'register.User',
@@ -68,6 +69,7 @@ class MasterRequest(models.Model):
     )
     created_date = models.DateTimeField(
         default=timezone.now,
+        verbose_name='Дата работы',
     )
     editing_date = models.DateTimeField(
         auto_now=True,
